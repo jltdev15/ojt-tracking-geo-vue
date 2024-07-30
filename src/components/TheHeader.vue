@@ -1,5 +1,5 @@
 <template>
-    <header class="absolute inset-x-0 top-0 z-50 bg-gray-50">
+    <header class="fixed inset-x-0 top-0 z-50 bg-gray-50">
         <nav class="flex items-center justify-between p-6 lg:px-8 container mx-auto" aria-label="Global">
             <div class="flex lg:flex-1">
                 <a href="#" class="-m-1.5 p-1.5">
@@ -63,7 +63,7 @@ import { Dialog, DialogPanel } from "@headlessui/vue";
 import { Bars3Icon, XMarkIcon } from "@heroicons/vue/24/outline";
 
 const navigation = [
-    { name: "Home", href: "#" },
+    { name: "Home", href: "#hero" },
     { name: "About", href: "#" },
     { name: "Partners", href: "#" },
     { name: "Contact", href: "#" },
