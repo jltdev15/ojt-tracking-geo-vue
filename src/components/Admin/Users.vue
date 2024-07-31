@@ -1,13 +1,18 @@
 <template>
     <section class="p-3">
-        <div>users page</div>
+        <header class="bg-gray-200 p-3 flex justify-between items-center">
+            <h1 class="text-3xl">User <span class="text-3xl font-bold">Management</span></h1>
+            <div>
+                <button class="btn btn-block"><i class="ri-add-line"></i>Add New User</button>
+            </div>
+        </header>
         <span>search field:</span>
-        <select v-model="searchField">
-            <option>player</option>
-            <option>team</option>
-        </select>
 
-        <br />
+        <select class="select select-bordered w-full max-w-xs" v-model="searchField">
+            <option disabled selected>Search User Filter?</option>
+            <option value="role">Role</option>
+            <option value="name">Name</option>
+        </select>
 
         <span>search value: </span>
         <input type="text" v-model="searchValue" />
@@ -33,27 +38,35 @@
 <script setup>
 import { ref } from "vue";
 
-const searchField = ref("player");
-const searchValue = ref("Stephen Curry");
+const searchField = ref("");
+const searchValue = ref("");
 
 const headers = [
-    { text: "NAME", value: "player" },
-    { text: "DATE CREATED", value: "team" },
-    { text: "ROLE", value: "number" },
-    { text: "STATUS", value: "position" },
+    { text: "NAME", value: "name" },
+    { text: "DATE CREATED", value: "date" },
+    { text: "ROLE", value: "role" },
+    { text: "STATUS", value: "status" },
     { text: "ACTIONS", value: "operation", width: 10 },
 ];
 
 const items = [
     {
-        player: "Stephen Curry",
-        team: "GSW",
-        number: 30,
-        position: "G",
-        height: "6-2",
-        weight: 185,
-        lastAttended: "Davidson",
-        country: "USA",
+        name: "Juan Dela Cruz",
+        date: "Jul 24, 2024",
+        role: "admin",
+        status: "active",
+    },
+    {
+        name: "Mark Dela Cruz",
+        date: "Jul 22, 2024",
+        role: "HTE",
+        status: "active",
+    },
+    {
+        name: "Rodrigo Duterte",
+        date: "Jul 24, 2024",
+        role: "Intern",
+        status: "active",
     },
 ];
 </script>
