@@ -7,19 +7,19 @@
         <ul class="mt-4">
             <span class="font-bold text-gray-400">ADMIN</span>
             <li class="mb-1 group">
-                <a href=""
+                <router-link to="/admin/dashboard"
                     class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
                     <i class="mr-3 text-lg ri-home-2-line"></i>
                     <span class="text-sm">Dashboard</span>
-                </a>
+                </router-link>
             </li>
             <li class="mb-1 group">
-                <a href=""
+                <router-link to="dashboard/users"
                     class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100 sidebar-dropdown-toggle">
                     <i class="mr-3 text-lg bx bx-user"></i>
                     <span class="text-sm">Users</span>
                     <i class="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-45"></i>
-                </a>
+                </router-link>
                 <ul class="pl-7 mt-2 hidden group-[.selected]:block">
                     <li class="mb-4">
                         <a href=""

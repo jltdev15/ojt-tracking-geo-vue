@@ -14,7 +14,7 @@
                 Discover amazing features and services that await you.
             </p>
             <a href="#"
-                class="btn btn-primary text-gray-900 hover:btn-accent py-2 px-6 rounded-full text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">Get
+                class="btn btn-primary text-gray-900 hover:btn-outline py-2 px-6 rounded-full text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">Get
                 Started</a>
         </div>
     </div>

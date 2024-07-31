@@ -10,20 +10,27 @@ const router = createRouter({
       component: HomeView,
     },
     {
+      path: "/admin",
+      redirect: "/admin/auth",
+    },
+    {
       path: "/admin/auth",
       name: "admin_auth",
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import("../views/AdminAuthView.vue"),
+      component: () => import("../views/Admin/AdminAuthView.vue"),
+    },
+    {
+      path: "/student",
+      redirect: "/student/auth",
+    },
+    {
+      path: "/student/auth",
+      name: "student_auth",
+      component: () => import("../views/StudentAuthView.vue"),
     },
     {
       path: "/admin/dashboard",
       name: "admin_dashboard",
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import("../views/AdminDashBoardView.vue"),
+      component: () => import("../views/Admin/AdminDashBoardView.vue"),
       children: [
         {
           path: "users",
