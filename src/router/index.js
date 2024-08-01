@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-
+import Users from "@/components/Admin/Users.vue";
+import AdminDashBoardView from "../views/Admin/AdminDashBoardView.vue";
+import AdminDashboard from "@/components/Admin/Dashboard.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -25,17 +27,22 @@ const router = createRouter({
     {
       path: "/student/auth",
       name: "student_auth",
-      component: () => import("../views/StudentAuthView.vue"),
+      component: () => import("../views/Student/StudentAuthView.vue"),
     },
     {
-      path: "/admin/dashboard",
-      name: "admin_dashboard",
-      component: () => import("../views/Admin/AdminDashBoardView.vue"),
+      path: "/admin",
+      name: "admin",
+      component: AdminDashBoardView,
       children: [
+        {
+          path: "dashboard",
+          name: "admin_dashboard",
+          component: AdminDashboard,
+        },
         {
           path: "users",
           name: "users",
-          component: () => import("../components/Admin/Users.vue"),
+          component: Users,
         },
       ],
     },

@@ -257,7 +257,7 @@ const handleToggleSidebar = () => {
 };
 </script>
 
-<style>
+<style scoped>
 /* Add your styles here */
 .hidden {
     display: none;

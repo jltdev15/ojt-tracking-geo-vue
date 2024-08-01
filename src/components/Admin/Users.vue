@@ -1,21 +1,24 @@
 <template>
     <section class="p-3">
-        <header class="bg-gray-200 p-3 flex justify-between items-center">
+        <header class="flex items-center justify-between p-3 bg-gray-200">
             <h1 class="text-3xl">User <span class="text-3xl font-bold">Management</span></h1>
             <div>
                 <button class="btn btn-block"><i class="ri-add-line"></i>Add New User</button>
             </div>
         </header>
-        <span>search field:</span>
+        <div class="flex justify-end gap-3 p-3">
+            <input type="text" placeholder="Type here" class="w-full max-w-xs input input-bordered"
+                v-model="searchValue" />
+            <select class="w-48 select select-bordered" v-model.trim="searchField">
+                <option selected disabled value="Set filter">Set filter</option>
+                <option value="role">Role</option>
+                <option value="name">Name</option>
+            </select>
+        </div>
 
-        <select class="select select-bordered w-full max-w-xs" v-model="searchField">
-            <option disabled selected>Search User Filter?</option>
-            <option value="role">Role</option>
-            <option value="name">Name</option>
-        </select>
 
-        <span>search value: </span>
-        <input type="text" v-model="searchValue" />
+
+
 
         <EasyDataTable :headers="headers" :items="items" :search-field="searchField" :search-value="searchValue"
             show-index>
@@ -36,11 +39,14 @@
 </template>
 
 <script setup>
+import { useUserStore } from "@/stores/userStore";
+const userStore = useUserStore()
 import { ref } from "vue";
 
-const searchField = ref("");
+const searchField = ref("Set filter");
 const searchValue = ref("");
 
+await userStore.fetchUsers()
 const headers = [
     { text: "NAME", value: "name" },
     { text: "DATE CREATED", value: "date" },

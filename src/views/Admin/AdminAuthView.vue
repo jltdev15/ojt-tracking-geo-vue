@@ -29,6 +29,10 @@
                         class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Login
                     </button>
+                    <div class="text-center capitalize text-gray-50">
+                        <router-link class="inline-block w-full pt-6" to="/">
+                            <span>&larr;</span> home page</router-link>
+                    </div>
                 </form>
             </div>
         </div>

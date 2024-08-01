@@ -7,7 +7,8 @@
                 <form action="#">
                     <div class="mb-4">
                         <label for="email"
-                            class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Username</label>
+                            class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Registered Email
+                            Address</label>
                         <input type="email" id="email"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             placeholder="your@email.com" required />
@@ -27,8 +28,8 @@
                         class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Login
                     </button>
-                    <div class="text-center capitalize">
-                        <router-link class="py-3 w-full inline-block" to="/">
+                    <div class="text-center capitalize text-gray-50">
+                        <router-link class="inline-block w-full py-3" to="/">
                             <span>&larr;</span> home page</router-link>
                     </div>
                 </form>
