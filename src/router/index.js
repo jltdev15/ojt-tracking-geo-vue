@@ -30,18 +30,22 @@ const router = createRouter({
       component: () => import("../views/Student/StudentAuthView.vue"),
     },
     {
-      path: "/admin",
-      name: "admin",
+      path: "/manage-users",
+      name: "manage_users",
+      component: Users,
+    },
+    {
+      path: "/admin/dashboard",
       component: AdminDashBoardView,
       children: [
         {
-          path: "dashboard",
+          path: "",
           name: "admin_dashboard",
           component: AdminDashboard,
         },
         {
-          path: "users",
-          name: "users",
+          path: "manage-users",
+          name: "manage_users",
           component: Users,
         },
       ],

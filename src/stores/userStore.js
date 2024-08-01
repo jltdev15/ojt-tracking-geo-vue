@@ -7,13 +7,24 @@ export const useUserStore = defineStore("user", () => {
   const fetchUsers = async () => {
     try {
       const response = await apiClient.get("/users");
-      console.log(response);
+      usersList.value = await response.data.content;
+      console.log(response.data.content);
     } catch (err) {
+      console.log(err);
+    }
+  };
+  const addIntern = async (payload) => {
+    // console.log(payload);
+    try {
+      const response = await apiClient.post("/intern",payload);
+      console.log(response);
+    }catch(err){
       console.log(err);
     }
   };
   return {
     fetchUsers,
     usersList,
+    addIntern,
   };
 });
