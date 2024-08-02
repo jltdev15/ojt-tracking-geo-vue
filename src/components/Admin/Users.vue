@@ -107,15 +107,15 @@
               />
             </label>
             <div class="flex justify-end">
-              <div class="flex gap-3 flex-row-reverse">
+              <div class="flex flex-row-reverse gap-3">
                 <button
-                  class="btn ml-auto text-right btn-primary"
+                  class="ml-auto text-right btn btn-primary"
                   @click="handleGeneratePassword"
                 >
                   Generate password
                 </button>
                 <button
-                  class="btn ml-auto text-right btn-outline"
+                  class="ml-auto text-right btn btn-outline"
                   @click="toggleShowPassword"
                 >
                   {{ showPassword ? "Hide" : "Show" }}
@@ -216,15 +216,15 @@
               />
             </label>
             <div class="flex justify-end">
-              <div class="flex gap-3 flex-row-reverse">
+              <div class="flex flex-row-reverse gap-3">
                 <button
-                  class="btn ml-auto text-right btn-primary"
+                  class="ml-auto text-right btn btn-primary"
                   @click="handleGeneratePassword"
                 >
                   Generate password
                 </button>
                 <button
-                  class="btn ml-auto text-right btn-outline"
+                  class="ml-auto text-right btn btn-outline"
                   @click="toggleShowPassword"
                 >
                   {{ showPassword ? "Hide" : "Show" }}
