@@ -1,8 +1,182 @@
 <template>
   <div class="p-3">
-    <header class="flex items-center justify-between p-3 bg-gray-200">
+    <header class="flex items-center justify-between p-3 bg-gray-50">
       <h1 class="text-3xl font-bold">Dashboard</h1>
     </header>
+    <div class="flex min-h-screen bg-gray-100">
+      <div class="container max-w-6xl p-5">
+        <header class="py-3">
+          <h1 class="text-xl font-semibold text-gray-400 uppercase">Users</h1>
+        </header>
+        <div class="grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
+          <div class="p-5 bg-white rounded shadow-sm">
+            <div class="flex items-center space-x-4 space-y-2">
+              <div>
+                <div
+                  class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-50 text-cyan-400"
+                >
+                  <svg
+                    enable-background="new 0 0 24 24"
+                    id="Layer_1"
+                    version="1.0"
+                    viewBox="0 0 24 24"
+                    xml:space="preserve"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                  >
+                    <g>
+                      <path
+                        d="M9,9c0-1.7,1.3-3,3-3s3,1.3,3,3c0,1.7-1.3,3-3,3S9,10.7,9,9z M12,14c-4.6,0-6,3.3-6,3.3V19h12v-1.7C18,17.3,16.6,14,12,14z   "
+                      />
+                    </g>
+                    <g>
+                      <g><circle cx="18.5" cy="8.5" r="2.5" /></g>
+                      <g>
+                        <path
+                          d="M18.5,13c-1.2,0-2.1,0.3-2.8,0.8c2.3,1.1,3.2,3,3.2,3.2l0,0.1H23v-1.3C23,15.7,21.9,13,18.5,13z"
+                        />
+                      </g>
+                    </g>
+                    <g>
+                      <g><circle cx="18.5" cy="8.5" r="2.5" /></g>
+                      <g>
+                        <path
+                          d="M18.5,13c-1.2,0-2.1,0.3-2.8,0.8c2.3,1.1,3.2,3,3.2,3.2l0,0.1H23v-1.3C23,15.7,21.9,13,18.5,13z"
+                        />
+                      </g>
+                    </g>
+                    <g>
+                      <g><circle cx="5.5" cy="8.5" r="2.5" /></g>
+                      <g>
+                        <path
+                          d="M5.5,13c1.2,0,2.1,0.3,2.8,0.8c-2.3,1.1-3.2,3-3.2,3.2l0,0.1H1v-1.3C1,15.7,2.1,13,5.5,13z"
+                        />
+                      </g>
+                    </g>
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <div class="text-gray-400">Registered Interns</div>
+                <div class="text-2xl font-bold text-gray-900">$7520.50</div>
+              </div>
+            </div>
+          </div>
+          <div class="p-5 bg-white rounded shadow-sm">
+            <div class="flex items-center space-x-4 space-y-2">
+              <div>
+                <div
+                  class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-50 text-cyan-400"
+                >
+                  <svg
+                    height="8.4666mm"
+                    style="
+                      shape-rendering: geometricPrecision;
+                      text-rendering: geometricPrecision;
+                      image-rendering: optimizeQuality;
+                      fill-rule: evenodd;
+                      clip-rule: evenodd;
+                    "
+                    version="1.1"
+                    viewBox="0 0 846.66 846.66"
+                    width="8.4666mm"
+                    xml:space="preserve"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                  >
+                    <defs></defs>
+                    <g id="Layer_x0020_1">
+                      <path
+                        class="fil0"
+                        d="M460.89 284.91l157.98 0 0 -214.83 -569.87 0 0 706.5 391.08 0 0 -470.86c0,-11.49 9.32,-20.81 20.81,-20.81zm-334.7 187.54l221.99 0c11.49,0 20.81,9.32 20.81,20.8l0 76c0,11.49 -9.32,20.8 -20.81,20.8l-221.99 0c-11.49,0 -20.8,-9.31 -20.8,-20.8l0 -76c0,-11.48 9.31,-20.8 20.8,-20.8zm201.19 41.61l-180.38 0 0 34.38 180.38 0 0 -34.38zm-201.19 -208.6l221.99 0c11.49,0 20.81,9.31 20.81,20.8l0 76c0,11.49 -9.32,20.8 -20.81,20.8l-221.99 0c-11.49,0 -20.8,-9.31 -20.8,-20.8l0 -76c0,-11.49 9.31,-20.8 20.8,-20.8zm201.19 41.61l-180.38 0 0 34.38 180.38 0 0 -34.38zm-201.19 -208.6l221.99 0c11.49,0 20.81,9.31 20.81,20.8l0 76c0,11.48 -9.32,20.8 -20.81,20.8l-221.99 0c-11.49,0 -20.8,-9.32 -20.8,-20.8l0 -76c0,-11.49 9.31,-20.8 20.8,-20.8zm201.19 41.61l-180.38 0 0 34.38 180.38 0 0 -34.38zm333.1 104.83l157.98 0c11.49,0 20.81,9.32 20.81,20.81l0 491.67c0,11.49 -9.32,20.8 -20.81,20.8 -263.42,0 -526.84,0 -790.26,0 -11.49,0 -20.81,-9.31 -20.81,-20.8l0 -748.12c0,-11.48 9.32,-20.8 20.81,-20.8l611.48 0c11.48,0 20.8,9.32 20.8,20.8l0 235.64zm8.67 491.67l0 -86.89 -58.95 0 0 86.89 58.95 0zm-100.56 0l0 -107.7c0,-11.49 9.31,-20.8 20.8,-20.8l100.57 0c11.49,0 20.8,9.31 20.8,20.8l0 107.7 86.9 0 0 -450.06 -157.98 0 -157.99 0 0 450.06 86.9 0zm-27.62 -283.08l61.46 0c11.49,0 20.8,9.31 20.8,20.8l0 61.46c0,11.49 -9.31,20.81 -20.8,20.81l-61.46 0c-11.49,0 -20.81,-9.32 -20.81,-20.81l0 -61.46c0,-11.49 9.32,-20.8 20.81,-20.8zm40.65 41.61l-19.85 0 0 19.85 19.85 0 0 -19.85zm95.3 -41.61l61.46 0c11.49,0 20.81,9.31 20.81,20.8l0 61.46c0,11.49 -9.32,20.81 -20.81,20.81l-61.46 0c-11.49,0 -20.8,-9.32 -20.8,-20.81l0 -61.46c0,-11.49 9.31,-20.8 20.8,-20.8zm40.66 41.61l-19.85 0 0 19.85 19.85 0 0 -19.85zm-176.61 -162.67l61.46 0c11.49,0 20.8,9.32 20.8,20.81l0 61.46c0,11.49 -9.31,20.8 -20.8,20.8l-61.46 0c-11.49,0 -20.81,-9.31 -20.81,-20.8l0 -61.46c0,-11.49 9.32,-20.81 20.81,-20.81zm40.65 41.61l-19.85 0 0 19.85 19.85 0 0 -19.85zm95.3 -41.61l61.46 0c11.49,0 20.81,9.32 20.81,20.81l0 61.46c0,11.49 -9.32,20.8 -20.81,20.8l-61.46 0c-11.49,0 -20.8,-9.31 -20.8,-20.8l0 -61.46c0,-11.49 9.31,-20.81 20.8,-20.81zm40.66 41.61l-19.85 0 0 19.85 19.85 0 0 -19.85z"
+                      />
+                    </g>
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <div class="text-gray-400">Registered HTE's</div>
+                <div class="text-2xl font-bold text-gray-900">$7520.50</div>
+              </div>
+            </div>
+          </div>
+          <div class="p-5 bg-white rounded shadow-sm">
+            <div class="flex items-center space-x-4 space-y-2">
+              <div>
+                <div
+                  class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-50 text-cyan-400"
+                >
+                  <svg
+                    height="32px"
+                    id="Capa_1"
+                    style="enable-background: new 0 0 100 88"
+                    version="1.1"
+                    viewBox="0 0 100 88"
+                    width="100px"
+                    xml:space="preserve"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                  >
+                    <g>
+                      <path
+                        d="M100,88c0,0-0.197-18.934-1.354-20.896c-1.721-2.923-5.729-4.932-13.17-8.041c-7.416-3.101-9.787-5.716-9.787-11.316   c0-3.364,2.264-2.264,3.26-8.419c0.412-2.555,2.412-0.043,2.795-5.872c0-2.324-1.092-2.903-1.092-2.903s0.555-3.437,0.771-6.084   c0.27-3.298-1.662-11.815-11.955-11.815c-10.295,0-12.225,8.518-11.955,11.815c0.217,2.647,0.77,6.084,0.77,6.084   s-1.09,0.579-1.09,2.903c0.383,5.829,2.381,3.317,2.795,5.872c0.994,6.155,3.26,5.056,3.26,8.419c0,3.807-1.102,6.235-4.137,8.375   c16.203,8.111,18.375,9.764,18.375,17.015V88H100z M51.117,61.877c-9.891-4.134-13.051-7.621-13.051-15.086   c0-4.483,3.02-3.019,4.346-11.228c0.549-3.404,3.217-0.056,3.727-7.829c0-3.098-1.455-3.868-1.455-3.868s0.74-4.583,1.029-8.112   C46.072,11.357,43.498,0,29.771,0C16.047,0,13.471,11.357,13.832,15.754c0.289,3.529,1.027,8.112,1.027,8.112   s-1.455,0.77-1.455,3.868c0.512,7.773,3.178,4.425,3.729,7.829c1.326,8.208,4.346,6.744,4.346,11.228   c0,7.465-3.162,10.952-13.051,15.086C5.414,63.137,0,65.088,0,69.783V88h69.469c0,0,0-10.776,0-13.659   C69.469,70.059,61.037,66.025,51.117,61.877z"
+                      />
+                    </g>
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <div class="text-gray-400">Registered Coor</div>
+                <div class="text-2xl font-bold text-gray-900">$7520.50</div>
+              </div>
+            </div>
+          </div>
+          <div class="p-5 bg-white rounded shadow-sm">
+            <div class="flex items-center space-x-4 space-y-2">
+              <div>
+                <div
+                  class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-50 text-cyan-400"
+                >
+                  <svg
+                    height="32px"
+                    id="Layer_1"
+                    style="enable-background: new 0 0 50 50"
+                    version="1.1"
+                    viewBox="0 0 50 50"
+                    xml:space="preserve"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                  >
+                    <g id="Layer_1_1_">
+                      <path
+                        d="M11,49h4h8h4h8h4h8h2v-2h-2V1h-8v46h-4V11h-8v36h-4V21h-8v26h-4V31H3v16H1v2h2H11z M41,3h4v44h-4V3z M29,13h4v34h-4V13z    M17,23h4v24h-4V23z M5,33h4v14H5V33z"
+                      />
+                    </g>
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <div class="text-gray-400">Total Users</div>
+                <div class="text-2xl font-bold text-gray-900">$7520.50</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="divider"></div>
+      </div>
+      <div class="w-2/6 p-5">
+        <header class="py-3">
+          <h1 class="text-xl font-semibold text-gray-400 uppercase">Announcements</h1>
+        </header>
+        <section>
+          <div class="p-5 bg-white rounded shadow-sm">
+            <header>date</header>
+            <p>Title</p>
+            <p>Content</p>
+          </div>
+        </section>
+      </div>
+    </div>
   </div>
 </template>
 <script setup></script>

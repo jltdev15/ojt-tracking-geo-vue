@@ -51,23 +51,23 @@
       <template #default>
         <div>
           <p
-            v-if="profile.role === 'Select Role'"
+            v-if="selectedRole === 'Select Role'"
             class="pb-3 font-medium text-center text-gray-600"
           >
             Please select role to proceed
           </p>
           <select
             @change="handleSelectChange"
-            v-model.trim="profile.role"
+            v-model.trim="selectedRole"
             class="w-full py-3 select select-bordered"
           >
-            <option selected disabled>Select Role</option>
+            <option selected disabled value="Select User Role">Select User Role</option>
             <option value="admin">Admin</option>
             <option value="coordinator">Coordinator</option>
-            <option value="HTE">HTE</option>
+            <option value="hte">HTE</option>
             <option value="intern">Intern</option>
           </select>
-          <div v-if="profile.role === 'intern'" class="flex flex-col gap-3 pt-3">
+          <div v-if="selectedRole === 'intern'" class="flex flex-col gap-3 pt-3">
             <label class="flex items-center gap-2 input input-bordered">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +80,7 @@
                 />
               </svg>
               <input
-                v-model.trim="profile.username"
+                v-model.trim="intern.username"
                 type="text"
                 class="grow"
                 placeholder="Username"
@@ -102,7 +102,7 @@
               <input
                 class="grow"
                 placeholder="Secure password"
-                v-model.trim="profile.password"
+                v-model.trim="intern.password"
                 :type="passwordFieldType"
               />
             </label>
@@ -138,7 +138,7 @@
                 />
               </svg>
               <input
-                v-model="profile.email"
+                v-model="intern.email"
                 type="text"
                 class="grow"
                 placeholder="Email"
@@ -146,7 +146,7 @@
             </label>
             <label class="flex items-center gap-2 input input-bordered">
               <input
-                v-model="profile.fullName"
+                v-model="intern.fullName"
                 type="text"
                 class="grow"
                 placeholder="Full Name"
@@ -154,7 +154,7 @@
             </label>
             <select
               @change="handleSelectDepartment"
-              v-model="profile.department"
+              v-model="intern.department"
               class="w-full py-3 select select-bordered"
             >
               <option selected disabled value="Select Department">
@@ -165,7 +165,7 @@
               <option value="Tourism">Tourism</option>
             </select>
             <div class="flex flex-col gap-2">
-              <button @click="handleSubmitForm" class="text-lg btn btn-primary btn-block">
+              <button @click="handleInternUser" class="text-lg btn btn-primary btn-block">
                 Create User
               </button>
               <button
@@ -176,7 +176,7 @@
               </button>
             </div>
           </div>
-          <div v-if="profile.role === 'hte'" class="flex flex-col gap-3 pt-3">
+          <div v-if="selectedRole === 'hte'" class="flex flex-col gap-3 pt-3">
             <label class="flex items-center gap-2 input input-bordered">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -189,7 +189,7 @@
                 />
               </svg>
               <input
-                v-model.trim="profile.username"
+                v-model.trim="hte.username"
                 type="text"
                 class="grow"
                 placeholder="Username"
@@ -211,7 +211,7 @@
               <input
                 class="grow"
                 placeholder="Secure password"
-                v-model.trim="profile.password"
+                v-model.trim="hte.password"
                 :type="passwordFieldType"
               />
             </label>
@@ -246,35 +246,58 @@
                   d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z"
                 />
               </svg>
+              <input v-model="hte.email" type="text" class="grow" placeholder="Email" />
+            </label>
+            <label class="flex items-center gap-2 input input-bordered">
               <input
-                v-model="profile.email"
+                v-model="hte.name"
                 type="text"
                 class="grow"
-                placeholder="Email"
+                placeholder="Company name"
               />
             </label>
             <label class="flex items-center gap-2 input input-bordered">
               <input
-                v-model="profile.fullName"
+                v-model="hte.contactNumber"
                 type="text"
                 class="grow"
-                placeholder="Full Name"
+                placeholder="Contact number"
               />
             </label>
-            <select
-              @change="handleSelectDepartment"
-              v-model="profile.department"
-              class="w-full py-3 select select-bordered"
+            <label class="flex items-center gap-2 input input-bordered">
+              <input
+                v-model="hte.address"
+                type="text"
+                class="grow"
+                placeholder="Company Address"
+              />
+            </label>
+            <label for="" class="font-medium text-center"
+              >Is Memorandum of Agreement provided?</label
             >
-              <option selected disabled value="Select Department">
-                Select Department
-              </option>
-              <option value="IT">IT</option>
-              <option value="Engineering">Engineering</option>
-              <option value="Tourism">Tourism</option>
-            </select>
+            <div class="join justify-center gap-3 pb-4">
+              <input
+                class="join-item btn"
+                type="radio"
+                name="options"
+                value="true"
+                aria-label="Yes"
+                v-model="hte.hasMoa"
+                @change="onChange"
+              />
+              <input
+                class="join-item btn"
+                type="radio"
+                name="options"
+                value="false"
+                aria-label="No"
+                v-model="hte.hasMoa"
+                @change="onChange"
+              />
+            </div>
+
             <div class="flex flex-col gap-2">
-              <button @click="handleSubmitForm" class="text-lg btn btn-primary btn-block">
+              <button @click="handleHteUser" class="text-lg btn btn-primary btn-block">
                 Create User
               </button>
               <button
@@ -299,17 +322,27 @@ import { ref, onMounted, reactive } from "vue";
 const searchField = ref("Set filter");
 const searchValue = ref("");
 const isModalShow = ref(false);
-
+const selectedRole = ref("Select User Role");
 const passwordFieldType = ref("password");
 const showPassword = ref(false);
 
-const profile = reactive({
+const intern = reactive({
   username: "",
   password: "",
-  role: "Select Role",
+  role: selectedRole.value,
   email: "",
   fullName: "",
   department: "Select Department",
+});
+const hte = reactive({
+  username: "",
+  password: "",
+  role: selectedRole.value,
+  email: "",
+  name: "",
+  contactNumber: "",
+  address: "",
+  hasMoa: "",
 });
 
 const handleGeneratePassword = () => {
@@ -320,32 +353,60 @@ const handleGeneratePassword = () => {
   for (let i = 0, n = charset.length; i < length; ++i) {
     generatedPassword += charset.charAt(Math.floor(Math.random() * n));
   }
-  profile.password = generatedPassword;
+  if (selectedRole.value === "intern") {
+    return (intern.password = generatedPassword);
+  }
+  if (selectedRole.value === "hte") {
+    return (hte.password = generatedPassword);
+  }
+  // if(selectedRole.value === 'intern'){
+  //   return intern.password = generatedPassword;
+  // }
+  // if(selectedRole.value === 'intern'){
+  //   return intern.password = generatedPassword;
+  // }
 };
+
 const toggleShowPassword = () => {
   showPassword.value = !showPassword.value;
   passwordFieldType.value = showPassword.value ? "text" : "password";
 };
 const handleToggleModal = async () => {
   isModalShow.value = !isModalShow.value;
-  profile.role = "Select Role";
+  intern.role = "Select Role";
 };
 
 onMounted(async () => {
   await userStore.fetchUsers();
 });
 
-const handleSubmitForm = async () => {
-  await userStore.addIntern(profile);
-  (profile.username = ""),
-    (profile.password = ""),
-    (profile.role = "Select Role"),
-    (profile.email = ""),
-    (profile.fullName = ""),
-    (profile.department = "Select Department");
+const handleInternUser = async () => {
+  await userStore.addIntern(intern);
+  (intern.username = ""),
+    (intern.password = ""),
+    (intern.role = "Select Role"),
+    (intern.email = ""),
+    (intern.fullName = ""),
+    (intern.department = "Select Department");
   await handleToggleModal();
 };
+const handleHteUser = async () => {
+  try {
+    const newHTE = await userStore.addHTE(hte);
+    console.log(newHTE);
 
+    await handleToggleModal();
+  } catch (err) {}
+};
+
+const handleSelectChange = async () => {
+  if (selectedRole.value === "intern") {
+    intern.role = selectedRole.value;
+  }
+  if (selectedRole.value === "hte") {
+    hte.role = selectedRole.value;
+  }
+};
 const headers = [
   { text: "USERNAME", value: "username" },
 

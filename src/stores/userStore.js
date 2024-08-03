@@ -25,11 +25,11 @@ export const useUserStore = defineStore("user", () => {
     }
   };
   const addHTE = async (payload) => {
-    // console.log(payload);
+    console.log(payload);
     try {
-      const response = await apiClient.post("/intern",payload);
+      const response = await apiClient.post("/hte",payload);
       await fetchUsers()
-      console.log(response);
+      return (response.data.message);
     }catch(err){
       console.log(err);
     }
@@ -38,5 +38,6 @@ export const useUserStore = defineStore("user", () => {
     fetchUsers,
     usersList,
     addIntern,
+    addHTE
   };
 });
