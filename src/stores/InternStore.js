@@ -13,10 +13,22 @@ export const useInternStore = defineStore("intern", () => {
       console.log(err);
     }
   };
+  const applyInternship = async (jobId,payload) => {
+    console.log(payload);
+    
+    // try {
+    //   const response = await apiClient.post(`/apply/${jobId}`,payload);
+
+    //   console.log(response);
+    // } catch (err) {
+    //   console.log(err);
+    // }
+  };
 
   return {
     fetchInternshipLists,
     internshipLists,
+    applyInternship
 
 
   };

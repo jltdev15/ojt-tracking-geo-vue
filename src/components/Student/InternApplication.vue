@@ -23,8 +23,12 @@
             id="supporting_document"
             ref="fileInput "
             class="file-input file-input-bordered w-full max-w-3xl"
-            @change="handleFileUpload"
+            @change="handleFileChange"
+            required
           />
+          <p v-if="isFileSizeExceed" class="p-1 text-red-800">
+            Files size exceeded. Please upload other documents
+          </p>
         </div>
         <header class="">
           <h2 class="text-xl font-bold flex items-center">
@@ -34,15 +38,18 @@
         </header>
         <div class="py-1 mb-3 border">
           <input
-            placeholder="Supporting documents"
             type="file"
             name="supporting_document"
             accept="application/pdf, image/jpeg, image/png"
             id="supporting_document"
             ref="fileInput "
             class="file-input file-input-bordered w-full max-w-3xl"
-            @change="handleFileUpload"
+            @change="handleFile2Change"
+            required
           />
+          <p v-if="isFileSizeExceed" class="p-1 text-red-800">
+            Files size exceeded. Please upload other documents
+          </p>
         </div>
         <div>
           <button class="btn btn-primary btn-block">Submit Application</button>
@@ -58,45 +65,50 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { useInternStore } from "@/stores/InternStore";
+import { reactive, ref } from "vue";
 import { useRoute } from "vue-router";
 const route = useRoute();
-console.log(route);
-const fileName = ref(null);
-const handleFileUpload = (event) => {
-  fileName.value = event.target.files[0];
+const internStore = useInternStore();
+console.log(route.params.id);
+
+const isFileSizeExceed = ref(false);
+// Object that will hold the uploaded files
+const applicationRequirements = reactive({
+  resume: null,
+  moa: null,
+});
+
+// Event for getting the file to be uploaded
+const handleFileChange = (event) => {
+  applicationRequirements.resume = event.target.files[0];
   const file = event.target.files[0];
   const maxSize = 5000 * 5000;
   if (file && file.size > maxSize) {
     return (isFileSizeExceed.value = true);
   }
   isFileSizeExceed.value = false;
-  console.log(fileName.value);
+};
+const handleFile2Change = (event) => {
+  applicationRequirements.moa = event.target.files[0];
+  const file = event.target.files[0];
+  const maxSize = 5000 * 5000;
+  if (file && file.size > maxSize) {
+    return (isFileSizeExceed.value = true);
+  }
+  isFileSizeExceed.value = false;
 };
 
 const uploadFile = async () => {
-  const formData = new FormData();
-  if (fileName.value) {
-    formData.append("fileName", fileName.value);
+  if (applicationRequirements.resume || applicationRequirements.moa) {
+    const formData = new FormData();
+    formData.append("fileResume", applicationRequirements.resume);
+    formData.append("fileMoa", applicationRequirements.moa);
   }
-  formData.append("documentType", documentType.value);
-  formData.append("dateCreated", dateCreated.value);
-  formData.append("year", year.value);
-  formData.append("processingDays", dateNeeded.value);
-  formData.append("purpose", purpose.value);
+  console.log(formData);
+
   try {
-    await axiosClient.post("/create", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    toast.success(
-      "Request sent",
-      {
-        timeout: 2000,
-      },
-      await router.push("/student_dashboard")
-    );
+    await internStore.applyInternship(route.params.id, formData);
     console.log("File uploaded successfully");
   } catch (err) {
     console.log(err);
