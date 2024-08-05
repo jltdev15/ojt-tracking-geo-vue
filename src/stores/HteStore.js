@@ -17,8 +17,6 @@ export const useHteStore = defineStore("hte", () => {
     }
   };
   const postInternship = async (payload) => {
-    console.log(payload);
-
     try {
       const response = await apiClient.post(`/hte/create/`,payload);
       console.log(response);
