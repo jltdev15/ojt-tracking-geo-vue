@@ -7,9 +7,7 @@ export const useUserStore = defineStore("user", () => {
   const fetchUsers = async () => {
     try {
       const response = await apiClient.get("/users");
-      if(response.data.content.length) {
-        usersList.value = await response.data.content;
-      }
+      usersList.value = await response.data.content;
     } catch (err) {
       console.log(err);
     }

@@ -3,10 +3,8 @@
     <!-- component -->
     <div class="flex items-center justify-center w-full min-h-screen dark:bg-gray-950">
       <div class="max-w-md px-8 py-6 bg-white rounded-lg shadow-md dark:bg-gray-900">
-        <h1 class="mb-4 text-2xl font-bold text-center dark:text-gray-200">
-          Administrator
-        </h1>
-        <form @submit.prevent="handleLogin">
+        <h1 class="mb-4 text-2xl font-bold text-center dark:text-gray-200">HTE</h1>
+        <form @submit.prevent="handleLogin" action="#">
           <div class="mb-4">
             <label
               for="email"
@@ -14,11 +12,11 @@
               >Username</label
             >
             <input
+              v-model.trim="username"
               type="text"
               id="email"
-              v-model.trim="username"
               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              placeholder="Enter your username"
+              placeholder="your@email.com"
               required
             />
           </div>
@@ -29,9 +27,9 @@
               >Password</label
             >
             <input
+              v-model.trim="password"
               type="password"
               id="password"
-              v-model.trim="password"
               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               placeholder="Enter your password"
               required
@@ -73,8 +71,8 @@ const handleLogin = async () => {
     username: username.value,
     password: password.value,
   };
-  await authStore.adminLogin(loginData);
-  router.push("/admin/dashboard");
+  await authStore.hteLogin(loginData);
+  router.push("/hte/dashboard");
 };
 </script>
 

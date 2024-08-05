@@ -14,8 +14,8 @@
 </template>
 
 <script setup>
-import SideBar from "@/components/Admin/SideBar.vue";
-import MainContainer from "@/components/Admin/MainContainer.vue";
+import SideBar from "@/components/Hte/SideBar.vue";
+import MainContainer from "@/components/Hte/MainContainer.vue";
 import { ref } from "vue";
 const isSidebarHidden = ref(false);
 

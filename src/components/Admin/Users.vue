@@ -51,7 +51,7 @@
       <template #default>
         <div>
           <p
-            v-if="selectedRole === 'Select Role'"
+            v-if="selectedRole === 'Select User Role'"
             class="pb-3 font-medium text-center text-gray-600"
           >
             Please select role to proceed
@@ -62,12 +62,12 @@
             class="w-full py-3 select select-bordered"
           >
             <option selected disabled value="Select User Role">Select User Role</option>
-            <option value="admin">Admin</option>
-            <option value="coordinator">Coordinator</option>
-            <option value="hte">HTE</option>
-            <option value="intern">Intern</option>
+            <option value="Admin">Admin</option>
+            <option value="Coordinator">Coordinator</option>
+            <option value="HTE">HTE</option>
+            <option value="Intern">Intern</option>
           </select>
-          <div v-if="selectedRole === 'intern'" class="flex flex-col gap-3 pt-3">
+          <div v-if="selectedRole === 'Intern'" class="flex flex-col gap-3 pt-3">
             <label class="flex items-center gap-2 input input-bordered">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -373,7 +373,8 @@ const toggleShowPassword = () => {
 };
 const handleToggleModal = async () => {
   isModalShow.value = !isModalShow.value;
-  intern.role = "Select Role";
+  selectedRole.value = "Select User Role";
+  console.log(hte.role);
 };
 
 onMounted(async () => {
@@ -392,18 +393,17 @@ const handleInternUser = async () => {
 };
 const handleHteUser = async () => {
   try {
-    const newHTE = await userStore.addHTE(hte);
-    console.log(newHTE);
+    await userStore.addHTE(hte);
 
     await handleToggleModal();
   } catch (err) {}
 };
 
 const handleSelectChange = async () => {
-  if (selectedRole.value === "intern") {
+  if (selectedRole.value === "Intern") {
     intern.role = selectedRole.value;
   }
-  if (selectedRole.value === "hte") {
+  if (selectedRole.value === "HTE") {
     hte.role = selectedRole.value;
   }
 };
