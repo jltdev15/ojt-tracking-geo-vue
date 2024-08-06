@@ -16,13 +16,17 @@ export const useInternStore = defineStore("intern", () => {
   const applyInternship = async (jobId,payload) => {
     console.log(payload);
     
-    // try {
-    //   const response = await apiClient.post(`/apply/${jobId}`,payload);
+    try {
+      const response = await apiClient.post(`intern/apply/${jobId}`,payload,{
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
-    //   console.log(response);
-    // } catch (err) {
-    //   console.log(err);
-    // }
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return {

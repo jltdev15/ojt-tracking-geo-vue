@@ -4,13 +4,13 @@
       <h1 class="p-6 text-3xl font-bold">Internship Application Form</h1>
     </header>
     <form @submit.prevent="uploadFile" enctype="multipart/form-data">
-      <div class="p-3 max-w-xl mx-auto">
+      <div class="max-w-xl p-3 mx-auto">
         <header class="">
-          <h2 class="text-xl font-bold flex items-center">
+          <h2 class="flex items-center text-xl font-bold">
             Resume
-            <span class="text-sm text-red-600 px-3 font-extralight">(required)</span>
+            <span class="px-3 text-sm text-red-600 font-extralight">(required)</span>
           </h2>
-          <p class="text-sm py-2 text-gray-500 font-extralight">
+          <p class="py-2 text-sm text-gray-500 font-extralight">
             Accepts only JPEG or PDF format(5MB Max size)
           </p>
         </header>
@@ -18,11 +18,11 @@
           <input
             placeholder="Supporting documents"
             type="file"
-            name="supporting_document"
+            name="files"
             accept="application/pdf, image/jpeg, image/png"
             id="supporting_document"
             ref="fileInput "
-            class="file-input file-input-bordered w-full max-w-3xl"
+            class="w-full max-w-3xl file-input file-input-bordered"
             @change="handleFileChange"
             required
           />
@@ -31,19 +31,19 @@
           </p>
         </div>
         <header class="">
-          <h2 class="text-xl font-bold flex items-center">
+          <h2 class="flex items-center text-xl font-bold">
             Memorandum of Agreement
-            <span class="text-sm text-gray-400 px-3 font-extralight">(optional)</span>
+            <span class="px-3 text-sm text-gray-400 font-extralight">(optional)</span>
           </h2>
         </header>
         <div class="py-1 mb-3 border">
           <input
             type="file"
-            name="supporting_document"
+            name="files"
             accept="application/pdf, image/jpeg, image/png"
             id="supporting_document"
             ref="fileInput "
-            class="file-input file-input-bordered w-full max-w-3xl"
+            class="w-full max-w-3xl file-input file-input-bordered"
             @change="handleFile2Change"
             required
           />
@@ -56,7 +56,7 @@
         </div>
         <router-link
           to="/student/dashboard/internships"
-          class="text-center flex items-center font-medium btn-outline btn mt-3 cursor-pointer hover:text-blue-600"
+          class="flex items-center mt-3 font-medium text-center cursor-pointer btn-outline btn hover:text-blue-600"
           >Browse Interships</router-link
         >
       </div>
@@ -74,23 +74,21 @@ console.log(route.params.id);
 
 const isFileSizeExceed = ref(false);
 // Object that will hold the uploaded files
-const applicationRequirements = reactive({
-  resume: null,
-  moa: null,
-});
+const fileResume = ref(null)
+const fileMoa = ref(null)
 
 // Event for getting the file to be uploaded
 const handleFileChange = (event) => {
-  applicationRequirements.resume = event.target.files[0];
+  fileResume.value = event.target.files[0];
   const file = event.target.files[0];
   const maxSize = 5000 * 5000;
   if (file && file.size > maxSize) {
     return (isFileSizeExceed.value = true);
   }
-  isFileSizeExceed.value = false;
+  isFileSizeExceed.value = false; 
 };
 const handleFile2Change = (event) => {
-  applicationRequirements.moa = event.target.files[0];
+  fileMoa.value = event.target.files[0];
   const file = event.target.files[0];
   const maxSize = 5000 * 5000;
   if (file && file.size > maxSize) {
@@ -100,16 +98,18 @@ const handleFile2Change = (event) => {
 };
 
 const uploadFile = async () => {
-  if (applicationRequirements.resume || applicationRequirements.moa) {
-    const formData = new FormData();
-    formData.append("fileResume", applicationRequirements.resume);
-    formData.append("fileMoa", applicationRequirements.moa);
+
+  const formData = new FormData();
+  console.log(formData);
+  
+  if (fileResume.value || fileMoa.value) {
+    formData.append("files", fileResume.value);
+    formData.append("files", fileMoa.value);    
   }
   console.log(formData);
 
   try {
     await internStore.applyInternship(route.params.id, formData);
-    console.log("File uploaded successfully");
   } catch (err) {
     console.log(err);
   }
