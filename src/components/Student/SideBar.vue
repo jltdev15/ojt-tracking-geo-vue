@@ -7,7 +7,7 @@
       <h2 class="text-2xl font-bold text-gray-600">OJT Tracker <span>v 1.0</span></h2>
     </a>
     <ul class="mt-4">
-      <span class="font-bold text-gray-400">Intern</span>
+      <span class="font-bold text-gray-400 uppercase">Intern</span>
       <li class="mb-1 group">
         <router-link
           to="/student/dashboard"
@@ -17,7 +17,7 @@
           <span class="text-sm">Dashboard</span>
         </router-link>
       </li>
-      <span class="font-bold text-gray-400">Internships</span>
+      <span class="font-bold text-gray-400 uppercase">Internships</span>
       <li class="mb-1 group">
         <router-link
           to="/student/dashboard/internships"

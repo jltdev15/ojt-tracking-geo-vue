@@ -19,6 +19,7 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: HomeView,
+      meta: { requiresAuth: false, roles: [''] },
     },
     // Admin
     {
@@ -127,7 +128,10 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore();
   await authStore.checkAuth()
-  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+  if(!to.meta.requiresAuth && authStore.isAuthenticated){
+    next({name:'admin_dashboard'})
+  }
+  else if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     next({ name: 'home' });
   } else if (to.meta.roles && !to.meta.roles.some(role => authStore.user?.includes(role))) {
     console.log('test 1')
@@ -137,6 +141,12 @@ router.beforeEach(async (to, from, next) => {
   }  else if(authStore.isAuthenticated && to.name === 'admin_auth') {
     console.log('test 2');
     next({name:'admin_dashboard'});
+  }  else if(authStore.isAuthenticated && to.name === 'hte_auth') {
+    console.log('test 2');
+    next({name:'hte_dashboard'});
+  }  else if(authStore.isAuthenticated && to.name === 'student_auth') {
+    console.log('test 2');
+    next({name:'student_dashboard'});
   } else {
     next()
   }

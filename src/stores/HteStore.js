@@ -6,7 +6,8 @@ export const useHteStore = defineStore("hte", () => {
   const applicantList = ref([]);
   const jobName = ref('')
   const datePosted = ref('')
-  const applicantId = ref('')
+  const applicantRequirements = ref([])
+
   const fetchInternships = async () => {  
     try {
       const response = await apiClient.get(`/hte/list` );
@@ -43,9 +44,10 @@ export const useHteStore = defineStore("hte", () => {
     }
   };
   const removeInternship = async (id) => {
-
+    console.log(id);
+    
     try {
-      const response = await apiClient.delete(`/hte/${id}`);
+      const response = await apiClient.delete(`/hte/delete/${id}`);
       console.log(response);
       await fetchInternships()
     }catch(err){
@@ -53,8 +55,27 @@ export const useHteStore = defineStore("hte", () => {
     }
   };
 
-  const fetchSingleApplication = () => {
+  const fetchSingleApplication = async (jobId,applicantId) => {
+    try {
+      const response = await apiClient.get(`/hte/applicants/${jobId}/intern/${applicantId}` );
+      console.log(response.data.content);
+      applicantRequirements.value = response.data.content;
+
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const acceptIntershipApplication = async (applicationId) => {
+    console.log(applicationId);
     
+    try {
+      const response = await apiClient.put(`/hte/application/${applicationId}/accept` );
+      console.log(response);
+
+
+    } catch (err) {
+      console.log(err);
+    }
   }
   const getNumberOfApplicants = computed(() => {
     return applicantList.value.length;
@@ -69,7 +90,9 @@ export const useHteStore = defineStore("hte", () => {
     jobName,
     datePosted,
     getNumberOfApplicants,
-    applicantId
+    fetchSingleApplication,
+    applicantRequirements,
+    acceptIntershipApplication
     
   };
 });

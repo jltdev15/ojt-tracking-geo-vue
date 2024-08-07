@@ -1,13 +1,16 @@
 <template>
   <div class="p-3">
-    <header class="flex items-center justify-between p-3 bg-gray-50">
+    <p class="text-3xl p-2 cursor-pointer" @click="router.back">
+      <i class="bx bx-arrow-back"></i>
+    </p>
+    <header class="flex items-center justify-between p-3 0">
       <div>
         <h1 class="text-3xl font-bold">{{ jobName }}</h1>
-        <p class="text-xs">Posted on {{datePosted}}</p>
+        <p class="text-xs">Posted on {{ datePosted }}</p>
       </div>
       <div>
         <h1 class="text-base font-bold">Number of Applicants</h1>
-        <p>{{getNumberOfApplicants}}</p>
+        <p>{{ getNumberOfApplicants }}</p>
       </div>
     </header>
     <section class="p-3">
@@ -26,71 +29,151 @@
         </select>
       </div>
       <EasyDataTable
-      :headers="headers"
-      :items="applicantList"
-      :search-field="searchField"
-      :search-value="searchValue"
-      show-index
-    >
-    <template #item-viewRequirements="item">
-      <div class="flex justify-between gap-3 py-2">
-        <p class="text-blue-600 underline cursor-pointer" @click="handleSetInternId(item._id)">Check Requirements</p>
-      </div>
-    </template>
-    <template #item-operation="item">
-      <div class="flex justify-between gap-3 py-2">
-        <button
-          @click="adminAuthStore.showUpdateModal(item)"
-          class="flex items-center justify-center w-24 gap-2 py-3 bg-blue-800 text-gray-50"
-        >
-          Edit <i class="fa-solid fa-pen-to-square"></i>
-        </button>
-        <button
-          @click="handleDeleteModalToggle(item._id)"
-          class="flex items-center justify-center w-24 gap-2 py-3 bg-red-500 text-gray-50"
-        >
-          Remove<i class="fa-solid fa-trash"></i>
-        </button>
-      </div>
-    </template>
-    </EasyDataTable>
+        :headers="headers"
+        :items="applicantList"
+        :search-field="searchField"
+        :search-value="searchValue"
+        show-index
+      >
+        <template #item-viewRequirements="item">
+          <div class="flex justify-between gap-3 py-2">
+            <p
+              class="text-blue-600 underline cursor-pointer"
+              @click="handleSetInternId(item._id)"
+            >
+              Check Requirements
+            </p>
+          </div>
+        </template>
+      </EasyDataTable>
+      <ModalRequirements
+        :show="modalRequirementShow"
+        title="Approved Application"
+        v-for="item in applicantRequirements"
+        :key="item.ids"
+      >
+        <template #default>
+          <p class="py-3 text-base font-medium t">Submitted Requirements</p>
+          <ul class="p-3 border border-b-2">
+            <li class="flex items-center justify-between gap-2 p-3 text-sm border-b-2">
+              <p class="flex items-center gap-2">
+                Resume - {{ item.resumeFile ? "Available" : "Not available"
+                }}<i
+                  class="bx"
+                  :class="{
+                    'bxs-check-circle text-green-600': item.resumeFile,
+                    'bxs-x-circle text-red-600': item.resumeFile === '',
+                  }"
+                ></i>
+              </p>
+
+              <div>
+                <a class="text-blue-600 underline" target="_blank" :href="item.resumePath"
+                  >View Resume</a
+                >
+              </div>
+            </li>
+            <li class="flex items-center justify-between gap-2 p-3 text-sm border-b-2">
+              <p class="flex items-center gap-2">
+                Memorandum - {{ item.moaFile ? "Available" : "Not available"
+                }}<i
+                  class="bx"
+                  :class="{
+                    'bxs-check-circle text-green-600': item.moaFile,
+                    'bxs-x-circle text-red-600': item.moaFile === '',
+                  }"
+                ></i>
+              </p>
+
+              <div>
+                <a class="text-blue-600 underline" target="_blank" :href="item.moaPath"
+                  >View Memorandum</a
+                >
+              </div>
+            </li>
+            <li class="flex items-center justify-between gap-2 p-3 text-sm">
+              <p class="flex items-center gap-2">
+                Endorsement - {{ item.eformFile ? "Available" : "Not available"
+                }}<i
+                  class="bx"
+                  :class="{
+                    'bxs-check-circle text-green-600': item.eformFile,
+                    'bxs-x-circle text-red-600': item.eformFile === '',
+                  }"
+                ></i>
+              </p>
+
+              <div>
+                <a
+                  class=""
+                  target="_blank"
+                  :href="item.endorsementPath ? item.endorsementPath : ''"
+                  :class="{ 'underline text-blue-600': item.endorsementPath }"
+                  >{{ item.endorsementPath ? "View Endorsement" : "Unavailable" }}</a
+                >
+              </div>
+            </li>
+          </ul>
+          <section class="flex justify-end p-3 border-2">
+            <div class="flex items-center gap-3">
+              <button class="btn btn-danger">Reject</button>
+              <button class="btn btn-primary" @click="handleAcceptApplicant(item._id)">
+                Accept
+              </button>
+            </div>
+          </section>
+          <p
+            @click="modalRequirementShow = !modalRequirementShow"
+            class="p-3 text-center underline capitalize cursor-pointer"
+          >
+            Close
+          </p>
+        </template>
+      </ModalRequirements>
     </section>
   </div>
 </template>
 
 <script setup>
-import { onMounted,ref } from 'vue';
-import { useHteStore } from '@/stores/HteStore';
-import { storeToRefs } from 'pinia'
-import { useRoute } from 'vue-router';
-const hteStore = useHteStore()
-const {jobName, datePosted,applicantList,getNumberOfApplicants, applicantId } = storeToRefs(hteStore)
-const route = useRoute()
-const internId = ref('')
-console.log(route.params.jobId);
+import { useRouter } from "vue-router";
+import { onMounted, ref } from "vue";
+import { useHteStore } from "@/stores/HteStore";
+import { storeToRefs } from "pinia";
+import { useRoute } from "vue-router";
+const hteStore = useHteStore();
+const router = useRouter();
+const {
+  jobName,
+  datePosted,
+  applicantList,
+  getNumberOfApplicants,
+  applicantId,
+  applicantRequirements,
+} = storeToRefs(hteStore);
+const route = useRoute();
+
 const searchField = ref("Set filter");
 const searchValue = ref("");
-
-
-
+const modalRequirementShow = ref(false);
 
 const headers = [
   { text: "APPLICANT NAME", value: "fullName" },
   { text: "DEPARTMENT", value: "department" },
-  { text: "APPLIED DATE", value: "createdAt", width: 200 },
-  { text: "VIEW REQUIREMENTS", value: "viewRequirements", width: 200 },
-  { text: "ACTIONS", value: "operation", width: 200 },
+
+  { text: "ACTIONS", value: "viewRequirements", width: 200 },
 ];
 
 onMounted(async () => {
-  await hteStore.fetchSingleInternships(route.params.jobId)
-})
-const handleSetInternId = (id) => {
-  applicantId.value = id;
-  console.log(applicantId.value);
-  
-}
+  await hteStore.fetchSingleInternships(route.params.jobId);
+});
+const handleSetInternId = async (id) => {
+  await hteStore.fetchSingleApplication(route.params.jobId, id);
+  modalRequirementShow.value = !modalRequirementShow.value;
+};
 
+const handleAcceptApplicant = async (applicationId) => {
+  await hteStore.acceptIntershipApplication(applicationId);
+};
 </script>
 
 <style lang="scss" scoped></style>

@@ -67,15 +67,16 @@
 <script setup>
 import { useInternStore } from "@/stores/InternStore";
 import { reactive, ref } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 const route = useRoute();
+const router = useRouter();
 const internStore = useInternStore();
 console.log(route.params.id);
 
 const isFileSizeExceed = ref(false);
 // Object that will hold the uploaded files
-const fileResume = ref(null)
-const fileMoa = ref(null)
+const fileResume = ref(null);
+const fileMoa = ref(null);
 
 // Event for getting the file to be uploaded
 const handleFileChange = (event) => {
@@ -85,7 +86,7 @@ const handleFileChange = (event) => {
   if (file && file.size > maxSize) {
     return (isFileSizeExceed.value = true);
   }
-  isFileSizeExceed.value = false; 
+  isFileSizeExceed.value = false;
 };
 const handleFile2Change = (event) => {
   fileMoa.value = event.target.files[0];
@@ -98,18 +99,17 @@ const handleFile2Change = (event) => {
 };
 
 const uploadFile = async () => {
-
   const formData = new FormData();
   console.log(formData);
-  
+
   if (fileResume.value || fileMoa.value) {
     formData.append("files", fileResume.value);
-    formData.append("files", fileMoa.value);    
+    formData.append("files", fileMoa.value);
   }
   console.log(formData);
-
   try {
     await internStore.applyInternship(route.params.id, formData);
+    router.push("/student/dashboard");
   } catch (err) {
     console.log(err);
   }

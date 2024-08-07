@@ -1,7 +1,7 @@
 <template>
   <section class="p-3">
     <header class="flex items-center justify-between p-3 bg-gray-200">
-      <h1 class="text-3xl font-bold">Internships</h1>
+      <h1 class="text-3xl font-bold">Internships Listing</h1>
       <div>
         <button @click="handleToggleModal" class="btn btn-block">
           <i class="ri-add-line"></i>New Internship
@@ -125,7 +125,11 @@
         <p class="text-xl font-medium">Are you sure you want to remove this listing?</p>
         <div class="flex justify-between pt-9">
           <button @click="handleDeleteModalToggle" class="btn btn-outline">Cancel</button>
-          <button @click="handleDeleteItem" class="bg-red-600 btn text-gray-50">
+          <button
+            type="button"
+            @click="handleDeleteItem"
+            class="bg-red-600 btn text-gray-50"
+          >
             Remove
           </button>
         </div>
@@ -158,8 +162,9 @@ const handleToggleModal = async () => {
   isModalShow.value = !isModalShow.value;
 };
 const handleDeleteModalToggle = async (id) => {
-  isConfirmationModalShow.value = !isConfirmationModalShow.value;
+  console.log(id);
   itemId.value = id;
+  isConfirmationModalShow.value = !isConfirmationModalShow.value;
 };
 const handleDeleteItem = async () => {
   await hteStore.removeInternship(itemId.value);
