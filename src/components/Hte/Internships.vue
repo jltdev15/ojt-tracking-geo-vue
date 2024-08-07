@@ -51,6 +51,18 @@
           </button>
         </div>
       </template>
+      <template #item-applicants="item">
+        <div class="flex flex-col justify-between gap-3 py-2">
+          <!-- <ul v-for="i in item.applicants" :key="i.id" class="flex flex-col">
+              <li class="flex ">{{i.fullName}}</li>
+          </ul> -->
+          <router-link
+            class="btn btn-outline"
+            :to="{ name: 'InternshipItem', params: { jobId: item._id } }"
+            >View Applicants</router-link
+          >
+        </div>
+      </template>
     </EasyDataTable>
     <Modal :show="isModalShow" title="New Internship">
       <!-- <Modal :show="true" title="New Account"> -->
@@ -174,6 +186,7 @@ const headers = [
   { text: "LOCATION", value: "location", width: 200 },
   { text: "POSTED ON", value: "createdAt", width: 200 },
   { text: "STATUS", value: "status", width: 200 },
+  { text: "APPLICANTS", value: "applicants", width: 200 },
   { text: "ACTIONS", value: "operation", width: 200 },
 ];
 </script>

@@ -92,5 +92,11 @@ menu {
 }
 
 @media (min-width: 1280px) {
+  dialog {
+    position: fixed;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -70%);
+  }
 }
 </style>

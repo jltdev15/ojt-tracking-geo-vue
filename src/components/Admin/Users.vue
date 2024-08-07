@@ -176,7 +176,7 @@
               </button>
             </div>
           </div>
-          <div v-if="selectedRole === 'hte'" class="flex flex-col gap-3 pt-3">
+          <div v-if="selectedRole === 'HTE'" class="flex flex-col gap-3 pt-3">
             <label class="flex items-center gap-2 input input-bordered">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -275,7 +275,7 @@
             <label for="" class="font-medium text-center"
               >Is Memorandum of Agreement provided?</label
             >
-            <div class="join justify-center gap-3 pb-4">
+            <div class="justify-center gap-3 pb-4 join">
               <input
                 class="join-item btn"
                 type="radio"

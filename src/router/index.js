@@ -73,6 +73,12 @@ const router = createRouter({
           component: HTEInternshipsList,
           meta: { requiresAuth: true, roles: ['HTE'] },
         },
+        {
+          path: "internships/:jobId",
+          name: "InternshipItem",
+          component: () => import("../components/Hte/InternshipItem.vue"),
+          meta: { requiresAuth: true, roles: ['HTE'] },
+        },
 
       ],
     },
