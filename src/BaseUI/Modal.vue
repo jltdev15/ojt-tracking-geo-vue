@@ -94,7 +94,7 @@ menu {
 @media (min-width: 1280px) {
   dialog {
     position: fixed;
-    top: 60%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -70%);
   }

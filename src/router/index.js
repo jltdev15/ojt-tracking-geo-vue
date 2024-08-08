@@ -53,6 +53,10 @@ const router = createRouter({
     },
     // HTE
     {
+      path: "/hte",
+      redirect: '/hte/auth'
+    },
+    {
       path: "/hte/auth",
       name: "hte_auth",
       component: () => import("../views/HTE/HTEAuthView.vue"),
@@ -122,34 +126,44 @@ const router = createRouter({
 
       ],
     },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+      component: () => import('../views/NotFound.vue'),
+    },
   ],
 });
 
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore();
   await authStore.checkAuth()
-  if(!to.meta.requiresAuth && authStore.isAuthenticated){
+  if (to.meta.requiresAuth) {
+    if (!authStore.isAuthenticated && to.meta.roles.includes('Admin')) {
+      next({ name: 'admin_auth' });
+    }else if(!authStore.isAuthenticated && to.meta.roles.includes('HTE')){
+      next({ name: 'hte_auth' });
+    } 
+    else if(!authStore.isAuthenticated && to.meta.roles.includes('HTE')){
+      next({ name: 'student_auth' });
+    }
+    else if (to.meta.roles && !to.meta.roles.includes(authStore.userRole)) {
+      next({ name: 'home' });
+    } else {
+      next();
+    }
+  } else if(!to.meta.requiresAuth && authStore.isAuthenticated && authStore.userRole === 'Admin') {
+    console.log('this route not need auth');
     next({name:'admin_dashboard'})
+  }else if(!to.meta.requiresAuth && authStore.isAuthenticated && authStore.userRole === 'HTE') {
+    next({name:'hte_dashboard'})
   }
-  else if (to.meta.requiresAuth && !authStore.isAuthenticated) {
-    next({ name: 'home' });
-  } else if (to.meta.roles && !to.meta.roles.some(role => authStore.user?.includes(role))) {
-    console.log('test 1')
-    if(authStore.user === 'Admin') return next({name:'admin_dashboard'})
-    if(authStore.user === 'HTE') return next({name:'hte_dashboard'})
-    if(authStore.user === 'Intern') return next({name:'student_dashboard'})
-  }  else if(authStore.isAuthenticated && to.name === 'admin_auth') {
-    console.log('test 2');
-    next({name:'admin_dashboard'});
-  }  else if(authStore.isAuthenticated && to.name === 'hte_auth') {
-    console.log('test 2');
-    next({name:'hte_dashboard'});
-  }  else if(authStore.isAuthenticated && to.name === 'student_auth') {
-    console.log('test 2');
-    next({name:'student_dashboard'});
-  } else {
-    next()
+  else if(!to.meta.requiresAuth && authStore.isAuthenticated && authStore.userRole === 'Intern') {
+    next({name:'student_dashboard'})
   }
+  else{
+    next();
+  }
+
 
 
 

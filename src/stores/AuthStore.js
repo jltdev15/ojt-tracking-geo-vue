@@ -3,16 +3,19 @@ import { defineStore } from "pinia";
 import apiClient from "@/config/axiosClient";
 export const useAuthStore = defineStore("auth", () => {
 
-  const user = ref(null);
+  const userRole = ref(null);
   const userId = ref(null)
   const isAuthenticated = ref(false);
 
   const checkAuth = async () => {
     try {
       const response = await apiClient.get(`/active`);
-      user.value = response.data.content.role;
+      userRole.value = response.data.content.role;
       userId.value = response.data.content._id;
       isAuthenticated.value = true;
+      console.log(isAuthenticated.value);
+      console.log(userRole.value);
+      
     } catch (err) {
 
       console.log(err);
@@ -59,7 +62,7 @@ export const useAuthStore = defineStore("auth", () => {
   return {
     checkAuth,
     adminLogin,
-    user,
+    userRole,
     isAuthenticated,
     hteLogin,
     userId,

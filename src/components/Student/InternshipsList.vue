@@ -11,6 +11,7 @@
     <div class="flex min-h-screen bg-gray-100">
       <div class="container max-w-6xl p-5">
         <div class="grid grid-cols-3 gap-24">
+          <p v-if="internStore.internshipLists.length === 0">No listing available</p>
           <InternshipItem />
           <!-- <InternshipItem v-for="job in internStore.internshipLists" 
       :key="job._id"
