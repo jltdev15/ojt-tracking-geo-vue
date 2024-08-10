@@ -84,16 +84,22 @@ const router = createRouter({
           component: () => import("../components/Hte/InternshipItem.vue"),
           meta: { requiresAuth: true, roles: ['HTE'] },
         },
+        // {
+        //   path: "applicants",
+        //   name: "ApplicationList",
+        //   component: () => import("../components/Hte/ApplicationList.vue"),
+        //   meta: { requiresAuth: true, roles: ['HTE'] },
+        // },
 
       ],
     },
     // Student
     {
-      path: "/student",
-      redirect: "/student/auth",
+      path: "/intern",
+      redirect: "/intern/auth",
     },
     {
-      path: "/student/auth",
+      path: "/intern/auth",
       name: "student_auth",
       component: () => import("../views/Student/StudentAuthView.vue"),
     },
@@ -119,6 +125,13 @@ const router = createRouter({
           path: "internships/:id",
           name: "InternApplication",
          component: () => import("../components/Student/InternApplication.vue"),
+          meta: { requiresAuth: true, roles: ['Intern'] },
+
+        },
+        {
+          path: "status",
+          name: "ApplicationStatus",
+         component: () => import("../components/Student/ApplicationStatus.vue"),
           meta: { requiresAuth: true, roles: ['Intern'] },
 
         },
@@ -152,7 +165,6 @@ router.beforeEach(async (to, from, next) => {
       next();
     }
   } else if(!to.meta.requiresAuth && authStore.isAuthenticated && authStore.userRole === 'Admin') {
-    console.log('this route not need auth');
     next({name:'admin_dashboard'})
   }else if(!to.meta.requiresAuth && authStore.isAuthenticated && authStore.userRole === 'HTE') {
     next({name:'hte_dashboard'})

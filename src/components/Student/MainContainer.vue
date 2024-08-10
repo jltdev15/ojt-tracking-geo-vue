@@ -13,7 +13,11 @@
 
       <ul class="flex items-center ml-auto">
         <li class="ml-3 dropdown">
-          <button type="button" class="flex items-center dropdown-toggle">
+          <button
+            @click="handleToggleDropDown"
+            type="button"
+            class="flex items-center dropdown-toggle"
+          >
             <div class="relative flex-shrink-0 w-10 h-10">
               <div class="p-1 bg-white rounded-full focus:outline-none focus:ring">
                 <img
@@ -36,6 +40,43 @@
           </button>
         </li>
       </ul>
+      <ul
+        :class="{ hidden: !isDropDownShow }"
+        class="dropdown-menu shadow-md shadow-black/5 z-30 py-3 rounded-md bg-white border border-gray-100 w-full max-w-[140px]"
+        data-popper-id="popper-1"
+        style="
+          position: absolute;
+          inset: 0px 0px auto auto;
+          margin: 0px;
+          transform: translate(-24px, 68px);
+          top: 5px;
+        "
+        data-popper-placement="bottom-end"
+      >
+        <li>
+          <a
+            href="#"
+            class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-[#f84525] hover:bg-gray-50"
+            >Profile</a
+          >
+        </li>
+        <li>
+          <a
+            href="#"
+            class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-[#f84525] hover:bg-gray-50"
+            >Settings</a
+          >
+        </li>
+        <li>
+          <a
+            href="javascript:void(0)"
+            @click="handleLogout"
+            class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-[#f84525] hover:bg-gray-50"
+          >
+            Logout</a
+          >
+        </li>
+      </ul>
     </div>
     <router-view />
   </main>
@@ -43,12 +84,22 @@
 
 <script setup>
 import { ref } from "vue";
-
+import { useAuthStore } from "@/stores/AuthStore";
+import { useRouter } from "vue-router";
 const props = defineProps(["isSidebarHidden"]);
 const emit = defineEmits(["toggleSidebar"]);
-
+const authStore = useAuthStore();
+const router = useRouter();
+const isDropDownShow = ref(false);
 const handleToggleSidebar = () => {
   emit("toggleSidebar");
+};
+const handleToggleDropDown = () => {
+  isDropDownShow.value = !isDropDownShow.value;
+};
+const handleLogout = async () => {
+  await authStore.submitLogout();
+  await router.push("/");
 };
 </script>
 

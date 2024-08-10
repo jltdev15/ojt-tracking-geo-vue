@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 import apiClient from "@/config/axiosClient";
 export const useInternStore = defineStore("intern", () => {
   const internshipLists = ref([]);
+  const applicationLists = ref([])
 
   const fetchInternshipLists = async () => {
     try {
@@ -25,12 +26,25 @@ export const useInternStore = defineStore("intern", () => {
       console.log(err);
     }
   };
+  const getNumberOfApplication = computed(() => {
+    return applicationLists.value.length;
+  })
+  const fetchApplicationList = async () => {
+    try {
+      const response = await apiClient.get(`/intern/applications`);
+      applicationLists.value = await response.data.content;
+      console.log(response.data.content);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return {
     fetchInternshipLists,
     internshipLists,
-    applyInternship
-
-
+    applyInternship,
+    applicationLists,
+    fetchApplicationList,
+    getNumberOfApplication
   };
 });

@@ -3,21 +3,17 @@ import { defineStore } from "pinia";
 import apiClient from "@/config/axiosClient";
 export const useHteStore = defineStore("hte", () => {
   const internshipList = ref([]);
-  const applicantList = ref([]);
+  const applicantItemList = ref([]);
+  const pendingApplicantList = ref([]);
   const jobName = ref('')
   const datePosted = ref('')
   const applicantRequirements = ref([])
+  const acceptedApplicantsList = ref([])
 
   const fetchInternships = async () => {  
     try {
       const response = await apiClient.get(`/hte/list` );
-      console.log(response);
-      
-      if(response.data.content) {
-        internshipList.value = response.data.content
-        
-      }
-
+      internshipList.value = response.data.content
     } catch (err) {
       console.log(err);
     }
@@ -27,9 +23,7 @@ export const useHteStore = defineStore("hte", () => {
       const response = await apiClient.get(`/hte/list/${jobId}` );
       jobName.value = response.data.content.title;
       datePosted.value = response.data.content.createdAt;
-      console.log(response.data.content.title);
-      console.log(response.data.content.applicants);
-      applicantList.value = response.data.content.applicants;
+      applicantItemList.value = response.data.content.applicants;
     } catch (err) {
       console.log(err);
     }
@@ -55,11 +49,32 @@ export const useHteStore = defineStore("hte", () => {
     }
   };
 
+  // Get list of applicant on specific job
   const fetchSingleApplication = async (jobId,applicantId) => {
     try {
       const response = await apiClient.get(`/hte/applicants/${jobId}/intern/${applicantId}` );
       console.log(response.data.content);
       applicantRequirements.value = response.data.content;
+
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const fetchAcceptedInterns = async () => {
+    try {
+      const response = await apiClient.get(`/hte/applicants/accepted` );
+      console.log(response.data.content);
+      acceptedApplicantsList.value = await response.data.content;
+
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const fetchPendingInterns = async () => {
+    try {
+      const response = await apiClient.get(`/hte/applicants/pending` );
+      console.log(response.data.content);
+      pendingApplicantList.value = await response.data.content;
 
     } catch (err) {
       console.log(err);
@@ -78,21 +93,37 @@ export const useHteStore = defineStore("hte", () => {
     }
   }
   const getNumberOfApplicants = computed(() => {
-    return applicantList.value.length;
+    return applicantItemList.value.length;
+  })
+  const getNumberOfListing = computed(() => {
+    return internshipList.value.length;
+  })
+  const getNumberOfAcceptedInterns = computed(() => {
+    return acceptedApplicantsList.value.length;
+  })
+  const getNumberOfPendingInterns = computed(() => {
+    return pendingApplicantList.value.length;
   })
   return {
     fetchInternships,
     internshipList,
     postInternship,
     removeInternship,
-    applicantList,
+    applicantItemList,
     fetchSingleInternships,
     jobName,
     datePosted,
     getNumberOfApplicants,
     fetchSingleApplication,
     applicantRequirements,
-    acceptIntershipApplication
+    acceptIntershipApplication,
+    getNumberOfListing,
+    fetchAcceptedInterns,
+    acceptedApplicantsList,
+    getNumberOfAcceptedInterns,
+    fetchPendingInterns,
+    pendingApplicantList,
+    getNumberOfPendingInterns
     
   };
 });

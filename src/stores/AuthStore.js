@@ -57,7 +57,14 @@ export const useAuthStore = defineStore("auth", () => {
       console.log(err);
     }
   };
-
+  const submitLogout = async () => {
+    try {
+      await apiClient.post("/admin/logout", {});
+      isAuthenticated.value = false;
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return {
     checkAuth,
@@ -66,6 +73,7 @@ export const useAuthStore = defineStore("auth", () => {
     isAuthenticated,
     hteLogin,
     userId,
-    internLogin
+    internLogin,
+    submitLogout
   };
 });

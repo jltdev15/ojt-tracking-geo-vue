@@ -29,7 +29,7 @@
         >
       </div>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-        <router-link to="/student" class="text-sm font-semibold leading-6 text-gray-900"
+        <router-link to="/intern" class="text-sm font-semibold leading-6 text-gray-900"
           >Log in <span aria-hidden="true">&rarr;</span></router-link
         >
       </div>
@@ -66,7 +66,7 @@
             </div>
             <div class="py-6">
               <router-link
-                to="/student"
+                to="/intern"
                 class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >Log in</router-link
               >

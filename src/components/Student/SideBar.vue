@@ -6,7 +6,7 @@
     <a href="#" class="flex items-center pb-4 border-b border-b-gray-800">
       <h2 class="text-2xl font-bold text-gray-600">OJT Tracker <span>v 1.0</span></h2>
     </a>
-    <ul class="mt-4">
+    <ul class="mt-4 flex flex-col gap-3">
       <span class="font-bold text-gray-400 uppercase">Intern</span>
       <li class="mb-1 group">
         <router-link
@@ -24,7 +24,16 @@
           class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100"
         >
           <i class="mr-3 text-lg bx bx-windows"></i>
-          <span class="text-sm">Browse Interships</span>
+          <span class="text-sm">Browse Internships</span>
+        </router-link>
+      </li>
+      <li class="mb-1 group">
+        <router-link
+          :to="{ name: 'ApplicationStatus' }"
+          class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100"
+        >
+          <i class="mr-3 text-lg bx bx-stats"></i>
+          <span class="text-sm">Application Status</span>
         </router-link>
       </li>
 

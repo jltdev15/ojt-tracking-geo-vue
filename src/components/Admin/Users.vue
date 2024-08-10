@@ -28,6 +28,7 @@
       :search-field="searchField"
       :search-value="searchValue"
       show-index
+      table-class-name="customize-table"
     >
       <template #item-operation="item">
         <div class="flex justify-between gap-3 py-2">
@@ -315,8 +316,8 @@
 </template>
 
 <script setup>
-import { useUserStore } from "@/stores/userStore";
-const userStore = useUserStore();
+import { useAdminUserStore } from "@/stores/AdminUserStore";
+const userStore = useAdminUserStore();
 import { ref, onMounted, reactive } from "vue";
 
 const searchField = ref("Set filter");
@@ -408,21 +409,22 @@ const handleSelectChange = async () => {
   }
 };
 const headers = [
-  { text: "USERNAME", value: "username" },
+  { text: "USERNAME", value: "username", width: 80 },
 
   { text: "ROLE", value: "role" },
   { text: "STATUS", value: "status" },
-  { text: "DATE CREATED", value: "createdAt" },
+  { text: "DATE CREATED", value: "createdAt", width: 50 },
   { text: "ACTIONS", value: "operation", width: 10 },
 ];
 </script>
 
-<style scoped>
+<style>
 .customize-table {
+  --easy-table-border: 1px rounded #445269;
   --easy-table-header-font-size: 16px;
   --easy-table-header-height: 60px;
-  --easy-table-header-font-color: #ffffff;
-  --easy-table-header-background-color: rgb(30 64 175);
+  --easy-table-header-font-color: #fff;
+  --easy-table-header-background-color: #2b2828;
   --easy-table-body-row-font-size: 16px;
 
   --easy-table-body-row-height: 50px;

@@ -1,7 +1,11 @@
 <template>
   <section class="p-3">
     <header class="flex items-center justify-between p-3 bg-gray-200">
-      <h1 class="text-3xl font-bold">Internships Listing</h1>
+      <div>
+        <h1 class="text-3xl font-bold">Internships Listing</h1>
+        <p>No. of listing {{ hteStore.getNumberOfListing }}</p>
+      </div>
+
       <div>
         <button @click="handleToggleModal" class="btn btn-block">
           <i class="ri-add-line"></i>New Internship
@@ -9,7 +13,7 @@
       </div>
     </header>
     <div class="divider"></div>
-    <div class="flex justify-end gap-3 py-3">
+    <div class="flex justify-end gap-3 pb-3">
       <input
         type="text"
         placeholder="Search here"
@@ -28,6 +32,7 @@
       :items="hteStore.internshipList"
       :search-field="searchField"
       :search-value="searchValue"
+      table-class-name="customize-table"
       show-index
     >
       <!-- <template #item-applicants="item">
@@ -196,8 +201,19 @@ const headers = [
 ];
 </script>
 
-<style scoped>
+<style>
 textarea {
   resize: none;
+}
+.customize-table {
+  --easy-table-border: 1px rounded #445269;
+  --easy-table-header-font-size: 16px;
+  --easy-table-header-height: 60px;
+  --easy-table-header-font-color: #fff;
+  --easy-table-header-background-color: #2b2828;
+  --easy-table-body-row-font-size: 16px;
+
+  --easy-table-body-row-height: 50px;
+  --easy-table-body-row-font-size: 16px;
 }
 </style>

@@ -30,9 +30,10 @@
       </div>
       <EasyDataTable
         :headers="headers"
-        :items="applicantList"
+        :items="applicantItemList"
         :search-field="searchField"
         :search-value="searchValue"
+        table-class-name="customize-table"
         show-index
       >
         <template #item-viewRequirements="item">
@@ -145,7 +146,7 @@ const router = useRouter();
 const {
   jobName,
   datePosted,
-  applicantList,
+  applicantItemList,
   getNumberOfApplicants,
   applicantId,
   applicantRequirements,
@@ -159,20 +160,24 @@ const modalRequirementShow = ref(false);
 const headers = [
   { text: "APPLICANT NAME", value: "fullName" },
   { text: "DEPARTMENT", value: "department" },
-
   { text: "ACTIONS", value: "viewRequirements", width: 200 },
 ];
 
 onMounted(async () => {
   await hteStore.fetchSingleInternships(route.params.jobId);
 });
+
+// function to select single application
 const handleSetInternId = async (id) => {
   await hteStore.fetchSingleApplication(route.params.jobId, id);
   modalRequirementShow.value = !modalRequirementShow.value;
 };
 
+// function to accept applicant
 const handleAcceptApplicant = async (applicationId) => {
   await hteStore.acceptIntershipApplication(applicationId);
+  modalRequirementShow.value = !modalRequirementShow.value;
+  await hteStore.fetchSingleInternships(route.params.jobId);
 };
 </script>
 
