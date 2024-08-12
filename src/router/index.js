@@ -84,12 +84,12 @@ const router = createRouter({
           component: () => import("../components/Hte/InternshipItem.vue"),
           meta: { requiresAuth: true, roles: ['HTE'] },
         },
-        // {
-        //   path: "applicants",
-        //   name: "ApplicationList",
-        //   component: () => import("../components/Hte/ApplicationList.vue"),
-        //   meta: { requiresAuth: true, roles: ['HTE'] },
-        // },
+        {
+          path: "applicants",
+          name: "ApplicantsList",
+          component: () => import("../components/Hte/ApplicationList.vue"),
+          meta: { requiresAuth: true, roles: ['HTE'] },
+        },
 
       ],
     },

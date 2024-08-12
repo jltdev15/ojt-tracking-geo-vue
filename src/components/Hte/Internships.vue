@@ -217,7 +217,7 @@ textarea {
   --easy-table-header-background-color: #2b2828;
   --easy-table-body-row-font-size: 16px;
 
-  --easy-table-body-row-height: 50px;
+  --easy-table-body-row-height: 80px;
   --easy-table-body-row-font-size: 16px;
 }
 </style>

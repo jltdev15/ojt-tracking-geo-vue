@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 import apiClient from "@/config/axiosClient";
 export const useHteStore = defineStore("hte", () => {
   const internshipList = ref([]);
+  const applicantList = ref([]);
   const applicantItemList = ref([]);
   const pendingApplicantList = ref([]);
   const jobName = ref('')
@@ -10,6 +11,17 @@ export const useHteStore = defineStore("hte", () => {
   const applicantRequirements = ref([])
   const acceptedApplicantsList = ref([])
 
+
+  const fetchApplicantList = async () => {
+    try {
+      const response = await apiClient.get(`/hte/applicants/list` );
+      console.log(response.data.content);
+      applicantList.value = await response.data.content;
+
+    } catch (err) {
+      console.log(err);
+    }
+  }
   const fetchInternships = async () => {  
     try {
       const response = await apiClient.get(`/hte/list` );
@@ -63,7 +75,7 @@ export const useHteStore = defineStore("hte", () => {
   }
   const fetchAcceptedInterns = async () => {
     try {
-      const response = await apiClient.get(`/hte/applicants/accepted` );
+      const response = await apiClient.get(`/hte/applicants/approved` );
       console.log(response.data.content);
       acceptedApplicantsList.value = await response.data.content;
 
@@ -93,6 +105,8 @@ export const useHteStore = defineStore("hte", () => {
       console.log(err);
     }
   }
+
+  // Computed
   const getNumberOfApplicants = computed(() => {
     return applicantItemList.value.length;
   })
@@ -124,7 +138,9 @@ export const useHteStore = defineStore("hte", () => {
     getNumberOfAcceptedInterns,
     fetchPendingInterns,
     pendingApplicantList,
-    getNumberOfPendingInterns
+    getNumberOfPendingInterns,
+    fetchApplicantList,
+    applicantList
     
   };
 });

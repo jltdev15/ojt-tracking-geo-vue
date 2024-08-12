@@ -42,6 +42,23 @@ export const useInternStore = defineStore("intern", () => {
       console.log(err);
     }
   }
+  const resetNotification = async () => {
+    try {
+      const response = await apiClient.post(`/intern/reset`);
+      console.log(response);
+      
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const handleAcceptOffer = async (applicationId) => {
+    try {
+      const response = await apiClient.patch(`/intern/acceptoffer/${applicationId}`);
+      console.log(response);
+    }catch(err) {
+      console.log(err)
+    }
+  }
 
   return {
     fetchInternshipLists,
@@ -50,6 +67,8 @@ export const useInternStore = defineStore("intern", () => {
     applicationLists,
     fetchApplicationList,
     getNumberOfApplication,
-    getNumberOfNotification
+    getNumberOfNotification,
+    resetNotification,
+    handleAcceptOffer
   };
 });

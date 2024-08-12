@@ -1,6 +1,6 @@
 <template>
   <div class="p-3">
-    <p class="text-3xl p-2 cursor-pointer" @click="router.back">
+    <p class="p-2 text-3xl cursor-pointer" @click="router.back">
       <i class="bx bx-arrow-back"></i>
     </p>
     <header class="flex items-center justify-between p-3 0">
@@ -182,6 +182,7 @@ const handleAcceptApplicant = async (applicationId) => {
   await hteStore.acceptIntershipApplication(applicationId);
   modalRequirementShow.value = !modalRequirementShow.value;
   await hteStore.fetchSingleInternships(route.params.jobId);
+  router.push({name:'hte_vacancy'})
 };
 </script>
 
