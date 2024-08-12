@@ -182,7 +182,8 @@ const handleAcceptApplicant = async (applicationId) => {
   await hteStore.acceptIntershipApplication(applicationId);
   modalRequirementShow.value = !modalRequirementShow.value;
   await hteStore.fetchSingleInternships(route.params.jobId);
-  router.push({name:'hte_vacancy'})
+  router.push({ name: "hte_vacancy" });
+  await hteStore.fetchPendingInterns();
 };
 </script>
 

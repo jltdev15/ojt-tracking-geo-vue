@@ -99,8 +99,6 @@ export const useHteStore = defineStore("hte", () => {
     try {
       const response = await apiClient.put(`/hte/application/${applicationId}/accept` );
       console.log(response);
-
-
     } catch (err) {
       console.log(err);
     }
