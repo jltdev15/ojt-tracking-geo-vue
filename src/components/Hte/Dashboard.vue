@@ -19,13 +19,19 @@
               </div>
             </div>
           </div>
-          <div class="p-5 bg-white rounded shadow-sm">
+          <div
+            :class="{
+              'bg-white text-gray-900': hteStore.getNumberOfPendingInterns === 0,
+              'bg-red-500 text-gray-50': hteStore.getNumberOfPendingInterns != 0,
+            }"
+            class="p-5 rounded shadow-sm"
+          >
             <div class="flex items-center space-x-4 space-y-2">
               <div>
-                <div class="text-2xl font-bold text-gray-900">
+                <div class="text-2xl font-bold">
                   {{ hteStore.getNumberOfPendingInterns }}
                 </div>
-                <div class="text-gray-400">Pending Applications</div>
+                <div class="">Pending Applications</div>
               </div>
             </div>
           </div>

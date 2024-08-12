@@ -58,10 +58,14 @@
       </template>
       <template #item-applicants="item">
         <div class="flex flex-col justify-between gap-3 py-2">
+          <div v-if="!item.applicants.length">
+            <p>{{ item.applicants.length }}</p>
+          </div>
           <!-- <ul v-for="i in item.applicants" :key="i.id" class="flex flex-col">
               <li class="flex ">{{i.fullName}}</li>
           </ul> -->
           <router-link
+            v-else
             class="btn btn-outline"
             :to="{ name: 'InternshipItem', params: { jobId: item._id } }"
             >View Applicants</router-link
@@ -86,7 +90,7 @@
               <textarea
                 class="w-full textarea textarea-bordered"
                 placeholder="Description"
-                v-model.trim="newInternship.description"
+                v-model.trim="newInternship.requirements"
               ></textarea>
             </label>
 
@@ -158,7 +162,7 @@ const isModalShow = ref(false);
 const isConfirmationModalShow = ref(false);
 const newInternship = reactive({
   title: "",
-  description: "",
+  requirements: "",
   slots: "",
   location: "",
 });
@@ -191,7 +195,7 @@ onMounted(async () => {
 const headers = [
   { text: "TITLE", value: "title" },
 
-  { text: "DESCRIPTION", value: "description" },
+  { text: "REQUIRMENTS", value: "requirements" },
   { text: "SLOTS", value: "slots" },
   { text: "LOCATION", value: "location", width: 200 },
   { text: "POSTED ON", value: "createdAt", width: 200 },

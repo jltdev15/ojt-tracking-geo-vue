@@ -45,7 +45,6 @@
             ref="fileInput "
             class="w-full max-w-3xl file-input file-input-bordered"
             @change="handleFile2Change"
-            required
           />
           <p v-if="isFileSizeExceed" class="p-1 text-red-800">
             Files size exceeded. Please upload other documents
@@ -101,15 +100,13 @@ const handleFile2Change = (event) => {
 const uploadFile = async () => {
   const formData = new FormData();
   console.log(formData);
+  formData.append("files", fileResume.value);
+  formData.append("files", fileMoa.value);
 
-  if (fileResume.value || fileMoa.value) {
-    formData.append("files", fileResume.value);
-    formData.append("files", fileMoa.value);
-  }
   console.log(formData);
   try {
     await internStore.applyInternship(route.params.id, formData);
-    router.push("/student/dashboard");
+    router.push("/student/dashboard/internships");
   } catch (err) {
     console.log(err);
   }

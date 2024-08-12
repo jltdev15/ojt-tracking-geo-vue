@@ -21,9 +21,10 @@ export const useHteStore = defineStore("hte", () => {
   const fetchSingleInternships = async (jobId) => {  
     try {
       const response = await apiClient.get(`/hte/list/${jobId}` );
-      jobName.value = response.data.content.title;
+      console.log(response.data.content);
+      jobName.value = response.data.content.jobTitle;
       datePosted.value = response.data.content.createdAt;
-      applicantItemList.value = response.data.content.applicants;
+      applicantItemList.value = response.data.content;
     } catch (err) {
       console.log(err);
     }

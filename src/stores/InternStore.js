@@ -29,6 +29,10 @@ export const useInternStore = defineStore("intern", () => {
   const getNumberOfApplication = computed(() => {
     return applicationLists.value.length;
   })
+  const getNumberOfNotification = computed(() => {
+    const numberOfNotif = applicationLists.value.filter(item => item.isUpdated === true)
+    return numberOfNotif.length;
+  })
   const fetchApplicationList = async () => {
     try {
       const response = await apiClient.get(`/intern/applications`);
@@ -45,6 +49,7 @@ export const useInternStore = defineStore("intern", () => {
     applyInternship,
     applicationLists,
     fetchApplicationList,
-    getNumberOfApplication
+    getNumberOfApplication,
+    getNumberOfNotification
   };
 });

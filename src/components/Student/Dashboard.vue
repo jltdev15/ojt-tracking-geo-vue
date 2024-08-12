@@ -84,4 +84,11 @@
     </div>
   </div>
 </template>
-<script setup></script>
+<script setup>
+import { onMounted } from "vue";
+import { useInternStore } from "@/stores/InternStore";
+const internStore = useInternStore();
+onMounted(async () => {
+  await internStore.fetchApplicationList();
+});
+</script>

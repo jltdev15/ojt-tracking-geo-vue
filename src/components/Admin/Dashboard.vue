@@ -57,10 +57,10 @@
                 </div>
               </div>
               <div>
-                <div class="text-gray-400">Registered Interns</div>
                 <div class="text-2xl font-bold text-gray-900">
                   {{ adminUserStore.getNumberOfInterns }}
                 </div>
+                <div class="text-gray-400">Interns</div>
               </div>
             </div>
           </div>
@@ -97,7 +97,7 @@
                 </div>
               </div>
               <div>
-                <div class="text-gray-400">Registered HTE's</div>
+                <div class="text-gray-400">HTE's</div>
                 <div class="text-2xl font-bold text-gray-900">
                   {{ adminUserStore.getNumberOfHTE }}
                 </div>

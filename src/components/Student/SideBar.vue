@@ -34,6 +34,10 @@
         >
           <i class="mr-3 text-lg bx bx-stats"></i>
           <span class="text-sm">Application Status</span>
+          <span
+            class="md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-red-600 bg-red-200 rounded-full"
+            >{{ internStore.getNumberOfNotification }}</span
+          >
         </router-link>
       </li>
 
@@ -130,9 +134,11 @@
 </template>
 
 <script setup>
+import { useInternStore } from "@/stores/InternStore";
 import { ref } from "vue";
 const props = defineProps(["isSidebarHidden"]);
 const isListShow = ref(false);
+const internStore = useInternStore();
 const toggleList = () => {
   isListShow.value = !isListShow.value;
 };

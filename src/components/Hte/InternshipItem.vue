@@ -4,9 +4,9 @@
       <i class="bx bx-arrow-back"></i>
     </p>
     <header class="flex items-center justify-between p-3 0">
-      <div>
-        <h1 class="text-3xl font-bold">{{ jobName }}</h1>
-        <p class="text-xs">Posted on {{ datePosted }}</p>
+      <div v-for="item in applicantItemList" :key="item.id">
+        <h1 class="text-3xl font-bold">{{ item.jobTitle }}</h1>
+        <p class="text-xs">Posted on {{ item.postedOn }}</p>
       </div>
       <div>
         <h1 class="text-base font-bold">Number of Applicants</h1>
@@ -40,7 +40,7 @@
           <div class="flex justify-between gap-3 py-2">
             <p
               class="text-blue-600 underline cursor-pointer"
-              @click="handleSetInternId(item._id)"
+              @click="handleSetInternId(item.internId)"
             >
               Check Requirements
             </p>
@@ -87,8 +87,12 @@
               </p>
 
               <div>
-                <a class="text-blue-600 underline" target="_blank" :href="item.moaPath"
-                  >View Memorandum</a
+                <a
+                  :class="{ 'underline text-blue-600': item.endorsementPath }"
+                  class=""
+                  target="_blank"
+                  :href="item.moaPath"
+                  >{{ item.moaPath ? "View Endorsement" : "Unavailable" }}</a
                 >
               </div>
             </li>
@@ -158,7 +162,7 @@ const searchValue = ref("");
 const modalRequirementShow = ref(false);
 
 const headers = [
-  { text: "APPLICANT NAME", value: "fullName" },
+  { text: "APPLICANT NAME", value: "name" },
   { text: "DEPARTMENT", value: "department" },
   { text: "ACTIONS", value: "viewRequirements", width: 200 },
 ];
