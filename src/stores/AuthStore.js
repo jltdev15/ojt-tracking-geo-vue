@@ -5,6 +5,8 @@ export const useAuthStore = defineStore("auth", () => {
 
   const userRole = ref(null);
   const userId = ref(null)
+  const currentUser = ref(null)
+  const isInternReady = ref(null)
   const isAuthenticated = ref(false);
 
   const checkAuth = async () => {
@@ -13,11 +15,22 @@ export const useAuthStore = defineStore("auth", () => {
       userRole.value = response.data.content.role;
       userId.value = response.data.content._id;
       isAuthenticated.value = true;
-      console.log(isAuthenticated.value);
-      console.log(userRole.value);
-      
-    } catch (err) {
+      if(userRole.value === 'Admin') {
+        return currentUser.value = response.data.content.profile.firstname
+      }
+      if(userRole.value === 'HTE') {
+        return currentUser.value = response.data.content.profile.name;
+      }
+      if(userRole.value === 'Coordinator') {
+        return currentUser.value = response.data.content.profile.firstname;
+      }
+      if(userRole.value === 'Intern') {
+        isInternReady.value = response.data.content.profile.isInternshipReady;
+        return currentUser.value = response.data.content.profile.fullName;
+      }
 
+    
+    } catch (err) {
       console.log(err);
     }
   };
@@ -74,6 +87,8 @@ export const useAuthStore = defineStore("auth", () => {
     hteLogin,
     userId,
     internLogin,
-    submitLogout
+    submitLogout,
+    currentUser,
+    isInternReady
   };
 });

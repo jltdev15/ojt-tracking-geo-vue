@@ -58,18 +58,20 @@
       </template>
       <template #item-applicants="item">
         <div class="flex flex-col justify-between gap-3 py-2">
-          <div v-if="!item.applicants.length">
-            <p>{{ item.applicants.length }}</p>
+          <div v-if="item.applicants.length">
+            <router-link
+              class="btn btn-outline"
+              :to="{ name: 'InternshipItem', params: { jobId: item._id } }"
+              >View Applicants</router-link
+            >
           </div>
+          <p v-else>0</p>
+          <!-- <div v-if="item.applicants.length">
+            <p>{{ item.applicants }}</p>
+          </div> -->
           <!-- <ul v-for="i in item.applicants" :key="i.id" class="flex flex-col">
               <li class="flex ">{{i.fullName}}</li>
           </ul> -->
-          <router-link
-            v-else
-            class="btn btn-outline"
-            :to="{ name: 'InternshipItem', params: { jobId: item._id } }"
-            >View Applicants</router-link
-          >
         </div>
       </template>
     </EasyDataTable>

@@ -6,41 +6,41 @@
     <div class="flex min-h-screen bg-gray-100">
       <div class="container max-w-6xl p-5">
         <header class="py-3">
-          <h1 class="text-xl font-semibold text-gray-400 uppercase">Interns</h1>
+          <h1 class="text-xl font-semibold text-gray-400 uppercase">Internship</h1>
         </header>
         <div class="grid justify-end gap-3 sm:grid-cols-2 lg:grid-cols-3">
           <div
-          :class="{
-            'bg-white text-gray-900': hteStore.getNumberOfPendingInterns === 0,
-            'bg-red-500 text-gray-50': hteStore.getNumberOfPendingInterns != 0,
-          }"
-          class="p-5 rounded shadow-sm"
-        >
-          <div class="flex items-center space-x-4 space-y-2">
-            <div>
-              <div class="text-2xl font-bold">
-                {{ hteStore.getNumberOfPendingInterns }}
+            :class="{
+              'bg-white text-gray-900': hteStore.getNumberOfPendingInterns === 0,
+              'bg-red-500 text-gray-50': hteStore.getNumberOfPendingInterns != 0,
+            }"
+            class="p-5 rounded shadow-sm"
+          >
+            <div class="flex items-center space-x-4 space-y-2">
+              <div>
+                <div class="text-2xl font-bold">
+                  {{ hteStore.getNumberOfPendingInterns }}
+                </div>
+                <div class="">Pending Applications</div>
               </div>
-              <div class="">Pending Applications</div>
             </div>
           </div>
-        </div>
           <div class="self-end p-5 bg-white rounded shadow-sm">
             <div class="flex items-center space-x-4 space-y-2">
               <div>
                 <div class="text-2xl font-bold text-gray-900">
-                  {{ hteStore.getNumberOfAcceptedInterns }}
+                  {{ hteStore.getNumberOfApprovedInterns }}
                 </div>
                 <div class="text-gray-600">Approved Interns</div>
               </div>
             </div>
           </div>
- 
+
           <div class="self-end p-5 bg-white rounded shadow-sm">
             <div class="flex items-center space-x-4 space-y-2">
               <div>
                 <div class="text-2xl font-bold text-gray-900">
-                  0
+                  {{ hteStore.getNumberOfAcceptedInterns }}
                 </div>
                 <div class="text-gray-400">Accepted Interns</div>
               </div>
@@ -49,9 +49,7 @@
         </div>
         <div class="p-0 divider"></div>
         <header class="py-3">
-          <h1 class="text-xl font-semibold text-gray-400 uppercase">
-            Internship Listing
-          </h1>
+          <h1 class="text-xl font-semibold text-gray-400 uppercase">Listing</h1>
         </header>
         <div class="grid justify-end gap-3 sm:grid-cols-2 lg:grid-cols-3">
           <div class="self-end p-5 bg-white rounded shadow-sm">
@@ -108,7 +106,6 @@ const hteStore = useHteStore();
 
 onMounted(async () => {
   await hteStore.fetchInternships();
-  await hteStore.fetchAcceptedInterns();
-  await hteStore.fetchPendingInterns();
+  await hteStore.fetchApplicantList();
 });
 </script>

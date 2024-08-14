@@ -12,19 +12,15 @@ export const useHteStore = defineStore("hte", () => {
   const acceptedApplicantsList = ref([])
 
 
-  const fetchApplicantList = async () => {
-    try {
-      const response = await apiClient.get(`/hte/applicants/list` );
-      console.log(response.data.content);
-      applicantList.value = await response.data.content;
 
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  //#region CRUD for Internships listing
+
+
   const fetchInternships = async () => {  
     try {
       const response = await apiClient.get(`/hte/list` );
+      console.log(response);
+      
       internshipList.value = response.data.content
     } catch (err) {
       console.log(err);
@@ -61,8 +57,21 @@ export const useHteStore = defineStore("hte", () => {
       console.log(err);
     }
   };
+//#endregion
+  
+// Get list of applicant on specific job
+//#region 
+const fetchApplicantList = async () => {
+  try {
+    const response = await apiClient.get(`/hte/applicants/list` );
+    console.log(response.data.content);
+    applicantList.value = await response.data.content;
 
-  // Get list of applicant on specific job
+  } catch (err) {
+    console.log(err);
+  }
+}
+// Method before accepting interns
   const fetchSingleApplication = async (jobId,applicantId) => {
     try {
       const response = await apiClient.get(`/hte/applicants/${jobId}/intern/${applicantId}` );
@@ -73,37 +82,17 @@ export const useHteStore = defineStore("hte", () => {
       console.log(err);
     }
   }
-  const fetchAcceptedInterns = async () => {
-    try {
-      const response = await apiClient.get(`/hte/applicants/approved` );
-      console.log(response.data.content);
-      acceptedApplicantsList.value = await response.data.content;
-
-    } catch (err) {
-      console.log(err);
-    }
-  }
-  const fetchPendingInterns = async () => {
-    try {
-      const response = await apiClient.get(`/hte/applicants/pending` );
-      console.log(response.data.content);
-      pendingApplicantList.value = await response.data.content;
-
-    } catch (err) {
-      console.log(err);
-    }
-  }
   const acceptIntershipApplication = async (applicationId) => {
     console.log(applicationId);
-    
     try {
       const response = await apiClient.put(`/hte/application/${applicationId}/accept` );
+
       console.log(response);
     } catch (err) {
       console.log(err);
     }
   }
-
+//#endregion
   // Computed
   const getNumberOfApplicants = computed(() => {
     return applicantItemList.value.length;
@@ -112,11 +101,15 @@ export const useHteStore = defineStore("hte", () => {
     return internshipList.value.length;
   })
   const getNumberOfAcceptedInterns = computed(() => {
-    return acceptedApplicantsList.value.length;
+    return acceptedApplicantsList.value = applicantList.value.filter(item=> item.status === 'Accepted').length
   })
   const getNumberOfPendingInterns = computed(() => {
-    return pendingApplicantList.value.length;
+    return pendingApplicantList.value = applicantList.value.filter(item =>  item.status === 'Pending').length
   })
+  const getNumberOfApprovedInterns = computed(() => {
+    return pendingApplicantList.value = applicantList.value.filter(item =>  item.status === 'Approved').length
+  })
+
   return {
     fetchInternships,
     internshipList,
@@ -131,14 +124,13 @@ export const useHteStore = defineStore("hte", () => {
     applicantRequirements,
     acceptIntershipApplication,
     getNumberOfListing,
-    fetchAcceptedInterns,
     acceptedApplicantsList,
     getNumberOfAcceptedInterns,
-    fetchPendingInterns,
     pendingApplicantList,
     getNumberOfPendingInterns,
     fetchApplicantList,
-    applicantList
+    applicantList,
+    getNumberOfApprovedInterns
     
   };
 });

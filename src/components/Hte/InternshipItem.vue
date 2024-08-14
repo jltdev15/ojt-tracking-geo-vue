@@ -119,8 +119,9 @@
               </div>
             </li>
           </ul>
-          <section class="flex justify-end p-3 border-2">
+          <section class="flex justify-end p-3 border-2" v-if="item.status === 'Pending' " >
             <div class="flex items-center gap-3">
+        
               <button class="btn btn-danger">Reject</button>
               <button class="btn btn-primary" @click="handleAcceptApplicant(item._id)">
                 Accept
@@ -183,7 +184,6 @@ const handleAcceptApplicant = async (applicationId) => {
   modalRequirementShow.value = !modalRequirementShow.value;
   await hteStore.fetchSingleInternships(route.params.jobId);
   router.push({ name: "hte_vacancy" });
-  await hteStore.fetchPendingInterns();
 };
 </script>
 

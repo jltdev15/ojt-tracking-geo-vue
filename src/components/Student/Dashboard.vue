@@ -15,7 +15,9 @@
             <div class="flex items-center space-x-4 space-y-2">
               <div>
                 <div class="text-gray-400">Target Hours</div>
-                <div class="text-2xl font-bold text-gray-900">720</div>
+                <div class="text-2xl font-bold text-gray-900">
+                  {{ internStore.getNumberOfHoursRequired }}
+                </div>
               </div>
             </div>
           </div>
@@ -41,12 +43,25 @@
             Internship Application
           </h1>
         </header>
-        <div class="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
           <div class="p-5 bg-white rounded shadow-sm">
             <div class="flex items-center space-x-4 space-y-2">
               <div>
-                <div class="text-gray-400">Applied</div>
-                <div class="text-2xl font-bold text-gray-900">3</div>
+                <div class="text-gray-400">Pending</div>
+                <div class="text-2xl font-bold text-gray-900">
+                  {{ internStore.getNumberOfPendingApplication }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="p-5 bg-white rounded shadow-sm">
+            <div class="flex items-center space-x-4 space-y-2">
+              <div>
+                <div class="text-gray-400">Approved</div>
+
+                <div class="text-2xl font-bold text-gray-900">
+                  {{ internStore.getNumberOfApprovedApplication }}
+                </div>
               </div>
             </div>
           </div>
@@ -62,7 +77,9 @@
             <div class="flex items-center space-x-4 space-y-2">
               <div>
                 <div class="text-gray-400">Accepted</div>
-                <div class="text-2xl font-bold text-gray-900">1</div>
+                <div class="text-2xl font-bold text-gray-900">
+                  {{ internStore.getNumberOfAcceptedApplication }}
+                </div>
               </div>
             </div>
           </div>
@@ -90,5 +107,6 @@ import { useInternStore } from "@/stores/InternStore";
 const internStore = useInternStore();
 onMounted(async () => {
   await internStore.fetchApplicationList();
+  await internStore.fetchRequiredHours();
 });
 </script>

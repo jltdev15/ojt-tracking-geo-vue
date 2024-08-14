@@ -69,7 +69,7 @@ const router = createRouter({
         {
           path: "",
           name: "hte_dashboard",
-          component: HTEDashboard,
+          component: () => import("../components/Hte/Dashboard.vue"),
           meta: { requiresAuth: true, roles: ['HTE'] },
         },
         {

@@ -34,7 +34,9 @@
               </div>
             </div>
             <div class="p-2 text-left md:block">
-              <h2 class="text-sm font-semibold text-gray-800">Intern</h2>
+              <h2 class="text-sm font-semibold text-gray-800">
+                {{ authStore.currentUser }}
+              </h2>
               <p class="text-xs text-gray-500">Intern Account</p>
             </div>
           </button>

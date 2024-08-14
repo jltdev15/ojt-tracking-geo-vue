@@ -27,33 +27,16 @@
         >
           <i class="mr-3 text-lg bx bx-list-ol"></i>
           <span class="text-sm">Listings</span>
-        
         </router-link>
-        <!-- <ul class="pl-7 mt-2 group-[.selected]:block" :class="{ hidden: !isListShow }">
-          <li class="mb-4">
-            <router-link
-              to="/"
-              class="text-gray-900 text-sm flex items-center hover:text-blue-600 hover:font-medium before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3"
-              >Active</router-link
-            >
-          </li>
-          <li class="mb-4">
-            <router-link
-              to="/"
-              class="text-gray-900 text-sm flex items-center hover:text-[#f84525] before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3"
-              >Inactive</router-link
-            >
-          </li>
-        </ul> -->
       </li>
       <li class="mb-1 group">
         <router-link
-          :to="{name: 'ApplicantsList'}"
+          :to="{ name: 'ApplicantsList' }"
           href=""
           class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100"
         >
           <i class="mr-3 text-lg bx bx-group"></i>
-          <span class="text-sm">Applicants</span>
+          <span class="text-sm">Application</span>
         </router-link>
       </li>
       <li class="mb-1 group">

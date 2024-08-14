@@ -31,7 +31,7 @@
         <p class="text-base font-bold">Slots {{ item.slots }}</p>
         <p class="text-sm font-medium text-gray-400">{{ item.location }}</p>
       </div>
-      <button class="btn btn-primary rounded-xl" @click="handleApply(item._id)">
+      <button :disabled="authStore.isInternReady" class="btn btn-primary rounded-xl" @click="handleApply(item._id)">
         Apply now
       </button>
     </div>
@@ -40,6 +40,8 @@
 
 <script setup>
 import { useInternStore } from "@/stores/InternStore";
+import { useAuthStore } from "@/stores/AuthStore";
+const authStore = useAuthStore()
 import { useRouter } from "vue-router";
 const internStore = useInternStore();
 const emit = defineEmits([""]);
