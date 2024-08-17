@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div>
+    <button>Time In</button>
+  </div>
 </template>
 
 <script setup></script>
