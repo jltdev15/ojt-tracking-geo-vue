@@ -4,20 +4,19 @@ import apiClient from "@/config/axiosClient";
 export const useAdminUserStore = defineStore("user", () => {
   const usersList = ref([]);
   const userRoleList = reactive({
-      hte: '',
-      coor:'',
-      intern:'',
-      admin:''
-  })
-
+    hte: "",
+    coor: "",
+    intern: "",
+    admin: "",
+  });
 
   // Methods
   const fetchAllUsers = async () => {
-    await fetchHTE()
-    await fetchInterns()
-    await fetchCoor()
-    await fetchAdmin()
-  }
+    await fetchHTE();
+    await fetchInterns();
+    await fetchCoor();
+    await fetchAdmin();
+  };
   const fetchUsers = async () => {
     try {
       const response = await apiClient.get("/users");
@@ -30,7 +29,6 @@ export const useAdminUserStore = defineStore("user", () => {
     try {
       const response = await apiClient.get("/hte");
       userRoleList.hte = await response.data.content;
-      
     } catch (err) {
       console.log(err);
     }
@@ -38,7 +36,7 @@ export const useAdminUserStore = defineStore("user", () => {
   const fetchInterns = async () => {
     try {
       const response = await apiClient.get("/intern");
-      userRoleList.intern = await response.data.content;      
+      userRoleList.intern = await response.data.content;
     } catch (err) {
       console.log(err);
     }
@@ -47,7 +45,7 @@ export const useAdminUserStore = defineStore("user", () => {
     try {
       const response = await apiClient.get("/coor");
       console.log(response.data);
-      userRoleList.coor = await response.data.content;      
+      userRoleList.coor = await response.data.content;
     } catch (err) {
       console.log(err);
     }
@@ -56,7 +54,7 @@ export const useAdminUserStore = defineStore("user", () => {
     try {
       const response = await apiClient.get("/admin");
       console.log(response.data);
-      userRoleList.admin = await response.data.content;      
+      userRoleList.admin = await response.data.content;
     } catch (err) {
       console.log(err);
     }
@@ -64,41 +62,41 @@ export const useAdminUserStore = defineStore("user", () => {
   const addIntern = async (payload) => {
     // console.log(payload);
     try {
-      const response = await apiClient.post("/intern",payload);
-      await fetchUsers()
+      const response = await apiClient.post("/intern", payload);
+      await fetchUsers();
       console.log(response);
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
   };
   const addHTE = async (payload) => {
     console.log(payload);
     try {
-      const response = await apiClient.post("/hte",payload);
-      await fetchUsers()
-      return (response.data.message);
-    }catch(err){
+      const response = await apiClient.post("/hte", payload);
+      await fetchUsers();
+      return response.data.message;
+    } catch (err) {
       console.log(err);
     }
   };
 
-  // Computed 
+  // Computed
 
-  const getNumberOfUsers = computed (() => {
+  const getNumberOfUsers = computed(() => {
     return usersList.value.length;
-  })
-  const getNumberOfHTE = computed (() => {
+  });
+  const getNumberOfHTE = computed(() => {
     return userRoleList.hte.length;
-  })
-  const getNumberOfInterns = computed (() => {
+  });
+  const getNumberOfInterns = computed(() => {
     return userRoleList.intern.length;
-  })
-  const getNumberOfCoor = computed (() => {
+  });
+  const getNumberOfCoor = computed(() => {
     return userRoleList.coor.length;
-  })
-  const getNumberOfAdmin = computed (() => {
+  });
+  const getNumberOfAdmin = computed(() => {
     return userRoleList.admin.length;
-  })
+  });
   return {
     fetchUsers,
     usersList,
@@ -114,6 +112,6 @@ export const useAdminUserStore = defineStore("user", () => {
     fetchCoor,
     fetchAdmin,
     getNumberOfAdmin,
-    fetchAllUsers
+    fetchAllUsers,
   };
 });

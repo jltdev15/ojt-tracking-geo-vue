@@ -3,8 +3,10 @@ import { defineStore } from "pinia";
 import apiClient from "@/config/axiosClient";
 export const useInternStore = defineStore("intern", () => {
   const internshipLists = ref([]);
-  const applicationLists = ref([])
-  const requiredHours = ref(null)
+  const applicationLists = ref([]);
+  const requiredHours = ref(null);
+  const workedHours = ref(null);
+  const isClockIn = ref(false);
   const fetchInternshipLists = async () => {
     try {
       const response = await apiClient.get(`/intern/vacancy`);
@@ -14,9 +16,9 @@ export const useInternStore = defineStore("intern", () => {
       console.log(err);
     }
   };
-  const applyInternship = async (jobId,payload) => {
+  const applyInternship = async (jobId, payload) => {
     try {
-      const response = await apiClient.post(`intern/apply/${jobId}`,payload,{
+      const response = await apiClient.post(`intern/apply/${jobId}`, payload, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -34,49 +36,70 @@ export const useInternStore = defineStore("intern", () => {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   const handleAcceptOffer = async (applicationId) => {
     try {
-      const response = await apiClient.patch(`/intern/acceptoffer/${applicationId}`);
+      const response = await apiClient.patch(
+        `/intern/acceptoffer/${applicationId}`
+      );
       console.log(response.date.content.requiredHours);
-      await fetchApplicationList()
-    }catch(err) {
-      console.log(err)
+      await fetchApplicationList();
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
   const fetchRequiredHours = async () => {
     try {
-      const response = await apiClient.get('/intern/profile')
+      const response = await apiClient.get("/intern/profile");
       console.log(response.data.content.requiredHours);
-      requiredHours.value = response.data.content.requiredHours
-      console.log(response)
-    }catch(err) {
-      console.log(err)
+      isClockIn.value = response.data.content.isClockIn;
+      requiredHours.value = response.data.content.requiredHours;
+      workedHours.value = response.data.content.workedHours;
+      console.log(response);
+    } catch (err) {
+      console.log(err);
     }
-  }
-
+  };
+  const clockIn = async (payload) => {
+    try {
+      const response = await apiClient.post("/intern/timein", payload);
+      await fetchRequiredHours();
+      return response;
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  };
   // Computed Properties
   const getNumberOfApplication = computed(() => {
     return applicationLists.value.length;
-  })
+  });
   const getNumberOfNotification = computed(() => {
-    const numberOfNotif = applicationLists.value.filter(item => item.isUpdated === true)
+    const numberOfNotif = applicationLists.value.filter(
+      (item) => item.isUpdated === true
+    );
     return numberOfNotif.length;
-  })
-  
+  });
+
   const getNumberOfPendingApplication = computed(() => {
-    return applicationLists.value.filter(item => item.status === 'Pending').length
-  })
+    return applicationLists.value.filter((item) => item.status === "Pending")
+      .length;
+  });
   const getNumberOfApprovedApplication = computed(() => {
-    return applicationLists.value.filter(item => item.status === 'Approved').length
-  })
+    return applicationLists.value.filter((item) => item.status === "Approved")
+      .length;
+  });
   const getNumberOfAcceptedApplication = computed(() => {
-    return applicationLists.value.filter(item => item.status === 'Accepted').length
-  })
+    return applicationLists.value.filter((item) => item.status === "Accepted")
+      .length;
+  });
   const getNumberOfHoursRequired = computed(() => {
-    return requiredHours.value
-  })
+    return requiredHours.value;
+  });
+  const getNumberOfHoursWorked = computed(() => {
+    return Math.floor(workedHours.value);
+  });
   return {
     fetchInternshipLists,
     internshipLists,
@@ -91,6 +114,10 @@ export const useInternStore = defineStore("intern", () => {
     getNumberOfHoursRequired,
     getNumberOfPendingApplication,
     getNumberOfApprovedApplication,
-    getNumberOfAcceptedApplication
+    getNumberOfAcceptedApplication,
+    clockIn,
+    isClockIn,
+    workedHours,
+    getNumberOfHoursWorked,
   };
 });

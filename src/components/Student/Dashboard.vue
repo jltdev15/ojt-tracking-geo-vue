@@ -8,9 +8,7 @@
         <header class="py-3">
           <h1 class="text-xl font-semibold text-gray-400 capitalize">Hours Required</h1>
         </header>
-        <div
-          class="grid items-end gap-7 sm:grid-cols-2 justify-self-right lg:grid-cols-3"
-        >
+        <div class="grid items-end gap-7 sm:grid-cols-2 justify-self-right lg:grid-cols-3">
           <div class="p-5 bg-white rounded shadow-sm">
             <div class="flex items-center space-x-4 space-y-2">
               <div>
@@ -25,7 +23,7 @@
             <div class="flex items-center space-x-4 space-y-2">
               <div>
                 <div class="text-gray-400">Rendered Hours</div>
-                <div class="text-2xl font-bold text-gray-900">0</div>
+                <div class="text-2xl font-bold text-gray-900">{{ internStore.getNumberOfHoursWorked.toFixed(0) }}</div>
               </div>
             </div>
           </div>
