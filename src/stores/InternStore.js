@@ -61,9 +61,20 @@ export const useInternStore = defineStore("intern", () => {
       console.log(err);
     }
   };
+  // Clock in
   const clockIn = async (payload) => {
     try {
       const response = await apiClient.post("/intern/timein", payload);
+      await fetchRequiredHours();
+      return response;
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  };
+  const clockOut = async (payload) => {
+    try {
+      const response = await apiClient.put("/intern/timeout", payload);
       await fetchRequiredHours();
       return response;
     } catch (err) {
@@ -119,5 +130,6 @@ export const useInternStore = defineStore("intern", () => {
     isClockIn,
     workedHours,
     getNumberOfHoursWorked,
+    clockOut
   };
 });
