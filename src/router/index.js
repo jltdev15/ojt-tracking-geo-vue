@@ -87,6 +87,24 @@ const router = createRouter({
           component: () => import("../components/Hte/ApplicationList.vue"),
           meta: { requiresAuth: true, roles: ["HTE"] },
         },
+        {
+          path: "accepted_applicants",
+          name: "AcceptedList",
+          component: () => import("../components/Hte/AcceptedInterns.vue"),
+          meta: { requiresAuth: true, roles: ["HTE"] },
+        },
+        {
+          path: "accepted_applicants/:internId",
+          name: "DailyTimeRecord",
+          component: () => import("../components/Hte/DailyTimeRecord.vue"),
+          meta: { requiresAuth: true, roles: ["HTE"] },
+        },
+        {
+          path: "monitoring",
+          name: "InternMonitoring",
+          component: () => import("../components/Hte/InternMonitoring.vue"),
+          meta: { requiresAuth: true, roles: ["HTE"] },
+        },
       ],
     },
     // Student

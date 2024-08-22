@@ -106,7 +106,7 @@ const uploadFile = async () => {
   console.log(formData);
   try {
     await internStore.applyInternship(route.params.id, formData);
-    router.push({ name: "ApplicantsList" });
+    router.push({ name: "ApplicationStatus" });
   } catch (err) {
     console.log(err);
   }

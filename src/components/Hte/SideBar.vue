@@ -35,8 +35,18 @@
           href=""
           class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100"
         >
-          <i class="mr-3 text-lg bx bx-group"></i>
+          <i class="mr-3 text-lg bx bx-book-content"></i>
           <span class="text-sm">Application</span>
+        </router-link>
+      </li>
+      <li class="mb-1 group">
+        <router-link
+          :to="{ name: 'AcceptedList' }"
+          href=""
+          class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100"
+        >
+          <i class="mr-3 text-lg bx bxs-user-check"></i>
+          <span class="text-sm">Accepted Interns</span>
         </router-link>
       </li>
       <li class="mb-1 group">
@@ -49,6 +59,17 @@
         </a>
       </li>
       <li class="mb-1 group">
+        <router-link
+          :to="{ name: 'InternMonitoring' }"
+          href=""
+          class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100"
+        >
+          <i class="mr-3 text-lg bx bx-desktop"></i>
+          <span class="text-sm">Intern Monitoring</span>
+        </router-link>
+      </li>
+      <span class="font-bold text-gray-400">Coordinator</span>
+      <li class="mb-1 group">
         <a
           href=""
           class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100"
@@ -59,15 +80,6 @@
             class="md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-red-600 bg-red-200 rounded-full"
             >5</span
           >
-        </a>
-      </li>
-      <li class="mb-1 group">
-        <a
-          href=""
-          class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100"
-        >
-          <i class="mr-3 text-lg bx bx-desktop"></i>
-          <span class="text-sm">Intern Monitoring</span>
         </a>
       </li>
       <span class="font-bold text-gray-400">COMMUNICATION</span>

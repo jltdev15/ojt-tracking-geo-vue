@@ -9,10 +9,13 @@
           <h1 class="text-xl font-semibold text-gray-400 uppercase">Internship</h1>
         </header>
         <div class="grid justify-end gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          <div :class="{
-            'bg-white text-gray-900': hteStore.getNumberOfPendingInterns === 0,
-            'bg-red-500 text-gray-50': hteStore.getNumberOfPendingInterns != 0,
-          }" class="p-5 rounded shadow-sm">
+          <div
+            :class="{
+              'bg-white text-gray-900': hteStore.getNumberOfPendingInterns === 0,
+              'bg-red-500 text-gray-50': hteStore.getNumberOfPendingInterns != 0,
+            }"
+            class="p-5 rounded shadow-sm"
+          >
             <div class="flex items-center space-x-4 space-y-2">
               <div>
                 <div class="text-2xl font-bold">
@@ -68,7 +71,10 @@
             </div>
           </div>
           <div class="p-5 bg-white rounded shadow-sm cursor-pointer hover:bg-gray-50">
-            <router-link to="/" class="flex items-center justify-between space-x-4 space-y-2">
+            <router-link
+              to="/"
+              class="flex items-center justify-between space-x-4 space-y-2"
+            >
               <div>
                 <div class="text-2xl font-bold text-gray-900 underline">Manage</div>
                 <p class="text-gray-400">Manage listings</p>
@@ -101,5 +107,7 @@ const hteStore = useHteStore();
 onMounted(async () => {
   await hteStore.fetchInternships();
   await hteStore.fetchApplicantList();
+  await hteStore.fetchApplicantAccepted();
+  await hteStore.getOnlineInterns();
 });
 </script>

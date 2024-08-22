@@ -14,6 +14,13 @@
         >
           Clock in
         </button>
+        <p
+          @click="removeErrorMessage"
+          class="flex justify-center items-center gap-3 w-full m-3 py-3 text-gray-50 font-bold text-center mx-auto bg-red-600"
+          v-if="clockInErrorMessage"
+        >
+          {{ clockInErrorMessage }}<i class="text-lg bx bx-info-circle"></i>
+        </p>
       </div>
       <div class="p-6">
         <p>Time ends at 5:00 pm</p>
@@ -52,13 +59,14 @@ const internStore = useInternStore();
 
 const isLocationEnabled = ref(false);
 const timeStringData = ref("");
+const clockInErrorMessage = ref("");
 const errorMessage = ref("");
 const locationData = reactive({
   lat: "",
   long: "",
 });
 
-const updateClock = () => {
+const updateClock = async () => {
   const now = new Date();
 
   let hours = String(now.getHours()).padStart(2, "0");
@@ -74,9 +82,6 @@ const updateClock = () => {
 
   timeStringData.value = `${hours}:${minutes}:${seconds} ${period}`;
 };
-
-updateClock();
-setInterval(updateClock, 1000);
 
 const getLocation = async () => {
   if (navigator.geolocation) {
@@ -94,6 +99,9 @@ const getLocation = async () => {
     errorMessage.value = "Geolocation is not supported by this browser.";
   }
 };
+const removeErrorMessage = () => {
+  clockInErrorMessage.value = "";
+};
 const timeInData = reactive({
   timeInLocation: locationData,
   timeIn: new Date(),
@@ -108,7 +116,8 @@ const timeOutData = reactive({
 const timeInHandler = async () => {
   try {
     const response = await internStore.clockIn(timeInData);
-    console.log(response);
+    console.log(response.response.data.content);
+    clockInErrorMessage.value = response.response.data.content;
   } catch (err) {
     console.log(err);
   }
@@ -125,6 +134,8 @@ const timeOutHandler = async () => {
 onMounted(async () => {
   await internStore.fetchRequiredHours();
   await getLocation();
+  await updateClock();
+  setInterval(updateClock, 1000);
 });
 </script>
 

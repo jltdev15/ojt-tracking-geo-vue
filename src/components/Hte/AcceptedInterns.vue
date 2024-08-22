@@ -1,7 +1,7 @@
 <template>
   <div class="p-3">
     <header class="flex items-center justify-between p-3 bg-gray-50">
-      <h1 class="text-3xl font-bold">Applicant List</h1>
+      <h1 class="text-3xl font-bold">Accepted Applicants</h1>
     </header>
     <div class="divider"></div>
     <div class="flex justify-end gap-3 pb-3">
@@ -20,7 +20,7 @@
     </div>
     <EasyDataTable
       :headers="headers"
-      :items="hteStore.getListOfInternApplication"
+      :items="hteStore.getListOfAcceptedInterns"
       :search-field="searchField"
       :search-value="searchValue"
       table-class-name="customize-table"
@@ -41,6 +41,17 @@
         </div>
         <div v-else>
           <p>{{ item.remarks }}</p>
+        </div>
+      </template>
+      <template #item-hours_rendered="item">
+        <p>{{ item.workedHours }}</p>
+      </template>
+      <template #item-evaluation="item">
+        <div v-if="item.evaluationStatus">
+          <p>Ready for evaluation</p>
+        </div>
+        <div v-else>
+          <p>Not ready</p>
         </div>
       </template>
     </EasyDataTable>
@@ -148,7 +159,7 @@ const searchField = ref("Set filter");
 const searchValue = ref("");
 onMounted(async () => {
   await hteStore.fetchApplicantList();
-  console.log(hteStore.getListOfAcceptedInterns);
+  await hteStore.fetchApplicantAccepted();
 });
 
 // function to select single application
@@ -163,13 +174,14 @@ const handleAcceptApplicant = async (applicationId) => {
   router.push({ name: "hte_dashboard" });
 };
 const headers = [
-  { text: "APPLICATION ID", value: "applicationId" },
-  { text: "JOB TITLE", value: "title" },
-  { text: "APPLICANT NAME", value: "applicantName" },
+  { text: "INTERNSHIP POSITION", value: "jobTitle" },
+  { text: "INTERN", value: "name" },
   { text: "DEPARTMENT", value: "department" },
-  { text: "REQUIREMENTS LIST", value: "viewRequirements" },
-  { text: "STATUS", value: "status" },
-  { text: "REMARKS", value: "remarks" },
+  { text: "HOURS RENDERED", value: "workedHours" },
+  { text: "EVALUATION", value: "evaluation" },
+  //   { text: "REQUIREMENTS LIST", value: "viewRequirements" },
+  //   { text: "STATUS", value: "status" },
+  //   { text: "REMARKS", value: "remarks" },
 ];
 </script>
 
