@@ -58,7 +58,7 @@ function closeHandler() {
 
 dialog {
   position: fixed;
-  top: 60%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -70%);
   z-index: 999;

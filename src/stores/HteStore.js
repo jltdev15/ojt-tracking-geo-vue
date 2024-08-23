@@ -1,4 +1,4 @@
-import { ref, computed } from "vue";
+import { ref, computed, reactive } from "vue";
 import { defineStore } from "pinia";
 import apiClient from "@/config/axiosClient";
 export const useHteStore = defineStore("hte", () => {
@@ -11,6 +11,11 @@ export const useHteStore = defineStore("hte", () => {
   const applicantRequirements = ref([]);
   const acceptedApplicantsList = ref([]);
   const approvedApplicantsList = ref([]);
+  const onlineInternList = ref([])
+  const hteLocationDefault = reactive({
+    lat:'',
+    long:'',
+  })
 
   //#region CRUD for Internships listing
 
@@ -18,8 +23,9 @@ export const useHteStore = defineStore("hte", () => {
     try {
       const response = await apiClient.get(`/hte/list`);
       console.log(response);
-
       internshipList.value = response.data.content;
+      hteLocationDefault.lat = 14.8333;
+      hteLocationDefault.long = 120.8833;
     } catch (err) {
       console.log(err);
     }
@@ -107,7 +113,7 @@ export const useHteStore = defineStore("hte", () => {
     try {
       const response = await apiClient.get(`/hte/internship/online`);
       console.log(response.data.content);
-
+      onlineInternList.value = response.data.content;
     } catch (err) {
       console.log(err);
     }
@@ -163,6 +169,8 @@ export const useHteStore = defineStore("hte", () => {
     getListOfAcceptedInterns,
     getListOfInternApplication,
     fetchApplicantAccepted,
-    getOnlineInterns
+    getOnlineInterns,
+    onlineInternList,
+    hteLocationDefault
   };
 });

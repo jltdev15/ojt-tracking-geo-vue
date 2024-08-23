@@ -116,8 +116,10 @@ const timeOutData = reactive({
 const timeInHandler = async () => {
   try {
     const response = await internStore.clockIn(timeInData);
-    console.log(response.response.data.content);
-    clockInErrorMessage.value = response.response.data.content;
+    if (response.response.data.content) {
+      clockInErrorMessage.value = response.response.data.content;
+      await getLocation();
+    }
   } catch (err) {
     console.log(err);
   }

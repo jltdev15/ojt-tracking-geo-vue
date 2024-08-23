@@ -140,7 +140,9 @@ onMounted(async () => {
   await internStore.fetchApplicationList();
   await internStore.fetchRequiredHours();
   if (internStore.isClockIn) {
-    intervalid = setInterval(sendLocationHandler, 5000);
+    return (intervalid = setInterval(sendLocationHandler, 3000));
+  } else {
+    clearInterval(intervalid);
   }
 });
 

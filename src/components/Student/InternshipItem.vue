@@ -7,10 +7,10 @@
     <div class="flex items-center justify-between p-2 text-xs text-right">
       <p class="px-3 text-base bg-gray-400 rounded text-gray-50">Internship</p>
       <p
-        v-if="item.hte.hasMoa === 'true'"
+        v-if="item.hte.moaAttachement && item.hte.hasMoa === 'false'"
         class="inline-block px-6 py-3 bg-green-600 text-gray-50"
       >
-        Moa
+        {{ item.hte.hasMoa }}
       </p>
       <p v-else class="inline-block px-6 py-3 bg-red-600 text-gray-50">No MOA</p>
     </div>
@@ -21,7 +21,7 @@
     <div class="px-6 pb-4">
       <div class="text-xl font-bold">{{ item.title }}</div>
       <p class="text-xs text-gray-700">
-        {{ item.description }}
+        {{ item.requirements }}
       </p>
     </div>
     <div class="flex justify-between px-6 py-3 font-bold"></div>
@@ -31,7 +31,11 @@
         <p class="text-base font-bold">Slots {{ item.slots }}</p>
         <p class="text-sm font-medium text-gray-400">{{ item.location }}</p>
       </div>
-      <button :disabled="authStore.isInternReady" class="btn btn-primary rounded-xl" @click="handleApply(item._id)">
+      <button
+        :disabled="authStore.isInternReady"
+        class="btn btn-primary rounded-xl"
+        @click="handleApply(item._id)"
+      >
         Apply now
       </button>
     </div>
@@ -41,7 +45,7 @@
 <script setup>
 import { useInternStore } from "@/stores/InternStore";
 import { useAuthStore } from "@/stores/AuthStore";
-const authStore = useAuthStore()
+const authStore = useAuthStore();
 import { useRouter } from "vue-router";
 const internStore = useInternStore();
 const emit = defineEmits([""]);
