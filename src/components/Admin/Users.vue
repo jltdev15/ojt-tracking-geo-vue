@@ -413,7 +413,7 @@ const headers = [
 
   { text: "ROLE", value: "role" },
   { text: "STATUS", value: "status" },
-  { text: "DATE CREATED", value: "createdAt", width: 50 },
+  { text: "DATE CREATED", value: "createdAt" },
   { text: "ACTIONS", value: "operation", width: 10 },
 ];
 </script>

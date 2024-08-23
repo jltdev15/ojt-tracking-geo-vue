@@ -82,6 +82,14 @@ export const useInternStore = defineStore("intern", () => {
       return err;
     }
   };
+  const sendLocationHandler = async(currentLocation) => {
+    try { 
+      await apiClient.put('intern/currentlocation', currentLocation)
+
+    }catch(err) {
+      console.log(err.message)
+    }
+  }
   // Computed Properties
   const getNumberOfApplication = computed(() => {
     return applicationLists.value.length;
@@ -130,6 +138,7 @@ export const useInternStore = defineStore("intern", () => {
     isClockIn,
     workedHours,
     getNumberOfHoursWorked,
-    clockOut
+    clockOut,
+    sendLocationHandler
   };
 });

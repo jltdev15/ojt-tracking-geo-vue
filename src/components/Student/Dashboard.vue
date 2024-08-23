@@ -8,7 +8,9 @@
         <header class="py-3">
           <h1 class="text-xl font-semibold text-gray-400 capitalize">Hours Required</h1>
         </header>
-        <div class="grid items-end gap-7 sm:grid-cols-2 justify-self-right lg:grid-cols-3">
+        <div
+          class="grid items-end gap-7 sm:grid-cols-2 justify-self-right lg:grid-cols-3"
+        >
           <div class="p-5 bg-white rounded shadow-sm">
             <div class="flex items-center space-x-4 space-y-2">
               <div>
@@ -23,7 +25,9 @@
             <div class="flex items-center space-x-4 space-y-2">
               <div>
                 <div class="text-gray-400">Rendered Hours</div>
-                <div class="text-2xl font-bold text-gray-900">{{ internStore.getNumberOfHoursWorked.toFixed(0) }}</div>
+                <div class="text-2xl font-bold text-gray-900">
+                  {{ internStore.getNumberOfHoursWorked.toFixed(0) }}
+                </div>
               </div>
             </div>
           </div>
@@ -100,11 +104,49 @@
   </div>
 </template>
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, onUnmounted, reactive } from "vue";
 import { useInternStore } from "@/stores/InternStore";
 const internStore = useInternStore();
+const locationData = reactive({
+  lat: "",
+  long: "",
+});
+const getLocation = async () => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        locationData.lat = position.coords.latitude;
+        locationData.long = position.coords.longitude;
+      },
+      (err) => {
+        errorMessage.value = `Error: ${err.message}`;
+      }
+    );
+  } else {
+    errorMessage.value = "Geolocation is not supported by this browser.";
+  }
+};
+
+const sendLocationHandler = async () => {
+  if (locationData.lat && locationData.long) {
+    await internStore.sendLocationHandler(locationData);
+  }
+};
+
+let intervalid = null;
+
 onMounted(async () => {
+  await getLocation();
   await internStore.fetchApplicationList();
   await internStore.fetchRequiredHours();
+  if (internStore.isClockIn) {
+    intervalid = setInterval(sendLocationHandler, 5000);
+  }
+});
+
+onUnmounted(async () => {
+  if (intervalid) {
+    clearInterval(intervalid);
+  }
 });
 </script>
