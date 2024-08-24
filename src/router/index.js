@@ -8,6 +8,8 @@ import HTEInternshipsList from "@/components/Hte/Internships.vue";
 import StudentDashBoardView from "../views/Student/StudentDashBoardView.vue";
 import StudentDashboard from "@/components/Student/Dashboard.vue";
 import StudentInternshipsList from "@/components/Student/InternshipsList.vue";
+import CoorDashBoard from '@/components/Coor/Dashboard.vue'
+import CoorDashBoardView from '../views/Coor/CoorDashBoardView.vue'
 import { useAuthStore } from "@/stores/AuthStore";
 
 const router = createRouter({
@@ -46,6 +48,47 @@ const router = createRouter({
           component: () => import("../components/Admin/Users.vue"),
           meta: { requiresAuth: true, roles: ["Admin"] },
         },
+        {
+          path: "settings",
+          name: "appSettings",
+          component: () => import("../components/Admin/Settings.vue"),
+          meta: { requiresAuth: true, roles: ["Admin"] },
+        },
+      ],
+    },
+    {
+      path: "/coor",
+      redirect: "/coor/auth",
+    },
+    {
+      path: "/coor/auth",
+      name: "coor_auth",
+      component: () => import("../views/Coor/CoorAuthView.vue"),
+    },
+    {
+      path: "/coor/dashboard",
+      component: CoorDashBoardView,
+      meta: { requiresAuth: true, roles: ["Coordinator"] },
+      children: [
+        {
+          path: "",
+          name: "coor_dashboard",
+          component: CoorDashBoard,
+          meta: { requiresAuth: true, roles: ["Coordinator"] },
+        },
+        {
+          path: "list",
+          name: "InternDepartmentList",
+          component: () => import("../components/Coor/InternDepartmentList.vue"),
+          meta: { requiresAuth: true, roles: ["Coordinator"] },
+        },
+        {
+          path: "hte",
+          name: "HteList",
+          component: () => import("../components/Coor/hteList.vue"),
+          meta: { requiresAuth: true, roles: ["Coordinator"] },
+        },
+
       ],
     },
     // HTE
@@ -154,6 +197,12 @@ const router = createRouter({
           component: () => import("../components/Student/DTR.vue"),
           meta: { requiresAuth: true, roles: ["Intern"] },
         },
+        {
+          path: "logs",
+          name: "Logsheets",
+          component: () => import("../components/Student/InternAttendance.vue"),
+          meta: { requiresAuth: true, roles: ["Intern"] },
+        },
       ],
     },
     {
@@ -165,6 +214,8 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+console.log('test');
+
   const authStore = useAuthStore();
   await authStore.checkAuth();
   if (to.meta.requiresAuth) {
@@ -172,9 +223,11 @@ router.beforeEach(async (to, from, next) => {
       next({ name: "admin_auth" });
     } else if (!authStore.isAuthenticated && to.meta.roles.includes("HTE")) {
       next({ name: "hte_auth" });
-    } else if (!authStore.isAuthenticated && to.meta.roles.includes("HTE")) {
+    } else if (!authStore.isAuthenticated && to.meta.roles.includes("Intern")) {
       next({ name: "student_auth" });
-    } else if (to.meta.roles && !to.meta.roles.includes(authStore.userRole)) {
+    } else if (!authStore.isAuthenticated && to.meta.roles.includes("Coordinator")) {
+      next({ name: "coordinator_auth" });
+    }  else if (to.meta.roles && !to.meta.roles.includes(authStore.userRole)) {
       next({ name: "home" });
     } else {
       next();
@@ -191,6 +244,12 @@ router.beforeEach(async (to, from, next) => {
     authStore.userRole === "HTE"
   ) {
     next({ name: "hte_dashboard" });
+  } else if (
+    !to.meta.requiresAuth &&
+    authStore.isAuthenticated &&
+    authStore.userRole === "Coordinator"
+  ) {
+    next({ name: "coor_dashboard" });
   } else if (
     !to.meta.requiresAuth &&
     authStore.isAuthenticated &&

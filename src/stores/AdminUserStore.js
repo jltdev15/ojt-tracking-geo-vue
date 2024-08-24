@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 import apiClient from "@/config/axiosClient";
 export const useAdminUserStore = defineStore("user", () => {
   const usersList = ref([]);
+  const departmentlist = ref([])
   const userRoleList = reactive({
     hte: "",
     coor: "",
@@ -80,19 +81,85 @@ export const useAdminUserStore = defineStore("user", () => {
     }
   };
 
+  const addCoordinator = async (payload) => {
+    console.log(payload);
+    try {
+      const response = await apiClient.post("/coor", payload);
+      await fetchUsers();
+      console.log(response);
+      
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  //#region Department List
+  const fetchDepartmentList = async () => {
+    try {
+      const response = await apiClient.get("/admin/departmentlist");
+      await fetchUsers();
+      console.log(response);
+      departmentlist.value = response.data.content;
+      
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const addDepartmentList = async (payload) => {
+    console.log(payload);
+    
+    try {
+      const response = await apiClient.post("/admin/departmentlist", payload);
+      await fetchUsers();
+      await fetchDepartmentList()
+      console.log(response);
+      
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const updateDepartmentList = async (departmentId, payload) => {
+    console.log(departmentId);
+    
+    console.log(payload);
+    
+    try {
+      const response = await apiClient.put(`/admin/departmentlist/${departmentId}`, payload);
+      await fetchUsers();
+      await fetchDepartmentList()
+      console.log(response);
+      
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const deleteDepartmentList = async (departmentId) => {
+    
+    try {
+      const response = await apiClient.delete(`/admin/departmentlist/${departmentId}`);
+      await fetchUsers();
+      await fetchDepartmentList()
+      console.log(response);
+      
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  //#endregion
   // Computed
+
+
 
   const getNumberOfUsers = computed(() => {
     return usersList.value.length;
   });
   const getNumberOfHTE = computed(() => {
-    return userRoleList.hte.length;
+    return usersList.value.filter((item) => item.role === "HTE").length
   });
   const getNumberOfInterns = computed(() => {
-    return userRoleList.intern.length;
+    return usersList.value.filter((item) => item.role === "Intern").length
   });
   const getNumberOfCoor = computed(() => {
-    return userRoleList.coor.length;
+    return usersList.value.filter((item) => item.role === "Coordinator").length
   });
   const getNumberOfAdmin = computed(() => {
     return userRoleList.admin.length;
@@ -113,5 +180,11 @@ export const useAdminUserStore = defineStore("user", () => {
     fetchAdmin,
     getNumberOfAdmin,
     fetchAllUsers,
+    addCoordinator,
+    fetchDepartmentList,
+    departmentlist,
+    addDepartmentList,
+    updateDepartmentList,
+    deleteDepartmentList
   };
 });

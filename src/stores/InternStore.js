@@ -1,4 +1,4 @@
-import { ref, computed } from "vue";
+import { ref, computed,reactive } from "vue";
 import { defineStore } from "pinia";
 import apiClient from "@/config/axiosClient";
 export const useInternStore = defineStore("intern", () => {
@@ -7,6 +7,13 @@ export const useInternStore = defineStore("intern", () => {
   const requiredHours = ref(null);
   const workedHours = ref(null);
   const isClockIn = ref(false);
+  const isLocationEnabled = ref(false)
+  const errorMessage = ref("");
+  const locationData = reactive({
+    lat: "",
+    lng: "",
+  });
+  const attendanceArr = ref([])
   const fetchInternshipLists = async () => {
     try {
       const response = await apiClient.get(`/intern/vacancy`);
@@ -82,12 +89,46 @@ export const useInternStore = defineStore("intern", () => {
       return err;
     }
   };
-  const sendLocationHandler = async(currentLocation) => {
-    try { 
-      await apiClient.put('intern/currentlocation', currentLocation)
+  const getLocationHandler = async () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          locationData.lat = position.coords.latitude;
+          locationData.lng = position.coords.longitude;
+          isLocationEnabled.value = true;
+        },
+        (err) => {
+          errorMessage.value = `Error: ${err.message}`;
+        }
+      );
+    } else {
+      errorMessage.value = "Geolocation is not supported by this browser.";
+    }
+
+  }
+  const sendLocationHandler = async() => {
+
+    try {
+       
+     const response =  await apiClient.put('intern/currentlocation', locationData)
+
+     console.log(response);
+     
 
     }catch(err) {
       console.log(err.message)
+    }
+  }
+  const getAttendanceHandler = async() => {
+    try {
+      const response = await apiClient.get("/intern/attendance");
+      console.log(response.data.content);
+      
+      attendanceArr.value = response.data.content;
+      return response;
+    } catch (err) {
+      console.log(err);
+      return err;
     }
   }
   // Computed Properties
@@ -139,6 +180,12 @@ export const useInternStore = defineStore("intern", () => {
     workedHours,
     getNumberOfHoursWorked,
     clockOut,
-    sendLocationHandler
+    sendLocationHandler,
+    getLocationHandler,
+    locationData,
+    isLocationEnabled,
+    attendanceArr,
+    getAttendanceHandler
+    
   };
 });

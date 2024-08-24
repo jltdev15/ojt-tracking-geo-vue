@@ -107,40 +107,15 @@
 import { onMounted, onUnmounted, reactive } from "vue";
 import { useInternStore } from "@/stores/InternStore";
 const internStore = useInternStore();
-const locationData = reactive({
-  lat: "",
-  long: "",
-});
-const getLocation = async () => {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        locationData.lat = position.coords.latitude;
-        locationData.long = position.coords.longitude;
-      },
-      (err) => {
-        errorMessage.value = `Error: ${err.message}`;
-      }
-    );
-  } else {
-    errorMessage.value = "Geolocation is not supported by this browser.";
-  }
-};
-
-const sendLocationHandler = async () => {
-  if (locationData.lat && locationData.long) {
-    await internStore.sendLocationHandler(locationData);
-  }
-};
 
 let intervalid = null;
 
 onMounted(async () => {
-  await getLocation();
   await internStore.fetchApplicationList();
   await internStore.fetchRequiredHours();
+
   if (internStore.isClockIn) {
-    return (intervalid = setInterval(sendLocationHandler, 3000));
+    return (intervalid = setInterval(internStore.sendLocationHandler, 3000));
   } else {
     clearInterval(intervalid);
   }

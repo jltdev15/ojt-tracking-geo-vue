@@ -12,7 +12,7 @@ export const useAuthStore = defineStore("auth", () => {
   const router = useRouter();
   const toast = useToast();
 
-  const checkApiConnection = async () => {};
+
   const checkAuth = async () => {
     try {
       const response = await apiClient.get(`/active`);
@@ -26,7 +26,7 @@ export const useAuthStore = defineStore("auth", () => {
         return (currentUser.value = response.data.content.profile.name);
       }
       if (userRole.value === "Coordinator") {
-        return (currentUser.value = response.data.content.profile.firstname);
+        return (currentUser.value = response.data.content.profile.fullName);
       }
       if (userRole.value === "Intern") {
         isInternReady.value = response.data.content.profile.isInternshipReady;

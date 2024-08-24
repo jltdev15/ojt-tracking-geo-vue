@@ -8,7 +8,7 @@
       <div class="p-6">
         <p>Time starts at 8:00 am</p>
         <button
-          :disabled="!isLocationEnabled || internStore.isClockIn"
+          :disabled="!internStore.isLocationEnabled || internStore.isClockIn"
           @click="timeInHandler"
           class="w-full rounded btn btn-primary"
         >
@@ -26,25 +26,26 @@
         <p>Time ends at 5:00 pm</p>
         <button
           @click="timeOutHandler"
-          :disabled="!isLocationEnabled || !internStore.isClockIn"
+          :disabled="!internStore.isLocationEnabled || !internStore.isClockIn"
           class="w-full rounded btn btn-primary"
         >
           Clock out
         </button>
       </div>
       <div class="py-3 flex justify-center">
-        <div v-if="!isLocationEnabled" class="p-3">
+        <div v-if="!internStore.isLocationEnabled" class="p-3">
           <p
             class="inline-block md:text-base text-xs text-center bg-red-600 p-3 text-gray-50 font-medium"
           >
-            {{ errorMessage }}<span class="block">Please enable your location</span>
+            {{ internStore.errorMessage
+            }}<span class="block">Please enable your location</span>
           </p>
         </div>
         <div v-else class="p-3 flex justify-center">
           <p
-            class="inline-block md:text-base text-xs bg-green-600 p-3 text-gray-50 font-medium"
+            class="inline-block md:text-xs text-[0.6rem] bg-green-600 p-3 text-gray-50 font-medium"
           >
-            Access location granted you can now clock in
+            Access location granted you can now clock in/clock out
           </p>
         </div>
       </div>
@@ -54,17 +55,10 @@
 
 <script setup>
 import { useInternStore } from "@/stores/InternStore";
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref, onUnmounted } from "vue";
 const internStore = useInternStore();
-
-const isLocationEnabled = ref(false);
 const timeStringData = ref("");
 const clockInErrorMessage = ref("");
-const errorMessage = ref("");
-const locationData = reactive({
-  lat: "",
-  long: "",
-});
 
 const updateClock = async () => {
   const now = new Date();
@@ -83,32 +77,16 @@ const updateClock = async () => {
   timeStringData.value = `${hours}:${minutes}:${seconds} ${period}`;
 };
 
-const getLocation = async () => {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        locationData.lat = position.coords.latitude;
-        locationData.long = position.coords.longitude;
-        isLocationEnabled.value = true;
-      },
-      (err) => {
-        errorMessage.value = `Error: ${err.message}`;
-      }
-    );
-  } else {
-    errorMessage.value = "Geolocation is not supported by this browser.";
-  }
-};
 const removeErrorMessage = () => {
   clockInErrorMessage.value = "";
 };
 const timeInData = reactive({
-  timeInLocation: locationData,
+  timeInLocation: internStore.locationData,
   timeIn: new Date(),
   date: new Date().toLocaleDateString(),
 });
 const timeOutData = reactive({
-  timeOutLocation: locationData,
+  timeOutLocation: internStore.locationData,
   timeOut: new Date(),
   date: new Date().toLocaleDateString(),
 });
@@ -116,9 +94,8 @@ const timeOutData = reactive({
 const timeInHandler = async () => {
   try {
     const response = await internStore.clockIn(timeInData);
-    if (response.response.data.content) {
+    if (response) {
       clockInErrorMessage.value = response.response.data.content;
-      await getLocation();
     }
   } catch (err) {
     console.log(err);
@@ -132,12 +109,23 @@ const timeOutHandler = async () => {
     console.log(err);
   }
 };
-
+let intervalid = null;
 onMounted(async () => {
+  await internStore.getLocationHandler();
+  if (internStore.isClockIn) {
+    return (intervalid = setInterval(internStore.sendLocationHandler, 3000));
+  } else {
+    clearInterval(intervalid);
+  }
   await internStore.fetchRequiredHours();
-  await getLocation();
   await updateClock();
   setInterval(updateClock, 1000);
+});
+
+onUnmounted(async () => {
+  if (intervalid) {
+    clearInterval(intervalid);
+  }
 });
 </script>
 

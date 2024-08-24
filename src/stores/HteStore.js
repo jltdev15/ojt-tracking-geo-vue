@@ -12,9 +12,10 @@ export const useHteStore = defineStore("hte", () => {
   const acceptedApplicantsList = ref([]);
   const approvedApplicantsList = ref([]);
   const onlineInternList = ref([])
+  const onlineLocationList = ref([])
   const hteLocationDefault = reactive({
     lat:'',
-    long:'',
+    lng:'',
   })
 
   //#region CRUD for Internships listing
@@ -25,7 +26,7 @@ export const useHteStore = defineStore("hte", () => {
       console.log(response);
       internshipList.value = response.data.content;
       hteLocationDefault.lat = 14.8333;
-      hteLocationDefault.long = 120.8833;
+      hteLocationDefault.lng = 120.8833;
     } catch (err) {
       console.log(err);
     }
@@ -114,6 +115,10 @@ export const useHteStore = defineStore("hte", () => {
       const response = await apiClient.get(`/hte/internship/online`);
       console.log(response.data.content);
       onlineInternList.value = response.data.content;
+      onlineInternList.value.forEach(element => {
+        onlineLocationList.value.push(element.currentLocation)
+
+      });
     } catch (err) {
       console.log(err);
     }
@@ -171,6 +176,7 @@ export const useHteStore = defineStore("hte", () => {
     fetchApplicantAccepted,
     getOnlineInterns,
     onlineInternList,
-    hteLocationDefault
+    hteLocationDefault,
+    onlineLocationList
   };
 });

@@ -3,29 +3,37 @@
     <header class="flex items-center justify-between p-3 bg-gray-50">
       <h1 class="text-3xl font-bold">Intern Monitoring</h1>
     </header>
-    <EasyDataTable
-      :headers="headers"
-      :items="hteStore.onlineInternList"
-      table-class-name="customize-table"
-    >
-      <template #item-status="item">
-        <div
-          v-if="
-            item.currentLocation.lat === hteStore.hteLocationDefault.lat &&
-            item.currentLocation.long === hteStore.hteLocationDefault.long
-          "
-        >
-          <p class="bg-green-600 inline-block p-3 rounded-md text-gray-50 font-bold">
-            Within Vicinity
-          </p>
-        </div>
-        <div v-else>
-          <p class="bg-red-600 inline-block p-3 rounded-md text-gray-50 font-bold">
-            Outside Vicinity
-          </p>
-        </div>
-      </template>
-    </EasyDataTable>
+    <div class="w-full grid grid-cols-2 gap-6">
+      <EasyDataTable
+        :headers="headers"
+        :items="hteStore.onlineInternList"
+        border-cell
+        table-class-name="customize-table"
+      >
+        <template #item-status="item">
+          <div
+            v-if="
+              item.currentLocation.lat === hteStore.hteLocationDefault.lat &&
+              item.currentLocation.lng === hteStore.hteLocationDefault.lng
+            "
+          >
+            <p class="bg-green-600 inline-block p-3 rounded-md text-gray-50 font-bold">
+              Within Vicinity
+            </p>
+          </div>
+          <div v-else>
+            <p class="bg-red-600 inline-block p-3 rounded-md text-gray-50 font-bold">
+              Outside Vicinity
+            </p>
+          </div>
+        </template>
+      </EasyDataTable>
+      <div
+        v-if="hteStore.onlineLocationList.length"
+        id="map"
+        style="height: 300px; width: 100%"
+      ></div>
+    </div>
   </div>
 </template>
 
@@ -34,7 +42,10 @@ import { useRouter } from "vue-router";
 import { onMounted, ref, onUnmounted } from "vue";
 import { useHteStore } from "@/stores/HteStore";
 const hteStore = useHteStore();
+
 // console.log(hteStore.hteLocationDefault.lat);
+// hteStore.onlineInternList.forEach((item) => internLocations.push(item));
+// console.log(hteStore.onlineInternList);
 
 const headers = [
   { text: "INTERN", value: "name" },
@@ -46,6 +57,38 @@ const getOnlineInternHandler = async () => {
   await hteStore.getOnlineInterns();
 };
 let intervalid = null;
+async function initMap() {
+  const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
+  const mapCenter =
+    hteStore.onlineLocationList.length > 0
+      ? {
+          lat: hteStore.onlineLocationList[0].lat,
+          lng: hteStore.onlineLocationList[0].lng,
+        }
+      : { lat: 0, lng: 0 };
+
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 20,
+    center: mapCenter,
+    mapId: "DEMO_MAP_ID",
+  });
+
+  hteStore.onlineLocationList.forEach((location) => {
+    const marker = new google.maps.marker.AdvancedMarkerElement({
+      position: { lat: location.lat, lng: location.lng },
+      map: map,
+      title: location.title,
+    });
+
+    const infoWindow = new google.maps.InfoWindow({
+      content: `<h3>${location.title}</h3>`,
+    });
+
+    marker.addListener("click", () => {
+      infoWindow.open(map, marker);
+    });
+  });
+}
 onMounted(async () => {
   await hteStore.fetchInternships();
   await hteStore.fetchApplicantList();
@@ -56,10 +99,29 @@ onMounted(async () => {
   } else {
     clearInterval(intervalid);
   }
+  // Dynamically load the Google Maps script
+  const script = document.createElement("script");
+  script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDLPMHSJa3zvaRq0pnbJvC83rYp_TFLBxE&callback=initMap`;
+  script.async = true;
+  script.defer = true;
+  window.initMap = initMap; // Assign initMap to the global window object
+  document.head.appendChild(script);
 });
 onUnmounted(async () => {
   clearInterval(intervalid);
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.customize-table {
+  --easy-table-border: 1px rounded #445269;
+  --easy-table-header-font-size: 12px;
+  --easy-table-header-height: 30px;
+  --easy-table-header-font-color: #fff;
+  --easy-table-header-background-color: #ae1818;
+  --easy-table-body-row-font-size: 16px;
+
+  --easy-table-body-row-height: 100px;
+  --easy-table-body-row-font-size: 16px;
+}
+</style>

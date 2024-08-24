@@ -37,7 +37,7 @@
               <h2 class="text-sm font-semibold text-gray-800">
                 {{ authStore.currentUser }}
               </h2>
-              <p class="text-xs text-gray-500">Intern Account</p>
+              <p class="text-xs text-gray-500">Coordinator</p>
             </div>
           </button>
         </li>
@@ -109,14 +109,9 @@ const handleLogout = async () => {
 let intervalid = null;
 
 onMounted(async () => {
-  await internStore.fetchApplicationList();
-  await internStore.fetchRequiredHours();
-
-  if (internStore.isClockIn) {
-    return (intervalid = setInterval(internStore.sendLocationHandler, 3000));
-  } else {
-    clearInterval(intervalid);
-  }
+  console.log("====================================");
+  console.log(authStore.currentUser);
+  console.log("====================================");
 });
 
 onUnmounted(async () => {

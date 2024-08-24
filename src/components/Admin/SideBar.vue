@@ -77,18 +77,15 @@
       </li>
       <span class="font-bold text-gray-400">SETTINGS</span>
       <li class="mb-1 group">
-        <a
-          href=""
+        <router-link
+          :to="{ name: 'appSettings' }"
           class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100"
         >
-          <i class="mr-3 text-lg bx bx-bell"></i>
-          <span class="text-sm">Notifications</span>
-          <span
-            class="md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-red-600 bg-red-200 rounded-full"
-            >5</span
-          >
-        </a>
+          <i class="mr-3 text-lg bx bx-cog"></i>
+          <span class="text-sm">App Settings</span>
+        </router-link>
       </li>
+      <span class="font-bold text-gray-400 uppercase">Communication</span>
       <li class="mb-1 group">
         <a
           href=""
