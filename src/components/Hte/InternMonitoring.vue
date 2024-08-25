@@ -28,7 +28,14 @@
           </div>
         </template>
       </EasyDataTable>
-      <div v-if="isMapShow" id="map" style="height: 300px; width: 100%"></div>
+      <div
+        v-if="hteStore.onlineLocationList.length > 0"
+        id="map"
+        style="height: 300px; width: 100%"
+      ></div>
+      <div v-else>
+        <p>No currently online</p>
+      </div>
     </div>
   </div>
 </template>
