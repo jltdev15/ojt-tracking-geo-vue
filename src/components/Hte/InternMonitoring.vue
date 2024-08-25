@@ -77,10 +77,10 @@ async function initMap() {
     mapId: "DEMO_MAP_ID",
   });
 
-  await addMarkers();
+  addMarkers();
 }
 
-async function addMarkers() {
+function addMarkers() {
   hteStore.onlineLocationList.forEach((location) => {
     const marker = new google.maps.marker.AdvancedMarkerElement({
       position: { lat: location.lat, lng: location.lng },
@@ -102,10 +102,6 @@ async function addMarkers() {
 watch(hteStore.onlineLocationList, async (newLocations, oldLocations) => {
   if (JSON.stringify(newLocations) !== JSON.stringify(oldLocations)) {
     if (newLocations.length > 0) {
-      isMapShow.value = true;
-      console.log("====================================");
-      console.log(isMapShow.value);
-      console.log("====================================");
       // Clear existing markers
       map = new google.maps.Map(document.getElementById("map"), {
         zoom: 15,
