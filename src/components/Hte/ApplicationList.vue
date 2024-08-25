@@ -165,7 +165,7 @@ const handleAcceptApplicant = async (applicationId) => {
 const headers = [
   { text: "APPLICATION ID", value: "applicationId" },
   { text: "JOB TITLE", value: "title" },
-  { text: "APPLICANT NAME", value: "applicantName" },
+  { text: "APPLICANT NAME", value: "name" },
   { text: "DEPARTMENT", value: "department" },
   { text: "REQUIREMENTS LIST", value: "viewRequirements" },
   { text: "STATUS", value: "status" },

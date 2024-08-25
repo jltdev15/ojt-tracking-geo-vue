@@ -18,45 +18,42 @@
             "
           >
             <p class="bg-green-600 inline-block p-3 rounded-md text-gray-50 font-bold">
-              Within Vicinity
+              Inside
             </p>
           </div>
           <div v-else>
             <p class="bg-red-600 inline-block p-3 rounded-md text-gray-50 font-bold">
-              Outside Vicinity
+              Outside
             </p>
           </div>
         </template>
       </EasyDataTable>
-      <div
-        v-if="hteStore.onlineLocationList.length"
-        id="map"
-        style="height: 300px; width: 100%"
-      ></div>
+      <div v-if="isMapShow" id="map" style="height: 300px; width: 100%"></div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { useRouter } from "vue-router";
-import { onMounted, ref, onUnmounted } from "vue";
+import { onMounted, ref, onUnmounted, watch } from "vue";
 import { useHteStore } from "@/stores/HteStore";
 const hteStore = useHteStore();
 
 // console.log(hteStore.hteLocationDefault.lat);
 // hteStore.onlineInternList.forEach((item) => internLocations.push(item));
 // console.log(hteStore.onlineInternList);
-
+const isMapShow = ref(false);
 const headers = [
   { text: "INTERN", value: "name" },
   { text: "TIME IN", value: "timeIn" },
-  { text: "CURRENT LOCATION", value: "status" },
+  { text: "STATUS", value: "status" },
 ];
 
 const getOnlineInternHandler = async () => {
   await hteStore.getOnlineInterns();
 };
 let intervalid = null;
+let map;
 async function initMap() {
   const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
   const mapCenter =
@@ -67,12 +64,16 @@ async function initMap() {
         }
       : { lat: 0, lng: 0 };
 
-  const map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 20,
+  map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 15,
     center: mapCenter,
     mapId: "DEMO_MAP_ID",
   });
 
+  await addMarkers();
+}
+
+async function addMarkers() {
   hteStore.onlineLocationList.forEach((location) => {
     const marker = new google.maps.marker.AdvancedMarkerElement({
       position: { lat: location.lat, lng: location.lng },
@@ -89,6 +90,32 @@ async function initMap() {
     });
   });
 }
+
+// Watch the internLocations array for changes and refresh the map
+watch(hteStore.onlineLocationList, async (newLocations, oldLocations) => {
+  if (JSON.stringify(newLocations) !== JSON.stringify(oldLocations)) {
+    if (newLocations.length > 0) {
+      isMapShow.value = true;
+      console.log("====================================");
+      console.log(isMapShow.value);
+      console.log("====================================");
+      // Clear existing markers
+      map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 15,
+        center:
+          newLocations.length > 0
+            ? { lat: newLocations[0].lat, lng: newLocations[0].lng }
+            : { lat: 0, lng: 0 },
+        mapId: "DEMO_MAP_ID",
+      });
+
+      // Add new markers
+      await addMarkers();
+    } else {
+      isMapShow.value = false;
+    }
+  }
+});
 onMounted(async () => {
   await hteStore.fetchInternships();
   await hteStore.fetchApplicantList();

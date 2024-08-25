@@ -25,8 +25,8 @@ export const useHteStore = defineStore("hte", () => {
       const response = await apiClient.get(`/hte/list`);
       console.log(response);
       internshipList.value = response.data.content;
-      hteLocationDefault.lat = 14.8333;
-      hteLocationDefault.lng = 120.8833;
+      hteLocationDefault.lat = 14.928082275482192;
+      hteLocationDefault.lng = 120.89439798465614;
     } catch (err) {
       console.log(err);
     }
@@ -70,7 +70,7 @@ export const useHteStore = defineStore("hte", () => {
     try {
       const response = await apiClient.get(`/hte/applicants/list`);
       console.log(response.data.content);
-      applicantList.value = await response.data.content;
+      applicantList.value = response.data.content;
     } catch (err) {
       console.log(err);
     }
@@ -78,7 +78,7 @@ export const useHteStore = defineStore("hte", () => {
   const fetchApplicantAccepted = async () => {
     try {
       const response = await apiClient.get(`/hte/applicants/accepted`);
-      console.log(response.data.content);
+      console.log(response);
       acceptedApplicantsList.value = await response.data.content;
     } catch (err) {
       console.log(err);
@@ -112,13 +112,18 @@ export const useHteStore = defineStore("hte", () => {
 
   const getOnlineInterns = async () => {
     try {
-      const response = await apiClient.get(`/hte/internship/online`);
-      console.log(response.data.content);
-      onlineInternList.value = response.data.content;
-      onlineInternList.value.forEach(element => {
-        onlineLocationList.value.push(element.currentLocation)
+  
+        const response = await apiClient.get(`/hte/internship/online`);
+        console.log(response.data.content);
+        onlineInternList.value = response.data.content;
+        if(onlineInternList.value.length > 0) {
+          onlineInternList.value.forEach(element => {
+            onlineLocationList.value.push(element.currentLocation)
+    
+          });
+        }
 
-      });
+      
     } catch (err) {
       console.log(err);
     }

@@ -9,6 +9,7 @@ export const useInternStore = defineStore("intern", () => {
   const isClockIn = ref(false);
   const isLocationEnabled = ref(false)
   const errorMessage = ref("");
+  const isInternReady = ref(false)
   const locationData = reactive({
     lat: "",
     lng: "",
@@ -63,6 +64,7 @@ export const useInternStore = defineStore("intern", () => {
       isClockIn.value = response.data.content.isClockIn;
       requiredHours.value = response.data.content.requiredHours;
       workedHours.value = response.data.content.workedHours;
+      isInternReady.value = response.data.content.isInternshipReady;
       console.log(response);
     } catch (err) {
       console.log(err);
@@ -109,11 +111,10 @@ export const useInternStore = defineStore("intern", () => {
   const sendLocationHandler = async() => {
 
     try {
-       
-     const response =  await apiClient.put('intern/currentlocation', locationData)
-
-     console.log(response);
-     
+       if(isClockIn.value = true){
+        const response =  await apiClient.put('intern/currentlocation', locationData)
+        console.log(response);
+       }
 
     }catch(err) {
       console.log(err.message)
@@ -185,7 +186,8 @@ export const useInternStore = defineStore("intern", () => {
     locationData,
     isLocationEnabled,
     attendanceArr,
-    getAttendanceHandler
+    getAttendanceHandler,
+    isInternReady
     
   };
 });

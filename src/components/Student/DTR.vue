@@ -54,9 +54,11 @@
 </template>
 
 <script setup>
+import { useRouter } from "vue-router";
 import { useInternStore } from "@/stores/InternStore";
 import { onMounted, reactive, ref, onUnmounted } from "vue";
 const internStore = useInternStore();
+const router = useRouter();
 const timeStringData = ref("");
 const clockInErrorMessage = ref("");
 
@@ -95,8 +97,9 @@ const timeInHandler = async () => {
   try {
     const response = await internStore.clockIn(timeInData);
     if (response) {
-      clockInErrorMessage.value = response.response.data.content;
+      return (clockInErrorMessage.value = response.response.data.content);
     }
+    await startPolling();
   } catch (err) {
     console.log(err);
   }
@@ -104,19 +107,25 @@ const timeInHandler = async () => {
 const timeOutHandler = async () => {
   try {
     const response = await internStore.clockOut(timeOutData);
+    router.push({ name: "student_dashboard" });
     console.log(response);
   } catch (err) {
+    clearInterval(intervalid);
     console.log(err);
   }
 };
 let intervalid = null;
-onMounted(async () => {
-  await internStore.getLocationHandler();
+
+const startPolling = async () => {
   if (internStore.isClockIn) {
     return (intervalid = setInterval(internStore.sendLocationHandler, 3000));
   } else {
     clearInterval(intervalid);
   }
+};
+onMounted(async () => {
+  await internStore.getLocationHandler();
+  await startPolling();
   await internStore.fetchRequiredHours();
   await updateClock();
   setInterval(updateClock, 1000);
