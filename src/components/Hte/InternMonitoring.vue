@@ -100,6 +100,8 @@ function addMarkers() {
 
 // Watch the internLocations array for changes and refresh the map
 watch(hteStore.onlineLocationList, async (newLocations, oldLocations) => {
+  console.log(newLocations);
+
   if (JSON.stringify(newLocations) !== JSON.stringify(oldLocations)) {
     if (newLocations.length > 0) {
       // Clear existing markers
@@ -112,8 +114,7 @@ watch(hteStore.onlineLocationList, async (newLocations, oldLocations) => {
         mapId: "DEMO_MAP_ID",
       });
 
-      // Add new markers
-      await addMarkers();
+      addMarkers();
     } else {
       isMapShow.value = false;
     }

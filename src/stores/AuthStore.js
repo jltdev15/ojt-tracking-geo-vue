@@ -87,8 +87,11 @@ export const useAuthStore = defineStore("auth", () => {
     }
   };
   const submitInternLogout = async () => {
+    console.log(internStore.isClockIn);
+    console.log(isAuthenticated.value);
+    
     try {
-      if(isAuthenticated.value && internStore.isClockIn) {
+      if(isAuthenticated.value && internStore.isClockIn) {       
         router.push("/student/dashboard/dtr");
        return alert('Logout failed, Please clock out first')
       }
