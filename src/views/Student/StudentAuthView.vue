@@ -72,7 +72,6 @@ const handleLogin = async () => {
     password: password.value,
   };
   await authStore.internLogin(loginData);
-  router.push("/student/dashboard");
 };
 </script>
 

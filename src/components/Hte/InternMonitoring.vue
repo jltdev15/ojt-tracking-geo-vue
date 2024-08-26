@@ -131,7 +131,9 @@ onMounted(async () => {
   }
   // Dynamically load the Google Maps script
   const script = document.createElement("script");
-  script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDLPMHSJa3zvaRq0pnbJvC83rYp_TFLBxE&callback=initMap`;
+  script.src = `https://maps.googleapis.com/maps/api/js?key=${
+    import.meta.env.VITE_API_GOOGLE_KEY
+  }&callback=initMap`;
   script.async = true;
   script.defer = true;
   window.initMap = initMap; // Assign initMap to the global window object

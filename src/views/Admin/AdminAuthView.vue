@@ -2,7 +2,9 @@
   <div>
     <!-- component -->
     <div class="flex items-center justify-center w-full min-h-screen dark:bg-gray-950">
-      <div class="max-w-md px-8 py-6 bg-white rounded-lg shadow-md dark:bg-gray-900">
+      <div
+        class="max-w-xl w-2/6 px-8 py-6 bg-white rounded-lg shadow-md dark:bg-gray-900"
+      >
         <h1 class="mb-4 text-2xl font-bold text-center dark:text-gray-200">
           Administrator
         </h1>
@@ -39,8 +41,7 @@
             <a
               href="#"
               class="text-xs text-gray-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >Forgot Password?</a
-            >
+            ></a>
           </div>
 
           <button

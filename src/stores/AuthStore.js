@@ -3,14 +3,17 @@ import { defineStore } from "pinia";
 import apiClient from "@/config/axiosClient";
 import { useRouter } from "vue-router";
 import { useToast } from "vue-toastification";
+import { useInternStore } from "./InternStore";
 export const useAuthStore = defineStore("auth", () => {
   const userRole = ref(null);
   const userId = ref(null);
   const currentUser = ref(null);
   const isInternReady = ref(null);
   const isAuthenticated = ref(false);
+  const loginErrorMessage = ref('')
   const router = useRouter();
   const toast = useToast();
+  const internStore = useInternStore()
 
 
   const checkAuth = async () => {
@@ -41,11 +44,13 @@ export const useAuthStore = defineStore("auth", () => {
     console.log(payload);
     try {
       const response = await apiClient.post("/admin/login", payload);
-      console.log(response);
+      console.log(response.response);
       isAuthenticated.value = true;
       await checkAuth();
     } catch (err) {
-      console.log(err);
+      loginErrorMessage.value = err.response.data
+      console.log(err.response.data);
+      alert('Invalid username or password. Try again')
     }
   };
   const hteLogin = async (payload) => {
@@ -57,20 +62,36 @@ export const useAuthStore = defineStore("auth", () => {
       await checkAuth();
     } catch (err) {
       console.log(err);
+      alert('Invalid username or password. Try again')
     }
   };
   const internLogin = async (payload) => {
     console.log(payload);
     try {
       const response = await apiClient.post("/intern/login", payload);
-      isAuthenticated.value = true;
+      console.log(response);
+      router.push("/student/dashboard");
       await checkAuth();
+    } catch (err) {
+      console.log(err);
+      alert('Invalid username or password. Try again')
+    }
+  };
+  const submitLogout = async () => {
+
+    try {
+      await apiClient.post("/admin/logout", {});
+      isAuthenticated.value = false;
     } catch (err) {
       console.log(err);
     }
   };
-  const submitLogout = async () => {
+  const submitInternLogout = async () => {
     try {
+      if(isAuthenticated.value && internStore.isClockIn) {
+        router.push("/student/dashboard/dtr");
+       return alert('Logout failed, Please clock out first')
+      }
       await apiClient.post("/admin/logout", {});
       isAuthenticated.value = false;
     } catch (err) {
@@ -89,5 +110,7 @@ export const useAuthStore = defineStore("auth", () => {
     submitLogout,
     currentUser,
     isInternReady,
+    loginErrorMessage,
+    submitInternLogout
   };
 });

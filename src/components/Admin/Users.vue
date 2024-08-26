@@ -180,7 +180,8 @@
               </button>
             </div>
           </div>
-          <div v-if="selectedRole === 'HTE'" class="flex flex-col gap-3 pt-3">
+          <!-- <div v-if="selectedRole === 'HTE'" class="flex flex-col gap-3 pt-3"> -->
+          <div v-if="true" class="flex flex-col gap-3 pt-3">
             <label class="flex items-center gap-2 input input-bordered">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -274,6 +275,21 @@
                 type="text"
                 class="grow"
                 placeholder="Company Address"
+              />
+            </label>
+            <p>Please provide exact map coordinates</p>
+            <label class="flex items-center gap-2 input input-bordered">
+              <input
+                v-model="hte.mapLocation.lat"
+                type="number"
+                class="grow"
+                placeholder="Latitude"
+              />
+              <input
+                v-model="hte.mapLocation.lng"
+                type="number"
+                class="grow"
+                placeholder="Longtitude"
               />
             </label>
             <label for="" class="font-medium text-center"
@@ -469,6 +485,14 @@ const hte = reactive({
   contactNumber: "",
   address: "",
   hasMoa: "",
+  mapLocation: {
+    lat: {
+      type: Number,
+    },
+    lng: {
+      type: Number,
+    },
+  },
 });
 const coordinator = reactive({
   username: "",
@@ -518,7 +542,6 @@ const toggleShowPassword = () => {
 const handleToggleModal = async () => {
   isModalShow.value = !isModalShow.value;
   selectedRole.value = "Select User Role";
-  console.log(hte.role);
 };
 const resetForms = () => {
   (intern.username = ""),
@@ -535,12 +558,51 @@ onMounted(async () => {
 });
 
 const handleInternUser = async () => {
-  await userStore.addIntern(intern);
-  (intern.username = ""), resetForms();
-  await handleToggleModal();
+  try {
+    if (intern.username === "") {
+      return alert("Please enter username");
+    }
+    if (intern.password === "") {
+      return alert("Please enter password");
+    }
+    if (intern.email === "") {
+      return alert("Please enter email");
+    }
+    if (intern.fullName === "") {
+      return alert("Please enter full name");
+    }
+    if (intern.department === "") {
+      return alert("Please select department");
+    }
+
+    await userStore.addIntern(intern);
+    (intern.username = ""), resetForms();
+    await handleToggleModal();
+  } catch (err) {
+    console.log(err);
+  }
 };
 const handleHteUser = async () => {
   try {
+    if (hte.username === "") {
+      return alert("Please enter username");
+    }
+    if (hte.password === "") {
+      return alert("Please enter password");
+    }
+    if (hte.email === "") {
+      return alert("Please enter email");
+    }
+    if (hte.name === "") {
+      return alert("Please enter company name");
+    }
+    if (hte.contactNumber === "") {
+      return alert("Please enter contact number");
+    }
+    if (hte.address === "") {
+      return alert("Please enter address");
+    }
+
     await userStore.addHTE(hte);
     await handleToggleModal();
   } catch (err) {

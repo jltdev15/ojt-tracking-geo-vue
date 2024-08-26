@@ -102,7 +102,7 @@ const handleToggleDropDown = () => {
   isDropDownShow.value = !isDropDownShow.value;
 };
 const handleLogout = async () => {
-  await authStore.submitLogout();
+  await authStore.submitInternLogout();
   await router.push("/");
 };
 
