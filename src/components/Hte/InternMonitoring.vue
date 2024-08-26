@@ -3,7 +3,7 @@
     <header class="flex items-center justify-between p-3 bg-gray-50">
       <h1 class="text-3xl font-bold">Intern Monitoring</h1>
     </header>
-    <div class="w-full grid grid-cols-2 gap-6">
+    <div class="grid w-full grid-cols-2 gap-6">
       <EasyDataTable
         :headers="headers"
         :items="hteStore.onlineInternList"
@@ -17,12 +17,18 @@
               item.currentLocation.lng === hteStore.hteLocationDefault.lng
             "
           >
-            <p class="bg-green-600 inline-block p-3 rounded-md text-gray-50 font-bold">
+            <p class="inline-block p-3 font-bold bg-green-600 rounded-md text-gray-50">
               Inside
             </p>
           </div>
+          <div v-else-if=" item.currentLocation.lat === null &&
+              item.currentLocation.lng === null">
+            <p class="inline-block p-3 font-bold bg-red-600 rounded-md text-gray-50">
+              Connection lost
+            </p>
+          </div>
           <div v-else>
-            <p class="bg-red-600 inline-block p-3 rounded-md text-gray-50 font-bold">
+            <p class="inline-block p-3 font-bold bg-red-600 rounded-md text-gray-50">
               Outside
             </p>
           </div>

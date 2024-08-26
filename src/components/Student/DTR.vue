@@ -1,10 +1,10 @@
 <template>
   <div class="">
-    <header class="p-3 bg-gray-50 md:text-left text-center">
+    <header class="p-3 text-center bg-gray-50 md:text-left">
       <h1 class="text-3xl font-bold">Daily Time Record</h1>
     </header>
-    <section class="max-w-sm py-6 bg-gray-100 m-6 rounded-xl shadow-lg">
-      <p class="font-bold text-5xl text-center">{{ timeStringData }}</p>
+    <section class="max-w-sm py-6 m-6 bg-gray-100 shadow-lg rounded-xl">
+      <p class="text-5xl font-bold text-center">{{ timeStringData }}</p>
       <div class="p-6">
         <p>Time starts at 8:00 am</p>
         <button
@@ -16,7 +16,7 @@
         </button>
         <p
           @click="removeErrorMessage"
-          class="flex justify-center items-center gap-3 w-full m-3 py-3 text-gray-50 font-bold text-center mx-auto bg-red-600"
+          class="flex items-center justify-center w-full gap-3 py-3 m-3 mx-auto font-bold text-center bg-red-600 text-gray-50"
           v-if="clockInErrorMessage"
         >
           {{ clockInErrorMessage }}<i class="text-lg bx bx-info-circle"></i>
@@ -32,16 +32,16 @@
           Clock out
         </button>
       </div>
-      <div class="py-3 flex justify-center">
+      <div class="flex justify-center py-3">
         <div v-if="!internStore.isLocationEnabled" class="p-3">
           <p
-            class="inline-block md:text-base text-xs text-center bg-red-600 p-3 text-gray-50 font-medium"
+            class="inline-block p-3 text-xs font-medium text-center bg-red-600 md:text-base text-gray-50"
           >
             {{ internStore.errorMessage
             }}<span class="block">Please enable your location</span>
           </p>
         </div>
-        <div v-else class="p-3 flex justify-center">
+        <div v-else class="flex justify-center p-3">
           <p
             class="inline-block md:text-xs text-[0.6rem] bg-green-600 p-3 text-gray-50 font-medium"
           >
@@ -117,6 +117,7 @@ const timeOutHandler = async () => {
 let intervalid = null;
 
 const startPolling = async () => {
+  await internStore.getLocationHandler();
   if (internStore.isClockIn) {
     return (intervalid = setInterval(internStore.sendLocationHandler, 3000));
   } else {
@@ -124,7 +125,7 @@ const startPolling = async () => {
   }
 };
 onMounted(async () => {
-  await internStore.getLocationHandler();
+
   await startPolling();
   await internStore.fetchRequiredHours();
   await updateClock();

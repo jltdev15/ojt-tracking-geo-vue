@@ -101,6 +101,23 @@ export const useAuthStore = defineStore("auth", () => {
       console.log(err);
     }
   };
+  const getLocationHandler = async () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          locationData.lat = position.coords.latitude;
+          locationData.lng = position.coords.longitude;
+          isLocationEnabled.value = true;
+        },
+        (err) => {
+          errorMessage.value = `Error: ${err.message}`;
+        }
+      );
+    } else {
+      errorMessage.value = "Geolocation is not supported by this browser.";
+    }
+
+  }
 
   return {
     checkAuth,
@@ -114,6 +131,7 @@ export const useAuthStore = defineStore("auth", () => {
     currentUser,
     isInternReady,
     loginErrorMessage,
-    submitInternLogout
+    submitInternLogout,
+    getLocationHandler
   };
 });
