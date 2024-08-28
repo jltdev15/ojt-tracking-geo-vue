@@ -4,16 +4,8 @@ import apiClient from "@/config/axiosClient";
 export const useCoorStore = defineStore("coor", () => {
   const internList = ref([]);
   const hteList = ref([])
-  const applicationLists = ref([]);
-  const requiredHours = ref(null);
-  const workedHours = ref(null);
-  const isClockIn = ref(false);
-  const isLocationEnabled = ref(false)
-  const errorMessage = ref("");
-  const locationData = reactive({
-    lat: "",
-    long: "",
-  });
+  const requestList = ref([])
+
 
   const fetchInternLists = async () => {
     try {
@@ -35,25 +27,25 @@ export const useCoorStore = defineStore("coor", () => {
       console.log(err);
     }
   };
-  const applyInternship = async (jobId, payload) => {
+  const fetchRequestVisitation = async () => {
     try {
-      const response = await apiClient.post(`intern/apply/${jobId}`, payload, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await apiClient.get(`/coor/requests`);
+      requestList.value = response.data.content;
       console.log(response);
+      
     } catch (err) {
       console.log(err);
     }
-  };
+  }
+
 
   return {
     fetchInternLists,
     internList,
-    applyInternship,
     hteList,
-    fetchHTELists
+    fetchHTELists,
+    fetchRequestVisitation,
+    requestList
 
     
   };

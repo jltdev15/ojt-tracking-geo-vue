@@ -602,8 +602,15 @@ const handleHteUser = async () => {
     if (hte.address === "") {
       return alert("Please enter address");
     }
+    if (hte.mapLocation.lat === "") {
+      return alert("Please enter lat value");
+    }
+    if (hte.mapLocation.lng === "") {
+      return alert("Please enter lng value");
+    }
 
     await userStore.addHTE(hte);
+    resetForms();
     await handleToggleModal();
   } catch (err) {
     console.log(err);

@@ -88,6 +88,12 @@ const router = createRouter({
           component: () => import("../components/Coor/hteList.vue"),
           meta: { requiresAuth: true, roles: ["Coordinator"] },
         },
+        {
+          path: "requests",
+          name: "CoorRequest",
+          component: () => import("../components/Coor/VisitationRequestList.vue"),
+          meta: { requiresAuth: true, roles: ["Coordinator"] },
+        },
 
       ],
     },

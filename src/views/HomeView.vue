@@ -1,7 +1,7 @@
 <template>
   <div>
     <TheHeader />
-    <Hero />
+    <!-- <Hero /> -->
     <About />
   </div>
 </template>

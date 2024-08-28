@@ -1,14 +1,19 @@
 <template>
-  <div>
+  <div class="bg-[url('/dhvsu.jpg')]">
     <!-- component -->
-    <div class="flex items-center justify-center w-full min-h-screen dark:bg-gray-950">
-      <div class="max-w-md px-8 py-6 bg-white rounded-lg shadow-md dark:bg-gray-900">
-        <h1 class="mb-4 text-2xl font-bold text-center dark:text-gray-200">Intern</h1>
+    <div class="flex items-center justify-center w-full min-h-screen dark:bg-gray-50">
+      <img src="/dhvsu.jpg"
+                alt="Background Image" class="absolute object-cover object-center w-full h-full " />
+      <div class="md:w-1/5 max-w-xl z-[9999] px-8 py-6 bg-white rounded-lg shadow-md backdrop-blur-sm bg-white/10">
+
+        <div class="p-6">
+          <img class="w-24 h-24 mx-auto" src="/logo.png" alt="">
+        </div>
         <form @submit.prevent="handleLogin" action="#">
           <div class="mb-4">
             <label
               for="email"
-              class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-50"
               >Registered Email Address</label
             >
             <input
@@ -23,7 +28,7 @@
           <div class="mb-4">
             <label
               for="password"
-              class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+              class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-50"
               >Password</label
             >
             <input
@@ -37,13 +42,13 @@
             <a
               href="#"
               class="text-xs text-gray-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >Forgot Password?</a
+              ></a
             >
           </div>
 
           <button
             type="submit"
-            class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-[#da1f26] border border-transparent rounded-md shadow-sm hover:bg-[#da1f25d8] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             Login
           </button>

@@ -8,6 +8,9 @@ export const useAuthStore = defineStore("auth", () => {
   const userRole = ref(null);
   const userId = ref(null);
   const currentUser = ref(null);
+  const currentDepartment = ref(null);
+  const coorId =ref(null)
+
   const isInternReady = ref(null);
   const isAuthenticated = ref(false);
   const loginErrorMessage = ref('')
@@ -19,6 +22,8 @@ export const useAuthStore = defineStore("auth", () => {
   const checkAuth = async () => {
     try {
       const response = await apiClient.get(`/active`);
+      console.log(response);
+      
       userRole.value = response.data.content.role;
       userId.value = response.data.content._id;
       isAuthenticated.value = true;
@@ -29,7 +34,10 @@ export const useAuthStore = defineStore("auth", () => {
         return (currentUser.value = response.data.content.profile.name);
       }
       if (userRole.value === "Coordinator") {
-        return (currentUser.value = response.data.content.profile.fullName);
+        currentDepartment.value = response.data.content.profile.department
+        return currentUser.value = response.data.content.profile.fullName
+
+        ;
       }
       if (userRole.value === "Intern") {
         isInternReady.value = response.data.content.profile.isInternshipReady;
@@ -132,6 +140,8 @@ export const useAuthStore = defineStore("auth", () => {
     isInternReady,
     loginErrorMessage,
     submitInternLogout,
-    getLocationHandler
+    getLocationHandler,
+    currentDepartment,
+    coorId
   };
 });
