@@ -18,6 +18,15 @@ export const useHteStore = defineStore("hte", () => {
     lng:'',
   })
 
+  const internshipData = reactive({
+    id:'',
+    title:'',
+    status:'',
+    slots:'',
+    requirements:'',
+    location:''
+  })
+
   //#region CRUD for Internships listing
 
   const fetchInternships = async () => {
@@ -128,6 +137,46 @@ export const useHteStore = defineStore("hte", () => {
       console.log(err);
     }
   }
+  const getListingItem = async (id) => {
+    try {
+        const response = await apiClient.get(`/hte/list/${id}`);
+        console.log(response.data.content._id);
+        internshipData.id = response.data.content._id
+        internshipData.title = response.data.content.title;
+        internshipData.status = response.data.content.status;
+        internshipData.slots = response.data.content.slots;
+        internshipData.requirements = response.data.content.requirements;
+        internshipData.location = response.data.content.location;
+
+      
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const updateListingItem = async () => {
+    console.log(internshipData.id);
+    
+    const payload = {
+      title: internshipData.title,
+      requirements: internshipData.requirements,
+      slots: internshipData.slots,
+      status: internshipData.status,
+      location: internshipData.location,
+    };
+
+    try {
+      const response = await apiClient.patch(
+        `/hte/list/${internshipData.id.toString()}`,
+        payload
+      );
+     
+      console.log(response);
+      return response;
+    } catch (err) {
+      console.log(err);
+    }
+
+  }
   // Computed
 
   const getNumberOfListing = computed(() => {
@@ -151,6 +200,10 @@ export const useHteStore = defineStore("hte", () => {
   });
   const getNumberOfApprovedInterns = computed(() => {
     return applicantList.value.filter((item) => item.status === "Approved")
+      .length;
+  });
+  const getNumberOfInternForEvaluation = computed(() => {
+    return applicantList.value.filter((item) => item.status === "Finished")
       .length;
   });
 
@@ -182,6 +235,9 @@ export const useHteStore = defineStore("hte", () => {
     getOnlineInterns,
     onlineInternList,
     hteLocationDefault,
-    onlineLocationList
+    onlineLocationList,
+    internshipData,
+    getListingItem,
+    updateListingItem
   };
 });

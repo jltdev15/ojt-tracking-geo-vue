@@ -8,7 +8,7 @@
         </button>
       </div>
     </header>
-    <div class="flex justify-end gap-3 p-3">
+    <div class="flex justify-end gap-3 py-3">
       <input
         type="text"
         placeholder="Type here"
@@ -32,14 +32,14 @@
     >
       <template #item-operation="item">
         <div class="flex justify-between gap-3 py-2">
-          <button
-            @click="adminAuthStore.showUpdateModal(item)"
+          <router-link
+            :to="{ name: 'UpdateUser', params: { id: item._id } }"
             class="flex items-center justify-center w-24 gap-2 py-3 bg-blue-800 text-gray-50"
           >
             Update <i class="fa-solid fa-pen-to-square"></i>
-          </button>
+          </router-link>
           <button
-            @click="adminAuthStore.showDeleteModal(item)"
+            @click="toggleConfirmationModal(item._id)"
             class="flex items-center justify-center w-24 gap-2 py-3 bg-red-500 text-gray-50"
           >
             Remove<i class="fa-solid fa-trash"></i>
@@ -153,12 +153,19 @@
                 placeholder="Full Name"
               />
             </label>
+            <label class="flex items-center gap-2 input input-bordered">
+              <input
+                v-model="intern.contact"
+                type="number"
+                class="grow"
+                placeholder="Contact"
+              />
+            </label>
             <select
-              @change="handleSelectDepartment"
-              v-model="intern.department"
+              @change="handleSelectDepartmentIntern"
               class="w-full py-3 select select-bordered"
             >
-              <option selected disabled>Select department</option>
+              <option selected disabled value="">Select department</option>
 
               <option
                 v-for="item in userStore.departmentlist"
@@ -181,7 +188,7 @@
             </div>
           </div>
           <!-- <div v-if="selectedRole === 'HTE'" class="flex flex-col gap-3 pt-3"> -->
-          <div v-if="true" class="flex flex-col gap-3 pt-3">
+          <div v-if="selectedRole === 'HTE'" class="flex flex-col gap-3 pt-3">
             <label class="flex items-center gap-2 input input-bordered">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -194,7 +201,7 @@
                 />
               </svg>
               <input
-                v-model.trim="hte.username"
+                v-model="hte.username"
                 type="text"
                 class="grow"
                 placeholder="Username"
@@ -423,20 +430,22 @@
               />
             </label>
 
-            <select
-              @change="handleSelectDepartment"
-              v-model="coordinator.department"
-              class="w-full py-3 select select-bordered"
-            >
-              <option value="" disabled>Select Department</option>
-              <option
-                v-for="item in userStore.departmentlist"
-                :key="item._id"
-                :value="item.name"
+            <div class="py-3">
+              <select
+                @change="handleSelectDepartmentCoor"
+                class="w-full py-3 select select-bordered"
               >
-                {{ item.name }}
-              </option>
-            </select>
+                <option selected disabled value="">Select department</option>
+
+                <option
+                  v-for="item in userStore.departmentlist"
+                  :key="item._id"
+                  :value="item.name"
+                >
+                  {{ item.name }}
+                </option>
+              </select>
+            </div>
 
             <div class="flex flex-col gap-2">
               <button @click="handleCoorUser" class="text-lg btn btn-primary btn-block">
@@ -453,28 +462,46 @@
         </div>
       </template>
     </Modal>
+    <Modal :show="isConfirmationModalShow" title="Confirmation">
+      <template #default>
+        <p class="text-xl font-medium">Are you sure you want to remove this account?</p>
+        <div class="flex justify-end gap-3 pt-9">
+          <button @click="handleDeleteModalToggle" class="btn btn-outline">Cancel</button>
+          <button
+            type="button"
+            @click="handleDeleteAccount"
+            class="bg-red-600 btn text-gray-50"
+          >
+            Proceed
+          </button>
+        </div>
+      </template>
+    </Modal>
   </section>
 </template>
 
 <script setup>
 import { useAdminUserStore } from "@/stores/AdminUserStore";
+import { useRouter } from "vue-router";
 const userStore = useAdminUserStore();
 import { ref, onMounted, reactive } from "vue";
 
+const router = useRouter();
 const searchField = ref("Set filter");
 const searchValue = ref("");
 const isModalShow = ref(false);
 const selectedRole = ref("Select User Role");
 const passwordFieldType = ref("password");
 const showPassword = ref(false);
-
+const isConfirmationModalShow = ref(false);
 const intern = reactive({
   username: "",
   password: "",
+  contact: "",
   role: selectedRole.value,
   email: "",
   fullName: "",
-  department: "Select Department",
+  department: "",
 });
 const hte = reactive({
   username: "",
@@ -501,7 +528,7 @@ const coordinator = reactive({
   email: "",
   fullName: "",
   contactNumber: "",
-  department: "Select Department",
+  department: "",
 });
 const admin = reactive({
   username: "",
@@ -513,6 +540,17 @@ const admin = reactive({
   lastname: "",
 });
 const selectedOption = ref("Select Department");
+const userId = ref("");
+
+const toggleConfirmationModal = (id) => {
+  console.log(id);
+  userId.value = id;
+  isConfirmationModalShow.value = !isConfirmationModalShow.value;
+};
+const handleDeleteAccount = async () => {
+  await userStore.removeAccount(userId.value);
+  isConfirmationModalShow.value = !isConfirmationModalShow.value;
+};
 const handleGeneratePassword = () => {
   const length = 12;
   const charset =
@@ -543,13 +581,44 @@ const handleToggleModal = async () => {
   isModalShow.value = !isModalShow.value;
   selectedRole.value = "Select User Role";
 };
-const resetForms = () => {
-  (intern.username = ""),
-    (intern.password = ""),
-    (intern.role = "Select Role"),
-    (intern.email = ""),
-    (intern.fullName = ""),
-    (intern.department = "Select Department");
+const resetInternForms = () => {
+  intern.username = "";
+  intern.password = "";
+  intern.role = "Select Role";
+  intern.email = "";
+  intern.fullName = "";
+  intern.department = "";
+  intern.contact = "";
+};
+const resetHTEForms = () => {
+  hte.username = "";
+  hte.password = "";
+  hte.role = "Select Role";
+  hte.email = "";
+  hte.name = "";
+  hte.contactNumber = "";
+  hte.address = "";
+  hte.hasMoa = "";
+  hte.mapLocation.lat = "";
+  hte.mapLocation.lng = "";
+};
+const resetCoorForms = () => {
+  coordinator.username = "";
+  coordinator.password = "";
+  coordinator.role = "Select Role";
+  coordinator.email = "";
+  coordinator.fullName = "";
+  coordinator.contactNumber = "";
+  coordinator.department = "Select Department";
+};
+
+const handleSelectDepartmentIntern = (event) => {
+  console.log(event.target.value);
+  intern.department = event.target.value;
+};
+const handleSelectDepartmentCoor = (event) => {
+  console.log(event.target.value);
+  coordinator.department = event.target.value;
 };
 
 onMounted(async () => {
@@ -560,6 +629,9 @@ onMounted(async () => {
 const handleInternUser = async () => {
   try {
     if (intern.username === "") {
+      return alert("Please enter username");
+    }
+    if (intern.contact === "") {
       return alert("Please enter username");
     }
     if (intern.password === "") {
@@ -575,8 +647,9 @@ const handleInternUser = async () => {
       return alert("Please select department");
     }
 
-    await userStore.addIntern(intern);
-    (intern.username = ""), resetForms();
+    const response = await userStore.addIntern(intern);
+    alert(response.data.message);
+    resetInternForms();
     await handleToggleModal();
   } catch (err) {
     console.log(err);
@@ -609,8 +682,9 @@ const handleHteUser = async () => {
       return alert("Please enter lng value");
     }
 
-    await userStore.addHTE(hte);
-    resetForms();
+    const response = await userStore.addHTE(hte);
+    alert(response.data.message);
+    resetHTEForms();
     await handleToggleModal();
   } catch (err) {
     console.log(err);
@@ -618,8 +692,10 @@ const handleHteUser = async () => {
 };
 const handleCoorUser = async () => {
   try {
-    await userStore.addCoordinator(coordinator);
+    const response = await userStore.addCoordinator(coordinator);
+    alert(response.data.message);
     await handleToggleModal();
+    resetCoorForms();
   } catch (err) {
     console.log(err);
   }

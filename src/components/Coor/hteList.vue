@@ -31,31 +31,51 @@
         </template>
       </EasyDataTable>
       <Modal :show="isModalShow" title="New Request">
-        <div class="flex flex-col gap-3 pt-3">
-          <!-- <div v-if="true" class="flex flex-col gap-3 pt-3"> -->
-          <p class="font-medium text-gray-600">Date of Visitation</p>
-          <label class="flex items-center gap-2 input input-bordered">
-            <input
-              v-model="requestData.scheduledDate"
-              type="date"
-              class="grow"
-              placeholder="Date of Visitation"
-            />
-          </label>
-          <p class="font-medium text-gray-600">Time of Visitation</p>
-          <label class="flex items-center justify-between gap-2 input input-bordered">
-            <input class="grow" type="time" v-model="requestData.scheduledTime" />
-          </label>
+        <form @submit.prevent="submitRequestHandler" action="">
+          <div class="flex flex-col gap-3 pt-3">
+            <!-- <div v-if="true" class="flex flex-col gap-3 pt-3"> -->
+            <p class="font-medium text-gray-600">Date of Visitation</p>
+            <label class="flex items-center gap-2 input input-bordered">
+              <input
+                v-model="requestData.scheduledDate"
+                type="date"
+                :min="today"
+                class="grow"
+                placeholder="Date of Visitation"
+                required
+              />
+            </label>
+            <p class="font-medium text-gray-600">Time of Visitation</p>
+            <label class="flex items-center justify-between gap-2 input input-bordered">
+              <input
+                min="08:00"
+                max="17:00"
+                class="grow"
+                type="time"
+                v-model="requestData.scheduledtime"
+                required
+              />
+            </label>
+            <p class="font-medium text-gray-600">Remarks</p>
+            <textarea
+              v-model="requestData.remarks"
+              placeholder="Optional"
+              class="textarea textarea-bordered textarea-sm w-full max-w-xs"
+            ></textarea>
 
-          <div class="flex flex-col gap-2">
-            <button @click="handleCoorUser" class="text-lg btn btn-primary btn-block">
-              Send Request
-            </button>
-            <button class="text-lg btn btn-outline btn-block" @click="closeRequestModal">
-              Close
-            </button>
+            <div class="flex flex-col gap-2">
+              <button type="submit" class="text-lg btn btn-primary btn-block">
+                Send Request
+              </button>
+              <button
+                class="text-lg btn btn-outline btn-block"
+                @click="closeRequestModal"
+              >
+                Close
+              </button>
+            </div>
           </div>
-        </div>
+        </form>
       </Modal>
     </div>
   </div>
@@ -69,23 +89,24 @@ const authStore = useAuthStore();
 const coorStore = useCoorStore();
 const isModalShow = ref(false);
 const headers = [
-  { text: "Name", value: "name", width: 100 },
+  { text: "Name", value: "name" },
   { text: "Address", value: "address" },
   { text: "Date Registered", value: "createdAt" },
   { text: "Memorandum of Agreement", value: "moa" },
   // { text: "Request List", value: "moa" },
 
-  { text: "Action", value: "operation", width: 200 },
+  { text: "Action", value: "operation" },
 ];
-
+const today = new Date().toISOString().split("T")[0];
 const requestData = reactive({
   hteId: "",
-  coorId: "",
+  coorId: authStore.coorId,
   requestorName: authStore.currentUser,
   requesteeName: "",
-  department: "",
+  department: authStore.currentDepartment,
   scheduledDate: "",
-  scheduledTime: "",
+  scheduledtime: "",
+  remarks: "",
 });
 
 // const sendRequestHandler = async () => {
@@ -96,6 +117,18 @@ const openRequestModal = (hteId, hteName) => {
   isModalShow.value = !isModalShow.value;
   requestData.hteId = hteId;
   requestData.requesteeName = hteName;
+};
+
+const submitRequestHandler = async () => {
+  console.log(requestData);
+  const response = await coorStore.submitVisiRequest(requestData);
+  alert(response.data.message);
+  isModalShow.value = !isModalShow.value;
+  requestData.hteId = "";
+  requestData.requesteeName = "";
+  requestData.scheduledDate = "";
+  requestData.scheduledtime = "";
+  requestData.remarks = "";
 };
 const closeRequestModal = () => {
   isModalShow.value = !isModalShow.value;

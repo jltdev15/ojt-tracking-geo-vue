@@ -21,8 +21,11 @@
               Inside
             </p>
           </div>
-          <div v-else-if=" item.currentLocation.lat === null &&
-              item.currentLocation.lng === null">
+          <div
+            v-else-if="
+              item.currentLocation.lat === null && item.currentLocation.lng === null
+            "
+          >
             <p class="inline-block p-3 font-bold bg-red-600 rounded-md text-gray-50">
               Connection lost
             </p>
@@ -51,6 +54,7 @@ import { useRouter } from "vue-router";
 import { onMounted, ref, onUnmounted, watch } from "vue";
 import { useHteStore } from "@/stores/HteStore";
 const hteStore = useHteStore();
+const locationList = ref([]);
 
 // console.log(hteStore.hteLocationDefault.lat);
 // hteStore.onlineInternList.forEach((item) => internLocations.push(item));
@@ -105,7 +109,7 @@ function addMarkers() {
 }
 
 // Watch the internLocations array for changes and refresh the map
-watch(hteStore.onlineLocationList, async (newLocations, oldLocations) => {
+watch(locationList, async (newLocations, oldLocations) => {
   console.log(newLocations);
 
   if (JSON.stringify(newLocations) !== JSON.stringify(oldLocations)) {
@@ -136,6 +140,7 @@ onMounted(async () => {
   } else {
     clearInterval(intervalid);
   }
+  locationList.value = hteStore.onlineInternList;
   // Dynamically load the Google Maps script
   const script = document.createElement("script");
   script.src = `https://maps.googleapis.com/maps/api/js?key=${

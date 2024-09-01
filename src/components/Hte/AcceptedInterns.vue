@@ -1,7 +1,7 @@
 <template>
   <div class="p-3">
     <header class="flex items-center justify-between p-3 bg-gray-50">
-      <h1 class="text-3xl font-bold">Accepted Applicants</h1>
+      <h1 class="text-3xl font-bold">Interns</h1>
     </header>
     <div class="divider"></div>
     <div class="flex justify-end gap-3 pb-3">
@@ -33,6 +33,16 @@
           >
             Check Requirements
           </p>
+        </div>
+      </template>
+      <template #item-dailytimerecord="item">
+        <div class="flex justify-between gap-3 py-2">
+          <router-link
+            :to="{ name: 'DailyTimeRecord', params: { internId: item.internId } }"
+            class="flex items-center justify-center w-24 gap-2 py-3 bg-blue-800 text-gray-50"
+          >
+            View <i class="fa-solid fa-pen-to-square"></i>
+          </router-link>
         </div>
       </template>
       <template #item-remarks="item">
@@ -178,7 +188,7 @@ const headers = [
   { text: "INTERN", value: "name" },
   { text: "DEPARTMENT", value: "department" },
   { text: "HOURS RENDERED", value: "workedHours" },
-  { text: "EVALUATION", value: "evaluation" },
+  { text: "Daily Time Record", value: "dailytimerecord" },
   //   { text: "REQUIREMENTS LIST", value: "viewRequirements" },
   //   { text: "STATUS", value: "status" },
   //   { text: "REMARKS", value: "remarks" },

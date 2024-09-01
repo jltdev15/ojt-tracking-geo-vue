@@ -12,7 +12,7 @@
       <template #item-operation="item">
         <div v-if="item.requiredHours === 0" class="flex gap-3">
           <button
-            @click="acceptOffer(item.applicationId)"
+            @click="toggleRequiredHoursModal(item._id)"
             class="btn btn-block btn-primary"
           >
             Set required hours
@@ -28,37 +28,65 @@
             @click="acceptOffer(item.applicationId)"
             class="btn btn-block btn-primary"
           >
-            View evalution
+            View evaluation
           </button>
         </div>
         <div v-else>
-          <p>Evaluation not found</p>
+          <p>Not available</p>
         </div>
       </template>
       <template #item-rendered="item">
         <p>{{ item.workedHours.toFixed() }}</p>
       </template>
-      <template #loading>
-        <img
-          src="https://i.pinimg.com/originals/94/fd/2b/94fd2bf50097ade743220761f41693d5.gif"
-          style="width: 100px; height: 80px"
-        />
-      </template>
     </EasyDataTable>
+    <Modal :show="setRequiredHours" title="Set Required Hours">
+      <template #default>
+        <section class="">
+          <input
+            v-model="coorStore.requiredHours"
+            type="number"
+            placeholder="Type here"
+            class="w-full input input-bordered"
+          />
+          <div class="flex justify-end gap-3 items-center">
+            <button @click="toggleRequiredHoursModal" class="btn btn-secondary">
+              Close
+            </button>
+            <button @click="setHoursHandler" class="btn btn-primary my-3">
+              Set hours
+            </button>
+          </div>
+        </section>
+      </template>
+    </Modal>
   </div>
 </template>
 
 <script setup>
 import { useCoorStore } from "@/stores/CoorStore";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 const coorStore = useCoorStore();
+const internId = ref("");
+const setRequiredHours = ref(false);
+
+const toggleRequiredHoursModal = (id) => {
+  internId.value = id;
+  setRequiredHours.value = !setRequiredHours.value;
+};
+const setHoursHandler = async () => {
+  const response = await coorStore.setHoursRequired(internId.value);
+  console.log(response);
+  alert(response.data.content.message);
+  setRequiredHours.value = !setRequiredHours.value;
+  await coorStore.fetchInternLists();
+};
 const headers = [
-  { text: "Full name", value: "fullName", width: 200 },
+  { text: "Full name", value: "fullName" },
   { text: "Department", value: "department" },
   { text: "Hours Required", value: "requiredHours" },
   { text: "Hours Rendered", value: "rendered" },
   { text: "Evaluation", value: "evaluation" },
-  { text: "Action", value: "operation", width: 200 },
+  { text: "Action", value: "operation" },
 ];
 
 onMounted(async () => {

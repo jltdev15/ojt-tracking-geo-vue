@@ -3,7 +3,10 @@
     <header class="p-3 text-center bg-gray-50 md:text-left">
       <h1 class="text-3xl font-bold">Daily Time Record</h1>
     </header>
-    <section class="max-w-sm py-6 m-6 bg-gray-100 shadow-lg rounded-xl">
+    <section
+      v-if="internStore.isInternReady"
+      class="max-w-sm py-6 m-6 bg-gray-100 shadow-lg rounded-xl"
+    >
       <p class="text-5xl font-bold text-center">{{ timeStringData }}</p>
       <div class="p-6">
         <p>Time starts at 8:00 am</p>
@@ -49,6 +52,9 @@
           </p>
         </div>
       </div>
+    </section>
+    <section v-else>
+      <p>Please apply internship</p>
     </section>
   </div>
 </template>
@@ -125,7 +131,6 @@ const startPolling = async () => {
   }
 };
 onMounted(async () => {
-
   await startPolling();
   await internStore.fetchRequiredHours();
   await updateClock();

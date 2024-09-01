@@ -206,7 +206,7 @@
         <header class="py-3">
           <h1 class="text-xl font-semibold text-gray-400 uppercase">Coordinator</h1>
         </header>
-        <div class="grid gap-7 sm:grid-cols-2 lg:grid-cols-5">
+        <div class="grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
           <div class="p-5 bg-white rounded shadow-sm">
             <div class="flex items-center space-x-4 space-y-2">
               <div>
@@ -273,9 +273,9 @@
                 </div>
               </div>
               <div>
-                <div class="text-gray-400">Registered Coor</div>
+                <div class="text-gray-400">Department</div>
                 <div class="text-2xl font-bold text-gray-900">
-                  {{ adminUserStore.getNumberOfCoor }}
+                  {{ adminUserStore.getNumberOfDepartment }}
                 </div>
               </div>
             </div>
@@ -306,7 +306,7 @@
                 </div>
               </div>
               <div>
-                <div class="text-gray-400">Registered Admin</div>
+                <div class="text-gray-400">Visitation Sent</div>
                 <div class="text-2xl font-bold text-gray-900">
                   {{ adminUserStore.getNumberOfAdmin }}
                 </div>
@@ -338,7 +338,7 @@
                 </div>
               </div>
               <div>
-                <div class="text-gray-400">Total Users</div>
+                <div class="text-gray-400">Visitation Done</div>
                 <div class="text-2xl font-bold text-gray-900">
                   {{ adminUserStore.getNumberOfUsers }}
                 </div>
@@ -373,5 +373,6 @@ onMounted(async () => {
   await authStore.checkAuth();
   await adminUserStore.fetchUsers();
   await adminUserStore.fetchAllUsers();
+  await adminUserStore.fetchDepartmentList();
 });
 </script>

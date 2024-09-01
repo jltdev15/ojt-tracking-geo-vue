@@ -43,7 +43,7 @@
       <template #item-operation="item">
         <div class="flex justify-between gap-3 py-2">
           <button
-            @click="adminAuthStore.showUpdateModal(item)"
+            @click="handleToggleUpdateModal(item._id)"
             class="flex items-center justify-center w-24 gap-2 py-3 bg-blue-800 text-gray-50"
           >
             Edit <i class="fa-solid fa-pen-to-square"></i>
@@ -146,6 +146,71 @@
         </div>
       </template>
     </Modal>
+    <Modal :show="isUpdateModalShow" title="Update Listing">
+      <template #default>
+        <div>
+          <div class="flex flex-col gap-3 pt-3">
+            <label class="flex items-center gap-2 input input-bordered">
+              <input
+                v-model.trim="hteStore.internshipData.title"
+                type="text"
+                class="grow"
+                placeholder="Title"
+              />
+            </label>
+            <div class="py-3">
+              <select
+                class="w-full py-3 select select-bordered"
+                @change="handleSelectStatus"
+              >
+                <option disabled value="">Select Status</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+            <label class="flex items-center justify-between gap-2">
+              <textarea
+                class="w-full textarea textarea-bordered"
+                placeholder="Description"
+                v-model.trim="hteStore.internshipData.requirements"
+              ></textarea>
+            </label>
+
+            <label class="flex items-center gap-2 input input-bordered">
+              <input
+                v-model.trim="hteStore.internshipData.slots"
+                type="text"
+                class="grow"
+                placeholder="Number of slots"
+              />
+            </label>
+            <label class="flex items-center gap-2 input input-bordered">
+              <input
+                v-model.trim="hteStore.internshipData.location"
+                type="text"
+                class="grow"
+                placeholder="Location"
+              />
+            </label>
+
+            <div class="flex flex-col gap-2">
+              <button
+                @click="handleUpdateListingItem"
+                class="text-lg btn btn-primary btn-block"
+              >
+                Update Internship
+              </button>
+              <button
+                class="text-lg btn btn-outline btn-block"
+                @click="isUpdateModalShow = !isUpdateModalShow"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </template>
+    </Modal>
   </section>
 </template>
 
@@ -162,6 +227,7 @@ const searchValue = ref("");
 const itemId = ref("");
 const isModalShow = ref(false);
 const isConfirmationModalShow = ref(false);
+const isUpdateModalShow = ref(false);
 const newInternship = reactive({
   title: "",
   requirements: "",
@@ -171,6 +237,18 @@ const newInternship = reactive({
 
 const handleToggleModal = async () => {
   isModalShow.value = !isModalShow.value;
+};
+const handleToggleUpdateModal = async (id) => {
+  console.log(id);
+  await hteStore.getListingItem(id);
+  isUpdateModalShow.value = !isUpdateModalShow.value;
+};
+const handleUpdateListingItem = async () => {
+  const response = await hteStore.updateListingItem();
+  alert(response.data.status);
+  console.log(response);
+  await hteStore.fetchInternships();
+  isUpdateModalShow.value = !isUpdateModalShow.value;
 };
 const handleDeleteModalToggle = async (id) => {
   console.log(id);
@@ -190,6 +268,10 @@ const handleNewInternship = async () => {
   newInternship.location = "";
   await handleToggleModal();
 };
+const handleSelectStatus = async (event) => {
+  hteStore.internshipData.status = event.target.value;
+};
+
 onMounted(async () => {
   await hteStore.fetchInternships();
 });

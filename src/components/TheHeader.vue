@@ -16,8 +16,8 @@
           @click="toggleMobileNav"
         >
           <span class="sr-only">Open main menu</span>
-          <Bars3Icon class="w-6 h-6" aria-hidden="true" />
-        </button>
+          <Bars3Icon class="w-6 h-6" aria-hidden="true" /></button
+        >s
       </div>
       <div class="hidden lg:flex lg:gap-x-12">
         <a
@@ -29,7 +29,7 @@
         >
       </div>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-        <router-link to="/intern" class="text-sm font-semibold leading-6 text-gray-900"
+        <router-link to="/auth" class="text-sm font-semibold leading-6 text-gray-900"
           >Log in <span aria-hidden="true">&rarr;</span></router-link
         >
       </div>

@@ -21,16 +21,17 @@ const router = createRouter({
       component: HomeView,
       meta: { requiresAuth: false, roles: [""] },
     },
+    {
+      path: "/auth",
+      name: "student_auth",
+      component: () => import("../views/Student/StudentAuthView.vue"),
+    },
     // Admin
     {
       path: "/admin",
       redirect: "/admin/auth",
     },
-    {
-      path: "/admin/auth",
-      name: "admin_auth",
-      component: () => import("../views/Admin/AdminAuthView.vue"),
-    },
+
     {
       path: "/admin/dashboard",
       component: AdminDashBoardView,
@@ -49,6 +50,25 @@ const router = createRouter({
           meta: { requiresAuth: true, roles: ["Admin"] },
         },
         {
+          path: "interns",
+          name: "InternsList",
+          component: () => import("../components/Admin/InternList.vue"),
+          meta: { requiresAuth: true, roles: ["Admin"] },
+        },
+        {
+          path: "interns/:id",
+          name: "DTRList",
+          component: () => import("../components/Admin/DailyTimeRecordList.vue"),
+          meta: { requiresAuth: true, roles: ["Admin"] },
+        },
+        {
+          path: "manage-users/:id",
+          name: "UpdateUser",
+          component: () => import("../components/Admin/UpdateUser.vue"),
+          meta: { requiresAuth: true, roles: ["Admin"] },
+        },
+
+        {
           path: "settings",
           name: "appSettings",
           component: () => import("../components/Admin/Settings.vue"),
@@ -60,11 +80,7 @@ const router = createRouter({
       path: "/coor",
       redirect: "/coor/auth",
     },
-    {
-      path: "/coor/auth",
-      name: "coor_auth",
-      component: () => import("../views/Coor/CoorAuthView.vue"),
-    },
+
     {
       path: "/coor/dashboard",
       component: CoorDashBoardView,
@@ -102,11 +118,7 @@ const router = createRouter({
       path: "/hte",
       redirect: "/hte/auth",
     },
-    {
-      path: "/hte/auth",
-      name: "hte_auth",
-      component: () => import("../views/HTE/HTEAuthView.vue"),
-    },
+
     {
       path: "/hte/dashboard",
       component: HTEDashBoardView,
@@ -161,11 +173,7 @@ const router = createRouter({
       path: "/intern",
       redirect: "/intern/auth",
     },
-    {
-      path: "/intern/auth",
-      name: "student_auth",
-      component: () => import("../views/Student/StudentAuthView.vue"),
-    },
+
     {
       path: "/student/dashboard",
       component: StudentDashBoardView,
@@ -226,13 +234,13 @@ console.log('test');
   await authStore.checkAuth();
   if (to.meta.requiresAuth) {
     if (!authStore.isAuthenticated && to.meta.roles.includes("Admin")) {
-      next({ name: "admin_auth" });
+      next({ name: "student_auth" });
     } else if (!authStore.isAuthenticated && to.meta.roles.includes("HTE")) {
-      next({ name: "hte_auth" });
+      next({ name: "student_auth" });
     } else if (!authStore.isAuthenticated && to.meta.roles.includes("Intern")) {
       next({ name: "student_auth" });
     } else if (!authStore.isAuthenticated && to.meta.roles.includes("Coordinator")) {
-      next({ name: "coordinator_auth" });
+      next({ name: "student_auth" });
     }  else if (to.meta.roles && !to.meta.roles.includes(authStore.userRole)) {
       next({ name: "home" });
     } else {

@@ -35,6 +35,7 @@ export const useAuthStore = defineStore("auth", () => {
       }
       if (userRole.value === "Coordinator") {
         currentDepartment.value = response.data.content.profile.department
+        coorId.value = response.data.content.profile._id;
         return currentUser.value = response.data.content.profile.fullName
 
         ;
@@ -142,6 +143,7 @@ export const useAuthStore = defineStore("auth", () => {
     submitInternLogout,
     getLocationHandler,
     currentDepartment,
-    coorId
+    coorId,
+
   };
 });

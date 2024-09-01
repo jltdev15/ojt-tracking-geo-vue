@@ -7,6 +7,16 @@ export default {
   },
   plugins: [require("daisyui")],
   daisyui: {
-    themes: ["lofi"],
+   themes: [
+      {
+        mytheme: {
+          "primary": "#7f1d1d",
+          "accent": "#991b1b",
+
+        },
+      },
+      "business"
+
+    ],
   },
 };

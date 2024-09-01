@@ -24,7 +24,7 @@ import { onMounted } from "vue";
 import { useCoorStore } from "@/stores/CoorStore";
 const coorStore = useCoorStore();
 const headers = [
-  { text: "Company Name", value: "name", width: 100 },
+  { text: "Company Name", value: "name", width: 300 },
   { text: "Request Date", value: "address" },
   { text: "Request Time", value: "createdAt" },
   { text: "Status", value: "moa" },

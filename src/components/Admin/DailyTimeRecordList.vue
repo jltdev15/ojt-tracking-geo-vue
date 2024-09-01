@@ -38,7 +38,7 @@ const route = useRoute();
 const searchField = ref("Set filter");
 const searchValue = ref("");
 onMounted(async () => {
-  await userStore.fetchInternDailyLogs(route.params.internId);
+  await userStore.fetchInternDailyLogs(route.params.id);
 });
 
 const headers = [
