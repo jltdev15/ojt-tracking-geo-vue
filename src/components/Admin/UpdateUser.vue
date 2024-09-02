@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="breadcrumbs text-sm p-6">
+    <div class="p-6 text-sm breadcrumbs">
       <ul>
         <li>
           <router-link :to="{ name: 'admin_dashboard' }">Admin Dashboard</router-link>
@@ -195,7 +195,7 @@
             </select>
           </div>
 
-          <button @click="updateHandlerIntern" class="btn btn-primary btn-block py-3">
+          <button @click="updateHandlerIntern" class="py-3 btn btn-primary btn-block">
             Update
           </button>
         </section>
@@ -230,7 +230,7 @@ const updateHandlerCoor = async () => {
 };
 const updateHandlerHTE = async () => {
   await userStore.updateInformationHTE();
-  alert(response.data.message);
+  // alert(response.data.message);
   router.push({ name: "manage_users" });
 };
 const updateHandlerIntern = async () => {

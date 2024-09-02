@@ -78,6 +78,8 @@ export const useAdminUserStore = defineStore("user", () => {
   const fetchInterns = async () => {
     try {
       const response = await apiClient.get("/intern");
+      console.log(response);
+      
       userRoleList.intern = await response.data.content;
     } catch (err) {
       console.log(err);

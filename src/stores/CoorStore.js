@@ -6,6 +6,7 @@ export const useCoorStore = defineStore("coor", () => {
   const hteList = ref([])
   const requestList = ref([])
   const requiredHours = ref('')
+  const messageInfo = ref('')
 
   const fetchInternLists = async () => {
     try {
@@ -52,10 +53,13 @@ export const useCoorStore = defineStore("coor", () => {
       const response = await apiClient.post(`/coor/request`,payload);
       requestList.value = response.data.content;
       console.log(response);
+      alert('Request sent')
       return response;
       
     } catch (err) {
       console.log(err);
+      alert('Pending Request found')
+      return err;
     }
   }
   const setHoursRequired = async (id) => {
@@ -72,6 +76,19 @@ export const useCoorStore = defineStore("coor", () => {
     }
   }
 
+  // Computed
+  const getNumberOfInterns = computed(() => {
+    return internList.value.length;
+  });
+  const getNumberOfInternsDeployed = computed(() => {
+    return internList.value.filter((item) => item.isInternshipReady === true).length;
+
+  });
+  const getNumberOfHTE = computed(() => {
+    return hteList.value.length;
+
+  });
+
   return {
     fetchInternLists,
     internList,
@@ -82,7 +99,10 @@ export const useCoorStore = defineStore("coor", () => {
     fetchHTEItemList,
     submitVisiRequest,
     setHoursRequired,
-    requiredHours
+    requiredHours,
+    getNumberOfInterns,
+    getNumberOfInternsDeployed,
+    getNumberOfHTE
 
     
   };

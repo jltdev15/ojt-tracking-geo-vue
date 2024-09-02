@@ -58,49 +58,9 @@
               </div>
               <div>
                 <div class="text-2xl font-bold text-gray-900">
-                  {{ adminUserStore.getNumberOfInterns }}
+                  {{ coorStore.getNumberOfInterns }}
                 </div>
                 <div class="text-gray-400">Interns</div>
-              </div>
-            </div>
-          </div>
-          <div class="p-5 bg-white rounded shadow-sm">
-            <div class="flex items-center space-x-4 space-y-2">
-              <div>
-                <div
-                  class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-50 text-cyan-400"
-                >
-                  <svg
-                    height="8.4666mm"
-                    style="
-                      shape-rendering: geometricPrecision;
-                      text-rendering: geometricPrecision;
-                      image-rendering: optimizeQuality;
-                      fill-rule: evenodd;
-                      clip-rule: evenodd;
-                    "
-                    version="1.1"
-                    viewBox="0 0 846.66 846.66"
-                    width="8.4666mm"
-                    xml:space="preserve"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <defs></defs>
-                    <g id="Layer_x0020_1">
-                      <path
-                        class="fil0"
-                        d="M460.89 284.91l157.98 0 0 -214.83 -569.87 0 0 706.5 391.08 0 0 -470.86c0,-11.49 9.32,-20.81 20.81,-20.81zm-334.7 187.54l221.99 0c11.49,0 20.81,9.32 20.81,20.8l0 76c0,11.49 -9.32,20.8 -20.81,20.8l-221.99 0c-11.49,0 -20.8,-9.31 -20.8,-20.8l0 -76c0,-11.48 9.31,-20.8 20.8,-20.8zm201.19 41.61l-180.38 0 0 34.38 180.38 0 0 -34.38zm-201.19 -208.6l221.99 0c11.49,0 20.81,9.31 20.81,20.8l0 76c0,11.49 -9.32,20.8 -20.81,20.8l-221.99 0c-11.49,0 -20.8,-9.31 -20.8,-20.8l0 -76c0,-11.49 9.31,-20.8 20.8,-20.8zm201.19 41.61l-180.38 0 0 34.38 180.38 0 0 -34.38zm-201.19 -208.6l221.99 0c11.49,0 20.81,9.31 20.81,20.8l0 76c0,11.48 -9.32,20.8 -20.81,20.8l-221.99 0c-11.49,0 -20.8,-9.32 -20.8,-20.8l0 -76c0,-11.49 9.31,-20.8 20.8,-20.8zm201.19 41.61l-180.38 0 0 34.38 180.38 0 0 -34.38zm333.1 104.83l157.98 0c11.49,0 20.81,9.32 20.81,20.81l0 491.67c0,11.49 -9.32,20.8 -20.81,20.8 -263.42,0 -526.84,0 -790.26,0 -11.49,0 -20.81,-9.31 -20.81,-20.8l0 -748.12c0,-11.48 9.32,-20.8 20.81,-20.8l611.48 0c11.48,0 20.8,9.32 20.8,20.8l0 235.64zm8.67 491.67l0 -86.89 -58.95 0 0 86.89 58.95 0zm-100.56 0l0 -107.7c0,-11.49 9.31,-20.8 20.8,-20.8l100.57 0c11.49,0 20.8,9.31 20.8,20.8l0 107.7 86.9 0 0 -450.06 -157.98 0 -157.99 0 0 450.06 86.9 0zm-27.62 -283.08l61.46 0c11.49,0 20.8,9.31 20.8,20.8l0 61.46c0,11.49 -9.31,20.81 -20.8,20.81l-61.46 0c-11.49,0 -20.81,-9.32 -20.81,-20.81l0 -61.46c0,-11.49 9.32,-20.8 20.81,-20.8zm40.65 41.61l-19.85 0 0 19.85 19.85 0 0 -19.85zm95.3 -41.61l61.46 0c11.49,0 20.81,9.31 20.81,20.8l0 61.46c0,11.49 -9.32,20.81 -20.81,20.81l-61.46 0c-11.49,0 -20.8,-9.32 -20.8,-20.81l0 -61.46c0,-11.49 9.31,-20.8 20.8,-20.8zm40.66 41.61l-19.85 0 0 19.85 19.85 0 0 -19.85zm-176.61 -162.67l61.46 0c11.49,0 20.8,9.32 20.8,20.81l0 61.46c0,11.49 -9.31,20.8 -20.8,20.8l-61.46 0c-11.49,0 -20.81,-9.31 -20.81,-20.8l0 -61.46c0,-11.49 9.32,-20.81 20.81,-20.81zm40.65 41.61l-19.85 0 0 19.85 19.85 0 0 -19.85zm95.3 -41.61l61.46 0c11.49,0 20.81,9.32 20.81,20.81l0 61.46c0,11.49 -9.32,20.8 -20.81,20.8l-61.46 0c-11.49,0 -20.8,-9.31 -20.8,-20.8l0 -61.46c0,-11.49 9.31,-20.81 20.8,-20.81zm40.66 41.61l-19.85 0 0 19.85 19.85 0 0 -19.85z"
-                      />
-                    </g>
-                  </svg>
-                </div>
-              </div>
-              <div>
-                <div class="text-2xl font-bold text-gray-900">
-                  {{ adminUserStore.getNumberOfHTE }}
-                </div>
-                <div class="text-gray-400">HTE's</div>
               </div>
             </div>
           </div>
@@ -131,7 +91,7 @@
               </div>
               <div>
                 <div class="text-2xl font-bold text-gray-900">
-                  {{ adminUserStore.getNumberOfUsers }}
+                  {{ coorStore.getNumberOfInternsDeployed }}
                 </div>
                 <div class="text-gray-400">Deployed</div>
               </div>
@@ -178,52 +138,13 @@
               </div>
               <div>
                 <div class="text-2xl font-bold text-gray-900">
-                  {{ adminUserStore.getNumberOfHTE }}
+                  {{ coorStore.getNumberOfHTE }}
                 </div>
-                <div class="text-gray-400">with MOA</div>
+                <div class="text-gray-400">HTE</div>
               </div>
             </div>
           </div>
-          <div class="p-5 bg-white rounded shadow-sm">
-            <div class="flex items-center space-x-4 space-y-2">
-              <div>
-                <div
-                  class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-50 text-cyan-400"
-                >
-                  <svg
-                    height="8.4666mm"
-                    style="
-                      shape-rendering: geometricPrecision;
-                      text-rendering: geometricPrecision;
-                      image-rendering: optimizeQuality;
-                      fill-rule: evenodd;
-                      clip-rule: evenodd;
-                    "
-                    version="1.1"
-                    viewBox="0 0 846.66 846.66"
-                    width="8.4666mm"
-                    xml:space="preserve"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <defs></defs>
-                    <g id="Layer_x0020_1">
-                      <path
-                        class="fil0"
-                        d="M460.89 284.91l157.98 0 0 -214.83 -569.87 0 0 706.5 391.08 0 0 -470.86c0,-11.49 9.32,-20.81 20.81,-20.81zm-334.7 187.54l221.99 0c11.49,0 20.81,9.32 20.81,20.8l0 76c0,11.49 -9.32,20.8 -20.81,20.8l-221.99 0c-11.49,0 -20.8,-9.31 -20.8,-20.8l0 -76c0,-11.48 9.31,-20.8 20.8,-20.8zm201.19 41.61l-180.38 0 0 34.38 180.38 0 0 -34.38zm-201.19 -208.6l221.99 0c11.49,0 20.81,9.31 20.81,20.8l0 76c0,11.49 -9.32,20.8 -20.81,20.8l-221.99 0c-11.49,0 -20.8,-9.31 -20.8,-20.8l0 -76c0,-11.49 9.31,-20.8 20.8,-20.8zm201.19 41.61l-180.38 0 0 34.38 180.38 0 0 -34.38zm-201.19 -208.6l221.99 0c11.49,0 20.81,9.31 20.81,20.8l0 76c0,11.48 -9.32,20.8 -20.81,20.8l-221.99 0c-11.49,0 -20.8,-9.32 -20.8,-20.8l0 -76c0,-11.49 9.31,-20.8 20.8,-20.8zm201.19 41.61l-180.38 0 0 34.38 180.38 0 0 -34.38zm333.1 104.83l157.98 0c11.49,0 20.81,9.32 20.81,20.81l0 491.67c0,11.49 -9.32,20.8 -20.81,20.8 -263.42,0 -526.84,0 -790.26,0 -11.49,0 -20.81,-9.31 -20.81,-20.8l0 -748.12c0,-11.48 9.32,-20.8 20.81,-20.8l611.48 0c11.48,0 20.8,9.32 20.8,20.8l0 235.64zm8.67 491.67l0 -86.89 -58.95 0 0 86.89 58.95 0zm-100.56 0l0 -107.7c0,-11.49 9.31,-20.8 20.8,-20.8l100.57 0c11.49,0 20.8,9.31 20.8,20.8l0 107.7 86.9 0 0 -450.06 -157.98 0 -157.99 0 0 450.06 86.9 0zm-27.62 -283.08l61.46 0c11.49,0 20.8,9.31 20.8,20.8l0 61.46c0,11.49 -9.31,20.81 -20.8,20.81l-61.46 0c-11.49,0 -20.81,-9.32 -20.81,-20.81l0 -61.46c0,-11.49 9.32,-20.8 20.81,-20.8zm40.65 41.61l-19.85 0 0 19.85 19.85 0 0 -19.85zm95.3 -41.61l61.46 0c11.49,0 20.81,9.31 20.81,20.8l0 61.46c0,11.49 -9.32,20.81 -20.81,20.81l-61.46 0c-11.49,0 -20.8,-9.32 -20.8,-20.81l0 -61.46c0,-11.49 9.31,-20.8 20.8,-20.8zm40.66 41.61l-19.85 0 0 19.85 19.85 0 0 -19.85zm-176.61 -162.67l61.46 0c11.49,0 20.8,9.32 20.8,20.81l0 61.46c0,11.49 -9.31,20.8 -20.8,20.8l-61.46 0c-11.49,0 -20.81,-9.31 -20.81,-20.8l0 -61.46c0,-11.49 9.32,-20.81 20.81,-20.81zm40.65 41.61l-19.85 0 0 19.85 19.85 0 0 -19.85zm95.3 -41.61l61.46 0c11.49,0 20.81,9.32 20.81,20.81l0 61.46c0,11.49 -9.32,20.8 -20.81,20.8l-61.46 0c-11.49,0 -20.8,-9.31 -20.8,-20.8l0 -61.46c0,-11.49 9.31,-20.81 20.8,-20.81zm40.66 41.61l-19.85 0 0 19.85 19.85 0 0 -19.85z"
-                      />
-                    </g>
-                  </svg>
-                </div>
-              </div>
-              <div>
-                <div class="text-2xl font-bold text-gray-900">
-                  {{ adminUserStore.getNumberOfHTE }}
-                </div>
-                <div class="text-gray-400">without MOA</div>
-              </div>
-            </div>
-          </div>
+          
           <div class="p-5 bg-white rounded shadow-sm">
             <div class="flex items-center space-x-4 space-y-2">
               <div>
@@ -305,6 +226,8 @@ const adminUserStore = useAdminUserStore();
 onMounted(async () => {
   document.title = "OJT Tracker | Dashboard";
   await coorStore.fetchInternLists();
+  await coorStore.fetchHTELists()
+  await adminUserStore.fetchInterns()
   // await authStore.checkAuth();
   // await adminUserStore.fetchUsers();
   // await adminUserStore.fetchAllUsers();

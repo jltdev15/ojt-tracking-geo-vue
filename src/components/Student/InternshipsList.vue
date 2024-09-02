@@ -10,7 +10,7 @@
     </header>
     <div class="flex min-h-screen bg-gray-100">
       <div class="p-5">
-        <div class="grid grid-cols-4 gap-6">
+        <div class="grid grid-cols-3 gap-6">
           <p v-if="internStore.internshipLists.length === 0">No listing available</p>
           <InternshipItem />
           <!-- <InternshipItem v-for="job in internStore.internshipLists" 

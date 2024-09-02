@@ -36,7 +36,7 @@
           class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100"
         >
           <i class="mr-3 text-lg bx bx-book-content"></i>
-          <span class="text-sm">Application</span>
+          <span class="text-sm">Applicant</span>
         </router-link>
       </li>
       <li class="mb-1 group">

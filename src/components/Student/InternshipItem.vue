@@ -7,10 +7,10 @@
     <div class="flex items-center justify-between p-2 text-xs text-right">
       <p class="px-3 text-base bg-gray-400 rounded text-gray-50">Internship</p>
       <p
-        v-if="item.hte.moaAttachement && item.hte.hasMoa === 'false'"
+        v-if="!item.hte.moaAttachement && item.hte.hasMoa === 'true'"
         class="inline-block px-6 py-3 bg-green-600 text-gray-50"
       >
-        {{ item.hte.hasMoa }}
+        has Moa
       </p>
       <p v-else class="inline-block px-6 py-3 bg-red-600 text-gray-50">No MOA</p>
     </div>

@@ -93,6 +93,30 @@
             </div>
           </div>
         </div>
+        <div class="p-0 divider"></div>
+        <header class="py-3">
+          <h1 class="text-xl font-semibold text-gray-400 uppercase">Coordinator</h1>
+        </header>
+        <div class="grid justify-end gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          <div class="self-end p-5 bg-white rounded shadow-sm">
+            <div class="flex items-center space-x-4 space-y-2">
+              <div>
+                <div class="text-2xl font-bold text-gray-900">
+                  {{ hteStore.getNumberOfListing }}
+                </div>
+                <div class="text-gray-400">Pending</div>
+              </div>
+            </div>
+          </div>
+          <div class="p-5 bg-white rounded shadow-sm">
+            <div class="flex items-center space-x-4 space-y-2">
+              <div>
+                <div class="text-2xl font-bold text-gray-900">0</div>
+                <div class="text-gray-400">Approved</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="w-2/6 p-5">
         <header class="py-3">

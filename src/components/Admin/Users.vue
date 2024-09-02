@@ -683,7 +683,7 @@ const handleHteUser = async () => {
     }
 
     const response = await userStore.addHTE(hte);
-    alert(response.data.message);
+    alert('HTE Added');
     resetHTEForms();
     await handleToggleModal();
   } catch (err) {

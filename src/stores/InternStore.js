@@ -1,4 +1,4 @@
-import { ref, computed,reactive } from "vue";
+import { ref, computed, reactive } from "vue";
 import { defineStore } from "pinia";
 import apiClient from "@/config/axiosClient";
 export const useInternStore = defineStore("intern", () => {
@@ -7,14 +7,14 @@ export const useInternStore = defineStore("intern", () => {
   const requiredHours = ref(null);
   const workedHours = ref(null);
   const isClockIn = ref(false);
-  const isLocationEnabled = ref(false)
+  const isLocationEnabled = ref(false);
   const errorMessage = ref("");
-  const isInternReady = ref(false)
+  const isInternReady = ref(false);
   const locationData = reactive({
     lat: "",
     lng: "",
   });
-  const attendanceArr = ref([])
+  const attendanceArr = ref([]);
   const fetchInternshipLists = async () => {
     try {
       const response = await apiClient.get(`/intern/vacancy`);
@@ -106,32 +106,41 @@ export const useInternStore = defineStore("intern", () => {
     } else {
       errorMessage.value = "Geolocation is not supported by this browser.";
     }
-
-  }
-  const sendLocationHandler = async() => {
-
+  };
+  const sendLocationHandler = async () => {
     try {
-       if(isClockIn.value = true){
-        const response =  await apiClient.put('intern/currentlocation', locationData)
+      if ((isClockIn.value = true)) {
+        const response = await apiClient.put(
+          "intern/currentlocation",
+          locationData
+        );
         console.log(response);
-       }
-
-    }catch(err) {
-      console.log(err.message)
+      }
+    } catch (err) {
+      console.log(err.message);
     }
-  }
-  const getAttendanceHandler = async() => {
+  };
+  const getAttendanceHandler = async () => {
     try {
       const response = await apiClient.get("/intern/attendance");
       console.log(response.data.content);
-      
+
       attendanceArr.value = response.data.content;
       return response;
     } catch (err) {
       console.log(err);
       return err;
     }
-  }
+  };
+  const removeApplicationHandler = async (id) => {
+    try {
+      const response = await apiClient.delete(`/intern/remove/${id}`);
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  };
   // Computed Properties
   const getNumberOfApplication = computed(() => {
     return applicationLists.value.length;
@@ -187,7 +196,7 @@ export const useInternStore = defineStore("intern", () => {
     isLocationEnabled,
     attendanceArr,
     getAttendanceHandler,
-    isInternReady
-    
+    isInternReady,
+    removeApplicationHandler,
   };
 });

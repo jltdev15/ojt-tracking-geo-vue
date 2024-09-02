@@ -1,7 +1,7 @@
 <template>
   <div>
     <header class="flex items-center justify-between p-6 bg-gray-200">
-      <h1 class="text-3xl px-3">
+      <h1 class="px-3 text-3xl">
         Host <span class="text-3xl font-bold">Training Establishment</span>
       </h1>
     </header>
@@ -60,7 +60,7 @@
             <textarea
               v-model="requestData.remarks"
               placeholder="Optional"
-              class="textarea textarea-bordered textarea-sm w-full max-w-xs"
+              class="w-full max-w-xl textarea textarea-bordered textarea-sm"
             ></textarea>
 
             <div class="flex flex-col gap-2">
@@ -68,7 +68,7 @@
                 Send Request
               </button>
               <button
-                class="text-lg btn btn-outline btn-block"
+                class="text-lg btn btn-accent btn-outline btn-block"
                 @click="closeRequestModal"
               >
                 Close
@@ -120,9 +120,9 @@ const openRequestModal = (hteId, hteName) => {
 };
 
 const submitRequestHandler = async () => {
-  console.log(requestData);
-  const response = await coorStore.submitVisiRequest(requestData);
-  alert(response.data.message);
+  await coorStore.submitVisiRequest(requestData);
+
+  // alert(response.data.message);
   isModalShow.value = !isModalShow.value;
   requestData.hteId = "";
   requestData.requesteeName = "";

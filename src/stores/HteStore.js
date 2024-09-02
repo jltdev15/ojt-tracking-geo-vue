@@ -1,7 +1,9 @@
+import { useRouter } from "vue-router";
 import { ref, computed, reactive } from "vue";
 import { defineStore } from "pinia";
 import apiClient from "@/config/axiosClient";
 export const useHteStore = defineStore("hte", () => {
+  const router = useRouter()
   const internshipList = ref([]);
   const applicantList = ref([]);
   const applicantItemList = ref([]);
@@ -113,10 +115,29 @@ export const useHteStore = defineStore("hte", () => {
       );
 
       console.log(response);
+      router.push({ name: "hte_dashboard" });
     } catch (err) {
-      console.log(err);
+      console.log(err.response.data.content);
+      alert(err.response.data.content)
+      router.push({ name: "ApplicantsList" });
+
     }
   };
+  const rejectInternshipApplication = async (applicationId) => {
+    try {
+      const response = await apiClient.patch(
+        `/hte/application/${applicationId}/reject`
+      );
+
+      console.log(response);
+      // router.push({ name: "hte_dashboard" });
+    } catch (err) {
+      console.log(err);
+      // alert(err.response.data.content)
+      // router.push({ name: "ApplicantsList" });
+
+    }
+  }
   //#endregion
 
   const getOnlineInterns = async () => {
@@ -186,7 +207,7 @@ export const useHteStore = defineStore("hte", () => {
     return applicantItemList.value.length;
   });
   const getListOfInternApplication = computed(() => {
-    return applicantList.value.filter((item) => item.status !== "Accepted");
+    return applicantList.value.filter((item) => item.status !== "Accepted" && item.status !== "Rejected");
   });
   const getListOfAcceptedInterns = computed(() => {
     return acceptedApplicantsList.value;
@@ -238,6 +259,7 @@ export const useHteStore = defineStore("hte", () => {
     onlineLocationList,
     internshipData,
     getListingItem,
-    updateListingItem
+    updateListingItem,
+    rejectInternshipApplication
   };
 });

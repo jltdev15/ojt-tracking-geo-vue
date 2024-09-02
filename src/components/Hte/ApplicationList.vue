@@ -118,7 +118,7 @@
         </ul>
         <section class="flex justify-end p-3 border-2" v-if="item.status === 'Pending'">
           <div class="flex items-center gap-3">
-            <button class="btn btn-danger">Reject</button>
+            <button class="btn btn-danger" @click="rejectApplicantHandler(item._id)">Reject</button>
             <button class="btn btn-primary" @click="handleAcceptApplicant(item._id)">
               Accept
             </button>
@@ -160,8 +160,11 @@ const handleAcceptApplicant = async (applicationId) => {
   await hteStore.acceptIntershipApplication(applicationId);
   modalRequirementShow.value = !modalRequirementShow.value;
   // await hteStore.fetchSingleInternships(route.params.jobId);
-  router.push({ name: "hte_dashboard" });
 };
+const rejectApplicantHandler = async (applicationId) => {
+  await hteStore.rejectInternshipApplication(applicationId)
+  modalRequirementShow.value = !modalRequirementShow.value;
+}
 const headers = [
   { text: "APPLICATION ID", value: "applicationId" },
   { text: "JOB TITLE", value: "title" },
