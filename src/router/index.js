@@ -166,6 +166,18 @@ const router = createRouter({
           component: () => import("../components/Hte/InternMonitoring.vue"),
           meta: { requiresAuth: true, roles: ["HTE"] },
         },
+        {
+          path: "evaluation",
+          name: "Evaluation",
+          component: () => import("../components/Hte/Evaluation.vue"),
+          meta: { requiresAuth: true, roles: ["HTE"] },
+        },
+        {
+          path: "evaluationForm",
+          name: "EvaluationForm",
+          component: () => import("../components/Hte/EvaluationForm.vue"),
+          meta: { requiresAuth: true, roles: ["HTE"] },
+        },
       ],
     },
     // Student
