@@ -8,8 +8,8 @@ import HTEInternshipsList from "@/components/Hte/Internships.vue";
 import StudentDashBoardView from "../views/Student/StudentDashBoardView.vue";
 import StudentDashboard from "@/components/Student/Dashboard.vue";
 import StudentInternshipsList from "@/components/Student/InternshipsList.vue";
-import CoorDashBoard from '@/components/Coor/Dashboard.vue'
-import CoorDashBoardView from '../views/Coor/CoorDashBoardView.vue'
+import CoorDashBoard from "@/components/Coor/Dashboard.vue";
+import CoorDashBoardView from "../views/Coor/CoorDashBoardView.vue";
 import { useAuthStore } from "@/stores/AuthStore";
 
 const router = createRouter({
@@ -58,7 +58,8 @@ const router = createRouter({
         {
           path: "interns/:id",
           name: "DTRList",
-          component: () => import("../components/Admin/DailyTimeRecordList.vue"),
+          component: () =>
+            import("../components/Admin/DailyTimeRecordList.vue"),
           meta: { requiresAuth: true, roles: ["Admin"] },
         },
         {
@@ -95,7 +96,8 @@ const router = createRouter({
         {
           path: "list",
           name: "InternDepartmentList",
-          component: () => import("../components/Coor/InternDepartmentList.vue"),
+          component: () =>
+            import("../components/Coor/InternDepartmentList.vue"),
           meta: { requiresAuth: true, roles: ["Coordinator"] },
         },
         {
@@ -107,10 +109,10 @@ const router = createRouter({
         {
           path: "requests",
           name: "CoorRequest",
-          component: () => import("../components/Coor/VisitationRequestList.vue"),
+          component: () =>
+            import("../components/Coor/VisitationRequestList.vue"),
           meta: { requiresAuth: true, roles: ["Coordinator"] },
         },
-
       ],
     },
     // HTE
@@ -240,7 +242,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-console.log('test');
+  console.log("test");
 
   const authStore = useAuthStore();
   await authStore.checkAuth();
@@ -251,9 +253,12 @@ console.log('test');
       next({ name: "student_auth" });
     } else if (!authStore.isAuthenticated && to.meta.roles.includes("Intern")) {
       next({ name: "student_auth" });
-    } else if (!authStore.isAuthenticated && to.meta.roles.includes("Coordinator")) {
+    } else if (
+      !authStore.isAuthenticated &&
+      to.meta.roles.includes("Coordinator")
+    ) {
       next({ name: "student_auth" });
-    }  else if (to.meta.roles && !to.meta.roles.includes(authStore.userRole)) {
+    } else if (to.meta.roles && !to.meta.roles.includes(authStore.userRole)) {
       next({ name: "home" });
     } else {
       next();
