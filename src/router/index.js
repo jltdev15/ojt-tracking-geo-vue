@@ -169,6 +169,12 @@ const router = createRouter({
           meta: { requiresAuth: true, roles: ["HTE"] },
         },
         {
+          path: "request",
+          name: "VisitRequest",
+          component: () => import("../components/Hte/RequestList.vue"),
+          meta: { requiresAuth: true, roles: ["HTE"] },
+        },
+        {
           path: "evaluation",
           name: "Evaluation",
           component: () => import("../components/Hte/Evaluation.vue"),

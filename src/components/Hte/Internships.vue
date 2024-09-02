@@ -14,12 +14,7 @@
     </header>
     <div class="divider"></div>
     <div class="flex justify-end gap-3 pb-3">
-      <input
-        type="text"
-        placeholder="Search here"
-        class="w-full input input-bordered"
-        v-model="searchValue"
-      />
+      <input type="text" placeholder="Search here" class="w-full input input-bordered" v-model="searchValue" />
       <select class="w-48 select select-bordered" v-model.trim="searchField">
         <option selected disabled value="Set filter">Set filter</option>
         <option value="status">Status</option>
@@ -27,14 +22,8 @@
       </select>
     </div>
 
-    <EasyDataTable
-      :headers="headers"
-      :items="hteStore.internshipList"
-      :search-field="searchField"
-      :search-value="searchValue"
-      table-class-name="customize-table"
-      show-index
-    >
+    <EasyDataTable :headers="headers" :items="hteStore.internshipList" :search-field="searchField"
+      :search-value="searchValue" table-class-name="customize-table" show-index>
       <!-- <template #item-applicants="item">
         <div class="flex justify-between gap-3 py-2">
           <h1>{{ item.applicants }}</h1>
@@ -42,21 +31,17 @@
       </template> -->
       <template #item-operation="item">
         <div class="flex justify-between gap-3 py-2">
-          <button
-            @click="handleToggleUpdateModal(item._id)"
-            class="flex items-center justify-center w-24 gap-2 py-3 bg-blue-800 text-gray-50"
-          >
+          <button @click="handleToggleUpdateModal(item._id)"
+            class="flex items-center justify-center w-24 gap-2 py-3 bg-blue-800 text-gray-50">
             Edit <i class="fa-solid fa-pen-to-square"></i>
           </button>
-          <button
-            @click="handleDeleteModalToggle(item._id)"
-            class="flex items-center justify-center w-24 gap-2 py-3 bg-red-500 text-gray-50"
-          >
+          <button @click="handleDeleteModalToggle(item._id)"
+            class="flex items-center justify-center w-24 gap-2 py-3 bg-red-500 text-gray-50">
             Remove<i class="fa-solid fa-trash"></i>
           </button>
         </div>
       </template>
-      <template #item-applicants="item">
+      <!-- <template #item-applicants="item">
         <div class="flex flex-col justify-between gap-3 py-2">
           <div v-if="item.applicants.length">
             <router-link
@@ -66,14 +51,14 @@
             >
           </div>
           <p v-else>0</p>
-          <!-- <div v-if="item.applicants.length">
+          <div v-if="item.applicants.length">
             <p>{{ item.applicants }}</p>
-          </div> -->
-          <!-- <ul v-for="i in item.applicants" :key="i.id" class="flex flex-col">
+          </div>
+          <ul v-for="i in item.applicants" :key="i.id" class="flex flex-col">
               <li class="flex ">{{i.fullName}}</li>
-          </ul> -->
+          </ul>
         </div>
-      </template>
+      </template> -->
     </EasyDataTable>
     <Modal :show="isModalShow" title="New Internship">
       <!-- <Modal :show="true" title="New Account"> -->
@@ -81,49 +66,25 @@
         <div>
           <div class="flex flex-col gap-3 pt-3">
             <label class="flex items-center gap-2 input input-bordered">
-              <input
-                v-model.trim="newInternship.title"
-                type="text"
-                class="grow"
-                placeholder="Title"
-              />
+              <input v-model.trim="newInternship.title" type="text" class="grow" placeholder="Title" />
             </label>
             <label class="flex items-center justify-between gap-2">
-              <textarea
-                class="w-full textarea textarea-bordered"
-                placeholder="Description"
-                v-model.trim="newInternship.requirements"
-              ></textarea>
+              <textarea class="w-full textarea textarea-bordered" placeholder="Description"
+                v-model.trim="newInternship.requirements"></textarea>
             </label>
 
             <label class="flex items-center gap-2 input input-bordered">
-              <input
-                v-model.trim="newInternship.slots"
-                type="text"
-                class="grow"
-                placeholder="Number of slots"
-              />
+              <input v-model.trim="newInternship.slots" type="text" class="grow" placeholder="Number of slots" />
             </label>
             <label class="flex items-center gap-2 input input-bordered">
-              <input
-                v-model.trim="newInternship.location"
-                type="text"
-                class="grow"
-                placeholder="Location"
-              />
+              <input v-model.trim="newInternship.location" type="text" class="grow" placeholder="Location" />
             </label>
 
             <div class="flex flex-col gap-2">
-              <button
-                @click="handleNewInternship"
-                class="text-lg btn btn-primary btn-block"
-              >
+              <button @click="handleNewInternship" class="text-lg btn btn-primary btn-block">
                 Add Internship
               </button>
-              <button
-                class="text-lg btn btn-outline btn-block"
-                @click="handleToggleModal"
-              >
+              <button class="text-lg btn btn-outline btn-block" @click="handleToggleModal">
                 Close
               </button>
             </div>
@@ -136,11 +97,7 @@
         <p class="text-xl font-medium">Are you sure you want to remove this listing?</p>
         <div class="flex justify-between pt-9">
           <button @click="handleDeleteModalToggle" class="btn btn-outline">Cancel</button>
-          <button
-            type="button"
-            @click="handleDeleteItem"
-            class="bg-red-600 btn text-gray-50"
-          >
+          <button type="button" @click="handleDeleteItem" class="bg-red-600 btn text-gray-50">
             Remove
           </button>
         </div>
@@ -151,59 +108,33 @@
         <div>
           <div class="flex flex-col gap-3 pt-3">
             <label class="flex items-center gap-2 input input-bordered">
-              <input
-                v-model.trim="hteStore.internshipData.title"
-                type="text"
-                class="grow"
-                placeholder="Title"
-              />
+              <input v-model.trim="hteStore.internshipData.title" type="text" class="grow" placeholder="Title" />
             </label>
             <div class="py-3">
-              <select
-                class="w-full py-3 select select-bordered"
-                @change="handleSelectStatus"
-              >
+              <select class="w-full py-3 select select-bordered" @change="handleSelectStatus">
                 <option disabled value="">Select Status</option>
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
               </select>
             </div>
             <label class="flex items-center justify-between gap-2">
-              <textarea
-                class="w-full textarea textarea-bordered"
-                placeholder="Description"
-                v-model.trim="hteStore.internshipData.requirements"
-              ></textarea>
+              <textarea class="w-full textarea textarea-bordered" placeholder="Description"
+                v-model.trim="hteStore.internshipData.requirements"></textarea>
             </label>
 
             <label class="flex items-center gap-2 input input-bordered">
-              <input
-                v-model.trim="hteStore.internshipData.slots"
-                type="text"
-                class="grow"
-                placeholder="Number of slots"
-              />
+              <input v-model.trim="hteStore.internshipData.slots" type="text" class="grow"
+                placeholder="Number of slots" />
             </label>
             <label class="flex items-center gap-2 input input-bordered">
-              <input
-                v-model.trim="hteStore.internshipData.location"
-                type="text"
-                class="grow"
-                placeholder="Location"
-              />
+              <input v-model.trim="hteStore.internshipData.location" type="text" class="grow" placeholder="Location" />
             </label>
 
             <div class="flex flex-col gap-2">
-              <button
-                @click="handleUpdateListingItem"
-                class="text-lg btn btn-primary btn-block"
-              >
+              <button @click="handleUpdateListingItem" class="text-lg btn btn-primary btn-block">
                 Update Internship
               </button>
-              <button
-                class="text-lg btn btn-outline btn-block"
-                @click="isUpdateModalShow = !isUpdateModalShow"
-              >
+              <button class="text-lg btn btn-outline btn-block" @click="isUpdateModalShow = !isUpdateModalShow">
                 Close
               </button>
             </div>
@@ -281,11 +212,10 @@ const headers = [
 
   { text: "REQUIRMENTS", value: "requirements" },
   { text: "SLOTS", value: "slots" },
-  { text: "LOCATION", value: "location", width: 200 },
-  { text: "POSTED ON", value: "createdAt", width: 200 },
-  { text: "STATUS", value: "status", width: 200 },
-  { text: "APPLICANTS", value: "applicants", width: 200 },
-  { text: "ACTIONS", value: "operation", width: 200 },
+  { text: "LOCATION", value: "location" },
+  { text: "POSTED ON", value: "createdAt" },
+  { text: "STATUS", value: "status" },
+  { text: "ACTIONS", value: "operation" },
 ];
 </script>
 
@@ -293,6 +223,7 @@ const headers = [
 textarea {
   resize: none;
 }
+
 .customize-table {
   --easy-table-border: 1px rounded #445269;
   --easy-table-header-font-size: 16px;

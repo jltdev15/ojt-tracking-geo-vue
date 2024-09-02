@@ -52,13 +52,13 @@
       </li>
       <span class="font-bold text-gray-400">Coordinator</span>
       <li class="mb-1 group">
-        <a href=""
+        <router-link :to="{ name: 'VisitRequest' }"
           class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
           <i class="mr-3 text-lg bx bx-git-pull-request"></i>
           <span class="text-sm">Visitation Request</span>
           <span
             class="md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-red-600 bg-red-200 rounded-full">5</span>
-        </a>
+        </router-link>
       </li>
       <span class="font-bold text-gray-400">COMMUNICATION</span>
       <li class="mb-1 group">

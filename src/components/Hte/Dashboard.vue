@@ -9,13 +9,10 @@
           <h1 class="text-xl font-semibold text-gray-400 uppercase">Interns</h1>
         </header>
         <div class="grid justify-end gap-3 sm:grid-cols-2 lg:grid-cols-5">
-          <div
-            :class="{
-              'bg-white text-gray-900': hteStore.getNumberOfPendingInterns === 0,
-              'bg-red-500 text-gray-50': hteStore.getNumberOfPendingInterns != 0,
-            }"
-            class="p-5 rounded shadow-sm"
-          >
+          <div :class="{
+            'bg-white text-gray-900': hteStore.getNumberOfPendingInterns === 0,
+            'bg-red-500 text-gray-50': hteStore.getNumberOfPendingInterns != 0,
+          }" class="p-5 rounded shadow-sm">
             <div class="flex items-center space-x-4 space-y-2">
               <div>
                 <div class="text-2xl font-bold">
@@ -36,13 +33,10 @@
             </div>
           </div>
 
-          <div
-            :class="{
-              'bg-green-600 text-gray-50': hteStore.getNumberOfAcceptedInterns != 0,
-              'bg-white text-gray-900': hteStore.getListOfAcceptedInterns === 0,
-            }"
-            class="self-end p-5 rounded shadow-sm"
-          >
+          <div :class="{
+            'bg-green-600 text-gray-50': hteStore.getNumberOfAcceptedInterns != 0,
+            'bg-white text-gray-900': hteStore.getListOfAcceptedInterns === 0,
+          }" class="self-end p-5 rounded shadow-sm">
             <div class="flex items-center space-x-4 space-y-2">
               <div>
                 <div class="text-2xl font-bold">
@@ -52,17 +46,14 @@
               </div>
             </div>
           </div>
-          <div
-            class="self-end p-5 rounded shadow-sm"
-            :class="{
-              'bg-red-600 text-gray-50': hteStore.getNumberOfAcceptedInterns != 0,
-              'bg-white text-gray-900': hteStore.getListOfAcceptedInterns === 0,
-            }"
-          >
+          <div class="self-end p-5 rounded shadow-sm" :class="{
+            'bg-red-600 text-gray-50': hteStore.getNumberOfAcceptedInterns != 0,
+            'bg-white text-gray-900': hteStore.getNumberOfApprovedInterns === 0,
+          }">
             <div class="flex items-center space-x-4 space-y-2">
               <div>
                 <div class="text-2xl font-bold">
-                  {{ hteStore.getNumberOfAcceptedInterns }}
+                  {{ hteStore.getNumberOfApprovedInterns }}
                 </div>
                 <div class="">For Evaluation</div>
               </div>
@@ -98,17 +89,33 @@
           <h1 class="text-xl font-semibold text-gray-400 uppercase">Coordinator</h1>
         </header>
         <div class="grid justify-end gap-3 sm:grid-cols-2 lg:grid-cols-5">
-          <div class="self-end p-5 bg-white rounded shadow-sm">
+          <router-link v-if="hteStore.getNumberOfVisitPendingRequest" :to="{ name: 'VisitRequest' }" :class="{
+            'bg-white text-gray-900': hteStore.getNumberOfVisitPendingRequest === 0,
+            'bg-red-500 text-gray-50': hteStore.getNumberOfVisitPendingRequest != 0,
+          }" class="self-end p-5 rounded shadow-sm">
             <div class="flex items-center space-x-4 space-y-2">
               <div>
-                <div class="text-2xl font-bold text-gray-900">
-                  {{ hteStore.getNumberOfListing }}
+                <div class="text-2xl font-bold ">
+                  {{ hteStore.getNumberOfVisitPendingRequest }}
                 </div>
-                <div class="text-gray-400">Pending</div>
+                <div>Pending</div>
+              </div>
+            </div>
+          </router-link>
+          <div v-else :to="{ name: 'VisitRequest' }" :class="{
+            'bg-white text-gray-900': hteStore.getNumberOfVisitPendingRequest === 0,
+            'bg-red-500 text-gray-50': hteStore.getNumberOfVisitPendingRequest != 0,
+          }" class="self-end p-5 rounded shadow-sm">
+            <div class="flex items-center space-x-4 space-y-2">
+              <div>
+                <div class="text-2xl font-bold ">
+                  {{ hteStore.getNumberOfVisitPendingRequest }}
+                </div>
+                <div>Pending</div>
               </div>
             </div>
           </div>
-          <div class="p-5 bg-white rounded shadow-sm">
+          <div class="p-5 bg-white rounded shadow-sm ">
             <div class="flex items-center space-x-4 space-y-2">
               <div>
                 <div class="text-2xl font-bold text-gray-900">0</div>
@@ -143,5 +150,6 @@ onMounted(async () => {
   await hteStore.fetchApplicantList();
   await hteStore.fetchApplicantAccepted();
   await hteStore.getOnlineInterns();
+  await hteStore.fetchVisitRequests()
 });
 </script>

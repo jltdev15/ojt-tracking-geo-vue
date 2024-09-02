@@ -3,8 +3,9 @@ import { ref, computed, reactive } from "vue";
 import { defineStore } from "pinia";
 import apiClient from "@/config/axiosClient";
 export const useHteStore = defineStore("hte", () => {
-  const router = useRouter()
+  const router = useRouter();
   const internshipList = ref([]);
+  const requestList = ref([]);
   const applicantList = ref([]);
   const applicantItemList = ref([]);
   const pendingApplicantList = ref([]);
@@ -13,21 +14,21 @@ export const useHteStore = defineStore("hte", () => {
   const applicantRequirements = ref([]);
   const acceptedApplicantsList = ref([]);
   const approvedApplicantsList = ref([]);
-  const onlineInternList = ref([])
-  const onlineLocationList = ref([])
+  const onlineInternList = ref([]);
+  const onlineLocationList = ref([]);
   const hteLocationDefault = reactive({
-    lat:'',
-    lng:'',
-  })
+    lat: "",
+    lng: "",
+  });
 
   const internshipData = reactive({
-    id:'',
-    title:'',
-    status:'',
-    slots:'',
-    requirements:'',
-    location:''
-  })
+    id: "",
+    title: "",
+    status: "",
+    slots: "",
+    requirements: "",
+    location: "",
+  });
 
   //#region CRUD for Internships listing
 
@@ -118,9 +119,8 @@ export const useHteStore = defineStore("hte", () => {
       router.push({ name: "hte_dashboard" });
     } catch (err) {
       console.log(err.response.data.content);
-      alert(err.response.data.content)
+      alert(err.response.data.content);
       router.push({ name: "ApplicantsList" });
-
     }
   };
   const rejectInternshipApplication = async (applicationId) => {
@@ -135,48 +135,41 @@ export const useHteStore = defineStore("hte", () => {
       console.log(err);
       // alert(err.response.data.content)
       // router.push({ name: "ApplicantsList" });
-
     }
-  }
+  };
   //#endregion
 
   const getOnlineInterns = async () => {
     try {
-  
-        const response = await apiClient.get(`/hte/internship/online`);
-        console.log(response.data.content);
-        onlineInternList.value = response.data.content;
-        if(onlineInternList.value.length > 0) {
-          onlineInternList.value.forEach(element => {
-            onlineLocationList.value.push(element.currentLocation)
-    
-          });
-        }
-
-      
+      const response = await apiClient.get(`/hte/internship/online`);
+      console.log(response.data.content);
+      onlineInternList.value = response.data.content;
+      if (onlineInternList.value.length > 0) {
+        onlineInternList.value.forEach((element) => {
+          onlineLocationList.value.push(element.currentLocation);
+        });
+      }
     } catch (err) {
       console.log(err);
     }
-  }
+  };
   const getListingItem = async (id) => {
     try {
-        const response = await apiClient.get(`/hte/list/${id}`);
-        console.log(response.data.content._id);
-        internshipData.id = response.data.content._id
-        internshipData.title = response.data.content.title;
-        internshipData.status = response.data.content.status;
-        internshipData.slots = response.data.content.slots;
-        internshipData.requirements = response.data.content.requirements;
-        internshipData.location = response.data.content.location;
-
-      
+      const response = await apiClient.get(`/hte/list/${id}`);
+      console.log(response.data.content._id);
+      internshipData.id = response.data.content._id;
+      internshipData.title = response.data.content.title;
+      internshipData.status = response.data.content.status;
+      internshipData.slots = response.data.content.slots;
+      internshipData.requirements = response.data.content.requirements;
+      internshipData.location = response.data.content.location;
     } catch (err) {
       console.log(err);
     }
-  }
+  };
   const updateListingItem = async () => {
     console.log(internshipData.id);
-    
+
     const payload = {
       title: internshipData.title,
       requirements: internshipData.requirements,
@@ -190,16 +183,51 @@ export const useHteStore = defineStore("hte", () => {
         `/hte/list/${internshipData.id.toString()}`,
         payload
       );
-     
+
       console.log(response);
       return response;
     } catch (err) {
       console.log(err);
     }
-
-  }
+  };
+  const fetchVisitRequests = async () => {
+    try {
+      const response = await apiClient.get(`/hte/requests`);
+      console.log(response);
+      requestList.value = response.data.content;
+      return response;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const acceptVisitRequests = async (requestId) => {
+    try {
+      const response = await apiClient.patch(`/hte/requests/${requestId}`);
+      await fetchVisitRequests();
+      console.log(response);
+      return response;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const rejectVisitRequests = async (requestId) => {
+    try {
+      const response = await apiClient.patch(
+        `/hte/requests/reject/${requestId}`
+      );
+      await fetchVisitRequests();
+      alert("Accepted Succesfully");
+      return response;
+    } catch (err) {
+      console.log(err);
+    }
+  };
   // Computed
-
+  const getNumberOfVisitPendingRequest = computed(() => {
+    return requestList.value.filter(
+      (item) => item.status != "Accepted" && item.status !== "Rejected"
+    ).length;
+  });
   const getNumberOfListing = computed(() => {
     return internshipList.value.length;
   });
@@ -207,7 +235,9 @@ export const useHteStore = defineStore("hte", () => {
     return applicantItemList.value.length;
   });
   const getListOfInternApplication = computed(() => {
-    return applicantList.value.filter((item) => item.status !== "Accepted" && item.status !== "Rejected");
+    return applicantList.value.filter(
+      (item) => item.status !== "Accepted" && item.status !== "Rejected"
+    );
   });
   const getListOfAcceptedInterns = computed(() => {
     return acceptedApplicantsList.value;
@@ -260,6 +290,11 @@ export const useHteStore = defineStore("hte", () => {
     internshipData,
     getListingItem,
     updateListingItem,
-    rejectInternshipApplication
+    rejectInternshipApplication,
+    fetchVisitRequests,
+    requestList,
+    acceptVisitRequests,
+    rejectVisitRequests,
+    getNumberOfVisitPendingRequest,
   };
 });
