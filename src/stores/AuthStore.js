@@ -9,21 +9,21 @@ export const useAuthStore = defineStore("auth", () => {
   const userId = ref(null);
   const currentUser = ref(null);
   const currentDepartment = ref(null);
-  const coorId =ref(null)
+  const coorId = ref(null);
 
   const isInternReady = ref(null);
   const isAuthenticated = ref(false);
-  const loginErrorMessage = ref('')
+  const loginErrorMessage = ref("");
   const router = useRouter();
   const toast = useToast();
-  const internStore = useInternStore()
-
+  const sessionCode = ref("");
+  const internStore = useInternStore();
 
   const checkAuth = async () => {
     try {
       const response = await apiClient.get(`/active`);
       console.log(response);
-      
+
       userRole.value = response.data.content.role;
       userId.value = response.data.content._id;
       isAuthenticated.value = true;
@@ -34,14 +34,16 @@ export const useAuthStore = defineStore("auth", () => {
         return (currentUser.value = response.data.content.profile.name);
       }
       if (userRole.value === "Coordinator") {
-        currentDepartment.value = response.data.content.profile.department
+        currentDepartment.value = response.data.content.profile.department;
         coorId.value = response.data.content.profile._id;
-        return currentUser.value = response.data.content.profile.fullName
-
-        ;
+        return (currentUser.value = response.data.content.profile.fullName);
       }
       if (userRole.value === "Intern") {
         isInternReady.value = response.data.content.profile.isInternshipReady;
+        sessionCode.value = response.data.content.profile.sessionCode;
+        if (sessionCode.value !== localStorage.getItem("sessionCode")) {
+          await submitLogout();
+        }
         return (currentUser.value = response.data.content.profile.fullName);
       }
     } catch (err) {
@@ -57,9 +59,9 @@ export const useAuthStore = defineStore("auth", () => {
       isAuthenticated.value = true;
       await checkAuth();
     } catch (err) {
-      loginErrorMessage.value = err.response.data
+      loginErrorMessage.value = err.response.data;
       console.log(err.response.data);
-      alert('Invalid username or password. Try again')
+      alert("Invalid username or password. Try again");
     }
   };
   const hteLogin = async (payload) => {
@@ -71,7 +73,7 @@ export const useAuthStore = defineStore("auth", () => {
       await checkAuth();
     } catch (err) {
       console.log(err);
-      alert('Invalid username or password. Try again')
+      alert("Invalid username or password. Try again");
     }
   };
   const internLogin = async (payload) => {
@@ -80,14 +82,18 @@ export const useAuthStore = defineStore("auth", () => {
       const response = await apiClient.post("/intern/login", payload);
       console.log(response);
       router.push("/student/dashboard");
+
+      if (response.data.content) {
+        localStorage.setItem("sessionCode", response.data.content);
+        sessionCode.value = localStorage.getItem("sessionCode");
+      }
       await checkAuth();
     } catch (err) {
       console.log(err);
-      alert('Invalid username or password. Try again')
+      alert(err.response.data.content);
     }
   };
   const submitLogout = async () => {
-
     try {
       await apiClient.post("/admin/logout", {});
       isAuthenticated.value = false;
@@ -98,11 +104,11 @@ export const useAuthStore = defineStore("auth", () => {
   const submitInternLogout = async () => {
     console.log(internStore.isClockIn);
     console.log(isAuthenticated.value);
-    
+
     try {
-      if(isAuthenticated.value && internStore.isClockIn) {       
+      if (isAuthenticated.value && internStore.isClockIn) {
         router.push("/student/dashboard/dtr");
-       return alert('Logout failed, Please clock out first')
+        return alert("Logout failed, Please clock out first");
       }
       await apiClient.post("/admin/logout", {});
       isAuthenticated.value = false;
@@ -125,8 +131,7 @@ export const useAuthStore = defineStore("auth", () => {
     } else {
       errorMessage.value = "Geolocation is not supported by this browser.";
     }
-
-  }
+  };
 
   return {
     checkAuth,
@@ -144,6 +149,6 @@ export const useAuthStore = defineStore("auth", () => {
     getLocationHandler,
     currentDepartment,
     coorId,
-
+    sessionCode,
   };
 });

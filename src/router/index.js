@@ -75,6 +75,12 @@ const router = createRouter({
           component: () => import("../components/Admin/Settings.vue"),
           meta: { requiresAuth: true, roles: ["Admin"] },
         },
+        {
+          path: "hte",
+          name: "hteLists",
+          component: () => import("../components/Admin/HteList.vue"),
+          meta: { requiresAuth: true, roles: ["Admin"] },
+        },
       ],
     },
     {

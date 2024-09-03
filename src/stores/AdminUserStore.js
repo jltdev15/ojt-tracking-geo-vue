@@ -4,9 +4,9 @@ import apiClient from "@/config/axiosClient";
 export const useAdminUserStore = defineStore("user", () => {
   const usersList = ref([]);
   const departmentlist = ref([]);
-  const internsList = ref([])
+  const internsList = ref([]);
   const currentRole = ref("");
-  const attendanceArr = ref([])
+  const attendanceArr = ref([]);
   const userRoleList = reactive({
     hte: "",
     coor: "",
@@ -23,10 +23,10 @@ export const useAdminUserStore = defineStore("user", () => {
 
     // HTE
     companyAddress: "",
-    companyContact:'',
+    companyContact: "",
     hasMoa: "",
     location: "",
-    companyName: '',
+    companyName: "",
     mapLocation: {
       lat: {
         type: Number,
@@ -35,19 +35,17 @@ export const useAdminUserStore = defineStore("user", () => {
         type: Number,
       },
     },
-    hteProfileId:'',
-    hasMoa:'',
-    companyEmail:'',
+    hteProfileId: "",
+    hasMoa: "",
+    companyEmail: "",
 
     // Intern
-    internEmail:'',
-    internName:'',
-    internContact:'',
-    internDepartment:'',
-    requiredHours:'',
-    internId:''
-
-
+    internEmail: "",
+    internName: "",
+    internContact: "",
+    internDepartment: "",
+    requiredHours: "",
+    internId: "",
   });
 
   // Methods
@@ -79,7 +77,7 @@ export const useAdminUserStore = defineStore("user", () => {
     try {
       const response = await apiClient.get("/intern");
       console.log(response);
-      
+
       userRoleList.intern = await response.data.content;
     } catch (err) {
       console.log(err);
@@ -109,7 +107,7 @@ export const useAdminUserStore = defineStore("user", () => {
       const response = await apiClient.post("/intern", payload);
       await fetchUsers();
       console.log(response);
-      return response ;
+      return response;
     } catch (err) {
       console.log(err);
     }
@@ -131,7 +129,7 @@ export const useAdminUserStore = defineStore("user", () => {
       const response = await apiClient.post("/coor", payload);
       await fetchUsers();
       console.log(response);
-      return response ;
+      return response;
     } catch (err) {
       console.log(err);
     }
@@ -215,7 +213,7 @@ export const useAdminUserStore = defineStore("user", () => {
         currentRole.value = response.data.content.role;
       }
       if (response.data.content.role === "HTE") {
-        updateInfo.hteProfileId = userId
+        updateInfo.hteProfileId = userId;
         updateInfo.companyName = response.data.content.profile.name;
         updateInfo.companyAddress = response.data.content.profile.address;
         updateInfo.companyContact = response.data.content.profile.contactNumber;
@@ -227,11 +225,11 @@ export const useAdminUserStore = defineStore("user", () => {
       }
       if (response.data.content.role === "Intern") {
         updateInfo.internId = userId;
-        updateInfo.internEmail = response.data.content.email
-        updateInfo.internName = response.data.content.profile.fullName
-        updateInfo.requiredHours = response.data.content.profile.requiredHours
-        updateInfo.internContact = response.data.content.profile.contact
-        updateInfo.internDepartment = response.data.content.profile.department
+        updateInfo.internEmail = response.data.content.email;
+        updateInfo.internName = response.data.content.profile.fullName;
+        updateInfo.requiredHours = response.data.content.profile.requiredHours;
+        updateInfo.internContact = response.data.content.profile.contact;
+        updateInfo.internDepartment = response.data.content.profile.department;
         currentRole.value = response.data.content.role;
       }
     } catch (err) {
@@ -252,7 +250,7 @@ export const useAdminUserStore = defineStore("user", () => {
         `/accounts/${updateInfo.coorId}`,
         payload
       );
-     
+
       console.log(response);
       return response;
     } catch (err) {
@@ -263,7 +261,7 @@ export const useAdminUserStore = defineStore("user", () => {
     const payload = {
       email: updateInfo.companyEmail,
 
-      name:updateInfo.companyName,
+      name: updateInfo.companyName,
       address: updateInfo.companyAddress,
       contactNumber: updateInfo.companyContact,
       location: updateInfo.mapLocation,
@@ -283,10 +281,10 @@ export const useAdminUserStore = defineStore("user", () => {
   const updateInformationIntern = async () => {
     const payload = {
       email: updateInfo.internEmail,
-      name:updateInfo.internName,
+      name: updateInfo.internName,
       contact: updateInfo.internContact,
       requiredHours: updateInfo.requiredHours,
-      department: updateInfo.internDepartment
+      department: updateInfo.internDepartment,
     };
     try {
       const response = await apiClient.patch(
@@ -304,27 +302,37 @@ export const useAdminUserStore = defineStore("user", () => {
 
   const fetchInternsList = async () => {
     try {
-      const response = await apiClient.get(
-        `/admin/internlist`);
+      const response = await apiClient.get(`/admin/internlist`);
       internsList.value = response.data.content;
       console.log(internsList.value);
       return response;
     } catch (err) {
       console.log(err);
     }
-  }
-  const fetchInternDailyLogs = async(id) => {
+  };
+  const fetchInternDailyLogs = async (id) => {
     try {
       const response = await apiClient.get(`/admin/dtrlogs/${id}`);
       console.log(response.data.content);
-      
+
       attendanceArr.value = response.data.content;
       return response;
     } catch (err) {
       console.log(err);
       return err;
     }
-  }
+  };
+
+  const resetDeviceRestriction = async (internId) => {
+    try {
+      const response = await apiClient.patch(`/admin/resetdevice/${internId}`);
+      console.log(response);
+      return response;
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  };
 
   // Computed
 
@@ -336,6 +344,11 @@ export const useAdminUserStore = defineStore("user", () => {
   });
   const getNumberOfInterns = computed(() => {
     return usersList.value.filter((item) => item.role === "Intern").length;
+  });
+  const getInternAccounts = computed(() => {
+    return usersList.value.filter(
+      (item) => item.role === "Intern" && item.profile.sessionCode !== null
+    );
   });
   const getNumberOfCoor = computed(() => {
     return usersList.value.filter((item) => item.role === "Coordinator").length;
@@ -379,7 +392,8 @@ export const useAdminUserStore = defineStore("user", () => {
     fetchInternsList,
     internsList,
     attendanceArr,
-    fetchInternDailyLogs
-    
+    fetchInternDailyLogs,
+    getInternAccounts,
+    resetDeviceRestriction,
   };
 });

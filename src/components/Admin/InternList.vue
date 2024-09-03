@@ -1,34 +1,22 @@
 <template>
-  <div>
+  <div class="p-6">
     <header class="">
-      <h1 class="p-6 text-3xl font-bold">Interns List</h1>
+      <h1 class="text-3xl font-bold">Interns List</h1>
     </header>
-    <section>
+    <section class="">
       <div class="flex justify-end gap-3 py-3">
-        <input
-          type="text"
-          placeholder="Type here"
-          class="w-full input input-bordered"
-          v-model="searchValue"
-        />
+        <input type="text" placeholder="Type here" class="w-full input input-bordered" v-model="searchValue" />
         <select class="w-48 select select-bordered" v-model.trim="searchField">
           <option selected disabled value="Set filter">Set filter</option>
-          <option value="role">Role</option>
-          <option value="name">Name</option>
+          <option value="department">Department</option>
         </select>
       </div>
-      <EasyDataTable
-        :headers="headers"
-        :items="userStore.internsList"
-        :search-field="searchField"
-        :search-value="searchValue"
-      >
+      <EasyDataTable :headers="headers" :items="userStore.internsList" :search-field="searchField"
+        :search-value="searchValue">
         <template #item-dailytimerecord="item">
           <div class="flex justify-between gap-3 py-2">
-            <router-link
-              :to="{ name: 'DTRList', params: { id: item._id } }"
-              class="flex items-center justify-center w-24 gap-2 py-3 bg-blue-800 text-gray-50"
-            >
+            <router-link :to="{ name: 'DTRList', params: { id: item._id } }"
+              class="flex items-center justify-center w-24 gap-2 py-3 bg-blue-800 text-gray-50">
               View <i class="fa-solid fa-pen-to-square"></i>
             </router-link>
           </div>
