@@ -26,6 +26,16 @@ const router = createRouter({
       name: "student_auth",
       component: () => import("../views/Student/StudentAuthView.vue"),
     },
+    {
+      path: "/passwordReset",
+      name: "reset",
+      component: () => import("../views/PasswordReset.vue"),
+    },
+    {
+      path: "/recovery",
+      name: "recovery",
+      component: () => import("../views/PasswordRecovery.vue"),
+    },
     // Admin
     {
       path: "/admin",

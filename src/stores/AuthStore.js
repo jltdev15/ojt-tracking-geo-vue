@@ -10,7 +10,8 @@ export const useAuthStore = defineStore("auth", () => {
   const currentUser = ref(null);
   const currentDepartment = ref(null);
   const coorId = ref(null);
-
+  const errorMessage = ref("");
+  const isEmailExist = ref(false);
   const isInternReady = ref(null);
   const isAuthenticated = ref(false);
   const loginErrorMessage = ref("");
@@ -90,7 +91,7 @@ export const useAuthStore = defineStore("auth", () => {
       await checkAuth();
     } catch (err) {
       console.log(err);
-      alert(err.response.data.content);
+      alert(err.response.data.message);
     }
   };
   const submitLogout = async () => {
@@ -133,6 +134,47 @@ export const useAuthStore = defineStore("auth", () => {
     }
   };
 
+  const submitPasswordRequest = async (emailValue) => {
+    console.log(emailValue);
+    try {
+      const response = await apiClient.post(
+        "/requestResetPassword",
+        emailValue
+      );
+      toast.success("Reset link has been sent", {
+        timeout: 1500,
+      });
+      console.log(response);
+
+      setTimeout(() => {
+        router.replace("/auth");
+      }, 1800);
+    } catch (err) {
+      toast.error(err.response.data.content, {
+        timeout: 1500,
+      });
+      console.log(err.response.data.content);
+      isEmailExist.value = true;
+    }
+  };
+  const removeErrorMessage = async () => {
+    isEmailExist.value = false;
+  };
+  const sumbitSetPassword = async (payload) => {
+    try {
+      const setPass = await apiClient.post("/resetPassword", payload);
+      toast.success("Success", {
+        timeout: 1500,
+      });
+      setTimeout(() => {
+        router.replace("/auth");
+      }, 1800);
+      console.log(setPass);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return {
     checkAuth,
     adminLogin,
@@ -150,5 +192,10 @@ export const useAuthStore = defineStore("auth", () => {
     currentDepartment,
     coorId,
     sessionCode,
+    removeErrorMessage,
+    errorMessage,
+    isEmailExist,
+    submitPasswordRequest,
+    sumbitSetPassword,
   };
 });
