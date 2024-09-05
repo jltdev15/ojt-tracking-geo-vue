@@ -1,52 +1,105 @@
 <template>
   <div>
+    <div class="p-6 text-sm breadcrumbs">
+      <ul>
+        <li>
+          <router-link :to="{ name: 'coor_dashboard' }">Admin Dashboard</router-link>
+        </li>
+        <li>
+          <router-link :to="{ name: 'CoorRequest' }">Requests</router-link>
+        </li>
+      </ul>
+    </div>
     <header class="">
-      <h1 class="p-6 text-3xl font-bold">Visitation Request List</h1>
+      <h1 class="p-6 text-3xl font-bold">Your Request List</h1>
     </header>
     <div class="p-6">
-      <EasyDataTable
-        :headers="headers"
-        :items="coorStore.requestList"
-        table-class-name="customize-table"
-      >
-        <template #item-operation="">
-          <div class="">
-            <button class="btn">Create Request</button>
+      <EasyDataTable :headers="headers" :items="coorStore.requestList" table-class-name="customize-table">
+        <template #item-operation="item">
+          <div v-if="item.status === 'Rejected'" class="">
+            <button @click="toggleConfirmRemoveModal(item._id)" class="btn btn-accent btn-outline">Remove</button>
+          </div>
+          <div v-if="item.status === 'Accepted'" class="">
+            <button @click="toggleMarkAsDoneModal(item._id)" class="btn btn-accent btn-outline">Mark as Done</button>
+          </div>
+          <div v-if="item.status !== 'Accepted' && item.status !== 'Rejected'">
+            <p>No action needed</p>
           </div>
         </template>
+        <template #item-hteRemarks="item">
+          <div v-if="item.hteRemarks" class="">
+            <p>{{ item.hteRemarks }}</p>
+          </div>
+          <p v-else>
+            no remarks
+          </p>
+        </template>
       </EasyDataTable>
+      <Modal :show="isRemoveModalShow" title="Remove Confirmation">
+        <template #default>
+          <p class="text-xl text-center ">Are you sure you want to remove
+            this request</p>
+          <div class="flex justify-end gap-3 py-6">
+            <button @click="isRemoveModalShow = !isRemoveModalShow" class="btn btn-accent btn-outline">Cancel</button>
+            <button type="button" @click="handleRemoveRequest" class="btn btn-primary text-gray-50">
+              Confirm
+            </button>
+          </div>
+        </template>
+      </Modal>
+      <Modal :show="isDoneModalShow" title="Done Confirmation">
+        <template #default>
+          <p class="text-xl text-center ">Visitation Done?</p>
+          <div class="flex justify-end gap-3 py-6">
+            <button @click="isDoneModalShow = !isDoneModalShow" class="btn btn-accent btn-outline">Cancel</button>
+            <button type="button" @click="handleDoneRequest" class="btn btn-primary text-gray-50">
+              Confirm
+            </button>
+          </div>
+        </template>
+      </Modal>
     </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { useCoorStore } from "@/stores/CoorStore";
 const coorStore = useCoorStore();
+const isRemoveModalShow = ref(false)
+const isDoneModalShow = ref(false)
+const requestId = ref('')
+const searchField = ref("Set filter");
+const searchValue = ref("");
 const headers = [
-  { text: "Company Name", value: "name", width: 300 },
-  { text: "Request Date", value: "address" },
-  { text: "Request Time", value: "createdAt" },
-  { text: "Status", value: "moa" },
-  { text: "Remarks", value: "moa" },
-
-  { text: "Action", value: "operation", width: 200 },
+  { text: "Company Name", value: "requesteeName", },
+  { text: "Request Date", value: "scheduledDate" },
+  { text: "Request Time", value: "scheduledtime" },
+  { text: "Status", value: "status" },
+  { text: "HTE Remarks", value: "hteRemarks" },
+  { text: "Action", value: "operation" },
 ];
 onMounted(async () => {
-  await coorStore.fetchHTELists();
+  await coorStore.fetchRequestVisitation();
   document.title = "OJT Tracker | Request list";
 });
+
+const toggleMarkAsDoneModal = (id) => {
+  requestId.value = id;
+  isDoneModalShow.value = !isDoneModalShow.value
+}
+const toggleConfirmRemoveModal = (id) => {
+  requestId.value = id;
+  isRemoveModalShow.value = !isRemoveModalShow.value
+}
+const handleRemoveRequest = async () => {
+  await coorStore.removeVisitRequests(requestId.value)
+  isRemoveModalShow.value = !isRemoveModalShow.value
+}
+const handleDoneRequest = async () => {
+  await coorStore.doneVisitRequest(requestId.value)
+  isDoneModalShow.value = !isDoneModalShow.value
+}
 </script>
 
-<style scoped>
-.customize-table {
-  --easy-table-border: 1px rounded #445269;
-  --easy-table-header-font-size: 16px;
-  --easy-table-header-height: 80px;
-  --easy-table-header-font-color: #fff;
-  --easy-table-header-background-color: #ae1818;
-
-  --easy-table-body-row-height: 60px;
-  --easy-table-body-row-font-size: 14px;
-}
-</style>
+<style scoped></style>

@@ -1,29 +1,28 @@
 <template>
   <div>
-    <header class="flex items-center justify-between p-3 bg-gray-50">
+    <div class="p-6 text-sm breadcrumbs">
+      <ul>
+        <li>
+          <router-link :to="{ name: 'hte_dashboard' }">Admin Dashboard</router-link>
+        </li>
+        <li>
+          <router-link :to="{ name: 'DailyTimeRecord' }">Logs</router-link>
+        </li>
+      </ul>
+    </div>
+    <header class="flex items-center justify-between px-6">
       <h1 class="text-3xl font-bold">Attendance Logs</h1>
     </header>
-    <div class="w-3/6 shadow-md m-3 rounded-xl p-3">
+    <div class="w-3/6 p-3 m-3 shadow-md rounded-xl">
       <div class="flex justify-end gap-3 py-3">
-        <input
-          type="text"
-          placeholder="Type here"
-          class="w-full input input-bordered"
-          v-model="searchValue"
-        />
+        <input type="text" placeholder="Type here" class="w-full input input-bordered" v-model="searchValue" />
         <select class="w-48 select select-bordered" v-model.trim="searchField">
           <option selected disabled value="Set filter">Set filter</option>
           <option value="date">Date</option>
         </select>
       </div>
-      <EasyDataTable
-        :headers="headers"
-        :items="userStore.attendanceArr"
-        :search-field="searchField"
-        :search-value="searchValue"
-        show-index
-        table-class-name="customize-table"
-      >
+      <EasyDataTable :headers="headers" :items="userStore.attendanceArr" :search-field="searchField"
+        :search-value="searchValue" show-index table-class-name="customize-table">
       </EasyDataTable>
     </div>
   </div>

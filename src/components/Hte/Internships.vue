@@ -1,6 +1,16 @@
 <template>
-  <section class="p-3">
-    <header class="flex items-center justify-between p-3 bg-gray-200">
+  <section class="">
+    <div class="p-6 text-sm breadcrumbs">
+      <ul>
+        <li>
+          <router-link :to="{ name: 'hte_dashboard' }">Admin Dashboard</router-link>
+        </li>
+        <li>
+          <router-link :to="{ name: 'hte_vacancy' }">Accepted</router-link>
+        </li>
+      </ul>
+    </div>
+    <header class="flex items-center justify-between px-6 bg-gray-200">
       <div>
         <h1 class="text-3xl font-bold">Internships Listing</h1>
         <p>No. of listing {{ hteStore.getNumberOfListing }}</p>
@@ -13,7 +23,7 @@
       </div>
     </header>
     <div class="divider"></div>
-    <div class="flex justify-end gap-3 pb-3">
+    <div class="flex justify-end gap-3 px-6 pb-3">
       <input type="text" placeholder="Search here" class="w-full input input-bordered" v-model="searchValue" />
       <select class="w-48 select select-bordered" v-model.trim="searchField">
         <option selected disabled value="Set filter">Set filter</option>
@@ -21,27 +31,27 @@
         <option value="title">Title</option>
       </select>
     </div>
-
-    <EasyDataTable :headers="headers" :items="hteStore.internshipList" :search-field="searchField"
-      :search-value="searchValue" table-class-name="customize-table" show-index>
-      <!-- <template #item-applicants="item">
+    <section class="px-6">
+      <EasyDataTable :headers="headers" :items="hteStore.internshipList" :search-field="searchField"
+        :search-value="searchValue" table-class-name="customize-table" show-index>
+        <!-- <template #item-applicants="item">
         <div class="flex justify-between gap-3 py-2">
           <h1>{{ item.applicants }}</h1>
         </div>
       </template> -->
-      <template #item-operation="item">
-        <div class="flex justify-between gap-3 py-2">
-          <button @click="handleToggleUpdateModal(item._id)"
-            class="flex items-center justify-center w-24 gap-2 py-3 bg-blue-800 text-gray-50">
-            Edit <i class="fa-solid fa-pen-to-square"></i>
-          </button>
-          <button @click="handleDeleteModalToggle(item._id)"
-            class="flex items-center justify-center w-24 gap-2 py-3 bg-red-500 text-gray-50">
-            Remove<i class="fa-solid fa-trash"></i>
-          </button>
-        </div>
-      </template>
-      <!-- <template #item-applicants="item">
+        <template #item-operation="item">
+          <div class="flex justify-between gap-3 py-2">
+            <button @click="handleToggleUpdateModal(item._id)"
+              class="flex items-center justify-center gap-2 py-3 btn btn-primary text-gray-50">
+              Update
+            </button>
+            <button @click="handleDeleteModalToggle(item._id)"
+              class="flex items-center justify-center w-24 gap-2 py-3 btn btn-outline btn-accent text-gray-50">
+              Remove
+            </button>
+          </div>
+        </template>
+        <!-- <template #item-applicants="item">
         <div class="flex flex-col justify-between gap-3 py-2">
           <div v-if="item.applicants.length">
             <router-link
@@ -59,7 +69,9 @@
           </ul>
         </div>
       </template> -->
-    </EasyDataTable>
+      </EasyDataTable>
+    </section>
+
     <Modal :show="isModalShow" title="New Internship">
       <!-- <Modal :show="true" title="New Account"> -->
       <template #default>
@@ -134,7 +146,8 @@
               <button @click="handleUpdateListingItem" class="text-lg btn btn-primary btn-block">
                 Update Internship
               </button>
-              <button class="text-lg btn btn-outline btn-block" @click="isUpdateModalShow = !isUpdateModalShow">
+              <button class="text-lg btn btn-accent btn-outline btn-block"
+                @click="isUpdateModalShow = !isUpdateModalShow">
                 Close
               </button>
             </div>
@@ -226,13 +239,13 @@ textarea {
 
 .customize-table {
   --easy-table-border: 1px rounded #445269;
-  --easy-table-header-font-size: 16px;
-  --easy-table-header-height: 60px;
+  --easy-table-header-font-size: 12px;
+  --easy-table-header-height: 50px;
   --easy-table-header-font-color: #fff;
-  --easy-table-header-background-color: #2b2828;
+  --easy-table-header-background-color: #ae1818;
   --easy-table-body-row-font-size: 16px;
 
-  --easy-table-body-row-height: 80px;
+  --easy-table-body-row-height: 100px;
   --easy-table-body-row-font-size: 16px;
 }
 </style>

@@ -57,7 +57,9 @@
           <i class="mr-3 text-lg bx bx-git-pull-request"></i>
           <span class="text-sm">Visitation Request</span>
           <span
-            class="md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-red-600 bg-red-200 rounded-full">5</span>
+            :class="{ 'bg-red-200 text-red-600': hteStore.getNumberOfVisitPendingRequest, 'bg-gray-50 text-gray-400': !hteStore.getNumberOfVisitPendingRequest }"
+            class="md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide   rounded-full">{{
+              hteStore.getNumberOfVisitPendingRequest ? hteStore.getNumberOfVisitPendingRequest : '0' }}</span>
         </router-link>
       </li>
       <span class="font-bold text-gray-400">COMMUNICATION</span>
@@ -81,12 +83,18 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { useHteStore } from "@/stores/HteStore";
+const hteStore = useHteStore();
 const props = defineProps(["isSidebarHidden"]);
 const isListShow = ref(false);
 const toggleList = () => {
   isListShow.value = !isListShow.value;
 };
+
+onMounted(async () => {
+  await hteStore.fetchVisitRequests()
+})
 </script>
 
 <style scoped>

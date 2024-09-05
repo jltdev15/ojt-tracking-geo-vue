@@ -16,38 +16,24 @@
     <section class="p-3">
       <p class="font-bold text-gray-600">List of Applicants</p>
       <div class="flex justify-end gap-3 py-3">
-        <input
-          type="text"
-          placeholder="Search here"
-          class="w-full input input-bordered"
-          v-model="searchValue"
-        />
+        <input type="text" placeholder="Search here" class="w-full input input-bordered" v-model="searchValue" />
         <select class="w-48 select select-bordered" v-model.trim="searchField">
           <option selected disabled value="Set filter">Set filter</option>
           <option value="status">Status</option>
           <option value="title">Title</option>
         </select>
       </div>
-      <EasyDataTable
-        :headers="headers"
-        :items="applicantItemList"
-        :search-field="searchField"
-        :search-value="searchValue"
-        table-class-name="customize-table"
-        show-index
-      >
+      <EasyDataTable :headers="headers" :items="applicantItemList" :search-field="searchField"
+        :search-value="searchValue" table-class-name="customize-table" show-index>
         <template #item-viewRequirements="item">
           <div class="flex justify-between gap-3 py-2">
-            <p
-              class="text-blue-600 underline cursor-pointer"
-              @click="handleSetInternId(item.internId)"
-            >
+            <p class="text-blue-600 underline cursor-pointer" @click="handleSetInternId(item.internId)">
               Check Requirements
             </p>
           </div>
         </template>
       </EasyDataTable>
-      <ModalRequirements
+      <!-- <ModalRequirements
         :show="modalRequirementShow"
         title="Approved Application"
         v-for="item in applicantRequirements"
@@ -134,7 +120,7 @@
             Close
           </p>
         </template>
-      </ModalRequirements>
+      </ModalRequirements> -->
     </section>
   </div>
 </template>
@@ -186,4 +172,16 @@ const handleAcceptApplicant = async (applicationId) => {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.customize-table {
+  --easy-table-border: 1px rounded #445269;
+  --easy-table-header-font-size: 12px;
+  --easy-table-header-height: 50px;
+  --easy-table-header-font-color: #fff;
+  --easy-table-header-background-color: #ae1818;
+  --easy-table-body-row-font-size: 16px;
+
+  --easy-table-body-row-height: 100px;
+  --easy-table-body-row-font-size: 16px;
+}
+</style>

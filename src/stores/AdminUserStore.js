@@ -5,6 +5,9 @@ export const useAdminUserStore = defineStore("user", () => {
   const usersList = ref([]);
   const departmentlist = ref([]);
   const internsList = ref([]);
+  const htesList = ref([]);
+  const hteInternshipList = ref([]);
+  const coordinatorList = ref([]);
   const currentRole = ref("");
   const attendanceArr = ref([]);
   const userRoleList = reactive({
@@ -333,11 +336,64 @@ export const useAdminUserStore = defineStore("user", () => {
       return err;
     }
   };
+  const fetchHTEList = async () => {
+    try {
+      const response = await apiClient.get(`/admin/hte`);
+      console.log("====================================");
+      console.log(response);
+      console.log("====================================");
+      htesList.value = response.data.content;
+      console.log(internsList.value);
+      return response;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const fetchHTEInternship = async (id) => {
+    try {
+      const response = await apiClient.get(`/admin/hte/${id}`);
+      console.log("====================================");
+      console.log(response);
+      console.log("====================================");
+      hteInternshipList.value = response.data.content;
+      return response;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const fetchInternshipApplicantList = async (jobId) => {
+    try {
+      const response = await apiClient.get(`/hte/list/${jobId}`);
+      console.log(response.data.content);
+      // jobName.value = response.data.content.jobTitle;
+      // datePosted.value = response.data.content.createdAt;
+      // applicantItemList.value = response.data.content;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // Coordinator List
+  const fetchCoordinator = async () => {
+    try {
+      const response = await apiClient.get(`/admin/coor`);
+      console.log(response);
+      coordinatorList.value = response.data.content;
+      // jobName.value = response.data.content.jobTitle;
+      // datePosted.value = response.data.content.createdAt;
+      // applicantItemList.value = response.data.content;
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   // Computed
 
   const getNumberOfUsers = computed(() => {
     return usersList.value.length;
+  });
+  const getNumberOfUsersOnly = computed(() => {
+    return usersList.value.filter((item) => item.role !== "Admin");
   });
   const getNumberOfHTE = computed(() => {
     return usersList.value.filter((item) => item.role === "HTE").length;
@@ -395,5 +451,13 @@ export const useAdminUserStore = defineStore("user", () => {
     fetchInternDailyLogs,
     getInternAccounts,
     resetDeviceRestriction,
+    fetchHTEList,
+    htesList,
+    hteInternshipList,
+    fetchHTEInternship,
+    fetchInternshipApplicantList,
+    getNumberOfUsersOnly,
+    fetchCoordinator,
+    coordinatorList,
   };
 });

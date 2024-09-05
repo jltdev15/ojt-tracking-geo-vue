@@ -45,8 +45,8 @@ export const useHteStore = defineStore("hte", () => {
   };
   const fetchSingleInternships = async (jobId) => {
     try {
-      const response = await apiClient.get(`/hte/list/${jobId}`);
-      console.log(response.data.content);
+      const response = await apiClient.get(`/hte/list/applicants/${jobId}`);
+      console.log(response);
       jobName.value = response.data.content.jobTitle;
       datePosted.value = response.data.content.createdAt;
       applicantItemList.value = response.data.content;
@@ -204,19 +204,23 @@ export const useHteStore = defineStore("hte", () => {
     try {
       const response = await apiClient.patch(`/hte/requests/${requestId}`);
       await fetchVisitRequests();
+      alert("Accepted Succesfully");
       console.log(response);
       return response;
     } catch (err) {
       console.log(err);
     }
   };
-  const rejectVisitRequests = async (requestId) => {
+  const rejectVisitRequests = async (requestId, payload) => {
     try {
       const response = await apiClient.patch(
-        `/hte/requests/reject/${requestId}`
+        `/hte/requests/reject/${requestId}`,
+        {
+          hteRemarks: payload,
+        }
       );
       await fetchVisitRequests();
-      alert("Accepted Succesfully");
+      alert("Rejected Succesfully");
       return response;
     } catch (err) {
       console.log(err);
@@ -225,7 +229,10 @@ export const useHteStore = defineStore("hte", () => {
   // Computed
   const getNumberOfVisitPendingRequest = computed(() => {
     return requestList.value.filter(
-      (item) => item.status != "Accepted" && item.status !== "Rejected"
+      (item) =>
+        item.status != "Accepted" &&
+        item.status !== "Rejected" &&
+        item.status !== "Done"
     ).length;
   });
   const getNumberOfListing = computed(() => {
@@ -236,15 +243,18 @@ export const useHteStore = defineStore("hte", () => {
   });
   const getListOfInternApplication = computed(() => {
     return applicantList.value.filter(
-      (item) => item.status !== "Accepted" && item.status !== "Rejected"
+      (item) =>
+        item.status !== "Accepted" &&
+        item.status !== "Rejected" &&
+        item.status !== "Finished"
     );
   });
   const getListOfAcceptedInterns = computed(() => {
     return acceptedApplicantsList.value;
   });
-  const getNumberOfAcceptedInterns = computed(() => {
-    return acceptedApplicantsList.value.length;
-  });
+  // const getNumberOfAcceptedInterns = computed(() => {
+  //   return acceptedApplicantsList.value.length;
+  // });
   const getNumberOfPendingInterns = computed(() => {
     return applicantList.value.filter((item) => item.status === "Pending")
       .length;
@@ -253,9 +263,21 @@ export const useHteStore = defineStore("hte", () => {
     return applicantList.value.filter((item) => item.status === "Approved")
       .length;
   });
+  const getNumberOfAcceptedInterns = computed(() => {
+    return applicantList.value.filter((item) => item.status === "Accepted")
+      .length;
+  });
   const getNumberOfInternForEvaluation = computed(() => {
     return applicantList.value.filter((item) => item.status === "Finished")
       .length;
+  });
+
+  const getNumberOfApprovedRequest = computed(() => {
+    return requestList.value.filter((item) => item.status === "Accepted")
+      .length;
+  });
+  const getNumberOfDoneRequest = computed(() => {
+    return requestList.value.filter((item) => item.status === "Done").length;
   });
 
   return {
@@ -296,5 +318,8 @@ export const useHteStore = defineStore("hte", () => {
     acceptVisitRequests,
     rejectVisitRequests,
     getNumberOfVisitPendingRequest,
+    getNumberOfApprovedRequest,
+    getNumberOfDoneRequest,
+    getNumberOfInternForEvaluation,
   };
 });

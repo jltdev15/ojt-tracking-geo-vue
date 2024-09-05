@@ -81,6 +81,25 @@ const router = createRouter({
           component: () => import("../components/Admin/HteList.vue"),
           meta: { requiresAuth: true, roles: ["Admin"] },
         },
+        {
+          path: "hte/:id",
+          name: "hteItem",
+          component: () => import("../components/Admin/HTEItem.vue"),
+          meta: { requiresAuth: true, roles: ["Admin"] },
+        },
+        {
+          path: "internship/:id",
+          name: "InternshipApplicantList",
+          component: () =>
+            import("../components/Admin/InternshipApplicantItem.vue"),
+          meta: { requiresAuth: true, roles: ["Admin"] },
+        },
+        {
+          path: "coordinator",
+          name: "CoordinatorList",
+          component: () => import("../components/Admin/CoordinatorList.vue"),
+          meta: { requiresAuth: true, roles: ["Admin"] },
+        },
       ],
     },
     {
@@ -187,7 +206,7 @@ const router = createRouter({
           meta: { requiresAuth: true, roles: ["HTE"] },
         },
         {
-          path: "evaluationForm",
+          path: "evaluationForm/:id",
           name: "EvaluationForm",
           component: () => import("../components/Hte/EvaluationForm.vue"),
           meta: { requiresAuth: true, roles: ["HTE"] },

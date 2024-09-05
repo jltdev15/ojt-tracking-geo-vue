@@ -31,9 +31,11 @@ export const useInternStore = defineStore("intern", () => {
           "Content-Type": "multipart/form-data",
         },
       });
+      alert("Application Sent");
       console.log(response);
     } catch (err) {
       console.log(err);
+      alert(err.response.data.content);
     }
   };
   const fetchApplicationList = async () => {

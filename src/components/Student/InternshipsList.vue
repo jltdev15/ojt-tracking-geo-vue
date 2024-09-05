@@ -1,6 +1,16 @@
 <template>
-  <section class="p-3">
-    <header class="flex items-center justify-between p-3 bg-gray-200">
+  <section class="">
+    <div class="p-6 text-sm breadcrumbs">
+      <ul>
+        <li>
+          <router-link :to="{ name: 'student_dashboard' }">Intern Dashboard</router-link>
+        </li>
+        <li>
+          <router-link :to="{ name: 'internships_list' }">Internship Jobs</router-link>
+        </li>
+      </ul>
+    </div>
+    <header class="flex items-center justify-between px-6 pb-3 bg-gray-200">
       <h1 class="text-3xl font-bold">Internships Job</h1>
       <div>
         <button @click="handleToggleModal" class="btn btn-block">
@@ -8,7 +18,7 @@
         </button>
       </div>
     </header>
-    <div class="flex min-h-screen bg-gray-100">
+    <div class="flex min-h-screen ">
       <div class="p-5">
         <div class="grid grid-cols-3 gap-6">
           <p v-if="internStore.internshipLists.length === 0">No listing available</p>

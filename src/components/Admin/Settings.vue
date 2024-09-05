@@ -1,11 +1,12 @@
 <template>
   <div>
+
     <header class="flex items-center justify-between p-3 bg-gray-50">
       <h1 class="text-3xl font-bold">Manage Settings</h1>
     </header>
     <section class="flex p-3 gap-9">
       <div class="w-3/6 p-3 shadow-md">
-        <p class="py-3 font-medium uppercase">Department List</p>
+        <p class="py-3 font-medium capitalize">Department List</p>
         <div class="flex items-center justify-between gap-3">
           <input v-model.trim="departmentName" type="text " class="w-full input" placeholder="New department" />
           <button @click="addDepartmentHandler" class="btn btn-primary">Add</button>
@@ -34,7 +35,7 @@
         </div>
       </div>
       <div class="w-3/6 p-3 shadow-md">
-        <p class="py-3 font-medium uppercase">Reset Device</p>
+        <p class="py-3 font-medium capitalize">Reset Device Restrictions</p>
         <span></span>
         <div class="flex justify-end gap-3 py-3">
           <input type="text" placeholder="Type here" class="w-full input input-bordered" v-model="searchValue" />

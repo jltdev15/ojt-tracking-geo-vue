@@ -6,11 +6,7 @@
       </h1>
     </header>
     <div class="p-6">
-      <EasyDataTable
-        :headers="headers"
-        :items="coorStore.hteList"
-        table-class-name="customize-table"
-      >
+      <EasyDataTable :headers="headers" :items="coorStore.hteList" table-class-name="customize-table">
         <template #item-moa="item">
           <div v-if="item.hasMoa === 'true'">
             <p>MOA Available</p>
@@ -21,10 +17,7 @@
         </template>
         <template #item-operation="item">
           <div class="">
-            <button
-              @click="openRequestModal(item._id, item.name)"
-              class="btn btn-primary"
-            >
+            <button @click="openRequestModal(item._id, item.name)" class="btn btn-primary">
               Create Request
             </button>
           </div>
@@ -36,41 +29,22 @@
             <!-- <div v-if="true" class="flex flex-col gap-3 pt-3"> -->
             <p class="font-medium text-gray-600">Date of Visitation</p>
             <label class="flex items-center gap-2 input input-bordered">
-              <input
-                v-model="requestData.scheduledDate"
-                type="date"
-                :min="today"
-                class="grow"
-                placeholder="Date of Visitation"
-                required
-              />
+              <input v-model="requestData.scheduledDate" type="date" :min="today" class="grow"
+                placeholder="Date of Visitation" required />
             </label>
             <p class="font-medium text-gray-600">Time of Visitation</p>
             <label class="flex items-center justify-between gap-2 input input-bordered">
-              <input
-                min="08:00"
-                max="17:00"
-                class="grow"
-                type="time"
-                v-model="requestData.scheduledtime"
-                required
-              />
+              <input min="08:00" max="17:00" class="grow" type="time" v-model="requestData.scheduledtime" required />
             </label>
             <p class="font-medium text-gray-600">Remarks</p>
-            <textarea
-              v-model="requestData.remarks"
-              placeholder="Optional"
-              class="w-full max-w-xl textarea textarea-bordered textarea-sm"
-            ></textarea>
+            <textarea v-model="requestData.coorRemarks" placeholder="Optional"
+              class="w-full max-w-xl textarea textarea-bordered textarea-sm"></textarea>
 
             <div class="flex flex-col gap-2">
               <button type="submit" class="text-lg btn btn-primary btn-block">
                 Send Request
               </button>
-              <button
-                class="text-lg btn btn-accent btn-outline btn-block"
-                @click="closeRequestModal"
-              >
+              <button class="text-lg btn btn-accent btn-outline btn-block" @click="closeRequestModal">
                 Close
               </button>
             </div>
@@ -106,7 +80,7 @@ const requestData = reactive({
   department: authStore.currentDepartment,
   scheduledDate: "",
   scheduledtime: "",
-  remarks: "",
+  coorRemarks: "",
 });
 
 // const sendRequestHandler = async () => {
@@ -128,7 +102,7 @@ const submitRequestHandler = async () => {
   requestData.requesteeName = "";
   requestData.scheduledDate = "";
   requestData.scheduledtime = "";
-  requestData.remarks = "";
+  requestData.coorRemarks = "";
 };
 const closeRequestModal = () => {
   isModalShow.value = !isModalShow.value;
@@ -139,15 +113,4 @@ onMounted(async () => {
 });
 </script>
 
-<style scoped>
-.customize-table {
-  --easy-table-border: 1px rounded #445269;
-  --easy-table-header-font-size: 16px;
-  --easy-table-header-height: 80px;
-  --easy-table-header-font-color: #fff;
-  --easy-table-header-background-color: #ae1818;
-
-  --easy-table-body-row-height: 60px;
-  --easy-table-body-row-font-size: 14px;
-}
-</style>
+<style scoped></style>

@@ -15,17 +15,9 @@
           </p>
         </header>
         <div class="py-1 mb-3 border">
-          <input
-            placeholder="Supporting documents"
-            type="file"
-            name="files"
-            accept="application/pdf, image/jpeg, image/png"
-            id="supporting_document"
-            ref="fileInput "
-            class="w-full max-w-3xl file-input file-input-bordered"
-            @change="handleFileChange"
-            required
-          />
+          <input placeholder="Supporting documents" type="file" name="files"
+            accept="application/pdf, image/jpeg, image/png" id="supporting_document" ref="fileInput "
+            class="w-full max-w-3xl file-input file-input-bordered" @change="handleFileChange" required />
           <p v-if="isFileSizeExceed" class="p-1 text-red-800">
             Files size exceeded. Please upload other documents
           </p>
@@ -37,15 +29,8 @@
           </h2>
         </header>
         <div class="py-1 mb-3 border">
-          <input
-            type="file"
-            name="files"
-            accept="application/pdf, image/jpeg, image/png"
-            id="supporting_document"
-            ref="fileInput "
-            class="w-full max-w-3xl file-input file-input-bordered"
-            @change="handleFile2Change"
-          />
+          <input type="file" name="files" accept="application/pdf, image/jpeg, image/png" id="supporting_document"
+            ref="fileInput " class="w-full max-w-3xl file-input file-input-bordered" @change="handleFile2Change" />
           <p v-if="isFileSizeExceed" class="p-1 text-red-800">
             Files size exceeded. Please upload other documents
           </p>
@@ -53,11 +38,9 @@
         <div>
           <button class="btn btn-primary btn-block">Submit Application</button>
         </div>
-        <router-link
-          to="/student/dashboard/internships"
-          class="flex items-center mt-3 font-medium text-center cursor-pointer btn-outline btn hover:text-blue-600"
-          >Browse Interships</router-link
-        >
+        <router-link to="/student/dashboard/internships"
+          class="flex items-center mt-3 font-medium text-center cursor-pointer btn-outline btn hover:text-blue-600">Browse
+          Interships</router-link>
       </div>
     </form>
   </div>
@@ -107,6 +90,7 @@ const uploadFile = async () => {
   try {
     await internStore.applyInternship(route.params.id, formData);
     router.push({ name: "ApplicationStatus" });
+
   } catch (err) {
     console.log(err);
   }

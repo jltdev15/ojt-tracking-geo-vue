@@ -1,5 +1,16 @@
 <template>
   <div class="p-6">
+    <div class="py-3 text-sm breadcrumbs">
+      <ul>
+        <li>
+          <router-link :to="{ name: 'admin_dashboard' }">Admin Dashboard</router-link>
+        </li>
+        <li>
+          <router-link class="font-medium" :to="{ name: 'InternsList' }">Intern List</router-link>
+        </li>
+
+      </ul>
+    </div>
     <header class="">
       <h1 class="text-3xl font-bold">Interns List</h1>
     </header>
@@ -22,11 +33,19 @@
           </div>
         </template>
         <template #item-status="item">
-          <div v-if="item.isEvaluationReady">
-            <p>Finished Internship</p>
+          <div v-if="item.isInternshipReady">
+            <p>Ongoing Internship</p>
           </div>
           <div v-else>
-            <p>Ongoing Internship</p>
+            <p>On going application</p>
+          </div>
+        </template>
+        <template #item-evaluation="item">
+          <div v-if="item.isEvaluationReady">
+            <router-link>View evaluation</router-link>
+          </div>
+          <div v-else>
+            <p>No evaluation found</p>
           </div>
         </template>
       </EasyDataTable>
@@ -42,14 +61,12 @@ const searchField = ref("Set filter");
 const searchValue = ref("");
 const headers = [
   { text: "NAME", value: "fullName" },
-
   { text: "DEPARTMENT", value: "department" },
   { text: "CONTACT", value: "contact" },
   { text: "REQUIRED HOURS", value: "requiredHours" },
   { text: "RENDERED HOURS", value: "workedHours" },
   { text: "DAILY TIME RECORD", value: "dailytimerecord" },
-  { text: "EVALUATION RESULTS", value: "isEvaluationReady" },
-
+  { text: "EVALUATION RESULTS", value: "evaluation" },
   { text: "STATUS", value: "status" },
 ];
 

@@ -48,6 +48,7 @@ export const useCoorStore = defineStore("coor", () => {
     try {
       const response = await apiClient.post(`/coor/request`, payload);
       requestList.value = response.data.content;
+      await fetchRequestVisitation();
       console.log(response);
       alert("Request sent");
       return response;
@@ -69,6 +70,30 @@ export const useCoorStore = defineStore("coor", () => {
       console.log(err);
     }
   };
+  const removeVisitRequests = async (requestId) => {
+    console.log(requestId);
+
+    try {
+      const response = await apiClient.delete(`/coor/requests/${requestId}`);
+      await fetchRequestVisitation();
+      alert("Remove Succesfully");
+      return response;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const doneVisitRequest = async (requestId) => {
+    console.log(requestId);
+
+    try {
+      const response = await apiClient.patch(`/coor/requests/${requestId}`);
+      await fetchRequestVisitation();
+      alert("Mark As Done Succesfully");
+      return response;
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   // Computed
   const getNumberOfInterns = computed(() => {
@@ -80,6 +105,20 @@ export const useCoorStore = defineStore("coor", () => {
   });
   const getNumberOfHTE = computed(() => {
     return hteList.value.length;
+  });
+  const getNumberOfRequestDone = computed(() => {
+    return requestList.value.filter((item) => item.status === "Done").length;
+  });
+  const getNumberOfRequestAccepted = computed(() => {
+    return requestList.value.filter((item) => item.status === "Accepted")
+      .length;
+  });
+  const getNumberOfRequestPending = computed(() => {
+    return requestList.value.filter((item) => item.status === "Pending").length;
+  });
+  const getNumberOfRequestRejected = computed(() => {
+    return requestList.value.filter((item) => item.status === "Rejected")
+      .length;
   });
 
   return {
@@ -96,5 +135,11 @@ export const useCoorStore = defineStore("coor", () => {
     getNumberOfInterns,
     getNumberOfInternsDeployed,
     getNumberOfHTE,
+    removeVisitRequests,
+    doneVisitRequest,
+    getNumberOfRequestDone,
+    getNumberOfRequestAccepted,
+    getNumberOfRequestRejected,
+    getNumberOfRequestPending,
   };
 });
