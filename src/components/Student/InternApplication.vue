@@ -1,118 +1,176 @@
 <template>
   <div>
-    <header class="text-center">
+    <header class="">
       <h1 class="p-6 text-3xl font-bold">Internship Application Form</h1>
+      <p class="px-6 text-sm text-gray-500 font-extralight">
+        Accepts only JPEG or PDF format(5MB Max size)
+      </p>
     </header>
-    <form @submit.prevent="uploadFile" enctype="multipart/form-data">
-      <div class="max-w-xl p-3 mx-auto">
-        <header class="">
-          <h2 class="flex items-center text-xl font-bold">
-            Resume
-            <span class="px-3 text-sm text-red-600 font-extralight">(required)</span>
-          </h2>
-          <p class="py-2 text-sm text-gray-500 font-extralight">
-            Accepts only JPEG or PDF format(5MB Max size)
-          </p>
-        </header>
-        <div class="py-1 mb-3 border">
-          <input placeholder="Supporting documents" type="file" name="files"
-            accept="application/pdf, image/jpeg, image/png" id="supporting_document" ref="fileInput "
-            class="w-full max-w-3xl file-input file-input-bordered" @change="handleFileChange" required />
-          <p v-if="isFileSizeExceed" class="p-1 text-red-800">
-            Files size exceeded. Please upload other documents
-          </p>
-        </div>
-        <!-- Parent Consent -->
-        <header class="">
-          <h2 class="flex items-center text-xl font-bold">
-            Parent Consent
-            <span class="px-3 text-sm text-gray-400 font-extralight">(optional)</span>
-          </h2>
-        </header>
-        <div class="py-1 mb-3 border">
-          <input type="file" name="files" accept="application/pdf, image/jpeg, image/png" id="supporting_document"
-            ref="fileInput " class="w-full max-w-3xl file-input file-input-bordered" @change="handleFile2Change" />
-          <p v-if="isFileSizeExceed" class="p-1 text-red-800">
-            Files size exceeded. Please upload other documents
-          </p>
-        </div>
-        <!-- Intern Endorsement Form -->
-        <header class="">
-          <h2 class="flex items-center text-xl font-bold">
-            Intern Endorsement Form
-            <span class="px-3 text-sm text-gray-400 font-extralight">(optional)</span>
-          </h2>
-        </header>
-        <div class="py-1 mb-3 border">
-          <input type="file" name="files" accept="application/pdf, image/jpeg, image/png" id="supporting_document"
-            ref="fileInput " class="w-full max-w-3xl file-input file-input-bordered" @change="handleFile3Change" />
-          <p v-if="isFileSizeExceed" class="p-1 text-red-800">
-            Files size exceeded. Please upload other documents
-          </p>
-        </div>
-        <!-- MOA HTE -->
-        <header class="">
-          <h2 class="flex items-center text-xl font-bold">
-            MOA HTE
-            <span class="px-3 text-sm text-gray-400 font-extralight">(optional)</span>
-          </h2>
-        </header>
-        <div class="py-1 mb-3 border">
-          <input type="file" name="files" accept="application/pdf, image/jpeg, image/png" id="supporting_document"
-            ref="fileInput " class="w-full max-w-3xl file-input file-input-bordered" @change="handleFile4Change" />
-          <p v-if="isFileSizeExceed" class="p-1 text-red-800">
-            Files size exceeded. Please upload other documents
-          </p>
-        </div>
-        <!-- First -->
-        <header class="">
-          <h2 class="flex items-center text-xl font-bold">
-            First Endorsement Form
-            <span class="px-3 text-sm text-gray-400 font-extralight">(optional)</span>
-          </h2>
-        </header>
-        <div class="py-1 mb-3 border">
-          <input type="file" name="files" accept="application/pdf, image/jpeg, image/png" id="supporting_document"
-            ref="fileInput " class="w-full max-w-3xl file-input file-input-bordered" @change="handleFile5Change" />
-          <p v-if="isFileSizeExceed" class="p-1 text-red-800">
-            Files size exceeded. Please upload other documents
-          </p>
-        </div>
-        <!-- Certification -->
-        <header class="">
-          <h2 class="flex items-center text-xl font-bold">
-            Certification Form
-            <span class="px-3 text-sm text-gray-400 font-extralight">(optional)</span>
-          </h2>
-        </header>
-        <div class="py-1 mb-3 border">
-          <input type="file" name="files" accept="application/pdf, image/jpeg, image/png" id="supporting_document"
-            ref="fileInput " class="w-full max-w-3xl file-input file-input-bordered" @change="handleFile6Change" />
-          <p v-if="isFileSizeExceed" class="p-1 text-red-800">
-            Files size exceeded. Please upload other documents
-          </p>
-        </div>
-        <!-- Internship agreement -->
-        <header class="">
-          <h2 class="flex items-center text-xl font-bold">
-            Internship Agreement
-            <span class="px-3 text-sm text-gray-400 font-extralight">(optional)</span>
-          </h2>
-        </header>
-        <div class="py-1 mb-3 border">
-          <input type="file" name="files" accept="application/pdf, image/jpeg, image/png" id="supporting_document"
-            ref="fileInput " class="w-full max-w-3xl file-input file-input-bordered" @change="handleFile7Change" />
-          <p v-if="isFileSizeExceed" class="p-1 text-red-800">
-            Files size exceeded. Please upload other documents
-          </p>
-        </div>
 
+    <form @submit.prevent="uploadFile" enctype="multipart/form-data">
+      <div class="max-w-5xl p-6 grid md:grid-cols-2 gap-3">
+        <div>
+          <header class="">
+            <h2 class="flex items-center text-xl font-bold">
+              Resume
+              <span class="px-3 text-sm text-red-600 font-extralight">(required)</span>
+            </h2>
+          </header>
+          <div class="py-1 mb-3 border">
+            <input
+              placeholder="Supporting documents"
+              type="file"
+              name="files"
+              accept="application/pdf, image/jpeg, image/png"
+              id="supporting_document"
+              ref="fileInput "
+              class="w-full max-w-3xl file-input file-input-bordered"
+              @change="handleFileChange"
+              required
+            />
+            <p v-if="isFileSizeExceed" class="p-1 text-red-800">
+              Files size exceeded. Please upload other documents
+            </p>
+          </div>
+          <!-- Parent Consent -->
+          <header class="">
+            <h2 class="flex items-center text-xl font-bold">
+              Parent Consent
+              <span class="px-3 text-sm text-gray-400 font-extralight">(optional)</span>
+            </h2>
+          </header>
+          <div class="py-1 mb-3 border">
+            <input
+              type="file"
+              name="files"
+              accept="application/pdf, image/jpeg, image/png"
+              id="supporting_document"
+              ref="fileInput "
+              class="w-full max-w-3xl file-input file-input-bordered"
+              @change="handleFile2Change"
+            />
+            <p v-if="isFileSizeExceed" class="p-1 text-red-800">
+              Files size exceeded. Please upload other documents
+            </p>
+          </div>
+          <!-- Intern Endorsement Form -->
+          <header class="">
+            <h2 class="flex items-center text-xl font-bold">
+              Intern Endorsement Form
+              <span class="px-3 text-sm text-gray-400 font-extralight">(optional)</span>
+            </h2>
+          </header>
+          <div class="py-1 mb-3 border">
+            <input
+              type="file"
+              name="files"
+              accept="application/pdf, image/jpeg, image/png"
+              id="supporting_document"
+              ref="fileInput "
+              class="w-full max-w-3xl file-input file-input-bordered"
+              @change="handleFile3Change"
+            />
+            <p v-if="isFileSizeExceed" class="p-1 text-red-800">
+              Files size exceeded. Please upload other documents
+            </p>
+          </div>
+          <!-- MOA HTE -->
+          <header class="">
+            <h2 class="flex items-center text-xl font-bold">
+              MOA HTE
+              <span class="px-3 text-sm text-gray-400 font-extralight">(optional)</span>
+            </h2>
+          </header>
+          <div class="py-1 mb-3 border">
+            <input
+              type="file"
+              name="files"
+              accept="application/pdf, image/jpeg, image/png"
+              id="supporting_document"
+              ref="fileInput "
+              class="w-full max-w-3xl file-input file-input-bordered"
+              @change="handleFile4Change"
+            />
+            <p v-if="isFileSizeExceed" class="p-1 text-red-800">
+              Files size exceeded. Please upload other documents
+            </p>
+          </div>
+        </div>
+        <div>
+          <!-- First -->
+          <header class="">
+            <h2 class="flex items-center text-xl font-bold">
+              First Endorsement Form
+              <span class="px-3 text-sm text-gray-400 font-extralight">(optional)</span>
+            </h2>
+          </header>
+          <div class="py-1 mb-3 border">
+            <input
+              type="file"
+              name="files"
+              accept="application/pdf, image/jpeg, image/png"
+              id="supporting_document"
+              ref="fileInput "
+              class="w-full max-w-3xl file-input file-input-bordered"
+              @change="handleFile5Change"
+            />
+            <p v-if="isFileSizeExceed" class="p-1 text-red-800">
+              Files size exceeded. Please upload other documents
+            </p>
+          </div>
+          <!-- Certification -->
+          <header class="">
+            <h2 class="flex items-center text-xl font-bold">
+              Certification Form
+              <span class="px-3 text-sm text-gray-400 font-extralight">(optional)</span>
+            </h2>
+          </header>
+          <div class="py-1 mb-3 border">
+            <input
+              type="file"
+              name="files"
+              accept="application/pdf, image/jpeg, image/png"
+              id="supporting_document"
+              ref="fileInput "
+              class="w-full max-w-3xl file-input file-input-bordered"
+              @change="handleFile6Change"
+            />
+            <p v-if="isFileSizeExceed" class="p-1 text-red-800">
+              Files size exceeded. Please upload other documents
+            </p>
+          </div>
+          <!-- Internship agreement -->
+          <header class="">
+            <h2 class="flex items-center text-xl font-bold">
+              Internship Agreement
+              <span class="px-3 text-sm text-gray-400 font-extralight">(optional)</span>
+            </h2>
+          </header>
+          <div class="py-1 mb-3 border">
+            <input
+              type="file"
+              name="files"
+              accept="application/pdf, image/jpeg, image/png"
+              id="supporting_document"
+              ref="fileInput "
+              class="w-full max-w-3xl file-input file-input-bordered"
+              @change="handleFile7Change"
+            />
+            <p v-if="isFileSizeExceed" class="p-1 text-red-800">
+              Files size exceeded. Please upload other documents
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="max-w-5xl p-6 gap-3 justify-end flex items-center">
+        <router-link
+          to="/student/dashboard/internships"
+          class="flex items-center font-medium text-center cursor-pointer btn-outline btn hover:text-blue-600"
+          >Browse Interships</router-link
+        >
         <div>
           <button class="btn btn-primary btn-block">Submit Application</button>
         </div>
-        <router-link to="/student/dashboard/internships"
-          class="flex items-center mt-3 font-medium text-center cursor-pointer btn-outline btn hover:text-blue-600">Browse
-          Interships</router-link>
       </div>
     </form>
   </div>
@@ -202,7 +260,6 @@ const handleFile7Change = (event) => {
   isFileSizeExceed.value = false;
 };
 
-
 const uploadFile = async () => {
   const formData = new FormData();
   console.log(formData);
@@ -216,7 +273,6 @@ const uploadFile = async () => {
   try {
     await internStore.applyInternship(route.params.id, formData);
     router.push({ name: "ApplicationStatus" });
-
   } catch (err) {
     console.log(err);
   }

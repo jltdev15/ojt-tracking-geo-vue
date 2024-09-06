@@ -18,9 +18,9 @@
         </button>
       </div>
     </header>
-    <div class="flex min-h-screen ">
-      <div class="p-5">
-        <div class="grid grid-cols-3 gap-6">
+    <div class="flex min-h-screen">
+      <div class="md:p-5">
+        <div class="grid md:grid-cols-3 gap-6">
           <p v-if="internStore.internshipLists.length === 0">No listing available</p>
           <InternshipItem />
           <!-- <InternshipItem v-for="job in internStore.internshipLists" 

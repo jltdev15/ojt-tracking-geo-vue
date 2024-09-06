@@ -168,6 +168,18 @@ const router = createRouter({
           meta: { requiresAuth: true, roles: ["HTE"] },
         },
         {
+          path: "profile",
+          name: "hte_profile",
+          component: () => import("../components/Hte/HteProfile.vue"),
+          meta: { requiresAuth: true, roles: ["HTE"] },
+        },
+        {
+          path: "settings",
+          name: "hte_settings",
+          component: () => import("../components/Hte/HteSettings.vue"),
+          meta: { requiresAuth: true, roles: ["HTE"] },
+        },
+        {
           path: "internships",
           name: "hte_vacancy",
           component: HTEInternshipsList,
@@ -238,6 +250,18 @@ const router = createRouter({
           path: "",
           name: "student_dashboard",
           component: StudentDashboard,
+          meta: { requiresAuth: true, roles: ["Intern"] },
+        },
+        {
+          path: "profile",
+          name: "intern_profile",
+          component: () => import("../components/Student/Profile.vue"),
+          meta: { requiresAuth: true, roles: ["Intern"] },
+        },
+        {
+          path: "settings",
+          name: "intern_settings",
+          component: () => import("../components/Student/InternSettings.vue"),
           meta: { requiresAuth: true, roles: ["Intern"] },
         },
         {

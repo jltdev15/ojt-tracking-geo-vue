@@ -1,4 +1,4 @@
-import { ref, computed } from "vue";
+import { ref, computed, reactive } from "vue";
 import { defineStore } from "pinia";
 import apiClient from "@/config/axiosClient";
 import { useRouter } from "vue-router";
@@ -20,6 +20,22 @@ export const useAuthStore = defineStore("auth", () => {
   const sessionCode = ref("");
   const internStore = useInternStore();
 
+  const internInformation = reactive({
+    fullName: "",
+    internId: "",
+    email: "",
+    contact: "",
+    address: "",
+    department: "",
+  });
+  const hteInformation = reactive({
+    name: "",
+    email: "",
+    contact: "",
+    address: "",
+    location: {},
+  });
+
   const checkAuth = async () => {
     try {
       const response = await apiClient.get(`/active`);
@@ -32,6 +48,11 @@ export const useAuthStore = defineStore("auth", () => {
         return (currentUser.value = response.data.content.profile.firstname);
       }
       if (userRole.value === "HTE") {
+        hteInformation.name = response.data.content.profile.name;
+        hteInformation.email = response.data.content.email;
+        hteInformation.contact = response.data.content.profile.contactNumber;
+        hteInformation.address = response.data.content.profile.address;
+        hteInformation.location = response.data.content.profile.location;
         return (currentUser.value = response.data.content.profile.name);
       }
       if (userRole.value === "Coordinator") {
@@ -40,6 +61,13 @@ export const useAuthStore = defineStore("auth", () => {
         return (currentUser.value = response.data.content.profile.fullName);
       }
       if (userRole.value === "Intern") {
+        internInformation.fullName = response.data.content.profile.fullName;
+        internInformation.internId = response.data.content.username;
+        internInformation.email = response.data.content.email;
+        internInformation.contact = response.data.content.profile.contact;
+        internInformation.address = response.data.content.profile.address;
+        internInformation.department = response.data.content.profile.department;
+
         isInternReady.value = response.data.content.profile.isInternshipReady;
         sessionCode.value = response.data.content.profile.sessionCode;
         if (sessionCode.value !== localStorage.getItem("sessionCode")) {
@@ -174,6 +202,43 @@ export const useAuthStore = defineStore("auth", () => {
       console.log(err);
     }
   };
+  const updatePersonalInfo = async () => {
+    const payload = {
+      email: internInformation.email,
+      contact: internInformation.contact,
+      address: internInformation.address,
+    };
+    console.log(payload);
+
+    try {
+      const response = await apiClient.patch(
+        `/intern/update/information`,
+        payload
+      );
+      console.log(response.status);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const updateHteInfo = async () => {
+    const payload = {
+      email: hteInformation.email,
+      contact: hteInformation.contact,
+      address: hteInformation.address,
+      location: hteInformation.location
+    };
+    console.log(payload);
+
+    try {
+      const response = await apiClient.patch(
+        `/hte/update/information`,
+        payload
+      );
+      console.log(response.status);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return {
     checkAuth,
@@ -197,5 +262,9 @@ export const useAuthStore = defineStore("auth", () => {
     isEmailExist,
     submitPasswordRequest,
     sumbitSetPassword,
+    internInformation,
+    updatePersonalInfo,
+    hteInformation,
+    updateHteInfo
   };
 });

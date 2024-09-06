@@ -13,7 +13,7 @@
             'bg-white text-gray-900': hteStore.getNumberOfPendingInterns === 0,
             'bg-red-500 text-gray-50': hteStore.getNumberOfPendingInterns != 0,
           }" class="p-5 rounded shadow-sm">
-            <div class="flex items-center space-x-4 space-y-2">
+            <div v-if="hteStore.getNumberOfPendingInterns === 0" class="flex items-center space-x-4 space-y-2">
               <div>
                 <div class="text-2xl font-bold">
                   {{ hteStore.getNumberOfPendingInterns }}
@@ -21,6 +21,14 @@
                 <div class="">Pending</div>
               </div>
             </div>
+            <router-link :to="{name:'ApplicantsList'}" v-if="hteStore.getNumberOfPendingInterns != 0" class="flex items-center space-x-4 space-y-2">
+              <div>
+                <div class="text-2xl font-bold">
+                  {{ hteStore.getNumberOfPendingInterns }}
+                </div>
+                <div class="">Pending</div>
+              </div>
+            </router-link>
           </div>
           <div class="self-end p-5 bg-white rounded shadow-sm">
             <div class="flex items-center space-x-4 space-y-2">

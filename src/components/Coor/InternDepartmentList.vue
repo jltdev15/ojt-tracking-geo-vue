@@ -8,17 +8,24 @@
         <li>
           <router-link :to="{ name: 'InternDepartmentList' }">Interns List</router-link>
         </li>
-
       </ul>
     </div>
     <header class="px-6">
       <h1 class="text-3xl font-bold">Interns List</h1>
     </header>
     <div class="p-6">
-      <EasyDataTable :headers="headers" :items="coorStore.internList" border-cell table-class-name="customize-table">
+      <EasyDataTable
+        :headers="headers"
+        :items="coorStore.internList"
+        border-cell
+        table-class-name="customize-table"
+      >
         <template #item-operation="item">
           <div v-if="item.requiredHours === 0" class="flex gap-3">
-            <button @click="toggleRequiredHoursModal(item._id)" class="btn btn-block btn-primary">
+            <button
+              @click="toggleRequiredHoursModal(item._id)"
+              class="btn btn-block btn-primary"
+            >
               Set required hours
             </button>
           </div>
@@ -28,9 +35,7 @@
         </template>
         <template #item-evaluation="item">
           <div v-if="item.evaluationResults" class="flex gap-3">
-            <button class="btn btn-block btn-primary">
-              View evaluation
-            </button>
+            <button class="btn btn-block btn-primary">View evaluation</button>
           </div>
           <div v-else>
             <p>Not available</p>
@@ -43,8 +48,12 @@
       <Modal :show="setRequiredHours" title="Set Required Hours">
         <template #default>
           <section class="">
-            <input v-model="coorStore.requiredHours" type="number" placeholder="Type here"
-              class="w-full input input-bordered" />
+            <input
+              v-model="coorStore.requiredHours"
+              type="number"
+              placeholder="Type here"
+              class="w-full input input-bordered"
+            />
             <div class="flex items-center justify-end gap-3">
               <button @click="toggleRequiredHoursModal" class="btn btn-secondary">
                 Close
@@ -58,7 +67,6 @@
       </Modal>
     </div>
   </div>
-
 </template>
 
 <script setup>
@@ -73,11 +81,15 @@ const toggleRequiredHoursModal = (id) => {
   setRequiredHours.value = !setRequiredHours.value;
 };
 const setHoursHandler = async () => {
-  const response = await coorStore.setHoursRequired(internId.value);
-  console.log(response);
-  alert(response.data.content.message);
-  setRequiredHours.value = !setRequiredHours.value;
-  await coorStore.fetchInternLists();
+  try {
+    const response = await coorStore.setHoursRequired(internId.value);
+    console.log(response);
+    alert("Setting required hours success!");
+    setRequiredHours.value = !setRequiredHours.value;
+    await coorStore.fetchInternLists();
+  } catch (err) {
+    console.log(err);
+  }
 };
 const headers = [
   { text: "Full name", value: "fullName" },
