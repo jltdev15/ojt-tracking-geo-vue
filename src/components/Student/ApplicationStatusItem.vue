@@ -13,6 +13,11 @@
 
     </template>
     <template #item-operation="item">
+      <!-- <div v-if="item.status === 'Pending'" class="flex gap-3">
+        <router-link :to="{ name: 'ApplicationUpdate', params: { id: item.applicationId } }"
+          class=" btn btn-accent btn-outline">Update
+          Application</router-link>
+      </div> -->
       <div v-if="item.status === 'Rejected'" class="flex gap-3">
         <button @click="removeApplication(item.applicationId)" class=" btn btn-accent btn-outline">Remove
           Application</button>
@@ -44,12 +49,12 @@ const props = defineProps({
 });
 
 const headers = [
-  { text: "APPLICATION ID", value: "applicationId", width: 200 },
+  { text: "APPLICATION ID", value: "applicationId" },
   { text: "DATE APPLIED", value: "DateApplied" },
   { text: "COMPANY NAME", value: "company" },
   { text: "JOB TITLE", value: "jobTitle" },
-  { text: "STATUS", value: "status", width: 200 },
-  { text: "ACTIONS", value: "operation", width: 200 },
+  { text: "STATUS", value: "status" },
+  { text: "ACTIONS", value: "operation" },
 ];
 const acceptOffer = async (id) => {
   await internStore.handleAcceptOffer(id);

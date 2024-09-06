@@ -261,6 +261,13 @@ const router = createRouter({
           meta: { requiresAuth: true, roles: ["Intern"] },
         },
         {
+          path: "status/:id",
+          name: "ApplicationUpdate",
+          component: () =>
+            import("../components/Student/InternApplicationUpdateForm.vue"),
+          meta: { requiresAuth: true, roles: ["Intern"] },
+        },
+        {
           path: "dtr",
           name: "DTR",
           component: () => import("../components/Student/DTR.vue"),

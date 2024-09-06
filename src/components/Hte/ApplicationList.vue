@@ -62,9 +62,43 @@
               <a class="text-blue-600 underline" target="_blank" :href="item.resumePath">View Resume</a>
             </div>
           </li>
+          <!-- Parent Consent -->
           <li class="flex items-center justify-between gap-2 p-3 text-sm border-b-2">
             <p class="flex items-center gap-2">
-              Memorandum - {{ item.moaFile ? "Available" : "Not available"
+              Parent Consent - {{ item.parentConsentFile ? "Available" : "Not available"
+              }}<i class="bx" :class="{
+                'bxs-check-circle text-green-600': item.parentConsentFile,
+                'bxs-x-circle text-red-600': item.parentConsentFile === '',
+              }"></i>
+            </p>
+
+            <div>
+              <a :class="{ 'underline text-blue-600': item.parentConsentFile }" class="" target="_blank"
+                :href="item.parentConsentPath">{{
+                  item.parentConsentPath ? "View Parent Consent" : "Unavailable" }}</a>
+            </div>
+          </li>
+          <!-- Intern Endorsement Form -->
+          <li class="flex items-center justify-between gap-2 p-3 text-sm border-b-2">
+            <p class="flex items-center gap-2">
+              Intern Endorsment Form - {{ item.internEndorsementFile ? "Available" : "Not available"
+              }}<i class="bx" :class="{
+                'bxs-check-circle text-green-600': item.internEndorsementFile,
+                'bxs-x-circle text-red-600': item.internEndorsementFile === '',
+              }"></i>
+            </p>
+
+            <div>
+              <a :class="{ 'underline text-blue-600': item.internEndorsementPath }" class="" target="_blank"
+                :href="item.internEndorsementPath">{{
+                  item.internEndorsementPath ? "View Intern Endorsement" : "Unavailable" }}</a>
+            </div>
+          </li>
+
+          <!-- MOA HTE -->
+          <li class="flex items-center justify-between gap-2 p-3 text-sm border-b-2">
+            <p class="flex items-center gap-2">
+              MOA HTE - {{ item.moaFile ? "Available" : "Not available"
               }}<i class="bx" :class="{
                 'bxs-check-circle text-green-600': item.moaFile,
                 'bxs-x-circle text-red-600': item.moaFile === '',
@@ -72,22 +106,59 @@
             </p>
 
             <div>
-              <a :class="{ 'underline text-blue-600': item.endorsementPath }" class="" target="_blank"
-                :href="item.moaPath">{{ item.moaPath ? "View Endorsement" : "Unavailable" }}</a>
+              <a :class="{ 'underline text-blue-600': item.moaPath }" class="" target="_blank" :href="item.moaPath">{{
+                item.moaPath ? "View MOA HTE" : "Unavailable" }}</a>
             </div>
           </li>
+
+          <!-- First Endorsement -->
           <li class="flex items-center justify-between gap-2 p-3 text-sm">
             <p class="flex items-center gap-2">
-              Endorsement - {{ item.eformFile ? "Available" : "Not available"
+              First Endorsement - {{ item.firstEndorsementFormFile ? "Available" : "Not available"
               }}<i class="bx" :class="{
-                'bxs-check-circle text-green-600': item.eformFile,
-                'bxs-x-circle text-red-600': item.eformFile === '',
+                'bxs-check-circle text-green-600': item.firstEndorsementFormFile,
+                'bxs-x-circle text-red-600': item.firstEndorsementFormFile === '',
               }"></i>
             </p>
 
             <div>
-              <a class="" target="_blank" :href="item.endorsementPath ? item.endorsementPath : ''"
-                :class="{ 'underline text-blue-600': item.endorsementPath }">{{ item.endorsementPath ? "ViewEndorsement"
+              <a class="" target="_blank" :href="item.firstEndorsementFormPath ? item.firstEndorsementFormPath : '#'"
+                :class="{ 'underline text-blue-600': item.firstEndorsementFormPath }">{{ item.firstEndorsementFormPath ?
+                  "View First Endorsement"
+                  : "Unavailable" }}</a>
+            </div>
+          </li>
+          <!-- Certification Form-->
+          <li class="flex items-center justify-between gap-2 p-3 text-sm">
+            <p class="flex items-center gap-2">
+              Certification Form - {{ item.certificationFormFile ? "Available" : "Not available"
+              }}<i class="bx" :class="{
+                'bxs-check-circle text-green-600': item.certificationFormFile,
+                'bxs-x-circle text-red-600': item.certificationFormFile === '',
+              }"></i>
+            </p>
+
+            <div>
+              <a class="" target="_blank" :href="item.certificationFormPath ? item.certificationFormPath : '#'"
+                :class="{ 'underline text-blue-600': item.certificationFormPath }">{{ item.certificationFormPath ?
+                  "View Certification Form"
+                  : "Unavailable" }}</a>
+            </div>
+          </li>
+          <!-- Internship Agreement -->
+          <li class="flex items-center justify-between gap-2 p-3 text-sm">
+            <p class="flex items-center gap-2">
+              Internship Agreement - {{ item.internshipAgreementFile ? "Available" : "Not available"
+              }}<i class="bx" :class="{
+                'bxs-check-circle text-green-600': item.internshipAgreementFile,
+                'bxs-x-circle text-red-600': item.internshipAgreementFile === '',
+              }"></i>
+            </p>
+
+            <div>
+              <a class="" target="_blank" :href="item.internshipAgreementPath ? item.internshipAgreementPath : '#'"
+                :class="{ 'underline text-blue-600': item.internshipAgreementPath }">{{ item.internshipAgreementPath ?
+                  "View Internship Agreement"
                   : "Unavailable" }}</a>
             </div>
           </li>
@@ -138,6 +209,8 @@ const handleAcceptApplicant = async (applicationId) => {
 const rejectApplicantHandler = async (applicationId) => {
   await hteStore.rejectInternshipApplication(applicationId)
   modalRequirementShow.value = !modalRequirementShow.value;
+  alert('Reject')
+  router.push({ name: 'hte_dashboard' })
 }
 const headers = [
   { text: "APPLICATION ID", value: "applicationId" },

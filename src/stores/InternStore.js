@@ -15,6 +15,24 @@ export const useInternStore = defineStore("intern", () => {
     lng: "",
   });
   const attendanceArr = ref([]);
+  const applicationInfo = reactive({
+    resume: "",
+    resumePath: "",
+    parent_consent: "",
+    parent_consentPath: "",
+    internEndorsement: "",
+    internEndorsementPath: "",
+    moa: "",
+    moaPath: "",
+    firstEndorsement: "",
+    firstEndorsementPath: "",
+    certificationFile: "",
+    certificationPath: "",
+    internshipAgreement: "",
+    internshipAgreementPath: "",
+  });
+
+  // Methods
   const fetchInternshipLists = async () => {
     try {
       const response = await apiClient.get(`/intern/vacancy`);
@@ -143,6 +161,43 @@ export const useInternStore = defineStore("intern", () => {
       return err;
     }
   };
+  const fetchApplicationInformation = async (id) => {
+    try {
+      const response = await apiClient.get(`/intern/application/${id}`);
+      applicationInfo.value = response.data;
+      console.log(response.data);
+      console.log(applicationInfo.value.resumeFile);
+      console.log(applicationInfo.value.resumePath);
+
+      applicationInfo.resume = response.data.resumeFile;
+      applicationInfo.resumePath = response.data.resumePath;
+
+      applicationInfo.parent_consent = response.data.parentConsentFile;
+      applicationInfo.parent_consentPath = response.data.parentConsentPath;
+
+      applicationInfo.internEndorsement = response.data.internEndorsementFile;
+      applicationInfo.internEndorsementPath =
+        response.data.internEndorsementPath;
+
+      applicationInfo.moa = response.data.moaFile;
+      applicationInfo.moaPath = response.data.moaPath;
+
+      applicationInfo.firstEndorsement = response.data.firstEndorsementFormFile;
+      applicationInfo.firstEndorsementPath =
+        response.data.firstEndorsementFormPath;
+
+      applicationInfo.certificationFile = response.data.certificationFormFile;
+      applicationInfo.certificationPath = response.data.certificationFormPath;
+
+      applicationInfo.internshipAgreement =
+        response.data.internshipAgreementFile;
+      applicationInfo.internshipAgreementPath =
+        response.data.internshipAgreementPath;
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  };
   // Computed Properties
   const getNumberOfApplication = computed(() => {
     return applicationLists.value.length;
@@ -200,5 +255,7 @@ export const useInternStore = defineStore("intern", () => {
     getAttendanceHandler,
     isInternReady,
     removeApplicationHandler,
+    fetchApplicationInformation,
+    applicationInfo,
   };
 });
