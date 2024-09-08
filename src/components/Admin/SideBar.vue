@@ -36,8 +36,16 @@
       <li class="mb-1 group">
         <router-link :to="{ name: 'CoordinatorList' }"
           class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100 sidebar-dropdown-toggle">
-          <i class="mr-3 text-lg bx bxl-blogger"></i>
-          <span class="text-sm">Visitation</span>
+
+          <i class='mr-3 text-lg bx bx-group'></i>
+          <span class="text-sm">Manage Coordinator</span>
+          <i class="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-180"></i>
+        </router-link>
+        <router-link :to="{ name: 'CoordinatorList' }"
+          class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100 sidebar-dropdown-toggle">
+
+          <i class='mr-3 text-lg bx bx-git-pull-request'></i>
+          <span class="text-sm">View Request</span>
           <i class="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-180"></i>
         </router-link>
       </li>
@@ -48,14 +56,24 @@
           class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100 sidebar-dropdown-toggle">
           <i class="mr-3 text-lg bx bx-list-ul"></i>
           <span class="text-sm">Manage Interns</span>
+          <i class="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-180"></i>
         </router-link>
       </li>
       <span class="font-bold text-gray-400 uppercase">HTE</span>
       <li class="mb-1 group">
         <router-link :to="{ name: 'hteLists' }"
           class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100 sidebar-dropdown-toggle">
-          <i class="mr-3 text-lg bx bx-list-ul"></i>
+          <i class='mr-3 text-lg bx bxs-buildings'></i>
           <span class="text-sm">Manage HTE</span>
+          <i class="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-180"></i>
+        </router-link>
+      </li>
+      <li class="mb-1 group">
+        <router-link :to="{ name: 'Hte_Listing' }"
+          class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100 sidebar-dropdown-toggle">
+
+          <i class='mr-3 text-lg bx bx-hard-hat'></i>
+          <span class="text-sm">View Internships</span>
         </router-link>
       </li>
 
@@ -77,6 +95,13 @@
             class="md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-green-600 bg-green-200 rounded-full">2
             New</span>
         </a>
+      </li>
+      <li class="mb-1 group">
+        <router-link :to="{ name: 'admin_announcement' }" href=""
+          class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
+          <i class="mr-3 text-lg bx bx-list-ol"></i>
+          <span class="text-sm">Announcement</span>
+        </router-link>
       </li>
     </ul>
   </div>

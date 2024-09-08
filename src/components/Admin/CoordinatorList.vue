@@ -18,7 +18,8 @@
             <input type="text" placeholder="Type here" class="w-full input input-bordered" v-model="searchValue" />
             <select class="w-48 select select-bordered" v-model.trim="searchField">
                 <option selected disabled value="Set filter">Set filter</option>
-                <option value="date">Date</option>
+                <option value="department">Department</option>
+                <option value="fullName">Full Name</option>
             </select>
         </div>
         <section class="px-6">
@@ -50,9 +51,10 @@ const route = useRoute();
 const searchField = ref("Set filter");
 const searchValue = ref("");
 const headers = [
+    { text: "Department", value: "department" },
     { text: "Name", value: "fullName" },
     { text: "Contact", value: "contact" },
-    { text: "Department", value: "department" },
+
     { text: "Visitation", value: "request" },
     //   { text: "STATUS", value: "status" },
     //   { text: "REMARKS", value: "remarks" },

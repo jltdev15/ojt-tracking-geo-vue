@@ -1,12 +1,31 @@
 <template>
   <div>
-    <header class="flex items-center justify-between p-6 bg-gray-200">
-      <h1 class="px-3 text-3xl">
+    <div class="p-6 text-sm breadcrumbs">
+      <ul>
+        <li>
+          <router-link :to="{ name: 'coor_dashboard' }">Dashboard</router-link>
+        </li>
+        <li>
+          <router-link :to="{ name: 'HteList' }">HTE List</router-link>
+        </li>
+      </ul>
+    </div>
+    <header class="flex items-center justify-between px-6 bg-gray-200">
+      <h1 class="text-3xl ">
         Host <span class="text-3xl font-bold">Training Establishment</span>
       </h1>
     </header>
+    <div class="flex justify-end gap-3 px-6">
+      <input type="text" placeholder="Search here" class="w-full input input-bordered" v-model="searchValue" />
+      <select class="w-48 select select-bordered" v-model.trim="searchField">
+        <option selected disabled value="Set filter">Set filter</option>
+        <option value="status">Status</option>
+        <option value="Intern">Intern Name</option>
+        <option value="Department">Department</option>
+      </select>
+    </div>
     <div class="p-6">
-      <EasyDataTable :headers="headers" :items="coorStore.hteList" table-class-name="customize-table">
+      <EasyDataTable border-cell :headers="headers" :items="coorStore.hteList" table-class-name="customize-table">
         <template #item-moa="item">
           <div v-if="item.hasMoa === 'true'">
             <p>MOA Available</p>
@@ -62,6 +81,9 @@ import { useAuthStore } from "@/stores/AuthStore";
 const authStore = useAuthStore();
 const coorStore = useCoorStore();
 const isModalShow = ref(false);
+
+const searchField = ref("Set filter");
+const searchValue = ref("");
 const headers = [
   { text: "Name", value: "name" },
   { text: "Address", value: "address" },
@@ -113,4 +135,11 @@ onMounted(async () => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.customize-table {
+
+  --easy-table-header-font-color: #fff;
+  --easy-table-header-background-color: #ae1818;
+
+}
+</style>

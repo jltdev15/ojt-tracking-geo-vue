@@ -25,7 +25,7 @@
         </div>
         <div class="px-6">
             <EasyDataTable :headers="headers" :items="useUserStore.htesList" :search-field="searchField"
-                :search-value="searchValue">
+                :search-value="searchValue" table-class-name="customize-table">
                 <template #item-internships="item">
                     <div>
                         <router-link :to="{ name: 'hteItem', params: { id: item._id } }">View</router-link>
@@ -56,4 +56,11 @@ onMounted(async () => {
 
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.customize-table {
+
+    --easy-table-header-font-color: #fff;
+    --easy-table-header-background-color: #ae1818;
+
+}
+</style>

@@ -1,7 +1,9 @@
 import { ref, computed, reactive } from "vue";
 import { defineStore } from "pinia";
 import apiClient from "@/config/axiosClient";
+import { useAuthStore } from "./AuthStore";
 export const useAdminUserStore = defineStore("user", () => {
+  const authStore = useAuthStore();
   const usersList = ref([]);
   const departmentlist = ref([]);
   const internsList = ref([]);
@@ -9,7 +11,12 @@ export const useAdminUserStore = defineStore("user", () => {
   const hteInternshipList = ref([]);
   const coordinatorList = ref([]);
   const currentRole = ref("");
+  const currentDepartment = ref("");
   const attendanceArr = ref([]);
+  const announcementList = ref([]);
+  const applicationList = ref([]);
+  const requestList = ref([]);
+  const vacancyList = ref([]);
   const userRoleList = reactive({
     hte: "",
     coor: "",
@@ -387,7 +394,82 @@ export const useAdminUserStore = defineStore("user", () => {
     }
   };
 
+  // Announcement list
+
+  const fetchAnnouncement = async () => {
+    try {
+      const response = await apiClient.get(`/announcement/view`);
+      console.log(response);
+      announcementList.value = response.data.content;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const addAnnouncement = async (payload) => {
+    console.log(payload);
+
+    try {
+      const response = await apiClient.post(`/announcement/add`, payload);
+      console.log(response);
+      await fetchAnnouncement();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchApplicationList = async () => {
+    try {
+      const response = await apiClient.get(`/admin/application`);
+      console.log(response);
+      applicationList.value = response.data.content;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const fetchRequestList = async () => {
+    try {
+      const response = await apiClient.get(`/admin/request/list`);
+      console.log(response);
+      requestList.value = response.data.content;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const fetchHTEListing = async () => {
+    try {
+      const response = await apiClient.get(`/admin/vacancy`);
+      console.log(response);
+      vacancyList.value = response.data.content;
+    } catch (err) {
+      console.log(err);
+    }
+  };
   // Computed
+  const getNumberVisitationSent = computed(() => {
+    return requestList.value.length;
+  });
+  const getNumberVisitationDone = computed(() => {
+    return requestList.value.filter((item) => item.status === "Done").length;
+  });
+
+  const getNumberInternDeployed = computed(() => {
+    return applicationList.value.filter((item) => item.status === "Accepted")
+      .length;
+  });
+  const getNumberInternFinished = computed(() => {
+    return applicationList.value.filter((item) => item.status === "Finished")
+      .length;
+  });
+
+  // Return only list for coor
+  const getCoorAnnouncementList = computed(() => {
+    return announcementList.value.filter(
+      (item) => item.department === authStore.currentDepartment
+    );
+  });
+  const getAdminAnnouncementList = computed(() => {
+    return announcementList.value.filter((item) => item.role === "Admin");
+  });
 
   const getNumberOfUsers = computed(() => {
     return usersList.value.length;
@@ -401,6 +483,7 @@ export const useAdminUserStore = defineStore("user", () => {
   const getNumberOfInterns = computed(() => {
     return usersList.value.filter((item) => item.role === "Intern").length;
   });
+  // For showing which account has session code
   const getInternAccounts = computed(() => {
     return usersList.value.filter(
       (item) => item.role === "Intern" && item.profile.sessionCode !== null
@@ -459,5 +542,20 @@ export const useAdminUserStore = defineStore("user", () => {
     getNumberOfUsersOnly,
     fetchCoordinator,
     coordinatorList,
+    fetchAnnouncement,
+    announcementList,
+    addAnnouncement,
+    getCoorAnnouncementList,
+    getAdminAnnouncementList,
+    fetchApplicationList,
+    applicationList,
+    getNumberInternDeployed,
+    getNumberInternFinished,
+    requestList,
+    fetchRequestList,
+    getNumberVisitationSent,
+    getNumberVisitationDone,
+    fetchHTEListing,
+    vacancyList,
   };
 });

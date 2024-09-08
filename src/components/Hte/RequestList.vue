@@ -173,7 +173,7 @@ onMounted(async () => {
 })
 </script>
 
-<style scoped>
+<style>
 .customize-table {
     --easy-table-border: 1px rounded #445269;
     --easy-table-header-font-size: 12px;

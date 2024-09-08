@@ -18,6 +18,8 @@ export const useAuthStore = defineStore("auth", () => {
   const router = useRouter();
   const toast = useToast();
   const sessionCode = ref("");
+  const currentRole = ref("");
+
   const internStore = useInternStore();
 
   const internInformation = reactive({
@@ -45,6 +47,7 @@ export const useAuthStore = defineStore("auth", () => {
       userId.value = response.data.content._id;
       isAuthenticated.value = true;
       if (userRole.value === "Admin") {
+         currentRole.value =  response.data.content.role 
         return (currentUser.value = response.data.content.profile.firstname);
       }
       if (userRole.value === "HTE") {
@@ -58,6 +61,7 @@ export const useAuthStore = defineStore("auth", () => {
       if (userRole.value === "Coordinator") {
         currentDepartment.value = response.data.content.profile.department;
         coorId.value = response.data.content.profile._id;
+        currentRole.value = response.data.content.role;
         return (currentUser.value = response.data.content.profile.fullName);
       }
       if (userRole.value === "Intern") {
@@ -265,6 +269,7 @@ export const useAuthStore = defineStore("auth", () => {
     internInformation,
     updatePersonalInfo,
     hteInformation,
-    updateHteInfo
+    updateHteInfo,
+    currentRole
   };
 });

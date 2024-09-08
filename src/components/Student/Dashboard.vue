@@ -8,9 +8,7 @@
         <header class="py-3">
           <h1 class="text-xl font-semibold text-gray-400 capitalize">Hours Required</h1>
         </header>
-        <div
-          class="grid items-end gap-7 sm:grid-cols-2 justify-self-right lg:grid-cols-3"
-        >
+        <div class="grid items-end gap-7 sm:grid-cols-2 justify-self-right lg:grid-cols-3">
           <div class="p-5 bg-white rounded shadow-sm">
             <div class="flex items-center space-x-4 space-y-2">
               <div>
@@ -56,8 +54,19 @@
               </div>
             </div>
           </div>
-          <div class="p-5 bg-white rounded shadow-sm">
-            <div class="flex items-center space-x-4 space-y-2">
+          <div class="p-5 rounded shadow-sm"
+            :class="{ 'bg-red-700 text-gray-50': internStore.getNumberOfApprovedApplication != 0, 'bg-white': internStore.getNumberOfApprovedApplication == 0 }">
+            <router-link v-if="internStore.getNumberOfApprovedApplication != 0" :to="{ name: 'ApplicationStatus' }"
+              class="flex items-center space-x-4 space-y-2">
+              <div>
+                <div class="">Approved</div>
+
+                <div class="text-2xl font-bold ">
+                  {{ internStore.getNumberOfApprovedApplication }}
+                </div>
+              </div>
+            </router-link>
+            <div v-else class="flex items-center space-x-4 space-y-2">
               <div>
                 <div class="text-gray-400">Approved</div>
 
@@ -75,8 +84,18 @@
               </div>
             </div>
           </div>
-          <div class="p-5 bg-white rounded shadow-sm">
-            <div class="flex items-center space-x-4 space-y-2">
+          <div class="p-5 rounded shadow-sm"
+            :class="{ 'bg-green-600 text-slate-50': internStore.getNumberOfAcceptedApplication != 0, 'bg-white': internStore.getNumberOfAcceptedApplication == 0 }">
+            <router-link v-if="internStore.getNumberOfAcceptedApplication != 0" :to="{ name: 'ApplicationStatus' }"
+              class="flex items-center space-x-4 space-y-2">
+              <div>
+                <div class="">Accepted</div>
+                <div class="text-2xl font-bold">
+                  {{ internStore.getNumberOfAcceptedApplication }}
+                </div>
+              </div>
+            </router-link>
+            <div v-else class="flex items-center space-x-4 space-y-2">
               <div>
                 <div class="text-gray-400">Accepted</div>
                 <div class="text-2xl font-bold text-gray-900">

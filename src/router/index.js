@@ -66,6 +66,12 @@ const router = createRouter({
           meta: { requiresAuth: true, roles: ["Admin"] },
         },
         {
+          path: "htelisting",
+          name: "Hte_Listing",
+          component: () => import("../components/Admin/HteListing.vue"),
+          meta: { requiresAuth: true, roles: ["Admin"] },
+        },
+        {
           path: "interns/:id",
           name: "DTRList",
           component: () =>
@@ -110,6 +116,12 @@ const router = createRouter({
           component: () => import("../components/Admin/CoordinatorList.vue"),
           meta: { requiresAuth: true, roles: ["Admin"] },
         },
+        {
+          path: "announcement",
+          name: "admin_announcement",
+          component: () => import("../components/Admin/Announce.vue"),
+          meta: { requiresAuth: true, roles: ["Admin"] },
+        },
       ],
     },
     {
@@ -126,6 +138,12 @@ const router = createRouter({
           path: "",
           name: "coor_dashboard",
           component: CoorDashBoard,
+          meta: { requiresAuth: true, roles: ["Coordinator"] },
+        },
+        {
+          path: "settings",
+          name: "CoorSettings",
+          component: () => import("../components/Coor/CoorSettings.vue"),
           meta: { requiresAuth: true, roles: ["Coordinator"] },
         },
         {
@@ -146,6 +164,12 @@ const router = createRouter({
           name: "CoorRequest",
           component: () =>
             import("../components/Coor/VisitationRequestList.vue"),
+          meta: { requiresAuth: true, roles: ["Coordinator"] },
+        },
+        {
+          path: "announcement",
+          name: "coor_announcement",
+          component: () => import("../components/Coor/CoorAnnounce.vue"),
           meta: { requiresAuth: true, roles: ["Coordinator"] },
         },
       ],

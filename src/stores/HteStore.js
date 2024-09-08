@@ -226,6 +226,18 @@ export const useHteStore = defineStore("hte", () => {
       console.log(err);
     }
   };
+
+  const resetDeviceRestriction = async (internId) => {
+    try {
+      const response = await apiClient.patch(`/admin/resetdevice/${internId}`);
+      console.log(response);
+      await fetchApplicantAccepted()
+      return response;
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  };
   // Computed
   const getNumberOfVisitPendingRequest = computed(() => {
     return requestList.value.filter(
@@ -251,6 +263,11 @@ export const useHteStore = defineStore("hte", () => {
   });
   const getListOfAcceptedInterns = computed(() => {
     return acceptedApplicantsList.value;
+  });
+  const getListOfAcceptedInternsSession = computed(() => {
+    return acceptedApplicantsList.value.filter(
+      (item) => item.sessionCode !== null
+    );
   });
   // const getNumberOfAcceptedInterns = computed(() => {
   //   return acceptedApplicantsList.value.length;
@@ -321,5 +338,7 @@ export const useHteStore = defineStore("hte", () => {
     getNumberOfApprovedRequest,
     getNumberOfDoneRequest,
     getNumberOfInternForEvaluation,
+    getListOfAcceptedInternsSession,
+    resetDeviceRestriction
   };
 });

@@ -1,7 +1,17 @@
 <template>
   <div>
+    <div class="p-6 text-sm breadcrumbs">
+      <ul>
+        <li>
+          <router-link :to="{ name: 'admin_dashboard' }">Admin Dashboard</router-link>
+        </li>
+        <li>
+          <router-link class="font-medium" :to="{ name: 'appSettings' }">Settings</router-link>
+        </li>
 
-    <header class="flex items-center justify-between p-3 bg-gray-50">
+      </ul>
+    </div>
+    <header class="flex items-center justify-between px-6 ">
       <h1 class="text-3xl font-bold">Manage Settings</h1>
     </header>
     <section class="flex p-3 gap-9">

@@ -21,7 +21,8 @@
                 <div class="">Pending</div>
               </div>
             </div>
-            <router-link :to="{name:'ApplicantsList'}" v-if="hteStore.getNumberOfPendingInterns != 0" class="flex items-center space-x-4 space-y-2">
+            <router-link :to="{ name: 'ApplicantsList' }" v-if="hteStore.getNumberOfPendingInterns != 0"
+              class="flex items-center space-x-4 space-y-2">
               <div>
                 <div class="text-2xl font-bold">
                   {{ hteStore.getNumberOfPendingInterns }}
@@ -40,13 +41,18 @@
               </div>
             </div>
           </div>
-
           <div :class="{
             'bg-green-600 text-gray-50': hteStore.getNumberOfAcceptedInterns != 0,
             'bg-white text-gray-900': hteStore.getNumberOfAcceptedInterns === 0,
           }" class="self-end p-5 rounded shadow-sm">
             <div class="flex items-center space-x-4 space-y-2">
-              <div>
+              <router-link v-if="hteStore.getNumberOfAcceptedInterns != 0" :to="{ name: 'AcceptedList' }">
+                <div class="text-2xl font-bold">
+                  {{ hteStore.getNumberOfAcceptedInterns }}
+                </div>
+                <div class="">Accepted</div>
+              </router-link>
+              <div v-if="hteStore.getNumberOfAcceptedInterns === 0">
                 <div class="text-2xl font-bold">
                   {{ hteStore.getNumberOfAcceptedInterns }}
                 </div>
@@ -88,7 +94,16 @@
         </header>
         <div class="grid justify-end gap-3 sm:grid-cols-2 lg:grid-cols-5">
           <div class="self-end p-5 bg-white rounded shadow-sm">
-            <div class="flex items-center space-x-4 space-y-2">
+            <router-link v-if="hteStore.getNumberOfListing != 0" :to="{ name: 'hte_vacancy' }"
+              class="flex items-center space-x-4 space-y-2">
+              <div>
+                <div class="text-2xl font-bold text-red-700">
+                  {{ hteStore.getNumberOfListing }}
+                </div>
+                <div class="text-red-700">Active</div>
+              </div>
+            </router-link>
+            <div v-if="hteStore.getNumberOfListing === 0" class="flex items-center space-x-4 space-y-2">
               <div>
                 <div class="text-2xl font-bold text-gray-900">
                   {{ hteStore.getNumberOfListing }}

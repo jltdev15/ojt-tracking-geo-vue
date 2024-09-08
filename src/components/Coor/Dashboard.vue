@@ -9,8 +9,55 @@
           <h1 class="text-xl font-semibold text-gray-400 uppercase">Internships</h1>
         </header>
         <div class="grid gap-7 sm:grid-cols-2 lg:grid-cols-5">
-          <div class="p-5 bg-white rounded shadow-sm">
-            <div class="flex items-center space-x-4 space-y-2">
+          <div class="p-5 bg-gray-500 rounded shadow-sm">
+            <router-link v-if="coorStore.getNumberOfInterns !== 0" :to="{ name: 'InternDepartmentList' }"
+              class="flex items-center space-x-4 space-y-2">
+              <div>
+                <div class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-50 text-cyan-400">
+                  <svg enable-background="new 0 0 24 24" id="Layer_1" version="1.0" viewBox="0 0 24 24"
+                    xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g>
+                      <path
+                        d="M9,9c0-1.7,1.3-3,3-3s3,1.3,3,3c0,1.7-1.3,3-3,3S9,10.7,9,9z M12,14c-4.6,0-6,3.3-6,3.3V19h12v-1.7C18,17.3,16.6,14,12,14z   " />
+                    </g>
+                    <g>
+                      <g>
+                        <circle cx="18.5" cy="8.5" r="2.5" />
+                      </g>
+                      <g>
+                        <path
+                          d="M18.5,13c-1.2,0-2.1,0.3-2.8,0.8c2.3,1.1,3.2,3,3.2,3.2l0,0.1H23v-1.3C23,15.7,21.9,13,18.5,13z" />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <circle cx="18.5" cy="8.5" r="2.5" />
+                      </g>
+                      <g>
+                        <path
+                          d="M18.5,13c-1.2,0-2.1,0.3-2.8,0.8c2.3,1.1,3.2,3,3.2,3.2l0,0.1H23v-1.3C23,15.7,21.9,13,18.5,13z" />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <circle cx="5.5" cy="8.5" r="2.5" />
+                      </g>
+                      <g>
+                        <path
+                          d="M5.5,13c1.2,0,2.1,0.3,2.8,0.8c-2.3,1.1-3.2,3-3.2,3.2l0,0.1H1v-1.3C1,15.7,2.1,13,5.5,13z" />
+                      </g>
+                    </g>
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <div class="text-2xl font-bold text-gray-100">
+                  {{ coorStore.getNumberOfInterns }}
+                </div>
+                <div class="text-gray-100">Interns</div>
+              </div>
+            </router-link>
+            <div v-if="coorStore.getNumberOfInterns === 0" class="flex items-center space-x-4 space-y-2">
               <div>
                 <div class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-50 text-cyan-400">
                   <svg enable-background="new 0 0 24 24" id="Layer_1" version="1.0" viewBox="0 0 24 24"
@@ -173,22 +220,26 @@
         </div>
         <div class="divider"></div>
       </div>
-      <div class="w-2/6 p-5">
+      <div class="w-3/6 p-5">
         <header class="py-3">
-          <h1 class="text-xl font-semibold text-gray-400 uppercase">Announcements</h1>
+          <h1 class="text-xl font-semibold text-gray-400 capitalize">Announcements</h1>
         </header>
         <section>
-          <div class="p-5 bg-white rounded shadow-sm">
-            <header>date</header>
-            <p>Title</p>
-            <p>Content</p>
-          </div>
+          <ul class="flex flex-col h-screen gap-3 p-2 overflow-auto rounded shadow-sm">
+            <p v-if="adminUserStore.announcementList.length === 0">No announcement yet</p>
+
+            <AnnouncementItem v-for="data in adminUserStore.announcementList" :key="data.id" :title="data.title"
+              :description="data.description" :author="data.author" :date="data.date" :role="data.role" />
+
+
+          </ul>
         </section>
       </div>
     </div>
   </div>
 </template>
 <script setup>
+import AnnouncementItem from "../AnnouncementItem.vue";
 import { onMounted } from "vue";
 import { useAuthStore } from "@/stores/AuthStore";
 import { useAdminUserStore } from "@/stores/AdminUserStore";
@@ -201,6 +252,7 @@ onMounted(async () => {
   await coorStore.fetchHTELists()
   await adminUserStore.fetchInterns()
   await coorStore.fetchRequestVisitation()
+  await adminUserStore.fetchAnnouncement();
   // await authStore.checkAuth();
   // await adminUserStore.fetchUsers();
   // await adminUserStore.fetchAllUsers();

@@ -3,7 +3,7 @@
     <div class="p-6 text-sm breadcrumbs">
       <ul>
         <li>
-          <router-link :to="{ name: 'coor_dashboard' }">Admin Dashboard</router-link>
+          <router-link :to="{ name: 'coor_dashboard' }">Dashboard</router-link>
         </li>
         <li>
           <router-link :to="{ name: 'InternDepartmentList' }">Interns List</router-link>
@@ -13,25 +13,29 @@
     <header class="px-6">
       <h1 class="text-3xl font-bold">Interns List</h1>
     </header>
-    <div class="p-6">
-      <EasyDataTable
-        :headers="headers"
-        :items="coorStore.internList"
-        border-cell
-        table-class-name="customize-table"
-      >
+    <div class="flex justify-end gap-3 p-6">
+      <input type="text" placeholder="Search here" class="w-full input input-bordered" v-model="searchValue" />
+      <select class="w-48 select select-bordered" v-model.trim="searchField">
+        <option selected disabled value="Set filter">Set filter</option>
+        <option value="fullName">Intern Name</option>
+        <option value="evaluation">Evaluation</option>
+      </select>
+    </div>
+    <div class="px-6 py-1">
+      <EasyDataTable :headers="headers" :search-field="searchField" :search-value="searchValue"
+        :items="coorStore.internList" border-cell table-class-name="customize-table">
         <template #item-operation="item">
           <div v-if="item.requiredHours === 0" class="flex gap-3">
-            <button
-              @click="toggleRequiredHoursModal(item._id)"
-              class="btn btn-block btn-primary"
-            >
+            <button @click="toggleRequiredHoursModal(item._id)" class="btn btn-block btn-primary">
               Set required hours
             </button>
           </div>
-          <div v-else>
-            <p>No action needed</p>
+          <div v-if="item.requiredHours != 0" class="">
+            <button @click="toggleRequiredHoursModal(item._id)" class="btn btn-block btn-primary">
+              Update Required Hours
+            </button>
           </div>
+
         </template>
         <template #item-evaluation="item">
           <div v-if="item.evaluationResults" class="flex gap-3">
@@ -48,12 +52,8 @@
       <Modal :show="setRequiredHours" title="Set Required Hours">
         <template #default>
           <section class="">
-            <input
-              v-model="coorStore.requiredHours"
-              type="number"
-              placeholder="Type here"
-              class="w-full input input-bordered"
-            />
+            <input v-model="coorStore.requiredHours" type="number" placeholder="Type here"
+              class="w-full input input-bordered" />
             <div class="flex items-center justify-end gap-3">
               <button @click="toggleRequiredHoursModal" class="btn btn-secondary">
                 Close
@@ -75,7 +75,8 @@ import { onMounted, ref } from "vue";
 const coorStore = useCoorStore();
 const internId = ref("");
 const setRequiredHours = ref(false);
-
+const searchField = ref("Set filter");
+const searchValue = ref("");
 const toggleRequiredHoursModal = (id) => {
   internId.value = id;
   setRequiredHours.value = !setRequiredHours.value;
@@ -97,7 +98,7 @@ const headers = [
   { text: "Hours Required", value: "requiredHours" },
   { text: "Hours Rendered", value: "rendered" },
   { text: "Evaluation", value: "evaluation" },
-  { text: "Action", value: "operation" },
+  { text: "Action", value: "operation", width: '250' },
 ];
 
 onMounted(async () => {
@@ -107,13 +108,8 @@ onMounted(async () => {
 
 <style>
 .customize-table {
-  --easy-table-border: 1px rounded #445269;
-  --easy-table-header-font-size: 16px;
-  --easy-table-header-height: 50px;
   --easy-table-header-font-color: #fff;
   --easy-table-header-background-color: #ae1818;
 
-  --easy-table-body-row-height: 60px;
-  --easy-table-body-row-font-size: 14px;
 }
 </style>

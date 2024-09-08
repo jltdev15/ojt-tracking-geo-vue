@@ -73,17 +73,17 @@
           <i class="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-180"></i>
         </router-link>
       </li>
-      <span class="font-bold text-gray-400 uppercase">Settings</span>
       <li class="mb-1 group">
         <router-link
-          to="#"
-          class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100 sidebar-dropdown-toggle"
+          :to="{ name: 'coor_announcement' }"
+          href=""
+          class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100"
         >
-          <i class="mr-3 text-lg bx bxs-user-account"></i>
-          <span class="text-sm">Account Settings</span>
-          <i class="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-180"></i>
+          <i class="mr-3 text-lg bx bx-list-ol"></i>
+          <span class="text-sm">Announcement</span>
         </router-link>
       </li>
+
     </ul>
   </div>
 </template>

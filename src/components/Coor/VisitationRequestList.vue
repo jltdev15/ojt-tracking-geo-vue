@@ -3,7 +3,7 @@
     <div class="p-6 text-sm breadcrumbs">
       <ul>
         <li>
-          <router-link :to="{ name: 'coor_dashboard' }">Admin Dashboard</router-link>
+          <router-link :to="{ name: 'coor_dashboard' }">Dashboard</router-link>
         </li>
         <li>
           <router-link :to="{ name: 'CoorRequest' }">Requests</router-link>
@@ -13,8 +13,17 @@
     <header class="">
       <h1 class="p-6 text-3xl font-bold">Your Request List</h1>
     </header>
+    <div class="flex justify-end gap-3 px-6">
+      <input type="text" placeholder="Search here" class="w-full input input-bordered" v-model="searchValue" />
+      <select class="w-48 select select-bordered" v-model.trim="searchField">
+        <option selected disabled value="Set filter">Set filter</option>
+        <option value="requesteeName">Company Name</option>
+        <option value="status">Status</option>
+      </select>
+    </div>
     <div class="p-6">
-      <EasyDataTable :headers="headers" :items="coorStore.requestList" table-class-name="customize-table">
+      <EasyDataTable :headers="headers" :items="coorStore.requestList" table-class-name="customize-table"
+        :search-field="searchField" :search-value="searchValue">
         <template #item-operation="item">
           <div v-if="item.status === 'Rejected'" class="">
             <button @click="toggleConfirmRemoveModal(item._id)" class="btn btn-accent btn-outline">Remove</button>
