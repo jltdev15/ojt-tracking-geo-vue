@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col pt-5"
+    class="flex flex-col p-3"
     :class="{ 'items-end': props.sender == messengerStore.userStore.id }"
   >
     <div class="flex">

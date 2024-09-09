@@ -1,17 +1,15 @@
 <template>
-  <div class="flex h-screen max-sm:flex-col max-sm:h-auto max-sm:relative">
-    <div class="w-1/4 pt-3 max-sm:order-2 max-sm:w-full max-sm:pt-0 max-sm:bg-gray-100">
+  <div class="flex h-[100dvh] max-sm:flex-col max-sm:h-auto max-sm:relative">
+    <div class="w-full h-[100dvh] pt-3 max-sm:w-full max-sm:p-0 max-sm:order-3">
       <conversation
         v-for="item in messengerStore.userStore.allUser"
         :name="item.username"
         :id="item._id"
         :key="item._id"
       />
-    </div>
-    <div class="w-1/2 pt-3 max-sm:w-full max-sm:p-0 max-sm:order-3">
       <div
         ref="scrollView"
-        class="p-3 overflow-y-scroll h-4/6 scroll-smooth max-sm:h-full max-sm:overflow-y-auto max-sm:fixed max-sm:w-full max-sm:pb-80"
+        class="p-6 overflow-y-scroll h-4/6 scroll-smooth max-sm:h-full max-sm:overflow-y-auto max-sm:fixed max-sm:w-full max-sm:pb-80"
       >
         <div v-if="setConversation === null">
           <h1 class="pt-20 text-4xl text-center">Start a conversation</h1>
@@ -28,12 +26,12 @@
       </div>
       <div
         v-if="setConversation !== null"
-        class="flex items-center justify-between max-sm:w-full max-sm:bg-gray-100 max-sm:px-2 max-sm:py-1 max-sm:fixed max-sm:bottom-0"
+        class="flex p-6 items-center justify-between max-sm:w-full max-sm:bg-gray-100 max-sm:px-2 max-sm:py-1 max-sm:fixed max-sm:bottom-0"
       >
         <textarea
           v-model="inputMessage.text"
           required
-          class="w-10/12 h-20 p-3 mr-2 border-2 border-gray"
+          class="w-full h-20 p-3 mr-2 border-2 rounded-xl border-gray"
           name=""
           id=""
           placeholder="Send a message ..."
@@ -47,8 +45,11 @@
       </div>
     </div>
     <div
-      class="w-1/4 pt-3 max-sm:flex max-sm:w-full max-sm:overflow-y-auto max-sm:pt-0 max-sm:bg-gray-200 max-sm:order-1"
+      class="w-1/4 pt-3 p-6 max-sm:flex max-sm:w-full max-sm:overflow-y-auto max-sm:pt-0 max-sm:bg-gray-200 bg-white max-sm:order-1"
     >
+      <h2 class="font-bold text-center text-3xl p-2 hidden md:block text-gray-800">
+        Contacts
+      </h2>
       <allUsers
         v-for="item in messengerStore.userStore.allUser"
         :id="item._id"
@@ -97,15 +98,15 @@ onMounted(async () => {
     // console.log("====================================");
     // console.log(users);
     // console.log("====================================");
-    if (intervalid) {
-      clearInterval(intervalid);
-    }
-    intervalid = setInterval(async () => {
-      await fetchMessage();
-      await messengerStore.fetchAllUser();
-      scrollToBottom();
-    }, 1000);
   });
+  if (intervalid) {
+    clearInterval(intervalid);
+  }
+  intervalid = setInterval(() => {
+    fetchMessage();
+    messengerStore.fetchAllUser();
+    // scrollToBottom();
+  }, 2000);
 });
 
 onUnmounted(() => {
@@ -118,8 +119,6 @@ const scrollToBottom = () => {
   const container = scrollView.value;
   container.scrollTop = container.scrollHeight;
 };
-
-onMounted(scrollToBottom);
 
 const inputMessage = reactive({
   ReceiverConversationId,
@@ -159,6 +158,7 @@ const addNewMessage = async () => {
 };
 
 watch(arrivalMessage, async () => {
+  scrollToBottom();
   setTimeout(async () => {
     fetchMessage();
   }, 500);
