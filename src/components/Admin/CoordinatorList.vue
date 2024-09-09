@@ -3,7 +3,7 @@
         <div class="p-6 text-sm breadcrumbs">
             <ul>
                 <li>
-                    <router-link :to="{ name: 'admin_dashboard' }">Admin Dashboard</router-link>
+                    <router-link :to="{ name: 'admin_dashboard' }">Dashboard</router-link>
                 </li>
                 <li>
                     <router-link :to="{ name: 'CoordinatorList' }">Coordinator</router-link>
@@ -27,7 +27,8 @@
                 :search-value="searchValue" table-class-name="customize-table">
                 <template #item-request="item">
                     <p v-if="item.requestList.length">
-                        <router-link class="btn btn-outline btn-accent">
+                        <router-link :to="{ name: 'CoordinatorRequestItem', params: { id: item._id } }"
+                            class="btn btn-outline btn-accent">
                             View requests
                         </router-link>
                     </p>

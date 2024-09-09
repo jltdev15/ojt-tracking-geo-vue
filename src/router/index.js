@@ -117,9 +117,28 @@ const router = createRouter({
           meta: { requiresAuth: true, roles: ["Admin"] },
         },
         {
+          path: "coordinator/:id",
+          name: "CoordinatorRequestItem",
+          component: () =>
+            import("../components/Admin/CoorRequestListItem.vue"),
+          meta: { requiresAuth: true, roles: ["Admin"] },
+        },
+        {
+          path: "request",
+          name: "CoordinatorRequest",
+          component: () => import("../components/Admin/CoorRequestList.vue"),
+          meta: { requiresAuth: true, roles: ["Admin"] },
+        },
+        {
           path: "announcement",
           name: "admin_announcement",
           component: () => import("../components/Admin/Announce.vue"),
+          meta: { requiresAuth: true, roles: ["Admin"] },
+        },
+        {
+          path: "communication/messenger",
+          name: "admin_messenger",
+          component: () => import("../components/Admin/Messenger.vue"),
           meta: { requiresAuth: true, roles: ["Admin"] },
         },
       ],
@@ -170,6 +189,12 @@ const router = createRouter({
           path: "announcement",
           name: "coor_announcement",
           component: () => import("../components/Coor/CoorAnnounce.vue"),
+          meta: { requiresAuth: true, roles: ["Coordinator"] },
+        },
+        {
+          path: "messenger",
+          name: "coor_messenger",
+          component: () => import("../components/Coor/Messenger.vue"),
           meta: { requiresAuth: true, roles: ["Coordinator"] },
         },
       ],
@@ -257,6 +282,12 @@ const router = createRouter({
           component: () => import("../components/Hte/EvaluationForm.vue"),
           meta: { requiresAuth: true, roles: ["HTE"] },
         },
+        {
+          path: "messenger",
+          name: "hte_messenger",
+          component: () => import("../components/Hte/Messenger.vue"),
+          meta: { requiresAuth: true, roles: ["HTE"] },
+        },
       ],
     },
     // Student
@@ -302,6 +333,12 @@ const router = createRouter({
           meta: { requiresAuth: true, roles: ["Intern"] },
         },
         {
+          path: "internships/information/:id",
+          name: "HteInformation",
+          component: () => import("../components/Student/HteInformation.vue"),
+          meta: { requiresAuth: true, roles: ["Intern"] },
+        },
+        {
           path: "status",
           name: "ApplicationStatus",
           component: () =>
@@ -325,6 +362,12 @@ const router = createRouter({
           path: "logs",
           name: "Logsheets",
           component: () => import("../components/Student/InternAttendance.vue"),
+          meta: { requiresAuth: true, roles: ["Intern"] },
+        },
+        {
+          path: "messenger",
+          name: "student_messenger",
+          component: () => import("../components/Student/Messenger.vue"),
           meta: { requiresAuth: true, roles: ["Intern"] },
         },
       ],

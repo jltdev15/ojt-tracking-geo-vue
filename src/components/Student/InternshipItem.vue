@@ -10,7 +10,8 @@
       <p v-else class="inline-block px-6 py-3 bg-red-600 text-gray-50">No MOA</p>
     </div>
     <div class="flex justify-between px-6 pt-6 text-xs font-bold">
-      <p>{{ item.hte.name }}</p>
+      <router-link :to="{ name: 'HteInformation', params: { id: item.hte._id } }">{{ item.hte.name }}</router-link>
+      <!-- <router-link>{{ item.hte.name }}</router-link> -->
     </div>
 
     <div class="px-6 pb-4">

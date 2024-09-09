@@ -17,6 +17,8 @@ export const useAdminUserStore = defineStore("user", () => {
   const applicationList = ref([]);
   const requestList = ref([]);
   const vacancyList = ref([]);
+  const coorRequestList = ref([]);
+  const requestListBy = ref("");
   const userRoleList = reactive({
     hte: "",
     coor: "",
@@ -69,7 +71,6 @@ export const useAdminUserStore = defineStore("user", () => {
     try {
       const response = await apiClient.get("/users");
       console.log(response);
-
       usersList.value = await response.data.content;
     } catch (err) {
       console.log(err);
@@ -78,6 +79,9 @@ export const useAdminUserStore = defineStore("user", () => {
   const fetchHTE = async () => {
     try {
       const response = await apiClient.get("/hte");
+      console.log("====================================");
+      console.log(response);
+      console.log("====================================");
       userRoleList.hte = await response.data.content;
     } catch (err) {
       console.log(err);
@@ -435,6 +439,16 @@ export const useAdminUserStore = defineStore("user", () => {
       console.log(err);
     }
   };
+  const fetchCoorRequestList = async (coorId) => {
+    try {
+      const response = await apiClient.get(`/admin/request/${coorId}`);
+      console.log(response);
+      coorRequestList.value = response.data.content;
+      requestListBy.value = response.data.content[0].requestorName;
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const fetchHTEListing = async () => {
     try {
       const response = await apiClient.get(`/admin/vacancy`);
@@ -557,5 +571,8 @@ export const useAdminUserStore = defineStore("user", () => {
     getNumberVisitationDone,
     fetchHTEListing,
     vacancyList,
+    fetchCoorRequestList,
+    coorRequestList,
+    requestListBy,
   };
 });

@@ -3,7 +3,7 @@
     <div class="p-6 text-sm breadcrumbs">
       <ul>
         <li>
-          <router-link :to="{ name: 'student_dashboard' }">Intern Dashboard</router-link>
+          <router-link :to="{ name: 'student_dashboard' }">Dashboard</router-link>
         </li>
         <li>
           <router-link :to="{ name: 'internships_list' }">Internship Jobs</router-link>
@@ -20,7 +20,7 @@
     </header>
     <div class="flex min-h-screen">
       <div class="md:p-5">
-        <div class="grid md:grid-cols-3 gap-6">
+        <div class="grid gap-6 md:grid-cols-3">
           <p v-if="internStore.internshipLists.length === 0">No listing available</p>
           <InternshipItem />
           <!-- <InternshipItem v-for="job in internStore.internshipLists" 

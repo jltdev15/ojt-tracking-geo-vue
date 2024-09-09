@@ -42,12 +42,11 @@ export const useAuthStore = defineStore("auth", () => {
     try {
       const response = await apiClient.get(`/active`);
       console.log(response);
-
       userRole.value = response.data.content.role;
       userId.value = response.data.content._id;
       isAuthenticated.value = true;
       if (userRole.value === "Admin") {
-         currentRole.value =  response.data.content.role 
+        currentRole.value = response.data.content.role;
         return (currentUser.value = response.data.content.profile.firstname);
       }
       if (userRole.value === "HTE") {
@@ -139,10 +138,6 @@ export const useAuthStore = defineStore("auth", () => {
     console.log(isAuthenticated.value);
 
     try {
-      if (isAuthenticated.value && internStore.isClockIn) {
-        router.push("/student/dashboard/dtr");
-        return alert("Logout failed, Please clock out first");
-      }
       await apiClient.post("/admin/logout", {});
       isAuthenticated.value = false;
     } catch (err) {
@@ -229,7 +224,7 @@ export const useAuthStore = defineStore("auth", () => {
       email: hteInformation.email,
       contact: hteInformation.contact,
       address: hteInformation.address,
-      location: hteInformation.location
+      location: hteInformation.location,
     };
     console.log(payload);
 
@@ -270,6 +265,6 @@ export const useAuthStore = defineStore("auth", () => {
     updatePersonalInfo,
     hteInformation,
     updateHteInfo,
-    currentRole
+    currentRole,
   };
 });

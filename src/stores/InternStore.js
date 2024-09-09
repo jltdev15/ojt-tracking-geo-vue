@@ -10,10 +10,12 @@ export const useInternStore = defineStore("intern", () => {
   const isLocationEnabled = ref(false);
   const errorMessage = ref("");
   const isInternReady = ref(false);
+  const isEvalReady = ref(false);
   const locationData = reactive({
     lat: "",
     lng: "",
   });
+  const hteInformation = ref({});
   const attendanceArr = ref([]);
   const applicationInfo = reactive({
     resume: "",
@@ -85,6 +87,7 @@ export const useInternStore = defineStore("intern", () => {
       requiredHours.value = response.data.content.requiredHours;
       workedHours.value = response.data.content.workedHours;
       isInternReady.value = response.data.content.isInternshipReady;
+      isEvalReady.value = response.data.content.isEvaluationReady;
       console.log(response);
     } catch (err) {
       console.log(err);
@@ -93,6 +96,11 @@ export const useInternStore = defineStore("intern", () => {
   // Clock in
   const clockIn = async (payload) => {
     try {
+      if (isEvalReady.value === true) {
+        return alert(
+          "You cant clock in. You already finished the required hours"
+        );
+      }
       const response = await apiClient.post("/intern/timein", payload);
       await fetchRequiredHours();
       return response;
@@ -145,6 +153,18 @@ export const useInternStore = defineStore("intern", () => {
       const response = await apiClient.get("/intern/attendance");
       console.log(response.data.content);
 
+      attendanceArr.value = response.data.content;
+      return response;
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  };
+  const getHteInformation = async (id) => {
+    try {
+      const response = await apiClient.get(`/intern/hte/information/${id}`);
+      console.log(response);
+      hteInformation.value = response.data;
       attendanceArr.value = response.data.content;
       return response;
     } catch (err) {
@@ -257,5 +277,8 @@ export const useInternStore = defineStore("intern", () => {
     removeApplicationHandler,
     fetchApplicationInformation,
     applicationInfo,
+    hteInformation,
+    getHteInformation,
+    isEvalReady,
   };
 });

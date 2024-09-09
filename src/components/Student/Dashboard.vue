@@ -33,7 +33,8 @@
             <div class="flex items-center space-x-4 space-y-2">
               <div>
                 <div class="text-gray-400">Remaining Hours</div>
-                <div class="text-2xl font-bold text-gray-900">720</div>
+                <div class="text-2xl font-bold text-gray-900"> {{ internStore.getNumberOfHoursRequired -
+                  internStore.getNumberOfHoursWorked.toFixed(0) }}</div>
               </div>
             </div>
           </div>

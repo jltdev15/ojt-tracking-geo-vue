@@ -92,13 +92,14 @@
       </li>
       <span class="font-bold text-gray-400 capitalize">COMMUNICATION</span>
       <li class="mb-1 group">
-        <a
+        <router-link
+          :to="{ name: 'hte_messenger' }"
           href=""
           class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100"
         >
           <i class="mr-3 text-lg bx bx-envelope"></i>
           <span class="text-sm">Messaging</span>
-        </a>
+        </router-link>
       </li>
     </ul>
   </div>
