@@ -37,8 +37,8 @@ export const useHteStore = defineStore("hte", () => {
       const response = await apiClient.get(`/hte/list`);
       console.log(response);
       internshipList.value = response.data.content;
-      hteLocationDefault.lat = 14.928082275482192;
-      hteLocationDefault.lng = 120.89439798465614;
+      hteLocationDefault.lat = 14.9536746;
+      hteLocationDefault.lng = 120.9005507;
     } catch (err) {
       console.log(err);
     }

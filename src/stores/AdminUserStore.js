@@ -228,7 +228,7 @@ export const useAdminUserStore = defineStore("user", () => {
       }
       if (response.data.content.role === "HTE") {
         updateInfo.hteProfileId = userId;
-        updateInfo.companyName = response.data.content.profile.name;
+        updateInfo.companyName = response.data.content.profile.fullName;
         updateInfo.companyAddress = response.data.content.profile.address;
         updateInfo.companyContact = response.data.content.profile.contactNumber;
         updateInfo.mapLocation.lat = response.data.content.profile.location.lat;
@@ -459,6 +459,9 @@ export const useAdminUserStore = defineStore("user", () => {
     }
   };
   // Computed
+  const getNumberOfVacancy = computed(() => {
+    return vacancyList.value.length;
+  });
   const getNumberVisitationSent = computed(() => {
     return requestList.value.length;
   });
@@ -574,5 +577,6 @@ export const useAdminUserStore = defineStore("user", () => {
     fetchCoorRequestList,
     coorRequestList,
     requestListBy,
+    getNumberOfVacancy
   };
 });

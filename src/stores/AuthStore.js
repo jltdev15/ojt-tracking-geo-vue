@@ -50,12 +50,12 @@ export const useAuthStore = defineStore("auth", () => {
         return (currentUser.value = response.data.content.profile.firstname);
       }
       if (userRole.value === "HTE") {
-        hteInformation.name = response.data.content.profile.name;
+        hteInformation.name = response.data.content.profile.fullName;
         hteInformation.email = response.data.content.email;
         hteInformation.contact = response.data.content.profile.contactNumber;
         hteInformation.address = response.data.content.profile.address;
         hteInformation.location = response.data.content.profile.location;
-        return (currentUser.value = response.data.content.profile.name);
+        return (currentUser.value = response.data.content.profile.fullName);
       }
       if (userRole.value === "Coordinator") {
         currentDepartment.value = response.data.content.profile.department;
