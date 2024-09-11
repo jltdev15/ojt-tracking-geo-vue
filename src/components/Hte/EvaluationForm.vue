@@ -1,9 +1,16 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
 import { useForm } from "@/stores/HteEvaluationStore";
-
+import { useAuthStore } from "@/stores/AuthStore";
+import { useHteStore } from "@/stores/HteStore";
 const { IsFormShow, result, nextForm, backForm, resultForm, submitForm } = useForm();
 
+const authStore = useAuthStore();
+const hteStore = useHteStore();
+const route = useRoute();
+const evalName = ref("");
+const evalPosition = ref("");
 const Question1 = ref(null);
 const Question2 = ref(null);
 const Question3 = ref(null);
@@ -25,6 +32,8 @@ const Question18 = ref(null);
 const Question19 = ref(null);
 const Question20 = ref(null);
 const comment = ref(null);
+const totalScore = ref(null)
+const rating = ref(null);
 
 const resultBtn = async () => {
   await resultForm(
@@ -50,17 +59,68 @@ const resultBtn = async () => {
     Question20.value,
     comment.value
   );
+
 };
+
+const submitEvaluation = async () => {
+  console.log(result.value[0].score);
+  
+  const payload = {
+    hteId: authStore.hteId,
+    internId: route.params.id,
+    department: hteStore.internsData.department,
+    hteName: authStore.currentUser,
+    internName: hteStore.internsData.fullName,
+    address: authStore.hteInformation.address,
+    contactNumber: authStore.hteInformation.contact,
+    hteEvaluator: evalName.value,
+    position: evalPosition.value,
+    startDate:hteStore.startDate,
+    endDate:hteStore.endDate,
+    numberOfHoursRendered: hteStore.hoursRendered,
+    Q1:Question1.value,
+    Q2:Question1.value,
+    Q3:Question1.value,
+    Q4:Question1.value,
+    Q5:Question1.value,
+    Q6:Question1.value,
+    Q7:Question1.value,
+    Q8:Question1.value,
+    Q9:Question1.value,
+    Q10:Question1.value,
+    Q11:Question1.value,
+    Q12:Question1.value,
+    Q13:Question1.value,
+    Q14:Question1.value,
+    Q15:Question1.value,
+    Q16:Question1.value,
+    Q17:Question1.value,
+    Q18:Question1.value,
+    Q19:Question1.value,
+    Q20:Question1.value,
+    totalScore:result.value[0].score,
+    verbalInterpretation: result.value[0].rating,
+    comment:comment.value
+
+};
+await hteStore.submitEvaluationResults(payload,route.params.id)
+}
+onMounted(async () => {
+  await hteStore.getInternsData(route.params.id);
+});
 </script>
 
 <template>
   <div class="p-3">
     <header class="flex items-center justify-between p-3 bg-gray-50">
-      <h1 class="text-3xl font-bold">Evaluation</h1>
+      <h1 class="text-3xl font-bold">
+        Evaluation {{ hteStore.hoursRendered }} -
+        {{ hteStore.endDate }}
+      </h1>
     </header>
-    <div class="w-full mt-2">
-      <div v-if="IsFormShow !== 7" class="w-11/12 m-auto">
-        <table class="w-10/12 m-auto bg-white border border-gray text-xs">
+    <div class="mt-2">
+      <div v-if="IsFormShow !== 7" class="flex">
+        <table class="text-xs border bg-gray-50 border-gray">
           <tr class="border border-gray00">
             <td class="px-4 py-2 border border-gray-300">5</td>
             <td class="px-4 py-2 border border-gray-300">Outstanding (O)</td>
@@ -101,22 +161,44 @@ const resultBtn = async () => {
           </tr>
         </table>
       </div>
-
-      <div class="w-11/12 m-auto mt-2">
+      <div class="m-auto mt-2">
         <div v-if="IsFormShow === 1">
-          <div
-            class="flex items-center justify-between p-2 border border-gray-300 bg-gray-50"
-          >
-            <h3 class="text-md font-bold">TEAMWORK</h3>
-          </div>
           <form @submit.prevent="nextForm()">
+            <div class="flex justify-start gap-2 py-1 pb-3 text-sm text-gray-400">
+              <div class="flex flex-col">
+                <label for="">Evaluator Name</label>
+                <input
+                  v-model="evalName"
+                  class="input input-bordered"
+                  type="text"
+                  placeholder="Enter Full Name"
+                  required
+                />
+              </div>
+              <div class="flex flex-col">
+                <label for="">Position</label>
+                <input
+                  v-model="evalPosition"
+                  class="input input-bordered"
+                  type="text"
+                  placeholder="Enter Position"
+                  required
+                />
+              </div>
+            </div>
+            <div
+              class="flex items-center justify-between p-2 border border-gray-300 bg-gray-50"
+            >
+              <h3 class="font-bold text-md">TEAMWORK</h3>
+            </div>
+
             <table class="w-full bg-white border border-gray-300">
               <tr class="border-b">
                 <td class="px-4 py-2 border">
                   <p>1. Consistently works with others to finish the tasks and goals.</p>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question1-5"> 5</label>
                     <input
                       v-model="Question1"
@@ -129,7 +211,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question1-4">4</label>
                     <input
                       v-model="Question1"
@@ -141,7 +223,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question1-3">3</label>
                     <input
                       v-model="Question1"
@@ -153,7 +235,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question1-2">2</label>
                     <input
                       v-model="Question1"
@@ -165,7 +247,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question1-1">1</label>
                     <input
                       v-model="Question1"
@@ -182,7 +264,7 @@ const resultBtn = async () => {
                   <p>2. Treat team members with proper respect and demeanor.</p>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question2-5">5</label>
                     <input
                       v-model="Question2"
@@ -195,7 +277,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question2-4">4</label>
                     <input
                       v-model="Question2"
@@ -207,7 +289,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question2-3">3</label>
                     <input
                       v-model="Question2"
@@ -219,7 +301,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question2-2">2</label>
                     <input
                       v-model="Question2"
@@ -231,7 +313,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question2-1">1</label>
                     <input
                       v-model="Question2"
@@ -248,7 +330,7 @@ const resultBtn = async () => {
                   <p>3. Participates actively in activities and assignments</p>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question3-5">5</label>
                     <input
                       v-model="Question3"
@@ -261,7 +343,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question3-4">4</label>
                     <input
                       v-model="Question3"
@@ -273,7 +355,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question3-3">3</label>
                     <input
                       v-model="Question3"
@@ -285,7 +367,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question3-2">2</label>
                     <input
                       v-model="Question3"
@@ -297,7 +379,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question3-1">1</label>
                     <input
                       v-model="Question3"
@@ -316,7 +398,7 @@ const resultBtn = async () => {
                   </p>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question4-5">5</label>
                     <input
                       v-model="Question4"
@@ -329,7 +411,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question4-4">4</label>
                     <input
                       v-model="Question4"
@@ -341,7 +423,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question4-3">3</label>
                     <input
                       v-model="Question4"
@@ -353,7 +435,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question4-2">2</label>
                     <input
                       v-model="Question4"
@@ -365,7 +447,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question4-1">1</label>
                     <input
                       v-model="Question4"
@@ -384,7 +466,7 @@ const resultBtn = async () => {
                   </p>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question5-5">5</label>
                     <input
                       v-model="Question5"
@@ -397,7 +479,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question5-4">4</label>
                     <input
                       v-model="Question5"
@@ -409,7 +491,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question5-3">3</label>
                     <input
                       v-model="Question5"
@@ -421,7 +503,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question5-2">2</label>
                     <input
                       v-model="Question5"
@@ -433,7 +515,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question5-1">1</label>
                     <input
                       v-model="Question5"
@@ -447,14 +529,12 @@ const resultBtn = async () => {
               </tr>
             </table>
             <section>
-              <div class="w-12/12 m-auto flex justify-between mt-2 mb-5">
-                <div class="w-7/12 m-auto flex justify-center mt-8">
-                  <button
-                    class="p-3 bg-green-400 rounded-md px-6 font-semibold text-white"
-                  >
-                    Next
-                  </button>
-                </div>
+              <div class="flex justify-end mt-2 mb-5">
+                <button
+                  class="p-3 px-6 font-semibold text-white rounded-md btn-primary btn"
+                >
+                  Next
+                </button>
               </div>
             </section>
           </form>
@@ -464,7 +544,7 @@ const resultBtn = async () => {
           <div
             class="flex items-center justify-between p-2 border border-gray-300 bg-gray-50"
           >
-            <h3 class="text-md font-bold">COMMUNICATION</h3>
+            <h3 class="font-bold text-md">COMMUNICATION</h3>
           </div>
           <form @submit.prevent="nextForm()">
             <table class="w-full bg-white border border-gray-300">
@@ -473,7 +553,7 @@ const resultBtn = async () => {
                   <p>6. Attentively listens to HTE supervisor and coordinator(s)</p>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question6-5">5</label>
                     <input
                       v-model="Question6"
@@ -486,7 +566,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question6-4">4</label>
                     <input
                       v-model="Question6"
@@ -498,7 +578,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question6-3">3</label>
                     <input
                       v-model="Question6"
@@ -510,7 +590,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question6-2">2</label>
                     <input
                       v-model="Question6"
@@ -522,7 +602,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question6-1">1</label>
                     <input
                       v-model="Question6"
@@ -539,7 +619,7 @@ const resultBtn = async () => {
                   <p>7. Comprehends oral and written information</p>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question7-5">5</label>
                     <input
                       v-model="Question7"
@@ -552,7 +632,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question7-4">4</label>
                     <input
                       v-model="Question7"
@@ -564,7 +644,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question7-3">3</label>
                     <input
                       v-model="Question7"
@@ -576,7 +656,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question7-2">2</label>
                     <input
                       v-model="Question7"
@@ -588,7 +668,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question7-1">1</label>
                     <input
                       v-model="Question7"
@@ -605,7 +685,7 @@ const resultBtn = async () => {
                   <p>8. Consistently delivers information accurately</p>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question8-5">5</label>
                     <input
                       v-model="Question8"
@@ -618,7 +698,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question8-4">4</label>
                     <input
                       v-model="Question8"
@@ -630,7 +710,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question8-3">3</label>
                     <input
                       v-model="Question8"
@@ -642,7 +722,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question8-2">2</label>
                     <input
                       v-model="Question8"
@@ -654,7 +734,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question8-1">1</label>
                     <input
                       v-model="Question8"
@@ -673,7 +753,7 @@ const resultBtn = async () => {
                   </p>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question9-5">5</label>
                     <input
                       v-model="Question9"
@@ -686,7 +766,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question9-4">4</label>
                     <input
                       v-model="Question9"
@@ -698,7 +778,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question9-3">3</label>
                     <input
                       v-model="Question9"
@@ -710,7 +790,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question9-2">2</label>
                     <input
                       v-model="Question9"
@@ -722,7 +802,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question9-1">1</label>
                     <input
                       v-model="Question9"
@@ -736,21 +816,19 @@ const resultBtn = async () => {
               </tr>
             </table>
             <section>
-              <div class="w-12/12 m-auto flex justify-between mt-2 mb-5">
-                <div class="w-5/12 m-auto flex justify-around mt-8">
-                  <button
-                    type="button"
-                    @click="backForm()"
-                    class="p-3 bg-red-400 rounded-md px-6 font-semibold text-white"
-                  >
-                    Back
-                  </button>
-                  <button
-                    class="p-3 bg-green-400 rounded-md px-6 font-semibold text-white"
-                  >
-                    Next
-                  </button>
-                </div>
+              <div class="flex justify-between mt-2 mb-5">
+                <button
+                  type="button"
+                  @click="backForm()"
+                  class="p-3 px-6 font-semibold text-white rounded-md btn-outline btn btn-accent"
+                >
+                  Back
+                </button>
+                <button
+                  class="p-3 px-6 font-semibold text-white rounded-md btn btn-primary"
+                >
+                  Next
+                </button>
               </div>
             </section>
           </form>
@@ -760,7 +838,7 @@ const resultBtn = async () => {
           <div
             class="flex items-center justify-between p-2 border border-gray-300 bg-gray-50"
           >
-            <h3 class="text-md font-bold">ATTENDANCE AND PUNCTUALITY</h3>
+            <h3 class="font-bold text-md">ATTENDANCE AND PUNCTUALITY</h3>
           </div>
           <form @submit.prevent="nextForm()">
             <table class="w-full bg-white border border-gray-300">
@@ -769,7 +847,7 @@ const resultBtn = async () => {
                   <p>10. Maintains participation and good attendance</p>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question10-5">5</label>
                     <input
                       v-model="Question10"
@@ -782,7 +860,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question10-4">4</label>
                     <input
                       v-model="Question10"
@@ -794,7 +872,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question10-3">3</label>
                     <input
                       v-model="Question10"
@@ -806,7 +884,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question10-2">2</label>
                     <input
                       v-model="Question10"
@@ -818,7 +896,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question10-1">1</label>
                     <input
                       v-model="Question10"
@@ -835,7 +913,7 @@ const resultBtn = async () => {
                   <p>11. Informs supervisor ahead of time if absent or late</p>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question11-5">5</label>
                     <input
                       v-model="Question11"
@@ -848,7 +926,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question11-4">4</label>
                     <input
                       v-model="Question11"
@@ -860,7 +938,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question11-3">3</label>
                     <input
                       v-model="Question11"
@@ -872,7 +950,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question11-2">2</label>
                     <input
                       v-model="Question11"
@@ -884,7 +962,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question11-1">1</label>
                     <input
                       v-model="Question11"
@@ -898,21 +976,19 @@ const resultBtn = async () => {
               </tr>
             </table>
             <section>
-              <div class="w-12/12 m-auto flex justify-between mt-2 mb-5">
-                <div class="w-5/12 m-auto flex justify-around mt-8">
-                  <button
-                    type="button"
-                    @click="backForm()"
-                    class="p-3 bg-red-400 rounded-md px-6 font-semibold text-white"
-                  >
-                    Back
-                  </button>
-                  <button
-                    class="p-3 bg-green-400 rounded-md px-6 font-semibold text-white"
-                  >
-                    Next
-                  </button>
-                </div>
+              <div class="flex justify-between mt-2 mb-5">
+                <button
+                  type="button"
+                  @click="backForm()"
+                  class="p-3 px-6 font-semibold text-white rounded-md btn btn-accent btn-outline"
+                >
+                  Back
+                </button>
+                <button
+                  class="p-3 px-6 font-semibold text-white rounded-md btn btn-primary"
+                >
+                  Next
+                </button>
               </div>
             </section>
           </form>
@@ -922,7 +998,7 @@ const resultBtn = async () => {
           <div
             class="flex items-center justify-between p-2 border border-gray-300 bg-gray-50"
           >
-            <h3 class="text-md font-bold">PRODUCTIVITY RESILIENCE</h3>
+            <h3 class="font-bold text-md">PRODUCTIVITY RESILIENCE</h3>
           </div>
           <form @submit.prevent="nextForm()">
             <table class="w-full bg-white border border-gray-300">
@@ -931,7 +1007,7 @@ const resultBtn = async () => {
                   <p>12. Consistently delivers quality results</p>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question12-5">5</label>
                     <input
                       v-model="Question12"
@@ -944,7 +1020,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question12-4">4</label>
                     <input
                       v-model="Question12"
@@ -956,7 +1032,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question12-3">3</label>
                     <input
                       v-model="Question12"
@@ -968,7 +1044,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question12-2">2</label>
                     <input
                       v-model="Question12"
@@ -980,7 +1056,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question12-1">1</label>
                     <input
                       v-model="Question12"
@@ -997,7 +1073,7 @@ const resultBtn = async () => {
                   <p>13. Meets deadlines and and manages time well</p>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question13-5">5</label>
                     <input
                       v-model="Question13"
@@ -1010,7 +1086,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question13-4">4</label>
                     <input
                       v-model="Question13"
@@ -1022,7 +1098,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question13-3">3</label>
                     <input
                       v-model="Question13"
@@ -1034,7 +1110,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question13-2">2</label>
                     <input
                       v-model="Question13"
@@ -1046,7 +1122,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question13-1">1</label>
                     <input
                       v-model="Question13"
@@ -1065,7 +1141,7 @@ const resultBtn = async () => {
                   </p>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question14-5">5</label>
                     <input
                       v-model="Question14"
@@ -1078,7 +1154,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question14-4">4</label>
                     <input
                       v-model="Question14"
@@ -1090,7 +1166,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question14-3">3</label>
                     <input
                       v-model="Question14"
@@ -1102,7 +1178,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question14-2">2</label>
                     <input
                       v-model="Question14"
@@ -1114,7 +1190,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question14-1">1</label>
                     <input
                       v-model="Question14"
@@ -1128,21 +1204,19 @@ const resultBtn = async () => {
               </tr>
             </table>
             <section>
-              <div class="w-12/12 m-auto flex justify-between mt-2 mb-5">
-                <div class="w-5/12 m-auto flex justify-around mt-8">
-                  <button
-                    type="button"
-                    @click="backForm()"
-                    class="p-3 bg-red-400 rounded-md px-6 font-semibold text-white"
-                  >
-                    Back
-                  </button>
-                  <button
-                    class="p-3 bg-green-400 rounded-md px-6 font-semibold text-white"
-                  >
-                    Next
-                  </button>
-                </div>
+              <div class="flex justify-between m-auto mt-2 mb-5 w-12/12">
+                <button
+                  type="button"
+                  @click="backForm()"
+                  class="p-3 px-6 font-semibold text-white rounded-md btn btn-outline btn-accent"
+                >
+                  Back
+                </button>
+                <button
+                  class="p-3 px-6 font-semibold text-white rounded-md btn-primary btn"
+                >
+                  Next
+                </button>
               </div>
             </section>
           </form>
@@ -1152,7 +1226,7 @@ const resultBtn = async () => {
           <div
             class="flex items-center justify-between p-2 border border-gray-300 bg-gray-50"
           >
-            <h3 class="text-md font-bold">INITIATIVE/PROACTIVITY</h3>
+            <h3 class="font-bold text-md">INITIATIVE/PROACTIVITY</h3>
           </div>
           <form @submit.prevent="nextForm()">
             <table class="w-full bg-white border border-gray-300">
@@ -1161,7 +1235,7 @@ const resultBtn = async () => {
                   <p>15. Completes tasks with minimal supervision</p>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question15-5">5</label>
                     <input
                       v-model="Question15"
@@ -1174,7 +1248,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question15-4">4</label>
                     <input
                       v-model="Question15"
@@ -1186,7 +1260,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question15-3">3</label>
                     <input
                       v-model="Question15"
@@ -1198,7 +1272,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question15-2">2</label>
                     <input
                       v-model="Question15"
@@ -1210,7 +1284,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question15-1">1</label>
                     <input
                       v-model="Question15"
@@ -1227,7 +1301,7 @@ const resultBtn = async () => {
                   <p>16. Completes tasks successively and independently</p>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question16-5">5</label>
                     <input
                       v-model="Question16"
@@ -1240,7 +1314,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question16-4">4</label>
                     <input
                       v-model="Question16"
@@ -1252,7 +1326,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question16-3">3</label>
                     <input
                       v-model="Question16"
@@ -1264,7 +1338,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question16-2">2</label>
                     <input
                       v-model="Question16"
@@ -1276,7 +1350,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question16-1">1</label>
                     <input
                       v-model="Question16"
@@ -1290,21 +1364,19 @@ const resultBtn = async () => {
               </tr>
             </table>
             <section>
-              <div class="w-12/12 m-auto flex justify-between mt-2 mb-5">
-                <div class="w-5/12 m-auto flex justify-around mt-8">
-                  <button
-                    type="button"
-                    @click="backForm()"
-                    class="p-3 bg-red-400 rounded-md px-6 font-semibold text-white"
-                  >
-                    Back
-                  </button>
-                  <button
-                    class="p-3 bg-green-400 rounded-md px-6 font-semibold text-white"
-                  >
-                    Next
-                  </button>
-                </div>
+              <div class="flex justify-between m-auto mt-2 mb-5 w-12/12">
+                <button
+                  type="button"
+                  @click="backForm()"
+                  class="p-3 px-6 font-semibold text-white rounded-md btn-accent btn btn-outline"
+                >
+                  Back
+                </button>
+                <button
+                  class="p-3 px-6 font-semibold text-white rounded-md btn btn-primary"
+                >
+                  Next
+                </button>
               </div>
             </section>
           </form>
@@ -1314,7 +1386,7 @@ const resultBtn = async () => {
           <div
             class="flex items-center justify-between p-2 border border-gray-300 bg-gray-50"
           >
-            <h3 class="text-md font-bold">DEPENDABILITY/RELIABILITY</h3>
+            <h3 class="font-bold text-md">DEPENDABILITY/RELIABILITY</h3>
           </div>
           <form @submit.prevent="nextForm()">
             <table class="w-full bg-white border border-gray-300">
@@ -1323,7 +1395,7 @@ const resultBtn = async () => {
                   <p>17. Ably follows through and meet deadlines</p>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question17-5">5</label>
                     <input
                       v-model="Question17"
@@ -1336,7 +1408,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question17-4">4</label>
                     <input
                       v-model="Question17"
@@ -1348,7 +1420,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question17-3">3</label>
                     <input
                       v-model="Question17"
@@ -1360,7 +1432,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question17-2">2</label>
                     <input
                       v-model="Question17"
@@ -1372,7 +1444,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question17-1">1</label>
                     <input
                       v-model="Question17"
@@ -1389,7 +1461,7 @@ const resultBtn = async () => {
                   <p>18. Takes accountability to his/her actions</p>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question18-5">5</label>
                     <input
                       v-model="Question18"
@@ -1402,7 +1474,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question18-4">4</label>
                     <input
                       v-model="Question18"
@@ -1414,7 +1486,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question18-3">3</label>
                     <input
                       v-model="Question18"
@@ -1426,7 +1498,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question18-2">2</label>
                     <input
                       v-model="Question18"
@@ -1438,7 +1510,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question18-1">1</label>
                     <input
                       v-model="Question18"
@@ -1455,7 +1527,7 @@ const resultBtn = async () => {
                   <p>19. Adapts effectively to change in the work from home OJT</p>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question19-5">5</label>
                     <input
                       v-model="Question19"
@@ -1468,7 +1540,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question19-4">4</label>
                     <input
                       v-model="Question19"
@@ -1480,7 +1552,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question19-3">3</label>
                     <input
                       v-model="Question19"
@@ -1492,7 +1564,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question19-2">2</label>
                     <input
                       v-model="Question19"
@@ -1504,7 +1576,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question19-1">1</label>
                     <input
                       v-model="Question19"
@@ -1521,7 +1593,7 @@ const resultBtn = async () => {
                   <p>20. Shows consistent level of good performance</p>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question20-5">5</label>
                     <input
                       v-model="Question20"
@@ -1534,7 +1606,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question20-4">4</label>
                     <input
                       v-model="Question20"
@@ -1546,7 +1618,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question20-3">3</label>
                     <input
                       v-model="Question20"
@@ -1558,7 +1630,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question20-2">2</label>
                     <input
                       v-model="Question20"
@@ -1570,7 +1642,7 @@ const resultBtn = async () => {
                   </div>
                 </td>
                 <td class="px-2 py-2">
-                  <div class="flex flex-col text-center items-center">
+                  <div class="flex flex-col items-center text-center">
                     <label for="Question20-1">1</label>
                     <input
                       v-model="Question20"
@@ -1584,46 +1656,43 @@ const resultBtn = async () => {
               </tr>
             </table>
 
-            <div class="w-12/12 m-auto flex justify-between">
-              <div class="w-9/12 m-auto pt-2 flex flex-col items-center">
-                <h1 class="font-semibold p-1">Remarks/Comments:</h1>
+            <div class="flex justify-center">
+              <div class="flex flex-col w-full pt-2 m-auto">
+                <h1 class="p-1 text-left">Remarks/Comments:</h1>
                 <textarea
                   v-model="comment"
-                  class="border border-gray-300 w-8/12 p-2 bg-zinc-100 rounded-md"
+                  class="w-full p-2 border border-gray-300 rounded-md bg-zinc-100"
                   rows="5"
                   cols="32"
                   name="comment"
                   id="comment"
                   placeholder="Enter your comment here..."
                 ></textarea>
+                <section class="w-full">
+                  <div class="flex justify-between m-auto mt-2 mb-5">
+                    <button
+                      type="button"
+                      @click="backForm()"
+                      class="p-3 px-6 font-semibold text-white rounded-md btn btn-outline btn-accent"
+                    >
+                      Back
+                    </button>
+                    <button
+                      @click="resultBtn()"
+                      class="p-3 px-6 font-semibold text-white rounded-md btn btn-primary"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </section>
               </div>
             </div>
-
-            <section>
-              <div class="w-12/12 m-auto flex justify-between mt-2 mb-5">
-                <div class="w-5/12 m-auto flex justify-around mt-8">
-                  <button
-                    type="button"
-                    @click="backForm()"
-                    class="p-3 bg-red-400 rounded-md px-6 font-semibold text-white"
-                  >
-                    Back
-                  </button>
-                  <button
-                    @click="resultBtn()"
-                    class="p-3 bg-green-400 rounded-md px-6 font-semibold text-white"
-                  >
-                    Next
-                  </button>
-                </div>
-              </div>
-            </section>
           </form>
         </div>
       </div>
       <div v-if="IsFormShow === 7">
-        <div class="w-full m-auto px-5">
-          <table class="w-full m-auto bg-white border border-gray text-xs">
+        <div class="w-full px-5 m-auto">
+          <table class="w-full m-auto text-xs bg-white border border-gray">
             <tr class="border border-gray00">
               <th class="px-4 py-2 border border-gray-300">Raw Score</th>
               <th class="px-4 py-2 border border-gray-300">Equivalent Rating</th>
@@ -1657,30 +1726,30 @@ const resultBtn = async () => {
           </table>
         </div>
 
-        <div class="w-full flex justify-end mt-5">
-          <div class="w-2/12 text-center bg-gray-50 border border-gray-300 p-4 mr-5">
+        <div class="flex justify-end w-full mt-5">
+          <div class="w-2/12 p-4 mr-5 text-center border border-gray-300 bg-gray-50">
             <p>Total Score: {{ result[0].score }}</p>
           </div>
-          <div class="w-2/12 text-center bg-gray-50 border border-gray-300 p-4 mr-5">
-            <p>{{ result[0].rating }}</p>
+          <div class="w-2/12 p-4 mr-5 text-center border border-gray-300 bg-gray-50">
+            <p class="font-bold">{{ result[0].rating }}</p>
           </div>
         </div>
 
         <section>
-          <div class="w-full flex justify-end mt-4 mb-5">
-            <div class="px-4 flex gap-3">
+          <div class="flex justify-end w-full mt-4 mb-5">
+            <div class="flex gap-3 px-4">
               <button
                 type="button"
                 @click="backForm()"
-                class="p-3 btn btn-outline btn-accent rounded-md px-6 font-semibold text-white"
+                class="p-3 px-6 font-semibold text-white rounded-md btn btn-outline btn-accent"
               >
                 Back
               </button>
               <button
-                @click="submitForm"
-                class="p-3 btn-primary btn rounded-md px-6 font-semibold text-white"
+                @click="submitEvaluation"
+                class="p-3 px-6 font-semibold text-white rounded-md btn-primary btn"
               >
-                Submit
+                Submit Evaluation
               </button>
             </div>
           </div>

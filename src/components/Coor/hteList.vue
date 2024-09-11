@@ -43,7 +43,7 @@
             >
           </div>
           <div v-else>
-            <button @click="openUpdateModal(item._id, item.name)" class="btn btn-primary">
+            <button @click="openUpdateModal(item._id)" class="btn btn-primary">
               Upload MOA
             </button>
           </div>
@@ -51,7 +51,7 @@
         <template #item-operation="item">
           <div class="">
             <button
-              @click="openRequestModal(item._id, item.name)"
+              @click="openRequestModal(item._id, item.fullName)"
               class="btn btn-primary"
             >
               Create Request

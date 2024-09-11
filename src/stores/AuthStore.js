@@ -10,6 +10,7 @@ export const useAuthStore = defineStore("auth", () => {
   const currentUser = ref(null);
   const currentDepartment = ref(null);
   const coorId = ref(null);
+  const hteId = ref(null);
   const errorMessage = ref("");
   const isEmailExist = ref(false);
   const isInternReady = ref(null);
@@ -50,6 +51,7 @@ export const useAuthStore = defineStore("auth", () => {
         return (currentUser.value = response.data.content.profile.firstname);
       }
       if (userRole.value === "HTE") {
+        hteId.value = response.data.content.profile._id
         hteInformation.name = response.data.content.profile.fullName;
         hteInformation.email = response.data.content.email;
         hteInformation.contact = response.data.content.profile.contactNumber;
@@ -266,5 +268,6 @@ export const useAuthStore = defineStore("auth", () => {
     hteInformation,
     updateHteInfo,
     currentRole,
+    hteId
   };
 });

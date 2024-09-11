@@ -277,6 +277,12 @@ const router = createRouter({
           meta: { requiresAuth: true, roles: ["HTE"] },
         },
         {
+          path: "evaluation/:id",
+          name: "EvaluationView",
+          component: () => import("../components/EvaluationView.vue"),
+          meta: { requiresAuth: true, roles: ["HTE"] },
+        },
+        {
           path: "evaluationForm/:id",
           name: "EvaluationForm",
           component: () => import("../components/Hte/EvaluationForm.vue"),

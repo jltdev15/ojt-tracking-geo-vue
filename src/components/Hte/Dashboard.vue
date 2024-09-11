@@ -34,14 +34,6 @@
               </div>
             </div>
           </div>
-          <div class="p-5 bg-white rounded shadow-sm">
-            <div class="flex items-center space-x-4 space-y-2">
-              <div>
-                <div class="text-2xl font-bold text-gray-900">0</div>
-                <div class="text-gray-400">Inactive</div>
-              </div>
-            </div>
-          </div>
         </div>
         <header class="py-3">
           <h1 class="text-xl font-semibold text-gray-400 uppercase">Interns</h1>

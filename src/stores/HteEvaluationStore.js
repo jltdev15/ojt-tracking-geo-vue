@@ -32,6 +32,7 @@ export function useForm() {
     }
 
     const resultForm = async (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, comment) => {
+
         const score = Number(q1) + Number(q2) + Number(q3) + Number(q4) + Number(q5) +
             Number(q6) + Number(q7) + Number(q8) + Number(q9) + Number(q10) +
             Number(q11) + Number(q12) + Number(q13) + Number(q14) + Number(q15) +
@@ -62,11 +63,12 @@ export function useForm() {
             formStore.result[0].rating = "Needs Improvement";
             return formStore.result[0].comment = comment;
         }
+
     }
 
-    const submitForm = async (q1) => {
+    const submitForm = async () => {
         try {
-            alert(q1)
+            alert(evaluationData.score)
 
         }
         catch {
@@ -80,6 +82,6 @@ export function useForm() {
         nextForm,
         backForm,
         resultForm,
-        submitForm
+        submitForm,
     }
 }

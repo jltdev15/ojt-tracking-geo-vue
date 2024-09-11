@@ -15,7 +15,12 @@
         <h1 class="text-3xl font-bold">Interns</h1>
       </header>
       <div class="flex justify-end gap-3 pb-3">
-        <input type="text" placeholder="Search here" class="w-full input input-bordered" v-model="searchValue" />
+        <input
+          type="text"
+          placeholder="Search here"
+          class="w-full input input-bordered"
+          v-model="searchValue"
+        />
         <select class="w-48 select select-bordered" v-model.trim="searchField">
           <option selected disabled value="Set filter">Set filter</option>
           <option value="status">Status</option>
@@ -23,29 +28,36 @@
           <option value="Department">Department</option>
         </select>
       </div>
-      <EasyDataTable :headers="headers" :items="hteStore.getListOfAcceptedInterns" :search-field="searchField"
-        :search-value="searchValue" table-class-name="customize-table" border-cell>
+      <EasyDataTable
+        :headers="headers"
+        :items="hteStore.getListOfAcceptedInterns"
+        :search-field="searchField"
+        :search-value="searchValue"
+        table-class-name="customize-table"
+        border-cell
+      >
         <template #item-viewRequirements="item">
           <div class="flex justify-between gap-3 py-2">
-            <p class="text-blue-600 underline cursor-pointer" @click="handleSetInternId(item.internId, item.jobId)">
+            <p
+              class="text-blue-600 underline cursor-pointer"
+              @click="handleSetInternId(item.internId, item.jobId)"
+            >
               Check Requirements
             </p>
           </div>
         </template>
         <template #item-online="item">
           <div class="flex justify-between gap-3 py-2">
-            <p v-if="item.isClockIn">
-              Online
-            </p>
-            <p v-else>
-              Offline
-            </p>
+            <p v-if="item.isClockIn">Online</p>
+            <p v-else>Offline</p>
           </div>
         </template>
         <template #item-dailytimerecord="item">
           <div class="flex justify-between gap-3 py-2">
-            <router-link :to="{ name: 'DailyTimeRecord', params: { internId: item.internId } }"
-              class="btn-accent btn-block btn btn-outline text-gray-50">
+            <router-link
+              :to="{ name: 'DailyTimeRecord', params: { internId: item.internId } }"
+              class="btn-accent btn-block btn btn-outline text-gray-50"
+            >
               View
             </router-link>
           </div>
@@ -62,8 +74,11 @@
           <p>{{ item.workedHours }}</p>
         </template>
         <template #item-evaluation="item">
-          <div v-if="item.evaluationStatus">
-            <router-link class="btn btn-primary" :to="{ name: 'EvaluationForm', params: { id: item.internId } }">
+          <div v-if="item.evaluationStatus === 'Ready'">
+            <router-link
+              class="btn btn-primary"
+              :to="{ name: 'EvaluationForm', params: { id: item.internId } }"
+            >
               <p>Ready for evaluation</p>
             </router-link>
           </div>
@@ -74,51 +89,75 @@
       </EasyDataTable>
     </section>
 
-    <ModalRequirements :show="modalRequirementShow" title="Approved Application" v-for="item in applicantRequirements"
-      :key="item.ids">
+    <ModalRequirements
+      :show="modalRequirementShow"
+      title="Approved Application"
+      v-for="item in applicantRequirements"
+      :key="item.ids"
+    >
       <template #default>
         <p class="py-3 text-base font-medium t">Submitted Requirements</p>
         <ul class="p-3 border border-b-2">
           <li class="flex items-center justify-between gap-2 p-3 text-sm border-b-2">
             <p class="flex items-center gap-2">
               Resume - {{ item.resumeFile ? "Available" : "Not available"
-              }}<i class="bx" :class="{
-                'bxs-check-circle text-green-600': item.resumeFile,
-                'bxs-x-circle text-red-600': item.resumeFile === '',
-              }"></i>
+              }}<i
+                class="bx"
+                :class="{
+                  'bxs-check-circle text-green-600': item.resumeFile,
+                  'bxs-x-circle text-red-600': item.resumeFile === '',
+                }"
+              ></i>
             </p>
 
             <div>
-              <a class="text-blue-600 underline" target="_blank" :href="item.resumePath">View Resume</a>
+              <a class="text-blue-600 underline" target="_blank" :href="item.resumePath"
+                >View Resume</a
+              >
             </div>
           </li>
           <li class="flex items-center justify-between gap-2 p-3 text-sm border-b-2">
             <p class="flex items-center gap-2">
               Memorandum - {{ item.moaFile ? "Available" : "Not available"
-              }}<i class="bx" :class="{
-                'bxs-check-circle text-green-600': item.moaFile,
-                'bxs-x-circle text-red-600': item.moaFile === '',
-              }"></i>
+              }}<i
+                class="bx"
+                :class="{
+                  'bxs-check-circle text-green-600': item.moaFile,
+                  'bxs-x-circle text-red-600': item.moaFile === '',
+                }"
+              ></i>
             </p>
 
             <div>
-              <a :class="{ 'underline text-blue-600': item.endorsementPath }" class="" target="_blank"
-                :href="item.moaPath">{{ item.moaPath ? "View Endorsement" : "Unavailable" }}</a>
+              <a
+                :class="{ 'underline text-blue-600': item.endorsementPath }"
+                class=""
+                target="_blank"
+                :href="item.moaPath"
+                >{{ item.moaPath ? "View Endorsement" : "Unavailable" }}</a
+              >
             </div>
           </li>
           <li class="flex items-center justify-between gap-2 p-3 text-sm">
             <p class="flex items-center gap-2">
               Endorsement - {{ item.eformFile ? "Available" : "Not available"
-              }}<i class="bx" :class="{
-                'bxs-check-circle text-green-600': item.eformFile,
-                'bxs-x-circle text-red-600': item.eformFile === '',
-              }"></i>
+              }}<i
+                class="bx"
+                :class="{
+                  'bxs-check-circle text-green-600': item.eformFile,
+                  'bxs-x-circle text-red-600': item.eformFile === '',
+                }"
+              ></i>
             </p>
 
             <div>
-              <a class="" target="_blank" :href="item.endorsementPath ? item.endorsementPath : ''"
-                :class="{ 'underline text-blue-600': item.endorsementPath }">{{ item.endorsementPath ? "ViewEndorsement"
-                  : "Unavailable" }}</a>
+              <a
+                class=""
+                target="_blank"
+                :href="item.endorsementPath ? item.endorsementPath : ''"
+                :class="{ 'underline text-blue-600': item.endorsementPath }"
+                >{{ item.endorsementPath ? "ViewEndorsement" : "Unavailable" }}</a
+              >
             </div>
           </li>
         </ul>
@@ -130,8 +169,10 @@
             </button>
           </div>
         </section>
-        <p @click="modalRequirementShow = !modalRequirementShow"
-          class="p-3 text-center underline capitalize cursor-pointer">
+        <p
+          @click="modalRequirementShow = !modalRequirementShow"
+          class="p-3 text-center underline capitalize cursor-pointer"
+        >
           Close
         </p>
       </template>
@@ -174,16 +215,12 @@ const headers = [
   { text: "Daily Time Record", value: "dailytimerecord" },
   { text: "Online Status", value: "online" },
   { text: "REMARKS", value: "evaluation" },
-
 ];
 </script>
 
 <style scoped>
 .customize-table {
-
-
   --easy-table-header-font-color: #fff;
   --easy-table-header-background-color: #ae1818;
-
 }
 </style>

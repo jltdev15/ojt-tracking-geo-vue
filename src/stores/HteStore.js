@@ -16,11 +16,15 @@ export const useHteStore = defineStore("hte", () => {
   const approvedApplicantsList = ref([]);
   const onlineInternList = ref([]);
   const onlineLocationList = ref([]);
+  const startDate = ref('')
+  const endDate = ref('')
+  const hoursRendered = ref(null)
   const hteLocationDefault = reactive({
     lat: "",
     lng: "",
   });
 
+  const internsData = ref('')
   const internshipData = reactive({
     id: "",
     title: "",
@@ -238,6 +242,36 @@ export const useHteStore = defineStore("hte", () => {
       return err;
     }
   };
+  const getInternsData = async (internId) => {
+    let dateArr = []
+    try {
+      const response = await apiClient.get(`/hte/info/${internId}`);
+      console.log(response);
+      internsData.value = response.data
+      dateArr = response.data.dailyTimeRecords;
+      startDate.value = dateArr[0].date
+      endDate.value = dateArr[dateArr.length - 1].date
+      hoursRendered.value = response.data.workedHours;
+      await fetchApplicantAccepted()
+      return response;
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  };
+  const submitEvaluationResults = async (payload,internId) => {
+    try {
+      const response = await apiClient.post(`/hte/evaluation/${internId}`,payload);
+      alert('Evaluation saved!')
+      router.push({name:'hte_dashboard'})
+      console.log(response);
+      await fetchApplicantAccepted()
+      return response;
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  }
   // Computed
   const getNumberOfVisitPendingRequest = computed(() => {
     return requestList.value.filter(
@@ -262,7 +296,7 @@ export const useHteStore = defineStore("hte", () => {
     );
   });
   const getListOfAcceptedInterns = computed(() => {
-    return acceptedApplicantsList.value;
+    return acceptedApplicantsList.value.filter((item) => item.evaluationStatus != 'Finished')
   });
   const getListOfAcceptedInternsSession = computed(() => {
     return acceptedApplicantsList.value.filter(
@@ -285,7 +319,7 @@ export const useHteStore = defineStore("hte", () => {
       .length;
   });
   const getNumberOfInternForEvaluation = computed(() => {
-    return acceptedApplicantsList.value.filter((item) => item.evaluationStatus === true)
+    return acceptedApplicantsList.value.filter((item) => item.evaluationStatus === 'Ready')
       .length;
   });
 
@@ -339,6 +373,12 @@ export const useHteStore = defineStore("hte", () => {
     getNumberOfDoneRequest,
     getNumberOfInternForEvaluation,
     getListOfAcceptedInternsSession,
-    resetDeviceRestriction
+    resetDeviceRestriction,
+    getInternsData,
+    internsData,
+    startDate,
+    endDate,
+    hoursRendered,
+    submitEvaluationResults
   };
 });
