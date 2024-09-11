@@ -94,6 +94,21 @@ export const useCoorStore = defineStore("coor", () => {
       console.log(err);
     }
   };
+  const updateMOAhte = async (hteId, payload) => {
+
+    try {
+      const response = await apiClient.patch(`/coor/updateMOA/${hteId}`, payload,{
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      alert("Updated!");
+      await fetchHTELists()
+      return response;
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   // Computed
   const getNumberOfInterns = computed(() => {
@@ -141,5 +156,6 @@ export const useCoorStore = defineStore("coor", () => {
     getNumberOfRequestAccepted,
     getNumberOfRequestRejected,
     getNumberOfRequestPending,
+    updateMOAhte
   };
 });

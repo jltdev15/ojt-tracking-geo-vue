@@ -19,6 +19,8 @@ export const useAdminUserStore = defineStore("user", () => {
   const vacancyList = ref([]);
   const coorRequestList = ref([]);
   const requestListBy = ref("");
+
+
   const userRoleList = reactive({
     hte: "",
     coor: "",
@@ -458,6 +460,15 @@ export const useAdminUserStore = defineStore("user", () => {
       console.log(err);
     }
   };
+  const updateAnnouncement = async (idToUpdate,payload) => {
+    try {
+      const response = await apiClient.patch(`/announcement/update/${idToUpdate}`,payload);
+      console.log(response);
+      await fetchAnnouncement();
+    } catch (err) {
+      console.log(err);
+    }
+  };
   // Computed
   const getNumberOfVacancy = computed(() => {
     return vacancyList.value.length;
@@ -577,6 +588,7 @@ export const useAdminUserStore = defineStore("user", () => {
     fetchCoorRequestList,
     coorRequestList,
     requestListBy,
-    getNumberOfVacancy
+    getNumberOfVacancy,
+    updateAnnouncement
   };
 });

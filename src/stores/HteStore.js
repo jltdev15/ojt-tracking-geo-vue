@@ -285,7 +285,7 @@ export const useHteStore = defineStore("hte", () => {
       .length;
   });
   const getNumberOfInternForEvaluation = computed(() => {
-    return applicantList.value.filter((item) => item.status === "Finished")
+    return acceptedApplicantsList.value.filter((item) => item.evaluationStatus === true)
       .length;
   });
 

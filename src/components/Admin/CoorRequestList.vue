@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="p-3">
     <div class="p-6 text-sm breadcrumbs">
       <ul>
         <li>
-          <router-link :to="{ name: 'admin_dashboard' }">Admin Dashboard</router-link>
+          <router-link :to="{ name: 'admin_dashboard' }">Dashboard</router-link>
         </li>
         <li>
-          <router-link class="font-bold" :to="{ name: 'hteLists' }">List</router-link>
+          <router-link class="" :to="{ name: 'hteLists' }">List</router-link>
         </li>
         <!-- <li>
                     <router-link class="text-red-800" :to="{ name: 'UpdateUser' }">Update user</router-link>

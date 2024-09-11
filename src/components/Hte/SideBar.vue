@@ -47,6 +47,18 @@
         >
           <i class="mr-3 text-lg bx bxs-user-check"></i>
           <span class="text-sm">Accepted Interns</span>
+          <span
+            :class="{
+              'bg-red-200 text-red-600': hteStore.getNumberOfInternForEvaluation,
+              'bg-gray-50 text-gray-400': !hteStore.getNumberOfInternForEvaluation,
+            }"
+            class="md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide rounded-full"
+            >{{
+              hteStore.getNumberOfInternForEvaluation
+                ? hteStore.getNumberOfInternForEvaluation
+                : "0"
+            }}</span
+          >
         </router-link>
       </li>
       <li class="mb-1 group">

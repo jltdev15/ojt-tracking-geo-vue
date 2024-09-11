@@ -1,34 +1,48 @@
 <template>
-  <div class="p-6">
-    <div class="py-3 text-sm breadcrumbs">
+  <div class="p-3">
+    <div class="p-6 text-sm breadcrumbs">
       <ul>
         <li>
-          <router-link :to="{ name: 'admin_dashboard' }">Admin Dashboard</router-link>
+          <router-link :to="{ name: 'admin_dashboard' }">Dashboard</router-link>
         </li>
         <li>
-          <router-link class="font-medium" :to="{ name: 'InternsList' }">Intern List</router-link>
+          <router-link class="font-medium" :to="{ name: 'InternsList' }"
+            >Intern List</router-link
+          >
         </li>
-
       </ul>
     </div>
-    <header class="">
+    <header class="px-6">
       <h1 class="text-3xl font-bold">Interns List</h1>
     </header>
-    <section class="">
+    <section class="px-6">
       <div class="flex justify-end gap-3 py-3">
-        <input type="text" placeholder="Type here" class="w-full input input-bordered" v-model="searchValue" />
+        <input
+          type="text"
+          placeholder="Type here"
+          class="w-full input input-bordered"
+          v-model="searchValue"
+        />
         <select class="w-48 select select-bordered" v-model.trim="searchField">
           <option selected disabled value="Set filter">Set filter</option>
           <option value="department">Department</option>
           <option value="fullName">Full Name</option>
         </select>
       </div>
-      <EasyDataTable :headers="headers" :items="userStore.internsList" :search-field="searchField"
-        :search-value="searchValue" table-class-name="customize-table">
+
+      <EasyDataTable
+        :headers="headers"
+        :items="userStore.internsList"
+        :search-field="searchField"
+        :search-value="searchValue"
+        table-class-name="customize-table"
+      >
         <template #item-dailytimerecord="item">
           <div class="flex justify-between gap-3 py-2">
-            <router-link :to="{ name: 'DTRList', params: { id: item._id } }"
-              class=" btn btn-accent btn-outline text-gray-50">
+            <router-link
+              :to="{ name: 'DTRList', params: { id: item._id } }"
+              class="btn btn-accent btn-outline text-gray-50"
+            >
               View
             </router-link>
           </div>
@@ -78,9 +92,7 @@ onMounted(async () => {
 
 <style scoped>
 .customize-table {
-
   --easy-table-header-font-color: #fff;
   --easy-table-header-background-color: #ae1818;
-
 }
 </style>

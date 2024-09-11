@@ -11,32 +11,49 @@
       </ul>
     </div>
     <header class="flex items-center justify-between px-6 bg-gray-200">
-      <h1 class="text-3xl ">
+      <h1 class="text-3xl">
         Host <span class="text-3xl font-bold">Training Establishment</span>
       </h1>
     </header>
-    <div class="flex justify-end gap-3 px-6">
-      <input type="text" placeholder="Search here" class="w-full input input-bordered" v-model="searchValue" />
+    <div class="flex justify-end gap-3 p-6">
+      <input
+        type="text"
+        placeholder="Search here"
+        class="w-full input input-bordered"
+        v-model="searchValue"
+      />
       <select class="w-48 select select-bordered" v-model.trim="searchField">
         <option selected disabled value="Set filter">Set filter</option>
-        <option value="status">Status</option>
+        <option value="fullName">HTE Name</option>
         <option value="Intern">Intern Name</option>
         <option value="Department">Department</option>
       </select>
     </div>
-    <div class="p-6">
-      <EasyDataTable border-cell :headers="headers" :items="coorStore.hteList" table-class-name="customize-table">
+    <div class="px-6">
+      <EasyDataTable
+        border-cell
+        :headers="headers"
+        :items="coorStore.hteList"
+        table-class-name="customize-table"
+      >
         <template #item-moa="item">
-          <div v-if="item.hasMoa === 'true'">
-            <p>MOA Available</p>
+          <div v-if="item.hasMoa">
+            <a class="text-blue-500 underline" :href="item.moaAttachement" target="_blank"
+              >View MOA</a
+            >
           </div>
           <div v-else>
-            <p>MOA not available</p>
+            <button @click="openUpdateModal(item._id, item.name)" class="btn btn-primary">
+              Upload MOA
+            </button>
           </div>
         </template>
         <template #item-operation="item">
           <div class="">
-            <button @click="openRequestModal(item._id, item.name)" class="btn btn-primary">
+            <button
+              @click="openRequestModal(item._id, item.name)"
+              class="btn btn-primary"
+            >
               Create Request
             </button>
           </div>
@@ -48,22 +65,80 @@
             <!-- <div v-if="true" class="flex flex-col gap-3 pt-3"> -->
             <p class="font-medium text-gray-600">Date of Visitation</p>
             <label class="flex items-center gap-2 input input-bordered">
-              <input v-model="requestData.scheduledDate" type="date" :min="today" class="grow"
-                placeholder="Date of Visitation" required />
+              <input
+                v-model="requestData.scheduledDate"
+                type="date"
+                :min="today"
+                class="grow"
+                placeholder="Date of Visitation"
+                required
+              />
             </label>
             <p class="font-medium text-gray-600">Time of Visitation</p>
             <label class="flex items-center justify-between gap-2 input input-bordered">
-              <input min="08:00" max="17:00" class="grow" type="time" v-model="requestData.scheduledtime" required />
+              <input
+                min="08:00"
+                max="17:00"
+                class="grow"
+                type="time"
+                v-model="requestData.scheduledtime"
+                required
+              />
             </label>
             <p class="font-medium text-gray-600">Remarks</p>
-            <textarea v-model="requestData.coorRemarks" placeholder="Optional"
-              class="w-full max-w-xl textarea textarea-bordered textarea-sm"></textarea>
+            <textarea
+              v-model="requestData.coorRemarks"
+              placeholder="Optional"
+              class="w-full max-w-xl textarea textarea-bordered textarea-sm"
+            ></textarea>
 
             <div class="flex flex-col gap-2">
               <button type="submit" class="text-lg btn btn-primary btn-block">
                 Send Request
               </button>
-              <button class="text-lg btn btn-accent btn-outline btn-block" @click="closeRequestModal">
+              <button
+                class="text-lg btn btn-accent btn-outline btn-block"
+                @click="closeRequestModal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </form>
+      </Modal>
+      <Modal :show="isUpdateModalShow" title="Update MOA">
+        <form @submit.prevent="submitUpdatedMOA">
+          <div class="flex flex-col gap-3 pt-3">
+            <header class="">
+              <h2 class="flex items-center text-xl font-bold">
+                MOA
+                <span class="px-3 text-sm text-red-600 font-extralight">(required)</span>
+              </h2>
+            </header>
+            <div class="py-1 mb-3 border">
+              <input
+                placeholder="Supporting documents"
+                type="file"
+                name="files"
+                accept="application/pdf, image/jpeg, image/png"
+                id="supporting_document"
+                ref="fileInput "
+                class="w-full max-w-3xl file-input file-input-bordered"
+                @change="handleFileChange"
+                required
+              />
+              <p v-if="isFileSizeExceed" class="p-1 text-red-800">
+                Files size exceeded. Please upload other documents
+              </p>
+            </div>
+            <div class="flex flex-col gap-2">
+              <button type="submit" class="text-lg btn btn-primary btn-block">
+                Update
+              </button>
+              <button
+                class="text-lg btn btn-accent btn-outline btn-block"
+                @click="isUpdateModalShow = !isUpdateModalShow"
+              >
                 Close
               </button>
             </div>
@@ -81,11 +156,14 @@ import { useAuthStore } from "@/stores/AuthStore";
 const authStore = useAuthStore();
 const coorStore = useCoorStore();
 const isModalShow = ref(false);
-
+const isUpdateModalShow = ref(false);
+const isFileSizeExceed = ref(false);
 const searchField = ref("Set filter");
 const searchValue = ref("");
+const hteId = ref("");
+const fileMoa = ref(null);
 const headers = [
-  { text: "Name", value: "name" },
+  { text: "Name", value: "fullName" },
   { text: "Address", value: "address" },
   { text: "Date Registered", value: "createdAt" },
   { text: "Memorandum of Agreement", value: "moa" },
@@ -115,6 +193,32 @@ const openRequestModal = (hteId, hteName) => {
   requestData.requesteeName = hteName;
 };
 
+const openUpdateModal = (id) => {
+  hteId.value = id;
+  isUpdateModalShow.value = !isUpdateModalShow.value;
+};
+
+const handleFileChange = (event) => {
+  fileMoa.value = event.target.files[0];
+  const file = event.target.files[0];
+  const maxSize = 5000 * 5000;
+  if (file && file.size > maxSize) {
+    return (isFileSizeExceed.value = true);
+  }
+  isFileSizeExceed.value = false;
+};
+
+const submitUpdatedMOA = async () => {
+  const formData = new FormData();
+  formData.append("file", fileMoa.value);
+  try {
+    await coorStore.updateMOAhte(hteId.value, formData);
+    isUpdateModalShow.value = !isUpdateModalShow.value;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const submitRequestHandler = async () => {
   await coorStore.submitVisiRequest(requestData);
 
@@ -137,9 +241,7 @@ onMounted(async () => {
 
 <style scoped>
 .customize-table {
-
   --easy-table-header-font-color: #fff;
   --easy-table-header-background-color: #ae1818;
-
 }
 </style>

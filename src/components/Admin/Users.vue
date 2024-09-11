@@ -3,7 +3,7 @@
     <div class="p-6 text-sm breadcrumbs">
       <ul>
         <li>
-          <router-link :to="{ name: 'admin_dashboard' }">Admin Dashboard</router-link>
+          <router-link :to="{ name: 'admin_dashboard' }">Dashboard</router-link>
         </li>
         <li>
           <router-link :to="{ name: 'manage_users' }">Manage users</router-link>
@@ -206,7 +206,7 @@
           </div>
           <!-- <div v-if="selectedRole === 'HTE'" class="flex flex-col gap-3 pt-3"> -->
           <div v-if="selectedRole === 'HTE'" class="flex gap-3 pt-3">
-            <div class="w-3/6 flex flex-col gap-2">
+            <div class="flex flex-col gap-3 w-full">
               <label class="flex items-center gap-2 input input-bordered">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -245,24 +245,21 @@
                   :type="passwordFieldType"
                 />
               </label>
-              <div class="flex justify-end">
-                <div class="flex flex-row-reverse gap-3">
-                  <button
-                    class="ml-auto text-right btn btn-primary"
-                    @click="handleGeneratePassword"
-                  >
-                    Generate password
-                  </button>
-                  <button
-                    class="ml-auto text-right btn btn-accent btn-outline"
-                    @click="toggleShowPassword"
-                  >
-                    {{ showPassword ? "Hide" : "Show" }}
-                  </button>
-                </div>
+              <div class="flex justify-start gap-3 flex-row-reverse">
+                <button
+                  class="text-right btn btn-primary"
+                  @click="handleGeneratePassword"
+                >
+                  Generate password
+                </button>
+                <button
+                  class="text-right btn btn-accent btn-outline"
+                  @click="toggleShowPassword"
+                >
+                  {{ showPassword ? "Hide" : "Show" }}
+                </button>
               </div>
-            </div>
-            <div class="flex flex-col gap-2 w-3/6">
+
               <label class="flex items-center gap-2 input input-bordered">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -295,6 +292,7 @@
                   placeholder="Contact number"
                 />
               </label>
+
               <label class="flex items-center gap-2 input input-bordered">
                 <input
                   v-model="hte.address"
@@ -303,22 +301,29 @@
                   placeholder="Company Address"
                 />
               </label>
-              <p>Please provide exact map coordinates</p>
+              <p>
+                Please provide exact map coordinates
+                <span class="text-blue-500 underline">
+                  <a href="https://www.google.com/maps" target="_blank"
+                    >open google map</a
+                  ></span
+                >
+              </p>
               <label class="flex items-center gap-2 input input-bordered">
                 <input
                   v-model="hte.mapLocation.lat"
                   type="number"
-                  class="grow"
+                  class="w-full"
                   placeholder="Latitude"
                 />
                 <input
                   v-model="hte.mapLocation.lng"
                   type="number"
-                  class="grow"
+                  class="w-full"
                   placeholder="Longtitude"
                 />
               </label>
-              <label for="" class="font-medium text-center"
+              <!-- <label for="" class="font-medium text-center"
                 >Is Memorandum of Agreement provided?</label
               >
               <div class="justify-center gap-3 pb-4 join">
@@ -340,8 +345,8 @@
                   v-model="hte.hasMoa"
                   @change="onChange"
                 />
-              </div>
-              <div class="flex flex-col gap-2">
+              </div> -->
+              <div class="flex flex-col gap-2 mt-auto">
                 <button @click="handleHteUser" class="text-lg btn btn-primary btn-block">
                   Create User
                 </button>
