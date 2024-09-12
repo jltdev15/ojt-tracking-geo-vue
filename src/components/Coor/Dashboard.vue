@@ -8,7 +8,7 @@
         <header class="py-3">
           <h1 class="text-xl font-semibold text-gray-400 uppercase">Internships</h1>
         </header>
-        <div class="grid gap-7 sm:grid-cols-2 lg:grid-cols-5">
+        <div class="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
           <div class="p-5 bg-gray-500 rounded shadow-sm">
             <router-link
               v-if="coorStore.getNumberOfInterns !== 0"
@@ -166,6 +166,38 @@
                   {{ coorStore.getNumberOfInternsDeployed }}
                 </div>
                 <div class="text-gray-400">Deployed</div>
+              </div>
+            </div>
+          </div>
+          <div class="p-5 bg-white rounded shadow-sm">
+            <div class="flex items-center space-x-4 space-y-2">
+              <div>
+                <div
+                  class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-50 text-cyan-400"
+                >
+                  <svg
+                    height="32px"
+                    id="Layer_1"
+                    style="enable-background: new 0 0 50 50"
+                    version="1.1"
+                    viewBox="0 0 50 50"
+                    xml:space="preserve"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                  >
+                    <g id="Layer_1_1_">
+                      <path
+                        d="M11,49h4h8h4h8h4h8h2v-2h-2V1h-8v46h-4V11h-8v36h-4V21h-8v26h-4V31H3v16H1v2h2H11z M41,3h4v44h-4V3z M29,13h4v34h-4V13z    M17,23h4v24h-4V23z M5,33h4v14H5V33z"
+                      />
+                    </g>
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <div class="text-2xl font-bold text-gray-900">
+                  {{ coorStore.getNumberOfStudentEvaluated }}
+                </div>
+                <div class="text-gray-400">Evaluated</div>
               </div>
             </div>
           </div>
@@ -327,6 +359,7 @@ onMounted(async () => {
   await coorStore.fetchHTELists();
   await adminUserStore.fetchInterns();
   await coorStore.fetchRequestVisitation();
+  await coorStore.getInternEvaluation();
   await adminUserStore.fetchAnnouncement();
   // await authStore.checkAuth();
   // await adminUserStore.fetchUsers();

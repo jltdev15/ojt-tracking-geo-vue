@@ -19,6 +19,7 @@ export const useAdminUserStore = defineStore("user", () => {
   const vacancyList = ref([]);
   const coorRequestList = ref([]);
   const requestListBy = ref("");
+  const evaluationResults = ref('')
 
 
   const userRoleList = reactive({
@@ -469,6 +470,15 @@ export const useAdminUserStore = defineStore("user", () => {
       console.log(err);
     }
   };
+  const getEvaluationItemResults = async (internId) => {
+    try {
+      const response = await apiClient.get(`/hte/view/evaluation/${internId}`);
+      console.log(response);
+      evaluationResults.value = await response.data.content;
+    }catch(err) {
+      console.log(err)
+    }
+  }
   // Computed
   const getNumberOfVacancy = computed(() => {
     return vacancyList.value.length;
@@ -589,6 +599,8 @@ export const useAdminUserStore = defineStore("user", () => {
     coorRequestList,
     requestListBy,
     getNumberOfVacancy,
-    updateAnnouncement
+    updateAnnouncement,
+    evaluationResults,
+    getEvaluationItemResults
   };
 });

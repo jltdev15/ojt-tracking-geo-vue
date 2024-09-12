@@ -61,8 +61,9 @@ export const useInternStore = defineStore("intern", () => {
   const fetchApplicationList = async () => {
     try {
       const response = await apiClient.get(`/intern/applications`);
+      console.log(response);
       applicationLists.value = await response.data.content;
-      console.log(response.data.content);
+      
     } catch (err) {
       console.log(err);
     }
@@ -222,12 +223,12 @@ export const useInternStore = defineStore("intern", () => {
   const getNumberOfApplication = computed(() => {
     return applicationLists.value.length;
   });
-  const getNumberOfNotification = computed(() => {
-    const numberOfNotif = applicationLists.value.filter(
-      (item) => item.isUpdated === true
-    );
-    return numberOfNotif.length;
-  });
+  // const getNumberOfNotification = computed(() => {
+  //   const numberOfNotif = applicationLists.value.filter(
+  //     (item) => item.isUpdated === true
+  //   );
+  //   return numberOfNotif.length;
+  // });
 
   const getNumberOfPendingApplication = computed(() => {
     return applicationLists.value.filter((item) => item.status === "Pending")
@@ -254,7 +255,7 @@ export const useInternStore = defineStore("intern", () => {
     applicationLists,
     fetchApplicationList,
     getNumberOfApplication,
-    getNumberOfNotification,
+    // getNumberOfNotification,
     handleAcceptOffer,
     fetchRequiredHours,
     requiredHours,

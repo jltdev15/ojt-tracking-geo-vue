@@ -35,6 +35,9 @@
       </p>
     </template>
     <template #item-operation="item">
+      <div v-if="item.status === 'Accepted'" class="flex gap-3">
+        <p class="bg-gray-500 rounded p-2 text-gray-50">No action needed</p>
+      </div>
       <!-- <div v-if="item.status === 'Pending'" class="flex gap-3">
         <router-link :to="{ name: 'ApplicationUpdate', params: { id: item.applicationId } }"
           class=" btn btn-accent btn-outline">Update

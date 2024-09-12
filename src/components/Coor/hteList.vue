@@ -25,8 +25,6 @@
       <select class="w-48 select select-bordered" v-model.trim="searchField">
         <option selected disabled value="Set filter">Set filter</option>
         <option value="fullName">HTE Name</option>
-        <option value="Intern">Intern Name</option>
-        <option value="Department">Department</option>
       </select>
     </div>
     <div class="px-6">

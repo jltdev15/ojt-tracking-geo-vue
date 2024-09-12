@@ -8,7 +8,7 @@
         <header class="py-3">
           <h1 class="text-xl font-semibold text-gray-400 uppercase">Listing</h1>
         </header>
-        <div class="grid justify-end gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        <div class="grid justify-end gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <div class="self-end p-5 bg-white rounded shadow-sm">
             <router-link
               v-if="hteStore.getNumberOfListing != 0"
@@ -38,7 +38,7 @@
         <header class="py-3">
           <h1 class="text-xl font-semibold text-gray-400 uppercase">Interns</h1>
         </header>
-        <div class="grid justify-end gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        <div class="grid justify-end gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <div
             :class="{
               'bg-white text-gray-900': hteStore.getNumberOfPendingInterns === 0,
@@ -89,7 +89,7 @@
           >
             <div class="flex items-center space-x-4 space-y-2">
               <router-link
-                v-if="hteStore.getNumberOfAcceptedInterns != 0"
+                v-if="hteStore.getNumberOfAcceptedInterns !== 0"
                 :to="{ name: 'AcceptedList' }"
               >
                 <div class="text-2xl font-bold">

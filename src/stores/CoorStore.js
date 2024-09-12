@@ -7,6 +7,7 @@ export const useCoorStore = defineStore("coor", () => {
   const requestList = ref([]);
   const requiredHours = ref("");
   const messageInfo = ref("");
+  const internEvaluationList = ref([])
 
   const fetchInternLists = async () => {
     try {
@@ -109,8 +110,22 @@ export const useCoorStore = defineStore("coor", () => {
       console.log(err);
     }
   };
+  const getInternEvaluation = async () => {
+
+    try {
+      const response = await apiClient.get(`/coor/evaluation`);
+      console.log(response);
+      internEvaluationList.value = response.data.content
+      return response;
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   // Computed
+  const getNumberOfStudentEvaluated = computed(() => {
+    return internEvaluationList.value.length;
+  })
   const getNumberOfInterns = computed(() => {
     return internList.value.length;
   });
@@ -156,6 +171,9 @@ export const useCoorStore = defineStore("coor", () => {
     getNumberOfRequestAccepted,
     getNumberOfRequestRejected,
     getNumberOfRequestPending,
-    updateMOAhte
+    updateMOAhte,
+    internEvaluationList,
+    getInternEvaluation,
+    getNumberOfStudentEvaluated
   };
 });

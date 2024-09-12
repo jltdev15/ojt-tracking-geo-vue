@@ -74,6 +74,9 @@
           <p>{{ item.workedHours }}</p>
         </template>
         <template #item-evaluation="item">
+          <div v-if="item.evaluationStatus === 'Not Ready'">
+            <p>{{item.evaluationStatus}}</p>
+          </div>
           <div v-if="item.evaluationStatus === 'Ready'">
             <router-link
               class="btn btn-primary"
@@ -82,9 +85,12 @@
               <p>Ready for evaluation</p>
             </router-link>
           </div>
-          <div v-else>
-            <p>Not ready</p>
+          <div v-if="item.evaluationStatus === 'Finished'">
+            <router-link :to="{ name: 'EvaluationView', params: { id: item.internId } }"
+            >View Results</router-link
+          >
           </div>
+
         </template>
       </EasyDataTable>
     </section>

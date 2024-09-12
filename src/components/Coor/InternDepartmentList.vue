@@ -14,7 +14,12 @@
       <h1 class="text-3xl font-bold">Interns List</h1>
     </header>
     <div class="flex justify-end gap-3 p-6">
-      <input type="text" placeholder="Search here" class="w-full input input-bordered" v-model="searchValue" />
+      <input
+        type="text"
+        placeholder="Search here"
+        class="w-full input input-bordered"
+        v-model="searchValue"
+      />
       <select class="w-48 select select-bordered" v-model.trim="searchField">
         <option selected disabled value="Set filter">Set filter</option>
         <option value="fullName">Intern Name</option>
@@ -22,20 +27,41 @@
       </select>
     </div>
     <div class="px-6 py-1">
-      <EasyDataTable :headers="headers" :search-field="searchField" :search-value="searchValue"
-        :items="coorStore.internList" border-cell table-class-name="customize-table">
+      <EasyDataTable
+        :headers="headers"
+        :search-field="searchField"
+        :search-value="searchValue"
+        :items="coorStore.internList"
+        border-cell
+        table-class-name="customize-table"
+      >
+        <template #item-dtr="item">
+          <div v-if="item.dailyTimeRecords.length === 0" class="flex gap-3">
+            <p>Not available</p>
+          </div>
+          <div v-if="item.dailyTimeRecords.length > 0">
+            <router-link :to="{ name: 'CoorDailyTimeRecord', params: { id: item._id } }"
+              >View DTR</router-link
+            >
+          </div>
+        </template>
         <template #item-operation="item">
           <div v-if="item.requiredHours === 0" class="flex gap-3">
-            <button @click="toggleRequiredHoursModal(item._id)" class="btn btn-block btn-primary">
+            <button
+              @click="toggleRequiredHoursModal(item._id)"
+              class="btn btn-block btn-primary"
+            >
               Set required hours
             </button>
           </div>
           <div v-if="item.requiredHours != 0" class="">
-            <button @click="toggleRequiredHoursModal(item._id)" class="btn btn-block btn-primary">
+            <button
+              @click="toggleRequiredHoursModal(item._id)"
+              class="btn btn-block btn-primary"
+            >
               Update Required Hours
             </button>
           </div>
-
         </template>
         <template #item-evaluation="item">
           <div v-if="item.evaluationResults" class="flex gap-3">
@@ -52,8 +78,12 @@
       <Modal :show="setRequiredHours" title="Set Required Hours">
         <template #default>
           <section class="">
-            <input v-model="coorStore.requiredHours" type="number" placeholder="Type here"
-              class="w-full input input-bordered" />
+            <input
+              v-model="coorStore.requiredHours"
+              type="number"
+              placeholder="Type here"
+              class="w-full input input-bordered"
+            />
             <div class="flex items-center justify-end gap-3">
               <button @click="toggleRequiredHoursModal" class="btn btn-secondary">
                 Close
@@ -97,8 +127,8 @@ const headers = [
   { text: "Department", value: "department" },
   { text: "Hours Required", value: "requiredHours" },
   { text: "Hours Rendered", value: "rendered" },
-  { text: "Evaluation", value: "evaluation" },
-  { text: "Action", value: "operation", width: '250' },
+  { text: "Daily Time Record", value: "dtr" },
+  { text: "Action", value: "operation", width: "250" },
 ];
 
 onMounted(async () => {
@@ -110,6 +140,5 @@ onMounted(async () => {
 .customize-table {
   --easy-table-header-font-color: #fff;
   --easy-table-header-background-color: #ae1818;
-
 }
 </style>

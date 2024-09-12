@@ -166,14 +166,14 @@
 <script setup>
 import { useRoute } from "vue-router";
 import { onMounted } from "vue";
-import { useHteStore } from "@/stores/HteStore";
+import { useAdminUserStore } from "@/stores/AdminUserStore";
 import { storeToRefs } from "pinia";
 const route = useRoute();
-const hteStore = useHteStore();
-const { evaluationResults } = storeToRefs(hteStore);
+const useAdminStore = useAdminUserStore();
+const { evaluationResults } = storeToRefs(useAdminStore);
 
 onMounted(async () => {
-  await hteStore.getEvaluationItemResults(route.params.id);
+  await useAdminStore.getEvaluationItemResults(route.params.id);
 });
 </script>
 

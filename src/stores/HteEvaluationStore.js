@@ -21,7 +21,6 @@ export function useForm() {
         }
 
     }
-
     const backForm = async () => {
         if (formStore.IsFormShow > 1) {
             formStore.IsFormShow--
@@ -66,22 +65,10 @@ export function useForm() {
 
     }
 
-    const submitForm = async () => {
-        try {
-            alert(evaluationData.score)
-
-        }
-        catch {
-
-        }
-    }
-
-
     return {
         ...toRefs(formStore),
         nextForm,
         backForm,
         resultForm,
-        submitForm,
     }
 }

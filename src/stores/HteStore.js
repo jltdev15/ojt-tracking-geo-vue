@@ -24,6 +24,8 @@ export const useHteStore = defineStore("hte", () => {
     lng: "",
   });
 
+  const evaluationResults = ref({})
+
   const internsData = ref('')
   const internshipData = reactive({
     id: "",
@@ -249,6 +251,8 @@ export const useHteStore = defineStore("hte", () => {
       console.log(response);
       internsData.value = response.data
       dateArr = response.data.dailyTimeRecords;
+      console.log(dateArr);
+      
       startDate.value = dateArr[0].date
       endDate.value = dateArr[dateArr.length - 1].date
       hoursRendered.value = response.data.workedHours;
@@ -270,6 +274,15 @@ export const useHteStore = defineStore("hte", () => {
     } catch (err) {
       console.log(err);
       return err;
+    }
+  }
+  const getEvaluationItemResults = async (internId) => {
+    try {
+      const response = await apiClient.get(`/admin/evaluation/${internId}`);
+      console.log(response);
+      evaluationResults.value = await response.data.content;
+    }catch(err) {
+      console.log(err)
     }
   }
   // Computed
@@ -296,7 +309,10 @@ export const useHteStore = defineStore("hte", () => {
     );
   });
   const getListOfAcceptedInterns = computed(() => {
-    return acceptedApplicantsList.value.filter((item) => item.evaluationStatus != 'Finished')
+    return acceptedApplicantsList.value;
+  });
+  const getListOfFinishedInterns = computed(() => {
+    return acceptedApplicantsList.value.filter((item) => item.evaluationStatus == 'Finished')
   });
   const getListOfAcceptedInternsSession = computed(() => {
     return acceptedApplicantsList.value.filter(
@@ -315,8 +331,7 @@ export const useHteStore = defineStore("hte", () => {
       .length;
   });
   const getNumberOfAcceptedInterns = computed(() => {
-    return applicantList.value.filter((item) => item.status === "Accepted")
-      .length;
+    return acceptedApplicantsList.value.length;
   });
   const getNumberOfInternForEvaluation = computed(() => {
     return acceptedApplicantsList.value.filter((item) => item.evaluationStatus === 'Ready')
@@ -379,6 +394,9 @@ export const useHteStore = defineStore("hte", () => {
     startDate,
     endDate,
     hoursRendered,
-    submitEvaluationResults
+    submitEvaluationResults,
+    getListOfFinishedInterns,
+    getEvaluationItemResults,
+    evaluationResults
   };
 });

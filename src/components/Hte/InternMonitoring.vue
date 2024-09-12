@@ -4,20 +4,29 @@
       <h1 class="text-3xl font-bold">Intern Monitoring</h1>
     </header>
     <div class="grid w-full grid-cols-2 gap-6">
-      <EasyDataTable :headers="headers" :items="hteStore.onlineInternList" border-cell
-        table-class-name="customize-table">
+      <EasyDataTable
+        :headers="headers"
+        :items="hteStore.onlineInternList"
+        border-cell
+        :rows-per-page="10"
+        table-class-name="customize-table"
+      >
         <template #item-status="item">
-          <div v-if="
-            item.currentLocation.lat === hteStore.hteLocationDefault.lat &&
-            item.currentLocation.lng === hteStore.hteLocationDefault.lng
-          ">
+          <div
+            v-if="
+              item.currentLocation.lat === hteStore.hteLocationDefault.lat &&
+              item.currentLocation.lng === hteStore.hteLocationDefault.lng
+            "
+          >
             <p class="inline-block p-3 font-bold bg-green-600 rounded-md text-gray-50">
               Inside
             </p>
           </div>
-          <div v-else-if="
-            item.currentLocation.lat === null && item.currentLocation.lng === null
-          ">
+          <div
+            v-else-if="
+              item.currentLocation.lat === null && item.currentLocation.lng === null
+            "
+          >
             <p class="inline-block p-3 font-bold bg-red-600 rounded-md text-gray-50">
               Connection lost
             </p>
@@ -29,7 +38,11 @@
           </div>
         </template>
       </EasyDataTable>
-      <div v-if="hteStore.onlineLocationList.length > 0" id="map" style="height: 300px; width: 100%"></div>
+      <div
+        v-if="hteStore.onlineLocationList.length > 0"
+        id="map"
+        style="height: 300px; width: 100%"
+      ></div>
       <div v-else>
         <p>No currently online</p>
       </div>
@@ -64,9 +77,9 @@ async function initMap() {
   const mapCenter =
     hteStore.onlineLocationList.length > 0
       ? {
-        lat: hteStore.onlineLocationList[0].lat,
-        lng: hteStore.onlineLocationList[0].lng,
-      }
+          lat: hteStore.onlineLocationList[0].lat,
+          lng: hteStore.onlineLocationList[0].lng,
+        }
       : { lat: 0, lng: 0 };
 
   map = new google.maps.Map(document.getElementById("map"), {
@@ -131,8 +144,9 @@ onMounted(async () => {
   locationList.value = hteStore.onlineInternList;
   // Dynamically load the Google Maps script
   const script = document.createElement("script");
-  script.src = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_API_GOOGLE_KEY
-    }&callback=initMap`;
+  script.src = `https://maps.googleapis.com/maps/api/js?key=${
+    import.meta.env.VITE_API_GOOGLE_KEY
+  }&callback=initMap`;
   script.async = true;
   script.defer = true;
   window.initMap = initMap; // Assign initMap to the global window object
@@ -145,9 +159,7 @@ onUnmounted(async () => {
 
 <style scoped>
 .customize-table {
-
   --easy-table-header-font-color: #fff;
   --easy-table-header-background-color: #ae1818;
-
 }
 </style>

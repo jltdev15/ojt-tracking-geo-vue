@@ -14,16 +14,30 @@
       <header class="flex items-center justify-between">
         <h1 class="text-3xl font-bold">List of Interns Evaluated</h1>
       </header>
+      <div class="flex justify-end gap-3 py-3">
+        <input
+          type="text"
+          placeholder="Search here"
+          class="w-full input input-bordered"
+          v-model="searchValue"
+        />
+        <select class="w-48 select select-bordered" v-model.trim="searchField">
+          <option selected disabled value="Set filter">Set filter</option>
+          <option value="fullName">HTE Name</option>
+          <option value="Intern">Intern Name</option>
+          <option value="Department">Department</option>
+        </select>
+      </div>
       <EasyDataTable
         :headers="headers"
-        :items="hteStore.getListOfFinishedInterns"
+        :items="coorStore.internEvaluationList"
         :search-field="searchField"
         :search-value="searchValue"
         table-class-name="customize-table"
         show-index
       >
         <template #item-results="item">
-          <router-link :to="{ name: 'EvaluationView', params: { id: item.internId } }"
+          <router-link :to="{ name: 'CoorEvaluationView', params: { id: item.internId } }"
             >View Results</router-link
           >
         </template>
@@ -34,20 +48,19 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import { useHteStore } from "@/stores/HteStore";
+import { useCoorStore } from "@/stores/CoorStore";
 const searchField = ref("Set filter");
 const searchValue = ref("");
-const hteStore = useHteStore();
+const coorStore = useCoorStore();
 
 const headers = [
-  { text: "INTERNSHIP POSITION", value: "jobTitle" },
-  { text: "INTERN", value: "name" },
-  { text: "DEPARTMENT", value: "department" },
-  { text: "REMARKS", value: "evaluationStatus" },
+  { text: "INTERN", value: "internName" },
+  { text: "HTE NAME", value: "hteName" },
+  { text: "REMARKS", value: "comment" },
   { text: "EVALUATION", value: "results" },
 ];
 
 onMounted(async () => {
-  await hteStore.fetchApplicantAccepted();
+  await coorStore.getInternEvaluation();
 });
 </script>

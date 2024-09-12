@@ -66,6 +66,12 @@ const router = createRouter({
           meta: { requiresAuth: true, roles: ["Admin"] },
         },
         {
+          path: "interns/:id",
+          name: "AdminEvaluation",
+          component: () => import("../components/Admin/AdminEvaluation.vue"),
+          meta: { requiresAuth: true, roles: ["Admin"] },
+        },
+        {
           path: "htelisting",
           name: "Hte_Listing",
           component: () => import("../components/Admin/HteListing.vue"),
@@ -173,6 +179,20 @@ const router = createRouter({
           meta: { requiresAuth: true, roles: ["Coordinator"] },
         },
         {
+          path: "list/:id",
+          name: "CoorDailyTimeRecord",
+          component: () =>
+            import("../components/Coor/CoorDTR.vue"),
+          meta: { requiresAuth: true, roles: ["Coordinator"] },
+        },
+        {
+          path: "evaluated",
+          name: "EvaluatedList",
+          component: () =>
+            import("../components/Coor/InternEvaluatedList.vue"),
+          meta: { requiresAuth: true, roles: ["Coordinator"] },
+        },
+        {
           path: "hte",
           name: "HteList",
           component: () => import("../components/Coor/hteList.vue"),
@@ -195,6 +215,12 @@ const router = createRouter({
           path: "messenger",
           name: "coor_messenger",
           component: () => import("../components/Coor/Messenger.vue"),
+          meta: { requiresAuth: true, roles: ["Coordinator"] },
+        },
+        {
+          path: "evaluation/:id",
+          name: "CoorEvaluationView",
+          component: () => import("../components/Coor/CoorEvaluationView.vue"),
           meta: { requiresAuth: true, roles: ["Coordinator"] },
         },
       ],

@@ -6,7 +6,7 @@
           <router-link :to="{ name: 'hte_dashboard' }">Dashboard</router-link>
         </li>
         <li>
-          <router-link :to="{ name: 'DailyTimeRecord' }">Logs</router-link>
+          <router-link :to="{ name: 'CoorDailyTimeRecord' }">Logs</router-link>
         </li>
       </ul>
     </div>
@@ -49,7 +49,7 @@ const route = useRoute();
 const searchField = ref("Set filter");
 const searchValue = ref("");
 onMounted(async () => {
-  await userStore.fetchInternDailyLogs(route.params.internId);
+  await userStore.fetchInternDailyLogs(route.params.id);
 });
 
 const headers = [

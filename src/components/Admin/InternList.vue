@@ -57,7 +57,9 @@
         </template>
         <template #item-evaluation="item">
           <div v-if="item.isEvaluationReady">
-            <router-link>View evaluation</router-link>
+            <router-link :to="{ name: 'AdminEvaluation', params: { id: item._id } }"
+              >View evaluation</router-link
+            >
           </div>
           <div v-else>
             <p>No evaluation found</p>
