@@ -10,7 +10,9 @@
         </li>
       </ul>
     </div>
-    <header class="flex items-center justify-between px-6 bg-gray-200">
+    <header
+      class="flex flex-col gap-3 md:flex-row items-center justify-between px-6 bg-gray-200"
+    >
       <div>
         <h1 class="text-3xl font-bold">Internships Listing</h1>
         <p>No. of listing {{ hteStore.getNumberOfListing }}</p>
@@ -23,7 +25,7 @@
       </div>
     </header>
     <div class="divider"></div>
-    <div class="flex justify-end gap-3 px-6 pb-3">
+    <div class="flex justify-end gap-3 px-1 md:px-6 pb-3">
       <input
         type="text"
         placeholder="Search here"
@@ -36,7 +38,7 @@
         <option value="title">Title</option>
       </select>
     </div>
-    <section class="px-6">
+    <section class="px-1 md:px-6">
       <EasyDataTable
         :headers="headers"
         :items="hteStore.internshipList"

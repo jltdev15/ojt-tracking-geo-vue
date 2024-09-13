@@ -17,7 +17,9 @@
       <h1 class="py-6 text-3xl font-bold text-center md:py-8 md:text-left md:text-7xl">
         Internship simplified
       </h1>
-      <p class="container mb-8 text-base text-left text-gray-300 md:text-lg">
+      <p
+        class="container mb-8 text-base md:text-left text-gray-300 md:text-lg px-3 text-justify"
+      >
         Effortlessly track OJT progress with real-time geolocation and seamless
         communication. Our system ensures you're always in the loop with precise tracking
         and instant messaging. Empower your OJT management with efficiency and clarity

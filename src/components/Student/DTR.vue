@@ -54,7 +54,14 @@
       </div>
     </section>
     <section v-else>
-      <p>Please apply internship</p>
+      <p class="text-center p-6 bg-red-600 font-bold text-gray-50">
+        Please apply internship
+      </p>
+      <router-link
+        to="/student/dashboard/internships"
+        class="flex items-center mt-3 font-medium text-center cursor-pointer btn-outline btn-accent btn hover:text-blue-600"
+        >Browse Interships</router-link
+      >
     </section>
   </div>
 </template>

@@ -1,7 +1,9 @@
 <template>
   <div>
     <header class="">
-      <h1 class="p-6 text-3xl font-bold">Internship Application Form</h1>
+      <h1 class="md:p-6 px-6 pt-6 text-xl md:text-3xl font-bold">
+        Internship Application Form
+      </h1>
       <p class="px-6 text-sm text-gray-500 font-extralight">
         Accepts only JPEG or PDF format(5MB Max size)
       </p>
@@ -162,7 +164,9 @@
           </div>
         </div>
       </div>
-      <div class="max-w-5xl p-6 gap-3 justify-end flex items-center">
+      <div
+        class="md:max-w-5xl p-6 gap-3 justify-between md:justify-end flex items-center"
+      >
         <router-link
           to="/student/dashboard/internships"
           class="flex items-center font-medium text-center cursor-pointer btn-outline btn hover:text-blue-600"

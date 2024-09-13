@@ -10,7 +10,9 @@
         </li>
       </ul>
     </div>
-    <header class="flex flex-col md:flex-row items-center justify-between md:px-6 pb-6">
+    <header
+      class="flex flex-col md:flex-row md:items-center md:justify-between md:px-6 pb-6"
+    >
       <h1 class="text-xl md:text-3xl font-bold">Application Status</h1>
       <div>
         <p class="text-sm font-medium">Number of Applications</p>

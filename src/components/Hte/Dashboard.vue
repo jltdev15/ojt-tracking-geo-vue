@@ -3,12 +3,12 @@
     <header class="flex items-center justify-between p-3 bg-gray-50">
       <h1 class="text-3xl font-bold">Dashboard</h1>
     </header>
-    <div class="flex min-h-screen bg-gray-100">
+    <div class="flex md:flex-row flex-col min-h-screen bg-gray-100">
       <div class="container max-w-6xl p-5">
         <header class="py-3">
           <h1 class="text-xl font-semibold text-gray-400 uppercase">Listing</h1>
         </header>
-        <div class="grid justify-end gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="grid md:justify-end gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <div class="self-end p-5 bg-white rounded shadow-sm">
             <router-link
               v-if="hteStore.getNumberOfListing != 0"
@@ -38,7 +38,7 @@
         <header class="py-3">
           <h1 class="text-xl font-semibold text-gray-400 uppercase">Interns</h1>
         </header>
-        <div class="grid justify-end gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="grid grid-cols-2 md:justify-end gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <div
             :class="{
               'bg-white text-gray-900': hteStore.getNumberOfPendingInterns === 0,
@@ -147,7 +147,7 @@
             Coordinator Request Visitation
           </h1>
         </header>
-        <div class="grid justify-end gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        <div class="grid grid-cols-2 md:justify-end gap-3 sm:grid-cols-2 lg:grid-cols-5">
           <!-- Pending -->
           <router-link
             v-if="hteStore.getNumberOfVisitPendingRequest"
@@ -258,7 +258,7 @@
           </div>
         </div>
       </div>
-      <div class="w-3/6 p-5">
+      <div class="md:w-3/6 p-5">
         <header class="py-3">
           <h1 class="text-xl font-semibold text-gray-400 capitalize">Announcements</h1>
         </header>
