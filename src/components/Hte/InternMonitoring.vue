@@ -15,7 +15,7 @@
           <div
             v-if="
               item.currentLocation.lat === authStore.hteLocationDefault.lat &&
-              item.currentLocation.lng === hteStore.hteLocationDefault.lng
+              item.currentLocation.lng === authStore.hteLocationDefault.lng
             "
           >
             <p class="inline-block p-3 font-bold bg-green-600 rounded-md text-gray-50">
@@ -57,7 +57,6 @@ import { useHteStore } from "@/stores/HteStore";
 import { useAuthStore } from "@/stores/AuthStore";
 const authStore = useAuthStore();
 const hteStore = useHteStore();
-const locationList = ref([]);
 const isMapShow = ref(false);
 const headers = [
   { text: "INTERN", value: "name" },
@@ -108,7 +107,7 @@ function addMarkers() {
 }
 
 // Watch the internLocations array for changes and refresh the map
-watch(locationList, async (newLocations, oldLocations) => {
+watch(hteStore.onlineInternList, async (newLocations, oldLocations) => {
   console.log(newLocations);
 
   if (JSON.stringify(newLocations) !== JSON.stringify(oldLocations)) {
@@ -138,7 +137,7 @@ onMounted(async () => {
   } else {
     clearInterval(intervalid);
   }
-  locationList.value = hteStore.onlineInternList;
+  // locationList.value = hteStore.onlineInternList;
   // Dynamically load the Google Maps script
   const script = document.createElement("script");
   script.src = `https://maps.googleapis.com/maps/api/js?key=${

@@ -1,6 +1,6 @@
 <template>
-  <div class="flex h-[100dvh] max-sm:flex-col max-sm:h-auto max-sm:relative">
-    <div class="w-full h-[100dvh] pt-3 max-sm:w-full max-sm:p-0 max-sm:order-3">
+  <div class="flex md:h-[100dvh] max-sm:flex-col max-sm:h-auto max-sm:relative">
+    <div class="w-full md:h-[100dvh] pt-3 max-sm:w-full max-sm:p-0 max-sm:order-3">
       <conversation
         v-for="item in messengerStore.userStore.allUser"
         :name="item.username"
@@ -45,7 +45,7 @@
       </div>
     </div>
     <div
-      class="w-1/4 pt-3 p-6 max-sm:flex max-sm:w-full max-sm:overflow-y-auto max-sm:pt-0 max-sm:bg-gray-200 bg-white max-sm:order-1"
+      class="w-1/4 md:pt-3 md:p-6 max-sm:flex max-sm:w-full max-sm:overflow-y-auto max-sm:pt-0 max-sm:bg-gray-200 bg-white max-sm:order-1"
     >
       <h2 class="font-bold text-center text-3xl p-2 hidden md:block text-gray-800">
         Contacts

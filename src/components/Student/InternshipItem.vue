@@ -2,12 +2,12 @@
   <div
     v-for="(item, index) in internStore.internshipLists"
     :key="index"
-    class="shadow-xl card card-compact bg-base-100 w-96"
+    class="shadow-xl card card-compact bg-base-100 w-full md:w-96"
   >
     <div class="flex items-center justify-between p-2 text-xs text-right">
       <p class="px-3 text-base bg-gray-400 rounded text-gray-50">Internship</p>
       <p
-        v-if="!item.hte.moaAttachement && item.hte.hasMoa === 'true'"
+        v-if="item.hte.moaAttachement"
         class="inline-block px-6 py-3 bg-green-600 text-gray-50"
       >
         has Moa
@@ -16,7 +16,7 @@
     </div>
     <div class="flex justify-between px-6 pt-6 text-xs font-bold">
       <router-link :to="{ name: 'HteInformation', params: { id: item.hte._id } }">{{
-        item.hte.name
+        item.hte.fullName
       }}</router-link>
       <!-- <router-link>{{ item.hte.name }}</router-link> -->
     </div>
