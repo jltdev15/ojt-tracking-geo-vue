@@ -17,6 +17,7 @@ export const useInternStore = defineStore("intern", () => {
   });
   const hteInformation = ref({});
   const attendanceArr = ref([]);
+  const evaluationResults = ref('')
   const applicationInfo = reactive({
     resume: "",
     resumePath: "",
@@ -219,6 +220,17 @@ export const useInternStore = defineStore("intern", () => {
       return err;
     }
   };
+
+  const fetchEvaluationResults = async () => {
+    try {
+      const response = await apiClient.get(`/intern/results/evaluation`);
+      evaluationResults.value = await response.data;
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  }
   // Computed Properties
   const getNumberOfApplication = computed(() => {
     return applicationLists.value.length;
@@ -281,5 +293,7 @@ export const useInternStore = defineStore("intern", () => {
     hteInformation,
     getHteInformation,
     isEvalReady,
+    evaluationResults,
+    fetchEvaluationResults
   };
 });

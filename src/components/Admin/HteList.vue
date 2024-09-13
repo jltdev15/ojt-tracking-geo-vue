@@ -37,7 +37,7 @@
         table-class-name="customize-table"
       >
         <template #item-moa="item">
-          <div v-if="item.hasMoa">
+          <div v-if="item.moaAttachement">
             <a class="text-blue-500 underline" :href="item.moaAttachement" target="_blank"
               >View MOA</a
             >
@@ -133,6 +133,7 @@ const submitUpdatedMOA = async () => {
   try {
     await coorStore.updateMOAhte(hteId.value, formData);
     isUpdateModalShow.value = !isUpdateModalShow.value;
+    await useUserStore.fetchHTEList();
   } catch (err) {
     console.log(err);
   }

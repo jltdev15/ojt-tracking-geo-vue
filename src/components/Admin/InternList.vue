@@ -48,16 +48,23 @@
           </div>
         </template>
         <template #item-status="item">
-          <div v-if="item.isInternshipReady">
+          <div v-if="item.isInternshipReady && item.isEvaluationReady === 'Not Ready'">
             <p>Ongoing Internship</p>
           </div>
-          <div v-else>
-            <p>On going application</p>
+          <div v-if="item.isInternshipReady && item.isEvaluationReady === 'Ready'">
+            <p>Waiting for evaluation</p>
+          </div>
+          <div v-if="item.isInternshipReady && item.isEvaluationReady === 'Finished'">
+            <p class="inline-block rounded p-3 text-gray-50 bg-green-600">
+              Done Internship
+            </p>
           </div>
         </template>
         <template #item-evaluation="item">
-          <div v-if="item.isEvaluationReady">
-            <router-link :to="{ name: 'AdminEvaluation', params: { id: item._id } }"
+          <div v-if="item.isEvaluationReady === 'Finished'">
+            <router-link
+              class="bg-blue-500 text-gray-50 btn"
+              :to="{ name: 'AdminEvaluation', params: { id: item._id } }"
               >View evaluation</router-link
             >
           </div>

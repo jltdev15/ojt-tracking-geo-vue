@@ -378,6 +378,13 @@ const router = createRouter({
           meta: { requiresAuth: true, roles: ["Intern"] },
         },
         {
+          path: "evaluation",
+          name: "EvaluationResults",
+          component: () =>
+            import("../components/Student/InternEvaluation.vue"),
+          meta: { requiresAuth: true, roles: ["Intern"] },
+        },
+        {
           path: "status/:id",
           name: "ApplicationUpdate",
           component: () =>

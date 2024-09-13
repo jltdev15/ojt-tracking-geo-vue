@@ -13,6 +13,13 @@
         {{ item.status }}
       </p>
       <p
+        v-if="item.status === 'Finished'"
+        class="inline-block w-full p-2 font-medium text-center text-gray-50"
+        :class="{ 'bg-green-800': item.status === 'Finished' }"
+      >
+        {{ item.status }}
+      </p>
+      <p
         v-if="item.status === 'Pending'"
         class="inline-block w-full p-2 font-medium text-center text-gray-50"
         :class="{ 'bg-red-700': item.status === 'Pending' }"
@@ -37,6 +44,11 @@
     <template #item-operation="item">
       <div v-if="item.status === 'Accepted'" class="flex gap-3">
         <p class="bg-gray-500 rounded p-2 text-gray-50">No action needed</p>
+      </div>
+      <div v-if="item.status === 'Finished'" class="flex gap-3">
+        <p class="bg-blue-500 rounded p-2 text-gray-50">
+          <router-link :to="{ name: 'EvaluationResults' }">View evaluation</router-link>
+        </p>
       </div>
       <!-- <div v-if="item.status === 'Pending'" class="flex gap-3">
         <router-link :to="{ name: 'ApplicationUpdate', params: { id: item.applicationId } }"

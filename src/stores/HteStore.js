@@ -19,13 +19,7 @@ export const useHteStore = defineStore("hte", () => {
   const startDate = ref('')
   const endDate = ref('')
   const hoursRendered = ref(null)
-  const hteLocationDefault = reactive({
-    lat: "",
-    lng: "",
-  });
-
   const evaluationResults = ref({})
-
   const internsData = ref('')
   const internshipData = reactive({
     id: "",
@@ -43,8 +37,7 @@ export const useHteStore = defineStore("hte", () => {
       const response = await apiClient.get(`/hte/list`);
       console.log(response);
       internshipList.value = response.data.content;
-      hteLocationDefault.lat = 14.9536746;
-      hteLocationDefault.lng = 120.9005507;
+
     } catch (err) {
       console.log(err);
     }
@@ -373,7 +366,6 @@ export const useHteStore = defineStore("hte", () => {
     fetchApplicantAccepted,
     getOnlineInterns,
     onlineInternList,
-    hteLocationDefault,
     onlineLocationList,
     internshipData,
     getListingItem,

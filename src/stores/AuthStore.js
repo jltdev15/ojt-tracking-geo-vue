@@ -20,7 +20,10 @@ export const useAuthStore = defineStore("auth", () => {
   const toast = useToast();
   const sessionCode = ref("");
   const currentRole = ref("");
-
+  const hteLocationDefault = reactive({
+    lat: "",
+    lng: "",
+  });
   const internStore = useInternStore();
 
   const internInformation = reactive({
@@ -57,6 +60,8 @@ export const useAuthStore = defineStore("auth", () => {
         hteInformation.contact = response.data.content.profile.contactNumber;
         hteInformation.address = response.data.content.profile.address;
         hteInformation.location = response.data.content.profile.location;
+        hteLocationDefault.lat = response.data.content.profile.location.lat;
+        hteLocationDefault.lng = response.data.content.profile.location.lng;
         return (currentUser.value = response.data.content.profile.fullName);
       }
       if (userRole.value === "Coordinator") {
@@ -268,6 +273,7 @@ export const useAuthStore = defineStore("auth", () => {
     hteInformation,
     updateHteInfo,
     currentRole,
-    hteId
+    hteId,
+    hteLocationDefault
   };
 });

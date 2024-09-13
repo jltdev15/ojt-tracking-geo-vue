@@ -14,7 +14,7 @@
         <template #item-status="item">
           <div
             v-if="
-              item.currentLocation.lat === hteStore.hteLocationDefault.lat &&
+              item.currentLocation.lat === authStore.hteLocationDefault.lat &&
               item.currentLocation.lng === hteStore.hteLocationDefault.lng
             "
           >
@@ -54,12 +54,10 @@
 import { useRouter } from "vue-router";
 import { onMounted, ref, onUnmounted, watch } from "vue";
 import { useHteStore } from "@/stores/HteStore";
+import { useAuthStore } from "@/stores/AuthStore";
+const authStore = useAuthStore();
 const hteStore = useHteStore();
 const locationList = ref([]);
-
-// console.log(hteStore.hteLocationDefault.lat);
-// hteStore.onlineInternList.forEach((item) => internLocations.push(item));
-// console.log(hteStore.onlineInternList);
 const isMapShow = ref(false);
 const headers = [
   { text: "INTERN", value: "name" },
@@ -132,9 +130,8 @@ watch(locationList, async (newLocations, oldLocations) => {
   }
 });
 onMounted(async () => {
-  await hteStore.fetchInternships();
-  await hteStore.fetchApplicantList();
-  await hteStore.fetchApplicantAccepted();
+  // await hteStore.fetchApplicantList();
+  // await hteStore.fetchApplicantAccepted();
   await hteStore.getOnlineInterns();
   if (hteStore.onlineInternList.length > 0) {
     intervalid = setInterval(getOnlineInternHandler, 3000);
