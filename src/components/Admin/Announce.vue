@@ -31,6 +31,9 @@
         show-index
         table-class-name="customize-table"
       >
+        <template #item-date="item">
+          <p>{{ moment(item.date).tz("Asia/Manila").format("YYYY-MM-DD") }}</p>
+        </template>
         <template #item-operation="item">
           <div class="flex justify-between gap-3 py-2">
             <button
@@ -129,6 +132,7 @@
 </template>
 
 <script setup>
+import moment from "moment-timezone";
 import { useAdminUserStore } from "@/stores/AdminUserStore";
 import { onMounted, ref, reactive } from "vue";
 import { useAuthStore } from "@/stores/AuthStore";
