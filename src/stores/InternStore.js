@@ -114,6 +114,7 @@ export const useInternStore = defineStore("intern", () => {
   const clockOut = async (payload) => {
     try {
       const response = await apiClient.put("/intern/timeout", payload);
+      isClockIn.value = false;
       await fetchRequiredHours();
       return response;
     } catch (err) {

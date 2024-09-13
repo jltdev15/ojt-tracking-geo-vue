@@ -120,7 +120,6 @@ const timeInHandler = async () => {
 const timeOutHandler = async () => {
   try {
     const response = await internStore.clockOut(timeOutData);
-    router.push({ name: "student_dashboard" });
     console.log(response);
     clearInterval(intervalid);
   } catch (err) {
@@ -136,7 +135,7 @@ const startPolling = async () => {
     clearInterval(intervalid);
   }
   if (internStore.isClockIn) {
-    return (intervalid = setInterval(internStore.sendLocationHandler, 2000));
+    return (intervalid = setInterval(internStore.sendLocationHandler, 1000));
   } else {
     clearInterval(intervalid);
   }
