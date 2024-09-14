@@ -3,7 +3,7 @@
     <div class="w-full md:h-[100dvh] pt-3 max-sm:w-full max-sm:p-0 max-sm:order-3">
       <conversation
         v-for="item in messengerStore.userStore.allUser"
-        :name="item.username"
+        :name="item.profile.fullName"
         :id="item._id"
         :key="item._id"
       />
@@ -45,7 +45,7 @@
       </div>
     </div>
     <div
-      class="w-1/4 md:pt-3 md:p-6 max-sm:flex max-sm:w-full max-sm:overflow-y-auto max-sm:pt-0 max-sm:bg-gray-200 bg-white max-sm:order-1"
+      class="w-1/4 md:pt-3 md:p-6 flex md:flex-col gap-3 max-sm:flex max-sm:w-full max-sm:overflow-y-auto max-sm:pt-0 max-sm:bg-gray-200 bg-white max-sm:order-1"
     >
       <h2 class="font-bold text-center text-3xl p-2 hidden md:block text-gray-800">
         Contacts
@@ -53,8 +53,10 @@
       <allUsers
         v-for="item in messengerStore.userStore.allUser"
         :id="item._id"
-        :name="item.username"
+        :name="item.profile.fullName"
         :key="item._id"
+        :department="item.profile.department"
+        :role="item.role"
       ></allUsers>
     </div>
   </div>

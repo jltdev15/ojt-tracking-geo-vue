@@ -13,8 +13,8 @@
     <header class="flex items-center justify-between px-6">
       <h1 class="text-3xl font-bold">Manage Settings</h1>
     </header>
-    <section class="flex p-3 gap-9">
-      <div class="w-3/6 p-3 shadow-md rounded-lg">
+    <section class="flex flex-col p-3 gap-9">
+      <div class="md:w-3/6 p-3 shadow-md rounded-lg">
         <p class="py-3 font-medium capitalize">Department List</p>
         <div class="flex items-center justify-between gap-3">
           <input
@@ -66,7 +66,7 @@
           </ul>
         </div>
       </div>
-      <div class="w-3/6 p-3 shadow-md rounded-lg">
+      <div class="md:w-3/6 p-3 shadow-md rounded-lg">
         <p class="py-3 font-medium capitalize">Reset Device Restrictions</p>
         <span></span>
         <div class="flex justify-end gap-3">

@@ -10,7 +10,7 @@
         </li>
       </ul>
     </div>
-    <header class="flex items-center justify-between px-6 bg-gray-200">
+    <header class="flex items-center gap-3 flex-col md:justify-between px-6 bg-gray-200">
       <h1 class="text-3xl">User <span class="text-3xl font-bold">Management</span></h1>
       <div>
         <button @click="handleToggleModal" class="btn btn-block">
@@ -18,7 +18,7 @@
         </button>
       </div>
     </header>
-    <div class="flex justify-end gap-3 p-6">
+    <div class="flex justify-end gap-3 px-6 py-3 md:p-6">
       <!-- <input type="text" placeholder="Type here" class="w-full input input-bordered" v-model="searchValue" /> -->
       <select class="w-full select select-bordered" @change="handleUserFilter">
         <option selected disabled value="Set filter">Search filter</option>

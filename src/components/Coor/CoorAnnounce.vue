@@ -12,11 +12,13 @@
         </li>
       </ul>
     </div>
-    <header class="flex items-center justify-between px-6 bg-gray-200">
-      <h1 class="text-3xl">
-        Announcement <span class="text-3xl font-bold">Management</span>
+    <header
+      class="flex items-center flex-col md:flex-row justify-between px-6 bg-gray-200"
+    >
+      <h1 class="text-xl md:text-3xl text-center">
+        Announcement <span class="text-xl md:text-3xl font-bold">Management</span>
       </h1>
-      <div>
+      <div class="p-6 md:p-0">
         <button @click="toggleNewAnnouncement" class="btn btn-block">
           <i class="ri-add-line"></i>Add New Announcement
         </button>
@@ -31,6 +33,9 @@
         show-index
         table-class-name="customize-table"
       >
+        <template #item-date="item">
+          <p>{{ moment(item.date).tz("Asia/Manila").format("YYYY-MM-DD") }}</p>
+        </template>
         <template #item-operation="item">
           <div class="flex justify-between gap-3 py-2">
             <button
@@ -204,4 +209,13 @@ onMounted(async () => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.customize-table {
+  --easy-table-body-row-font-size: 16px;
+}
+@media (max-width: 390px) {
+  .customize-table {
+    --easy-table-body-row-font-size: 8px;
+  }
+}
+</style>

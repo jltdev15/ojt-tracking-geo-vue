@@ -3,12 +3,12 @@
     <header class="flex items-center justify-between p-3 bg-gray-50">
       <h1 class="text-3xl font-bold">Dashboard</h1>
     </header>
-    <div class="flex min-h-screen bg-gray-100">
+    <div class="flex flex-col md:flex-row min-h-screen bg-gray-100">
       <div class="container max-w-6xl p-5">
         <header class="py-3">
           <h1 class="text-xl font-semibold text-gray-400 uppercase">Internships</h1>
         </header>
-        <div class="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="grid gap-7 grid-cols-2 lg:grid-cols-3">
           <div class="p-5 bg-gray-500 rounded shadow-sm">
             <router-link
               v-if="coorStore.getNumberOfInterns !== 0"
@@ -173,7 +173,7 @@
             <div class="flex items-center space-x-4 space-y-2">
               <div>
                 <div
-                  class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-50 text-cyan-400"
+                  class="flex items-center justify-center md:w-12 md:h-12 h-6 w-6 rounded-full bg-cyan-50 text-cyan-400"
                 >
                   <svg
                     height="32px"
@@ -205,7 +205,7 @@
         <header class="py-3">
           <h1 class="text-xl font-semibold text-gray-400 uppercase">HTE Requests</h1>
         </header>
-        <div class="grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="grid gap-7 grid-cols-2 lg:grid-cols-4">
           <div class="p-5 bg-white rounded shadow-sm">
             <div class="flex items-center space-x-4 space-y-2">
               <div>
@@ -241,7 +241,7 @@
             <div class="flex items-center space-x-4 space-y-2">
               <div>
                 <div
-                  class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-50 text-cyan-400"
+                  class="flex items-center justify-center md:w-12 md:h-12 h-6 w-6 rounded-full bg-cyan-50 text-cyan-400"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -270,7 +270,7 @@
             <div class="flex items-center space-x-4 space-y-2">
               <div>
                 <div
-                  class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-50 text-cyan-400"
+                  class="flex items-center justify-center md:w-12 md:h-12 h-6 w-6 rounded-full bg-cyan-50 text-cyan-400"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -289,7 +289,7 @@
                 <div class="text-2xl font-bold text-gray-900">
                   {{ coorStore.getNumberOfRequestAccepted }}
                 </div>
-                <div class="text-gray-400">For visitation</div>
+                <div class="text-gray-400 text-sm">For visitation</div>
               </div>
             </div>
           </div>
@@ -297,7 +297,7 @@
             <div class="flex items-center space-x-4 space-y-2">
               <div>
                 <div
-                  class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-50 text-cyan-400"
+                  class="flex items-center justify-center md:w-12 md:h-12 h-6 w-6rounded-full bg-cyan-50 text-cyan-400"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -322,7 +322,7 @@
         </div>
         <div class="divider"></div>
       </div>
-      <div class="w-3/6 p-5">
+      <div class="md:w-3/6 p-5">
         <header class="py-3">
           <h1 class="text-xl font-semibold text-gray-400 capitalize">Announcements</h1>
         </header>

@@ -32,7 +32,7 @@ const Question18 = ref(null);
 const Question19 = ref(null);
 const Question20 = ref(null);
 const comment = ref(null);
-const totalScore = ref(null)
+const totalScore = ref(null);
 const rating = ref(null);
 
 const resultBtn = async () => {
@@ -59,12 +59,11 @@ const resultBtn = async () => {
     Question20.value,
     comment.value
   );
-
 };
 
 const submitEvaluation = async () => {
   console.log(result.value[0].score);
-  
+
   const payload = {
     hteId: authStore.hteId,
     internId: route.params.id,
@@ -75,36 +74,35 @@ const submitEvaluation = async () => {
     contactNumber: authStore.hteInformation.contact,
     hteEvaluator: evalName.value,
     position: evalPosition.value,
-    startDate:hteStore.startDate,
-    endDate:hteStore.endDate,
+    startDate: hteStore.startDate,
+    endDate: hteStore.endDate,
     numberOfHoursRendered: hteStore.hoursRendered,
-    Q1:Question1.value,
-    Q2:Question1.value,
-    Q3:Question1.value,
-    Q4:Question1.value,
-    Q5:Question1.value,
-    Q6:Question1.value,
-    Q7:Question1.value,
-    Q8:Question1.value,
-    Q9:Question1.value,
-    Q10:Question1.value,
-    Q11:Question1.value,
-    Q12:Question1.value,
-    Q13:Question1.value,
-    Q14:Question1.value,
-    Q15:Question1.value,
-    Q16:Question1.value,
-    Q17:Question1.value,
-    Q18:Question1.value,
-    Q19:Question1.value,
-    Q20:Question1.value,
-    totalScore:result.value[0].score,
+    Q1: Question1.value,
+    Q2: Question1.value,
+    Q3: Question1.value,
+    Q4: Question1.value,
+    Q5: Question1.value,
+    Q6: Question1.value,
+    Q7: Question1.value,
+    Q8: Question1.value,
+    Q9: Question1.value,
+    Q10: Question1.value,
+    Q11: Question1.value,
+    Q12: Question1.value,
+    Q13: Question1.value,
+    Q14: Question1.value,
+    Q15: Question1.value,
+    Q16: Question1.value,
+    Q17: Question1.value,
+    Q18: Question1.value,
+    Q19: Question1.value,
+    Q20: Question1.value,
+    totalScore: result.value[0].score,
     verbalInterpretation: result.value[0].rating,
-    comment:comment.value
-
+    comment: comment.value,
+  };
+  await hteStore.submitEvaluationResults(payload, route.params.id);
 };
-await hteStore.submitEvaluationResults(payload,route.params.id)
-}
 onMounted(async () => {
   await hteStore.getInternsData(route.params.id);
 });
@@ -113,10 +111,7 @@ onMounted(async () => {
 <template>
   <div class="p-3">
     <header class="flex items-center justify-between p-3 bg-gray-50">
-      <h1 class="text-3xl font-bold">
-        Evaluation {{ hteStore.hoursRendered }} -
-        {{ hteStore.endDate }}
-      </h1>
+      <h1 class="text-3xl font-bold">Evaluation</h1>
     </header>
     <div class="mt-2">
       <div v-if="IsFormShow !== 7" class="flex">
@@ -164,7 +159,9 @@ onMounted(async () => {
       <div class="m-auto mt-2">
         <div v-if="IsFormShow === 1">
           <form @submit.prevent="nextForm()">
-            <div class="flex justify-start gap-2 py-1 pb-3 text-sm text-gray-400">
+            <div
+              class="flex justify-start flex-col gap-2 py-1 pb-3 text-sm text-gray-400"
+            >
               <div class="flex flex-col">
                 <label for="">Evaluator Name</label>
                 <input

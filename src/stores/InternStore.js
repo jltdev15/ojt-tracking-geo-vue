@@ -139,8 +139,9 @@ export const useInternStore = defineStore("intern", () => {
     }
   };
   const sendLocationHandler = async () => {
+    // await fetchRequiredHours()
     try {
-      if ((isClockIn.value = true)) {
+      if ((isClockIn.value)) {
         const response = await apiClient.put(
           "intern/currentlocation",
           locationData

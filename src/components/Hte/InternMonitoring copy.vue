@@ -3,7 +3,7 @@
     <header class="flex items-center justify-between p-3 bg-gray-50">
       <h1 class="text-3xl font-bold">Intern Monitoring</h1>
     </header>
-    <div class="grid w-full md:grid-cols-2 gap-6">
+    <div class="grid w-full grid-cols-2 gap-6">
       <EasyDataTable
         :headers="headers"
         :items="hteStore.onlineInternList"

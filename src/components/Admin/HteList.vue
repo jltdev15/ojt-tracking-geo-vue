@@ -13,8 +13,8 @@
                 </li> -->
       </ul>
     </div>
-    <header class="flex items-center justify-between px-6">
-      <h1 class="text-3xl font-bold">Register Host Training Establishments</h1>
+    <header class="flex items-center justify-center md:justify-between md:px-6">
+      <h1 class="text-lg md:text-3xl font-bold">Register Host Training Establishments</h1>
     </header>
     <div class="flex justify-end gap-3 p-6">
       <input
@@ -28,7 +28,7 @@
         <option value="Username">Username</option>
       </select>
     </div>
-    <div class="px-6">
+    <div class="md:px-6">
       <EasyDataTable
         :headers="headers"
         :items="useUserStore.htesList"

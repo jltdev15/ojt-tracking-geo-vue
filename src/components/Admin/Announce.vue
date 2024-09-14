@@ -12,9 +12,11 @@
         </li>
       </ul>
     </div>
-    <header class="flex items-center justify-between px-6 bg-gray-200">
-      <h1 class="text-3xl">
-        Announcement <span class="text-3xl font-bold">Management</span>
+    <header
+      class="flex items-center gap-3 md:flex-row flex-col justify-between px-6 bg-gray-200"
+    >
+      <h1 class="text-lg md:text-3xl">
+        Announcement <span class="text-lg md:text-3xl font-bold">Management</span>
       </h1>
       <div>
         <button @click="toggleNewAnnouncement" class="btn btn-block">
@@ -197,4 +199,4 @@ onMounted(async () => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>

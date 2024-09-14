@@ -12,10 +12,10 @@
         </li>
       </ul>
     </div>
-    <header class="px-6">
+    <header class="px-6 text-center md:text-left">
       <h1 class="text-3xl font-bold">Interns List</h1>
     </header>
-    <section class="px-6">
+    <section class="md:px-6">
       <div class="flex justify-end gap-3 py-3">
         <input
           type="text"

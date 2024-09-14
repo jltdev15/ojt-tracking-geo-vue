@@ -1,9 +1,9 @@
 <template>
   <div class="p-3">
-    <main class="w-5/6 bg-gray-50">
+    <main class="md:w-5/6 bg-gray-50">
       <section class="pt-6 px-6">
         <h1 class="font-bold text-xl pb-2">Evaluation Summary</h1>
-        <div class="grid gap-6 grid-cols-2">
+        <div class="grid gap-6 md:grid-cols-2">
           <div class="flex flex-col gap-2 text-sm">
             <p>Intern Name : {{ evaluationResults.internName }}</p>
             <p>HTE : {{ evaluationResults.hteName }}</p>
@@ -20,7 +20,7 @@
           </div>
         </div>
       </section>
-      <section class="grid grid-cols-2 pt-1 gap-6 px-6 pb-6">
+      <section class="grid md:grid-cols-2 pt-1 gap-6 px-6 pb-6">
         <div class="">
           <p class="p-2 font-bold bg-gray-50">Team Work</p>
           <section class="text-sm grid">

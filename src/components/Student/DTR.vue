@@ -53,15 +53,17 @@
         </div>
       </div>
     </section>
-    <section v-else>
-      <p class="text-center p-6 bg-red-600 font-bold text-gray-50">
-        Please apply internship
-      </p>
-      <router-link
-        to="/student/dashboard/internships"
-        class="flex items-center mt-3 font-medium text-center cursor-pointer btn-outline btn-accent btn hover:text-blue-600"
-        >Browse Interships</router-link
-      >
+    <section v-else class="w-96 p-6">
+      <div>
+        <p class="text-center p-6 bg-red-600 font-bold text-gray-50">
+          Please apply internship
+        </p>
+        <router-link
+          to="/student/dashboard/internships"
+          class="flex items-center mt-3 font-medium text-center cursor-pointer btn-outline btn-accent btn hover:text-blue-600"
+          >Browse Interships</router-link
+        >
+      </div>
     </section>
   </div>
 </template>
@@ -74,7 +76,7 @@ const internStore = useInternStore();
 const router = useRouter();
 const timeStringData = ref("");
 const clockInErrorMessage = ref("");
-
+let intervalid = null;
 const updateClock = async () => {
   const now = new Date();
 
@@ -120,17 +122,17 @@ const timeInHandler = async () => {
 const timeOutHandler = async () => {
   try {
     const response = await internStore.clockOut(timeOutData);
-    console.log(response);
-    clearInterval(intervalid);
+
+    if (intervalid) {
+      clearInterval(intervalid);
+    }
   } catch (err) {
     clearInterval(intervalid);
     console.log(err);
   }
 };
-let intervalid = null;
 
 const startPolling = async () => {
-  await internStore.getLocationHandler();
   if (intervalid) {
     clearInterval(intervalid);
   }
@@ -142,6 +144,7 @@ const startPolling = async () => {
 };
 onMounted(async () => {
   await startPolling();
+  await internStore.getLocationHandler();
   await internStore.fetchRequiredHours();
   await updateClock();
   setInterval(updateClock, 1000);

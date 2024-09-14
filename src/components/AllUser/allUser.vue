@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="props.id !== messengerStore.userStore.id"
-    class="flex items-center p-3 cursor-pointer hover:bg-gray-100 max-sm:flex-col max-sm:p-2 max-sm:max-w-15 max-sm:mx-1 max-sm:text-center"
+    class="items-center gap-1 md:gap-3 cursor-pointer hover:bg-gray-100 pt-3 px-3 flex md:flex-row flex-col"
     @click="newConvo()"
   >
     <div class="relative">
@@ -15,17 +15,23 @@
         class="top-0 start-7 absolute w-3.5 h-3.5 bg-green-500 border-2 border-white dark:border-gray-800 rounded-full"
       ></span>
     </div>
-    <div
-      class="pl-3 text-lg font-medium break-words max-sm:text-sm max-sm:max-w-15 max-sm:max-h-13 max-sm:p-0 max-sm:w-14"
-    >
-      <p class="capitalize">{{ props.name }}</p>
+    <div class="w-24 md:w-full text-lg font-medium">
+      <p class="capitalize md:text-lg text-[0.7rem] leading-3 text-center">
+        {{ props.name }}
+      </p>
+      <div class="flex gap-1 md:gap-2 justify-center items-center">
+        <p v-if="props.department" class="text-[0.6rem] md:text-xs">
+          {{ props.department ? props.department : "" }}
+        </p>
+        <span class="text-[0.6rem] md:text-xs">{{ props.role ? props.role : "" }}</span>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { useMessengerStore } from "@/store/useMessengerStore";
-const props = defineProps(["id", "name"]);
+const props = defineProps(["id", "name", "department", "role"]);
 // import { useUser } from '@/store/useMessengerStoregerStore';
 import { useConversation } from "@/store/conversation";
 import { io } from "socket.io-client";

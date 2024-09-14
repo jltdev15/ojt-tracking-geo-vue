@@ -26,7 +26,7 @@
         <option value="fullName">Full Name</option>
       </select>
     </div>
-    <section class="px-6">
+    <section class="md:px-6">
       <EasyDataTable
         :headers="headers"
         :items="userStore.coordinatorList"

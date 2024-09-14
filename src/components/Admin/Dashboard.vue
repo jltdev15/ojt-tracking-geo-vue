@@ -1,9 +1,9 @@
 <template>
   <div class="p-3">
     <header class="flex items-center justify-between p-3 bg-gray-50">
-      <h1 class="text-3xl font-bold">Dashboard</h1>
+      <h1 class="text-3xl font-bold">Overview</h1>
     </header>
-    <div class="flex min-h-screen bg-gray-100">
+    <div class="flex flex-col min-h-screen bg-gray-100">
       <div class="container max-w-6xl p-5">
         <!-- <header class="py-3">
           <h1 class="text-xl font-semibold text-gray-400 capitalize">Users</h1>
@@ -148,7 +148,7 @@
         <header class="py-3">
           <h1 class="text-xl font-semibold text-gray-400 capitalize">Coordinator</h1>
         </header>
-        <div class="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="grid gap-7 grid-cols-2 lg:grid-cols-3">
           <div class="p-5 bg-white rounded shadow-sm hover:bg-gray-200">
             <router-link
               :to="{ name: 'appSettings' }"
@@ -157,7 +157,7 @@
             >
               <div>
                 <div
-                  class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-50 text-cyan-400"
+                  class="flex items-center justify-center md:w-12 md:h-12 w-6 h-6 rounded-full bg-cyan-50 text-cyan-400"
                 >
                   <svg
                     height="32px"
@@ -182,7 +182,7 @@
                 <div class="text-2xl font-bold text-gray-900">
                   {{ adminUserStore.getNumberOfDepartment }}
                 </div>
-                <div class="text-gray-400">Department</div>
+                <div class="text-gray-400 text-sm">Department</div>
               </div>
             </router-link>
             <div
@@ -191,7 +191,7 @@
             >
               <div>
                 <div
-                  class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-50 text-cyan-400"
+                  class="flex items-center justify-center md:w-12 md:h-12 w-6 h-6 rounded-full bg-cyan-50 text-cyan-400"
                 >
                   <svg
                     height="32px"
@@ -224,7 +224,7 @@
             <div class="flex items-center space-x-4 space-y-2">
               <div>
                 <div
-                  class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-50 text-cyan-400"
+                  class="flex items-center justify-center md:w-12 md:h-12 w-6 h-6 rounded-full bg-cyan-50 text-cyan-400"
                 >
                   <svg
                     height="32px"
@@ -257,7 +257,7 @@
             <div class="flex items-center space-x-4 space-y-2">
               <div>
                 <div
-                  class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-50 text-cyan-400"
+                  class="flex items-center justify-center md:w-12 md:h-12 w-6 h-6 rounded-full bg-cyan-50 text-cyan-400"
                 >
                   <svg
                     height="32px"
@@ -290,7 +290,7 @@
         <header class="py-3">
           <h1 class="text-xl font-semibold text-gray-400 capitalize">Interns</h1>
         </header>
-        <div class="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="grid gap-7 grid-cols-2 lg:grid-cols-3">
           <div class="p-5 bg-white rounded shadow-sm cursor-pointer hover:bg-gray-200">
             <router-link
               v-if="adminUserStore.getNumberOfInterns !== 0"
@@ -299,7 +299,7 @@
             >
               <div>
                 <div
-                  class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-50 text-cyan-400"
+                  class="flex items-center justify-center md:w-12 md:h-12 w-6 h-6 rounded-full bg-cyan-50 text-cyan-400"
                 >
                   <svg
                     height="8.4666mm"
@@ -341,7 +341,7 @@
             >
               <div>
                 <div
-                  class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-50 text-cyan-400"
+                  class="flex items-center justify-center md:w-12 md:h-12 w-6 h-6 rounded-full bg-cyan-50 text-cyan-400"
                 >
                   <svg
                     height="8.4666mm"
@@ -387,7 +387,7 @@
             >
               <div>
                 <div
-                  class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-50 text-cyan-400"
+                  class="flex items-center justify-center md:w-12 md:h-12 w-6 h-6 rounded-full bg-cyan-50 text-cyan-400"
                 >
                   <svg
                     height="32px"
@@ -456,7 +456,7 @@
             <div class="flex items-center space-x-4 space-y-2">
               <div>
                 <div
-                  class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-50 text-cyan-400"
+                  class="flex items-center justify-center md:w-12 md:h-12 w-6 h-6 rounded-full bg-cyan-50 text-cyan-400"
                 >
                   <svg
                     height="32px"
@@ -491,7 +491,7 @@
             Host Training Establisments
           </h1>
         </header>
-        <div class="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="grid gap-7 grid-cols-2 lg:grid-cols-3">
           <div class="p-5 bg-white rounded shadow-sm cursor-pointer hover:bg-gray-200">
             <router-link
               v-if="adminUserStore.getNumberOfHTE !== 0"
@@ -500,7 +500,7 @@
             >
               <div>
                 <div
-                  class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-50 text-cyan-400"
+                  class="flex items-center justify-center md:w-12 md:h-12 w-6 h-6 rounded-full bg-cyan-50 text-cyan-400"
                 >
                   <svg
                     height="8.4666mm"
@@ -541,7 +541,7 @@
             >
               <div>
                 <div
-                  class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-50 text-cyan-400"
+                  class="flex items-center justify-center md:w-12 md:h-12 w-6 h-6 rounded-full bg-cyan-50 text-cyan-400"
                 >
                   <svg
                     height="8.4666mm"
@@ -585,7 +585,7 @@
             >
               <div>
                 <div
-                  class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-50 text-cyan-400"
+                  class="flex items-center justify-center md:w-12 md:h-12 w-6 h-6 rounded-full bg-cyan-50 text-cyan-400"
                 >
                   <svg
                     height="32px"
@@ -610,7 +610,7 @@
                 <div class="text-2xl font-bold text-gray-900">
                   {{ adminUserStore.getNumberOfVacancy }}
                 </div>
-                <div class="text-gray-400">Posted Internships</div>
+                <div class="text-gray-400">Internships</div>
               </div>
             </router-link>
             <div
@@ -619,7 +619,7 @@
             >
               <div>
                 <div
-                  class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-50 text-cyan-400"
+                  class="flex items-center justify-center md:w-12 md:h-12 w-6 h-6 rounded-full bg-cyan-50 text-cyan-400"
                 >
                   <svg
                     height="32px"
@@ -644,13 +644,13 @@
                 <div class="text-2xl font-bold text-gray-900">
                   {{ adminUserStore.getNumberOfDepartment }}
                 </div>
-                <div class="text-gray-400">Posted Internships</div>
+                <div class="text-gray-400">Internships</div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="w-3/6 p-5">
+      <div class="md:w-3/6 p-5">
         <header class="py-3">
           <h1 class="text-xl font-semibold text-gray-400 capitalize">Announcements</h1>
         </header>

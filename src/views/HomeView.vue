@@ -1,8 +1,9 @@
 <template>
   <div>
     <TheHeader />
-    <!-- <Hero /> -->
+
     <About />
+    <Hero />
   </div>
 </template>
 

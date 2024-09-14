@@ -28,7 +28,7 @@
         <option value="Username">Username</option>
       </select>
     </div>
-    <div class="px-6">
+    <div class="md:px-6">
       <EasyDataTable
         :headers="headers"
         :items="adminUserStore.requestList"
