@@ -10,7 +10,9 @@
         </li>
       </ul>
     </div>
-    <header class="flex items-center gap-3 flex-col md:justify-between px-6 bg-gray-200">
+    <header
+      class="flex items-center gap-3 flex-col md:flex-row md:justify-between px-6 bg-gray-200"
+    >
       <h1 class="text-3xl">User <span class="text-3xl font-bold">Management</span></h1>
       <div>
         <button @click="handleToggleModal" class="btn btn-block">
