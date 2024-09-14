@@ -20,7 +20,7 @@
         Update <span class="font-bold">Information</span> {{ userStore.currentRole }}
       </h1>
     </header>
-    <section class="grid max-w-5xl grid-cols-2 gap-6 p-3">
+    <section class="grid max-w-5xl md:grid-cols-2 gap-6 p-3">
       <div class="flex flex-col gap-3 p-3 rounded-md shadow-md">
         <h2 class="p-3 text-2xl bg-red-800 text-gray-50">Profile Information</h2>
         <!-- Coord -->

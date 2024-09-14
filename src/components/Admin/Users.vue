@@ -20,7 +20,7 @@
         </button>
       </div>
     </header>
-    <div class="flex justify-end gap-3 px-6 py-3 md:p-6">
+    <div class="flex justify-end gap-3 md:px-6 py-3 md:p-6">
       <!-- <input type="text" placeholder="Type here" class="w-full input input-bordered" v-model="searchValue" /> -->
       <select class="w-full select select-bordered" @change="handleUserFilter">
         <option selected disabled value="Set filter">Search filter</option>
@@ -30,12 +30,13 @@
         <option value="">All</option>
       </select>
     </div>
-    <section class="px-6">
+    <section class="md:px-6">
       <EasyDataTable
         :headers="headers"
         :items="userStore.getNumberOfUsersOnly"
         :search-field="searchField"
         :search-value="searchValue"
+        rows-per-page="10"
         show-index
         table-class-name="customize-table"
       >
