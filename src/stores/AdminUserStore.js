@@ -123,10 +123,13 @@ export const useAdminUserStore = defineStore("user", () => {
     try {
       const response = await apiClient.post("/intern", payload);
       await fetchUsers();
-      console.log(response);
-      return response;
+      console.log(response.data.message);
+      alert(response.data.message)
     } catch (err) {
-      console.log(err);
+      console.log(err.response.data.message);
+      if(err.response.data.message){
+        return alert('Duplicate username. Please try other one')
+      }
     }
   };
   const addHTE = async (payload) => {

@@ -129,6 +129,12 @@ export const useInternStore = defineStore("intern", () => {
           locationData.lat = position.coords.latitude;
           locationData.lng = position.coords.longitude;
           isLocationEnabled.value = true;
+          console.log('====================================');
+          console.log(locationData.lat);
+          console.log('====================================');
+          console.log('====================================');
+          console.log(locationData.lng);
+          console.log('====================================');
         },
         (err) => {
           errorMessage.value = `Error: ${err.message}`;

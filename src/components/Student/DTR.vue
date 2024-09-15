@@ -111,10 +111,11 @@ const timeOutData = reactive({
 const timeInHandler = async () => {
   try {
     const response = await internStore.clockIn(timeInData);
-    if (response) {
-      return (clockInErrorMessage.value = response.response.data.content);
-    }
-    await startPolling();
+    // if (response) {
+    //   return (clockInErrorMessage.value = response.response.data.content);
+    // }
+    // await internStore.sendLocationHandler();
+    // await startPolling();
   } catch (err) {
     console.log(err);
   }
@@ -132,18 +133,18 @@ const timeOutHandler = async () => {
   }
 };
 
-const startPolling = async () => {
-  if (intervalid) {
-    clearInterval(intervalid);
-  }
-  if (internStore.isClockIn) {
-    return (intervalid = setInterval(internStore.sendLocationHandler, 1000));
-  } else {
-    clearInterval(intervalid);
-  }
-};
+// const startPolling = async () => {
+//   if (intervalid) {
+//     clearInterval(intervalid);
+//   }
+//   if (internStore.isClockIn) {
+//     return (intervalid = setInterval(internStore.sendLocationHandler, 1000));
+//   } else {
+//     clearInterval(intervalid);
+//   }
+// };
 onMounted(async () => {
-  await startPolling();
+  // await startPolling();
   await internStore.getLocationHandler();
   await internStore.fetchRequiredHours();
   await updateClock();

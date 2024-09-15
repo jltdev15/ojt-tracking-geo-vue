@@ -20,6 +20,7 @@ export const useAuthStore = defineStore("auth", () => {
   const toast = useToast();
   const sessionCode = ref("");
   const currentRole = ref("");
+
   const hteLocationDefault = reactive({
     lat: "",
     lng: "",
@@ -27,12 +28,20 @@ export const useAuthStore = defineStore("auth", () => {
   const internStore = useInternStore();
 
   const internInformation = reactive({
-    fullName: "",
-    internId: "",
-    email: "",
+    firstName: "",
+    middleInitial: "",
+    lastName: "",
     contact: "",
-    address: "",
+    age: "",
+    birthday: "",
+    street: "",
+    brgy: "",
+    municipality: "",
+    province: "",
+    zipcode: "",
     department: "",
+    email:'',
+    userName:''
   });
   const hteInformation = reactive({
     name: "",
@@ -71,19 +80,27 @@ export const useAuthStore = defineStore("auth", () => {
         return (currentUser.value = response.data.content.profile.fullName);
       }
       if (userRole.value === "Intern") {
-        internInformation.fullName = response.data.content.profile.fullName;
-        internInformation.internId = response.data.content.username;
+        internInformation.firstName = response.data.content.profile.firstName;
+        internInformation.middleInitial = response.data.content.profile.middleInitial;
+        internInformation.lastName = response.data.content.profile.lastName;
         internInformation.email = response.data.content.email;
         internInformation.contact = response.data.content.profile.contact;
-        internInformation.address = response.data.content.profile.address;
+        internInformation.age = response.data.content.profile.age;
+        internInformation.internId = response.data.content.username;
+        internInformation.birthday = response.data.content.profile.birthday;
+        internInformation.street = response.data.content.profile.street;
+        internInformation.brgy = response.data.content.profile.brgy;
+        internInformation.municipality = response.data.content.profile.municipality;
+        internInformation.province = response.data.content.profile.province;
+        internInformation.zipcode = response.data.content.profile.zipcode;
         internInformation.department = response.data.content.profile.department;
-
+        internInformation.userName = response.data.content.username;
         isInternReady.value = response.data.content.profile.isInternshipReady;
         sessionCode.value = response.data.content.profile.sessionCode;
         if (sessionCode.value !== localStorage.getItem("sessionCode")) {
           await submitLogout();
         }
-        return (currentUser.value = response.data.content.profile.fullName);
+        return (currentUser.value = response.data.content.profile.firstName);
       }
     } catch (err) {
       console.log(err);
@@ -210,9 +227,20 @@ export const useAuthStore = defineStore("auth", () => {
   };
   const updatePersonalInfo = async () => {
     const payload = {
-      email: internInformation.email,
+      firstName: internInformation.firstName,
+      middleInitial: internInformation.middleInitial,
+      lastName: internInformation.lastName,
       contact: internInformation.contact,
-      address: internInformation.address,
+      age: internInformation.age,
+      birthday: internInformation.birthday,
+      street: internInformation.street,
+      brgy: internInformation.brgy,
+      municipality: internInformation.municipality,
+      province: internInformation.province,
+      zipcode: internInformation.zipcode,
+      department: internInformation.department,
+      email: internInformation.email
+      
     };
     console.log(payload);
 
@@ -274,6 +302,6 @@ export const useAuthStore = defineStore("auth", () => {
     updateHteInfo,
     currentRole,
     hteId,
-    hteLocationDefault
+    hteLocationDefault,
   };
 });

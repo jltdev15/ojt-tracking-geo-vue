@@ -1,5 +1,6 @@
 <template>
   <div
+    id="hero"
     class="relative h-screen overflow-hidden text-white bg-gradient-to-r from-purple-600 to-blue-600"
   >
     <div class="absolute inset-0">

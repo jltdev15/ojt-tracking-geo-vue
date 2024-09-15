@@ -36,7 +36,7 @@
         :items="userStore.getNumberOfUsersOnly"
         :search-field="searchField"
         :search-value="searchValue"
-        rows-per-page="10"
+        :rows-per-page="10"
         show-index
         table-class-name="customize-table"
       >
@@ -157,15 +157,15 @@
                 placeholder="Email"
               />
             </label>
-            <label class="flex items-center gap-2 input input-bordered">
+            <!-- <label class="flex items-center gap-2 input input-bordered">
               <input
                 v-model="intern.fullName"
                 type="text"
                 class="grow"
                 placeholder="Full Name"
               />
-            </label>
-            <label class="flex items-center gap-2 input input-bordered">
+            </label> -->
+            <!-- <label class="flex items-center gap-2 input input-bordered">
               <input
                 v-model="intern.contact"
                 type="number"
@@ -180,7 +180,7 @@
                 class="grow"
                 placeholder="Complete Address"
               />
-            </label>
+            </label> -->
             <select
               @change="handleSelectDepartmentIntern"
               class="w-full py-3 select select-bordered"
@@ -626,10 +626,10 @@ const resetInternForms = () => {
   intern.password = "";
   intern.role = "Select Role";
   intern.email = "";
-  intern.fullName = "";
+  // intern.fullName = "";
   intern.department = "";
-  intern.contact = "";
-  intern.address = "";
+  // intern.contact = "";
+  // intern.address = "";
 };
 const resetHTEForms = () => {
   hte.username = "";
@@ -672,23 +672,23 @@ const handleInternUser = async () => {
     if (intern.username === "") {
       return alert("Please enter username");
     }
-    if (intern.contact === "") {
-      return alert("Please enter username");
-    }
+    // if (intern.contact === "") {
+    //   return alert("Please enter username");
+    // }
     if (intern.password === "") {
       return alert("Please enter password");
     }
     if (intern.email === "") {
       return alert("Please enter email");
     }
-    if (intern.fullName === "") {
-      return alert("Please enter full name");
-    }
+    // if (intern.fullName === "") {
+    //   return alert("Please enter full name");
+    // }
     if (intern.department === "") {
       return alert("Please select department");
     }
-    const response = await userStore.addIntern(intern);
-    alert(response.data.message);
+    await userStore.addIntern(intern);
+
     resetInternForms();
     await handleToggleModal();
   } catch (err) {
