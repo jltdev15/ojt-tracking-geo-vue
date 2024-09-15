@@ -1,5 +1,8 @@
 <template>
-  <div id="partner" class="relative md:h-screen md:overflow-hidden text-white bg-white">
+  <div
+    id="partner"
+    class="relative pt-20 md:h-screen md:overflow-hidden text-white bg-white"
+  >
     <div
       class="container items-center relative z-10 flex justify-between h-full mx-auto text-center text-gray-800"
     >

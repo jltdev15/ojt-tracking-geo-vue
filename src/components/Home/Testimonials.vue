@@ -1,5 +1,8 @@
 <template>
-  <div id="testimonials" class="relative md:h-screen overflow-hidden text-white bg-white">
+  <div
+    id="testimonials"
+    class="relative pt-12 md:h-screen overflow-hidden text-white bg-white"
+  >
     <div
       class="container items-center relative z-10 flex justify-between h-full mx-auto text-center text-gray-800"
     >

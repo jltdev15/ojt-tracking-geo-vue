@@ -1,5 +1,8 @@
 <template>
-  <div id="about" class="relative md:h-screen md:overflow-hidden text-white bg-white">
+  <div
+    id="about"
+    class="relative pt-20 md:h-screen md:pt-0 md:overflow-hidden text-white bg-white"
+  >
     <div class="absolute inset-0">
       <div class="absolute inset-0 bg-black opacity-10"></div>
     </div>
