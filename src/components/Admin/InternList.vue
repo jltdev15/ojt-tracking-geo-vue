@@ -48,7 +48,7 @@
           </div>
         </template>
         <template #item-status="item">
-          <div v-if="item.isInternshipReady && item.isEvaluationReady === 'Not Ready'">
+          <div v-if="item.isEvaluationReady === 'Not Ready'">
             <p>Ongoing Internship</p>
           </div>
           <div v-if="item.isInternshipReady && item.isEvaluationReady === 'Ready'">
@@ -71,6 +71,9 @@
           <div v-else>
             <p>No evaluation found</p>
           </div>
+        </template>
+        <template #item-fullName="item">
+          <p>{{ item.firstName }} {{ item.lastName }}</p>
         </template>
       </EasyDataTable>
     </section>

@@ -3,7 +3,7 @@
     <div class="w-full md:h-[100dvh] pt-3 max-sm:w-full max-sm:p-0 max-sm:order-3">
       <conversation
         v-for="item in messengerStore.userStore.allUser"
-        :name="item.profile.fullName"
+        :name="item.profile.firstName"
         :id="item._id"
         :key="item._id"
       />
@@ -53,7 +53,7 @@
       <allUsers
         v-for="item in messengerStore.userStore.allUser"
         :id="item._id"
-        :name="item.profile.fullName"
+        :name="item.profile.firstName"
         :key="item._id"
         :department="item.profile.department"
         :role="item.role"

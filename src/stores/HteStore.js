@@ -57,6 +57,7 @@ export const useHteStore = defineStore("hte", () => {
     try {
       const response = await apiClient.post(`/hte/create/`, payload);
       console.log(response);
+      alert(response.data.message)
       await fetchInternships();
     } catch (err) {
       console.log(err);

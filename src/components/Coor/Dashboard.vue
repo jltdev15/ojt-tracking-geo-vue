@@ -266,8 +266,17 @@
               </div>
             </div>
           </div>
-          <div class="p-5 bg-white rounded shadow-sm">
-            <div class="flex items-center space-x-4 space-y-2">
+          <div
+            class="p-5 rounded shadow-sm"
+            :class="{
+              'bg-red-600 text-gray-50': coorStore.getNumberOfRequestAccepted != 0,
+              'bg-white text-gray-900': coorStore.getNumberOfRequestAccepted === 0,
+            }"
+          >
+            <router-link
+              :to="{ name: 'CoorRequest' }"
+              class="flex items-center space-x-4 space-y-2"
+            >
               <div>
                 <div
                   class="flex items-center justify-center md:w-12 md:h-12 h-6 w-6 rounded-full bg-cyan-50 text-cyan-400"
@@ -286,12 +295,12 @@
                 </div>
               </div>
               <div>
-                <div class="text-2xl font-bold text-gray-900">
+                <div class="text-2xl font-bold">
                   {{ coorStore.getNumberOfRequestAccepted }}
                 </div>
-                <div class="text-gray-400 text-sm">For visitation</div>
+                <div class="text-sm">For visitation</div>
               </div>
-            </div>
+            </router-link>
           </div>
           <div class="p-5 bg-white rounded shadow-sm">
             <div class="flex items-center space-x-4 space-y-2">

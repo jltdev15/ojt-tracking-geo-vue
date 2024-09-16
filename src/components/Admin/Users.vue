@@ -732,8 +732,8 @@ const handleHteUser = async () => {
 };
 const handleCoorUser = async () => {
   try {
-    const response = await userStore.addCoordinator(coordinator);
-    alert(response.data.message);
+    await userStore.addCoordinator(coordinator);
+
     await handleToggleModal();
     resetCoorForms();
   } catch (err) {

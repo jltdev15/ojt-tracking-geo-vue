@@ -71,7 +71,7 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { useInternStore } from "@/stores/InternStore";
-import { onMounted, reactive, ref, onUnmounted } from "vue";
+import { onMounted, reactive, ref, onBeforeUnmount } from "vue";
 const internStore = useInternStore();
 const router = useRouter();
 const timeStringData = ref("");
@@ -111,11 +111,13 @@ const timeOutData = reactive({
 const timeInHandler = async () => {
   try {
     const response = await internStore.clockIn(timeInData);
-    // if (response) {
-    //   return (clockInErrorMessage.value = response.response.data.content);
-    // }
-    // await internStore.sendLocationHandler();
-    // await startPolling();
+    console.log("====================================");
+    console.log(response);
+    console.log("====================================");
+    if (response.response.data.content) {
+      return (clockInErrorMessage.value = response.response.data.content);
+    }
+    window.location.reload();
   } catch (err) {
     console.log(err);
   }
@@ -132,26 +134,23 @@ const timeOutHandler = async () => {
     console.log(err);
   }
 };
-
-// const startPolling = async () => {
-//   if (intervalid) {
-//     clearInterval(intervalid);
-//   }
-//   if (internStore.isClockIn) {
-//     return (intervalid = setInterval(internStore.sendLocationHandler, 1000));
-//   } else {
-//     clearInterval(intervalid);
-//   }
-// };
+const startInterval = () => {
+  intervalid = setInterval(() => {
+    internStore.sendLocationHandler();
+  }, 1000);
+};
 onMounted(async () => {
-  // await startPolling();
-  await internStore.getLocationHandler();
   await internStore.fetchRequiredHours();
+  if (internStore.isClockIn) {
+    startInterval();
+  }
+  await internStore.getLocationHandler();
+
   await updateClock();
   setInterval(updateClock, 1000);
 });
 
-onUnmounted(async () => {
+onBeforeUnmount(async () => {
   if (intervalid) {
     clearInterval(intervalid);
   }

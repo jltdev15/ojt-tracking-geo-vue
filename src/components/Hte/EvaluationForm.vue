@@ -69,7 +69,7 @@ const submitEvaluation = async () => {
     internId: route.params.id,
     department: hteStore.internsData.department,
     hteName: authStore.currentUser,
-    internName: hteStore.internsData.fullName,
+    internName: hteStore.internsData.firstName + " " + hteStore.internsData.lastName,
     address: authStore.hteInformation.address,
     contactNumber: authStore.hteInformation.contact,
     hteEvaluator: evalName.value,
@@ -160,7 +160,7 @@ onMounted(async () => {
         <div v-if="IsFormShow === 1">
           <form @submit.prevent="nextForm()">
             <div
-              class="flex justify-start flex-col gap-2 py-1 pb-3 text-sm text-gray-400"
+              class="flex justify-start flex-col md:flex-row gap-2 py-1 pb-3 text-sm text-gray-400"
             >
               <div class="flex flex-col">
                 <label for="">Evaluator Name</label>

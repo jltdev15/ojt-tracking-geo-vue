@@ -38,14 +38,7 @@
           </div>
         </template>
       </EasyDataTable>
-      <div
-        v-if="hteStore.onlineLocationList.length > 0"
-        id="map"
-        style="height: 300px; width: 100%"
-      ></div>
-      <div v-else>
-        <p>No currently online</p>
-      </div>
+      <div id="map" style="height: 300px; width: 100%"></div>
     </div>
   </div>
 </template>
@@ -58,6 +51,7 @@ import { useAuthStore } from "@/stores/AuthStore";
 const authStore = useAuthStore();
 const hteStore = useHteStore();
 const isMapShow = ref(false);
+const markers = ref({});
 const headers = [
   { text: "INTERN", value: "name" },
   { text: "TIME IN", value: "timeIn" },
@@ -66,16 +60,18 @@ const headers = [
 
 const getOnlineInternHandler = async () => {
   await hteStore.getOnlineInterns();
+  addMarkers();
 };
+
 let intervalid = null;
 let map;
 async function initMap() {
   const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
   const mapCenter =
-    hteStore.onlineLocationList.length > 0
+    hteStore.onlineLocationList.length >= 0
       ? {
-          lat: hteStore.onlineLocationList[0].lat,
-          lng: hteStore.onlineLocationList[0].lng,
+          lat: authStore.hteLocationDefault.lat,
+          lng: authStore.hteLocationDefault.lng,
         }
       : { lat: 0, lng: 0 };
 
@@ -83,6 +79,21 @@ async function initMap() {
     zoom: 15,
     center: mapCenter,
     mapId: "DEMO_MAP_ID",
+  });
+  const marker = new google.maps.marker.AdvancedMarkerElement({
+    position: {
+      lat: authStore.hteLocationDefault.lat,
+      lng: authStore.hteLocationDefault.lng,
+    },
+    map: map,
+    title: location.title,
+  });
+
+  const infoWindow = new google.maps.InfoWindow({
+    content: `<h3>${location.title}</h3>`,
+  });
+  marker.addListener("click", () => {
+    infoWindow.open(map, marker);
   });
 
   addMarkers();
@@ -95,7 +106,7 @@ function addMarkers() {
       map: map,
       title: location.title,
     });
-
+    markers.value[location._id] = marker;
     const infoWindow = new google.maps.InfoWindow({
       content: `<h3>${location.title}</h3>`,
     });
@@ -106,37 +117,30 @@ function addMarkers() {
   });
 }
 
-// Watch the internLocations array for changes and refresh the map
-watch(hteStore.onlineInternList, async (newLocations, oldLocations) => {
-  console.log(newLocations);
-
-  if (JSON.stringify(newLocations) !== JSON.stringify(oldLocations)) {
-    if (newLocations.length > 0) {
-      // Clear existing markers
-      map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 15,
-        center:
-          newLocations.length > 0
-            ? { lat: newLocations[0].lat, lng: newLocations[0].lng }
-            : { lat: 0, lng: 0 },
-        mapId: "DEMO_MAP_ID",
-      });
-
-      addMarkers();
-    } else {
-      isMapShow.value = false;
-    }
+watch(hteStore.onlineInternList, (newValue) => {
+  console.log("====================================");
+  console.log(newValue);
+  console.log("====================================");
+  if (newValue) {
+    initMap();
   }
 });
+
+// Watch the internLocations array for changes and refresh the map
+
 onMounted(async () => {
   // await hteStore.fetchApplicantList();
   // await hteStore.fetchApplicantAccepted();
   await hteStore.getOnlineInterns();
-  if (hteStore.onlineInternList.length > 0) {
-    intervalid = setInterval(getOnlineInternHandler, 1000);
-  } else {
-    clearInterval(intervalid);
-  }
+  intervalid = setInterval(getOnlineInternHandler, 1000);
+  console.log("====================================");
+  console.log(hteStore.onlineInternList);
+  console.log("====================================");
+  // if (hteStore.onlineInternList.length > 0) {
+  //   intervalid = setInterval(getOnlineInternHandler, 1000);
+  // } else {
+  //   clearInterval(intervalid);
+  // }
   // locationList.value = hteStore.onlineInternList;
   // Dynamically load the Google Maps script
   const script = document.createElement("script");

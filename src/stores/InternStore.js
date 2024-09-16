@@ -104,7 +104,9 @@ export const useInternStore = defineStore("intern", () => {
         );
       }
       const response = await apiClient.post("/intern/timein", payload);
+  
       await fetchRequiredHours();
+   
       return response;
     } catch (err) {
       console.log(err);

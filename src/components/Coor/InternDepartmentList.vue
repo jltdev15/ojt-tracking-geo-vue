@@ -74,6 +74,9 @@
         <template #item-rendered="item">
           <p>{{ item.workedHours.toFixed() }}</p>
         </template>
+        <template #item-fullName="item">
+          <p>{{ item.firstName }} {{ item.lastName }}</p>
+        </template>
       </EasyDataTable>
       <Modal :show="setRequiredHours" title="Set Required Hours">
         <template #default>
@@ -123,7 +126,7 @@ const setHoursHandler = async () => {
   }
 };
 const headers = [
-  { text: "Full name", value: "fullName" },
+  { text: "Name", value: "fullName" },
   { text: "Department", value: "department" },
   { text: "Hours Required", value: "requiredHours" },
   { text: "Hours Rendered", value: "rendered" },

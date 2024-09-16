@@ -147,11 +147,13 @@ export const useAdminUserStore = defineStore("user", () => {
     console.log(payload);
     try {
       const response = await apiClient.post("/coor", payload);
+      alert(response.data.message);
       await fetchUsers();
       console.log(response);
       return response;
     } catch (err) {
       console.log(err);
+      alert(err.response.data.message);
     }
   };
   //#region Department List

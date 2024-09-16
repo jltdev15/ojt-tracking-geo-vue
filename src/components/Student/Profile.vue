@@ -21,7 +21,7 @@
           </p>
         </header>
 
-        <section class="grid grid-cols-2">
+        <section class="grid md:grid-cols-2 md:w-3/6">
           <!-- Left side -->
           <div class="flex flex-col pt-6">
             <label for="">Department</label>
@@ -146,7 +146,7 @@
           </div>
         </section>
 
-        <div class="flex py-6 pr-12">
+        <div class="flex py-6 pr-12 w-full md:w-64">
           <button
             type="button"
             v-if="!isEditEnable"
@@ -155,7 +155,7 @@
           >
             Edit Profile
           </button>
-          <button type="submit" v-if="isEditEnable" class="btn btn-block btn-primary">
+          <button type="submit" v-if="isEditEnable" class="btn md:btn-block btn-primary">
             Update Profile
           </button>
         </div>
