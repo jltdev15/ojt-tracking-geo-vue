@@ -6,6 +6,7 @@ export const useInternStore = defineStore("intern", () => {
   const applicationLists = ref([]);
   const requiredHours = ref(null);
   const workedHours = ref(null);
+  const isProfileComplete = ref(null)
   const isClockIn = ref(false);
   const isLocationEnabled = ref(false);
   const errorMessage = ref("");
@@ -90,6 +91,7 @@ export const useInternStore = defineStore("intern", () => {
       workedHours.value = response.data.content.workedHours;
       isInternReady.value = response.data.content.isInternshipReady;
       isEvalReady.value = response.data.content.isEvaluationReady;
+      isProfileComplete.value = response.data.content.isProfileComplete
       console.log(response);
     } catch (err) {
       console.log(err);
@@ -304,6 +306,7 @@ export const useInternStore = defineStore("intern", () => {
     getHteInformation,
     isEvalReady,
     evaluationResults,
-    fetchEvaluationResults
+    fetchEvaluationResults,
+    isProfileComplete
   };
 });

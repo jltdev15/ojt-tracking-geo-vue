@@ -75,6 +75,9 @@
           <p>{{ item.workedHours.toFixed() }}</p>
         </template>
         <template #item-fullName="item">
+          <p v-if="item.firstName===null && item.lastName === null">
+            Profile not updated
+          </p>
           <p>{{ item.firstName }} {{ item.lastName }}</p>
         </template>
       </EasyDataTable>

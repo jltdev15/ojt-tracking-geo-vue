@@ -18,22 +18,18 @@
         </button>
       </div>
     </header>
-    <div class="flex justify-center md:justify-normal min-h-screen">
+    <div class="flex justify-center min-h-screen md:justify-normal">
       <div class="md:p-5">
-        <div class="grid gap-6 justify-center md:grid-cols-3">
+        <div class="grid justify-center gap-6 md:grid-cols-3">
           <p v-if="internStore.internshipLists.length === 0">No listing available</p>
-          <InternshipItem />
-          <!-- <InternshipItem v-for="job in internStore.internshipLists" 
-      :key="job._id"
-      :datePosted="job.createdAt"
-      :status="job.status"
-      :slots="job.slots"
-      :location="job.location"
-      :description="job.description" 
-      :title="job.title"
-      :companyName="job.hte.name"
-      :id="job._id"
-      /> -->
+          <p class="inline-block p-3 capitalize bg-primary text-gray-50" v-if="internStore.requiredHours === 0 && internStore.internshipLists.length > 0">Please ask your coordinator to set required hours</p>
+          <p class="p-3 bg-primary text-gray-50" v-else-if="!internStore.isProfileComplete">
+            Please complete your profile information. <router-link class="underline " :to="{name:'intern_profile'}">Click here</router-link>
+          </p>
+          <div v-else>
+            <InternshipItem />
+          </div>
+
         </div>
       </div>
     </div>

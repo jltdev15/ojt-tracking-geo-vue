@@ -3,18 +3,18 @@
     <header class="flex items-center justify-between p-3 bg-gray-50">
       <h1 class="text-3xl font-bold">Dashboard</h1>
     </header>
-    <div class="flex flex-col md:flex-row min-h-screen bg-gray-100">
+    <div class="flex flex-col min-h-screen bg-gray-100 md:flex-row">
       <div class="container max-w-6xl p-5">
         <header class="py-3">
           <h1 class="text-xl font-semibold text-gray-400 capitalize">Hours Required</h1>
         </header>
         <div
-          class="grid grid-cols-2 items-end gap-7 sm:grid-cols-2 justify-self-right lg:grid-cols-3"
+          class="grid items-end grid-cols-2 gap-7 sm:grid-cols-2 justify-self-right lg:grid-cols-3"
         >
           <div class="p-5 bg-white rounded shadow-sm">
             <div class="flex items-center space-x-4 space-y-2">
               <div>
-                <div class="text-gray-400 text-sm">Target Hours</div>
+                <div class="text-sm text-gray-400">Target Hours</div>
                 <div class="text-2xl font-bold text-gray-900">
                   {{ internStore.getNumberOfHoursRequired }}
                 </div>
@@ -24,7 +24,7 @@
           <div class="p-5 bg-white rounded shadow-sm">
             <div class="flex items-center space-x-4 space-y-2">
               <div>
-                <div class="text-gray-400 text-sm md:text-base">Rendered Hours</div>
+                <div class="text-sm text-gray-400 md:text-base">Rendered Hours</div>
                 <div class="text-2xl font-bold text-gray-900">
                   {{ internStore.getNumberOfHoursWorked.toFixed(0) }}
                 </div>
@@ -34,7 +34,7 @@
           <div class="p-5 bg-white rounded shadow-sm">
             <div class="flex items-center space-x-4 space-y-2">
               <div>
-                <div class="text-gray-400 text-sm">Remaining Hours</div>
+                <div class="text-sm text-gray-400">Remaining Hours</div>
                 <div class="text-2xl font-bold text-gray-900">
                   {{
                     internStore.getNumberOfHoursWorked >=
@@ -53,7 +53,7 @@
             Internship Application
           </h1>
         </header>
-        <div class="grid gap-7 grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="grid grid-cols-2 gap-7 sm:grid-cols-2 lg:grid-cols-4">
           <div class="p-5 bg-white rounded shadow-sm">
             <div class="flex items-center space-x-4 space-y-2">
               <div>
@@ -134,7 +134,7 @@
         </div>
         <div class="divider"></div>
       </div>
-      <div class="md:w-3/6 p-5">
+      <div class="p-5 md:w-3/6">
         <header class="py-3">
           <h1 class="text-xl font-semibold text-gray-400 capitalize">Announcements</h1>
         </header>
