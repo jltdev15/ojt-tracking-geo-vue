@@ -1,25 +1,22 @@
 <template>
   <div
     v-if="props.id !== messengerStore.userStore.id"
-    class="items-center gap-1 md:gap-3 cursor-pointer hover:bg-gray-100 pt-3 px-3 flex md:flex-row flex-col"
+    class="flex flex-col items-center gap-1 p-3 cursor-pointer md:gap-3 hover:bg-gray-100 md:flex-row"
     @click="newConvo()"
   >
     <div class="relative">
       <img
-        class="w-10 h-10 rounded-full max-sm:max-w-10 max-sm:max-h-10"
+        class="w-12 h-10 rounded-full max-sm:max-w-10 max-sm:max-h-10"
         src="/favicon.ico"
         alt="profile image"
       />
-      <span
-        v-if="props.id == UsersActive.activeUsers"
-        class="top-0 start-7 absolute w-3.5 h-3.5 bg-green-500 border-2 border-white dark:border-gray-800 rounded-full"
-      ></span>
+
     </div>
-    <div class="w-24 md:w-full text-lg font-medium">
-      <p class="capitalize md:text-lg text-[0.7rem] leading-3 text-center">
+    <div class="flex flex-col justify-start w-24 text-lg font-medium md:w-full">
+      <p class="capitalize md:text-lg text-[0.7rem] leading-3 text-left">
         {{ props.name }}
       </p>
-      <div class="flex gap-1 md:gap-2 justify-center items-center">
+      <div class="flex items-center gap-1 md:gap-2 md:justify-start">
         <p v-if="props.department" class="text-[0.6rem] md:text-xs">
           {{ props.department ? props.department : "" }}
         </p>
