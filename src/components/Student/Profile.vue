@@ -21,7 +21,7 @@
           </p>
         </header>
 
-        <section class="grid md:grid-cols-2 md:w-3/6">
+        <section class="grid md:grid-cols-2 md:w-2/6">
           <!-- Left side -->
           <div class="flex flex-col pt-6">
             <label for="">Department</label>
@@ -30,7 +30,7 @@
               type="text"
               v-model="authStore.internInformation.department"
               placeholder="Type here"
-              class="w-full max-w-xs input input-bordered"
+              class="w-full md:max-w-xs input input-bordered"
             />
             <label for="">First Name</label>
             <input
@@ -38,7 +38,7 @@
               type="text"
               v-model="authStore.internInformation.firstName"
               placeholder="Type here"
-              class="w-full max-w-xs input input-bordered"
+              class="w-full md:max-w-xs input input-bordered"
               required
             />
             <label for="">Middle Initial</label>
@@ -47,7 +47,7 @@
               type="text"
               v-model="authStore.internInformation.middleInitial"
               placeholder="Type here"
-              class="w-full max-w-xs input input-bordered"
+              class="w-full md:max-w-xs input input-bordered"
               required
             />
             <label for="">Last Name</label>
@@ -56,7 +56,7 @@
               type="text"
               v-model="authStore.internInformation.lastName"
               placeholder="Type here"
-              class="w-full max-w-xs input input-bordered"
+              class="w-full md:max-w-xs input input-bordered"
               required
             />
             <label for="">Email</label>
@@ -65,7 +65,7 @@
               type="text"
               v-model="authStore.internInformation.email"
               placeholder="Type here"
-              class="w-full max-w-xs input input-bordered"
+              class="w-full md:max-w-xs input input-bordered"
               required
             />
             <label for="">Contact</label>
@@ -74,7 +74,7 @@
               type="number"
               v-model="authStore.internInformation.contact"
               placeholder="Type here"
-              class="w-full max-w-xs input input-bordered"
+              class="w-full md:max-w-xs input input-bordered"
               required
             />
           </div>
@@ -86,7 +86,7 @@
               type="number"
               v-model="authStore.internInformation.age"
               placeholder="Type here"
-              class="w-full max-w-xs input input-bordered"
+              class="w-full md:max-w-xs input input-bordered"
               required
             />
             <label for="">Birthday</label>
@@ -95,7 +95,7 @@
               type="date"
               v-model="authStore.internInformation.birthday"
               placeholder="Type here"
-              class="w-full max-w-xs input input-bordered"
+              class="w-full md:max-w-xs input input-bordered"
               required
             />
             <label for="">Street</label>
@@ -104,7 +104,7 @@
               type="text"
               v-model="authStore.internInformation.street"
               placeholder="Type here"
-              class="w-full max-w-xs input input-bordered"
+              class="w-full md:max-w-xs input input-bordered"
               required
             />
             <label for="">Brgy.</label>
@@ -113,7 +113,7 @@
               type="text"
               v-model="authStore.internInformation.brgy"
               placeholder="Type here"
-              class="w-full max-w-xs input input-bordered"
+              class="w-full md:max-w-xs input input-bordered"
               required
             />
             <label for="">Zip Code</label>
@@ -122,7 +122,7 @@
               type="text"
               v-model="authStore.internInformation.zipcode"
               placeholder="Type here"
-              class="w-full max-w-xs input input-bordered"
+              class="w-full md:max-w-xs input input-bordered"
               required
             />
             <label for="">Municipality/City</label>
@@ -131,7 +131,7 @@
               type="text"
               v-model="authStore.internInformation.municipality"
               placeholder="Type here"
-              class="w-full max-w-xs input input-bordered"
+              class="w-full md:max-w-xs input input-bordered"
               required
             />
             <label for="">Province</label>
@@ -140,13 +140,13 @@
               type="text"
               v-model="authStore.internInformation.province"
               placeholder="Type here"
-              class="w-full max-w-xs input input-bordered"
+              class="w-full md:max-w-xs input input-bordered"
               required
             />
           </div>
         </section>
 
-        <div class="flex py-6 pr-12 w-full md:w-64">
+        <div class="flex w-full py-6 md:w-64">
           <button
             type="button"
             v-if="!isEditEnable"
@@ -155,7 +155,7 @@
           >
             Edit Profile
           </button>
-          <button type="submit" v-if="isEditEnable" class="btn md:btn-block btn-primary">
+          <button type="submit" v-if="isEditEnable" class="w-full btn md:btn-block btn-primary">
             Update Profile
           </button>
         </div>

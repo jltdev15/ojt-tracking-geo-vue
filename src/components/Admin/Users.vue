@@ -11,7 +11,7 @@
       </ul>
     </div>
     <header
-      class="flex items-center gap-3 flex-col md:flex-row md:justify-between px-6 bg-gray-200"
+      class="flex flex-col items-center gap-3 px-6 bg-gray-200 md:flex-row md:justify-between"
     >
       <h1 class="text-3xl">User <span class="text-3xl font-bold">Management</span></h1>
       <div>
@@ -20,7 +20,7 @@
         </button>
       </div>
     </header>
-    <div class="flex justify-end gap-3 md:px-6 py-3 md:p-6">
+    <div class="flex justify-end gap-3 py-3 md:px-6 md:p-6">
       <!-- <input type="text" placeholder="Type here" class="w-full input input-bordered" v-model="searchValue" /> -->
       <select class="w-full select select-bordered" @change="handleUserFilter">
         <option selected disabled value="Set filter">Search filter</option>
@@ -59,7 +59,7 @@
       </EasyDataTable>
     </section>
 
-    <Modal :show="isModalShow" title="New Account">
+    <Modal :show="isModalShow" @close="isModalShow = !isModalShow" title="New Account">
       <!-- <Modal :show="true" title="New Account"> -->
       <template #default>
         <div>
@@ -80,7 +80,8 @@
             <option value="HTE">HTE</option>
             <option value="Intern">Intern</option>
           </select>
-          <div v-if="selectedRole === 'Intern'" class="flex flex-col gap-3 pt-3">
+          <div v-if="selectedRole === 'Intern'" >
+            <form @submit.prevent="handleInternUser" action="" class="flex flex-col gap-3 pt-3">
             <label class="flex items-center gap-2 input input-bordered">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -97,6 +98,7 @@
                 type="text"
                 class="grow"
                 placeholder="Username"
+                required
               />
             </label>
             <label class="flex items-center justify-between gap-2 input input-bordered">
@@ -117,6 +119,7 @@
                 placeholder="Secure password"
                 v-model.trim="intern.password"
                 :type="passwordFieldType"
+                required
               />
             </label>
             <div class="flex justify-end">
@@ -152,19 +155,30 @@
               </svg>
               <input
                 v-model="intern.email"
-                type="text"
+                type="email"
                 class="grow"
                 placeholder="Email"
+                required
               />
             </label>
-            <!-- <label class="flex items-center gap-2 input input-bordered">
+            <label class="flex items-center gap-2 input input-bordered">
               <input
-                v-model="intern.fullName"
+                v-model="intern.firstName"
                 type="text"
                 class="grow"
-                placeholder="Full Name"
+                placeholder="First Name"
+                required
               />
-            </label> -->
+            </label>
+            <label class="flex items-center gap-2 input input-bordered">
+              <input
+                v-model="intern.lastName"
+                type="text"
+                class="grow"
+                placeholder="Last Name"
+                required
+              />
+            </label>
             <!-- <label class="flex items-center gap-2 input input-bordered">
               <input
                 v-model="intern.contact"
@@ -199,17 +213,18 @@
               <button @click="handleInternUser" class="text-lg btn btn-primary btn-block">
                 Create User
               </button>
-              <button
-                class="text-lg btn btn-outline btn-block"
+              <button type="submit"
+                class="text-lg btn-accent btn btn-outline btn-block"
                 @click="handleToggleModal"
               >
                 Close
               </button>
             </div>
+          </form>
           </div>
           <!-- <div v-if="selectedRole === 'HTE'" class="flex flex-col gap-3 pt-3"> -->
           <div v-if="selectedRole === 'HTE'" class="flex gap-3 pt-3">
-            <div class="flex flex-col gap-3 w-full">
+            <div class="flex flex-col w-full gap-3">
               <label class="flex items-center gap-2 input input-bordered">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -248,7 +263,7 @@
                   :type="passwordFieldType"
                 />
               </label>
-              <div class="flex justify-start gap-3 flex-row-reverse">
+              <div class="flex flex-row-reverse justify-start gap-3">
                 <button
                   class="text-right btn btn-primary"
                   @click="handleGeneratePassword"
@@ -277,7 +292,7 @@
                     d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z"
                   />
                 </svg>
-                <input v-model="hte.email" type="text" class="grow" placeholder="Email" />
+                <input v-model="hte.email" type="email" class="grow" placeholder="Email" />
               </label>
               <label class="flex items-center gap-2 input input-bordered">
                 <input
@@ -290,13 +305,19 @@
               <label class="flex items-center gap-2 input input-bordered">
                 <input
                   v-model="hte.contactNumber"
-                  type="text"
+                  type="number"
                   class="grow"
                   placeholder="Contact number"
                 />
               </label>
 
               <label class="flex items-center gap-2 input input-bordered">
+                <input
+                  v-model="hte.address"
+                  type="text"
+                  class="grow"
+                  placeholder="Company Address"
+                />
                 <input
                   v-model="hte.address"
                   type="text"
@@ -326,6 +347,16 @@
                   placeholder="Longtitude"
                 />
               </label>
+
+              <GoogleMap
+              :api-key="apiKey"
+              style="width: 100%; height: 500px"
+              :center="center"
+              :zoom="15"
+              mapId="DEMO_MAP_ID"
+              >
+                <Marker :options="{ position: center }" />
+              </GoogleMap>
               <!-- <label for="" class="font-medium text-center"
                 >Is Memorandum of Agreement provided?</label
               >
@@ -513,11 +544,12 @@
 </template>
 
 <script setup>
+import { GoogleMap, Marker } from 'vue3-google-map'
 import { useAdminUserStore } from "@/stores/AdminUserStore";
 import { useRouter } from "vue-router";
 const userStore = useAdminUserStore();
 import { ref, onMounted, reactive } from "vue";
-
+const center = { lat: 40.689247, lng: -74.044502 }
 const router = useRouter();
 const searchField = ref("role");
 const searchValue = ref("");
@@ -526,7 +558,7 @@ const selectedRole = ref("Select User Role");
 const passwordFieldType = ref("password");
 const showPassword = ref(false);
 const isConfirmationModalShow = ref(false);
-
+const apiKey = import.meta.env.VITE_API_GOOGLE_KEY
 const handleUserFilter = async (event) => {
   console.log("====================================");
   console.log(event.target.value);
@@ -540,7 +572,8 @@ const intern = reactive({
   address: "",
   role: selectedRole.value,
   email: "",
-  fullName: "",
+  firstName: "",
+  lastName: "",
   department: "",
 });
 const hte = reactive({
@@ -672,18 +705,13 @@ const handleInternUser = async () => {
     if (intern.username === "") {
       return alert("Please enter username");
     }
-    // if (intern.contact === "") {
-    //   return alert("Please enter username");
-    // }
     if (intern.password === "") {
       return alert("Please enter password");
     }
     if (intern.email === "") {
       return alert("Please enter email");
     }
-    // if (intern.fullName === "") {
-    //   return alert("Please enter full name");
-    // }
+
     if (intern.department === "") {
       return alert("Please select department");
     }
