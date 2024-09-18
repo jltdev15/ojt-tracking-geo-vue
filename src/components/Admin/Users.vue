@@ -663,6 +663,8 @@ const resetInternForms = () => {
   intern.department = "";
   // intern.contact = "";
   // intern.address = "";
+    intern.firstName= "";
+  intern.lastName="";
 };
 const resetHTEForms = () => {
   hte.username = "";

@@ -21,7 +21,7 @@
           </p>
         </header>
 
-        <section class="grid md:grid-cols-2 md:w-2/6">
+        <section class="grid md:gap-3 md:grid-cols-2 md:w-2/6">
           <!-- Left side -->
           <div class="flex flex-col pt-6">
             <label for="">Department</label>
@@ -146,7 +146,7 @@
           </div>
         </section>
 
-        <div class="flex w-full py-6 md:w-64">
+        <div class="flex py-6 md:w-2/6">
           <button
             type="button"
             v-if="!isEditEnable"
