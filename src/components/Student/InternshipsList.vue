@@ -23,7 +23,7 @@
         <div class="grid justify-center gap-6 md:grid-cols-3">
           <p v-if="internStore.internshipLists.length === 0">No listing available</p>
           <p class="inline-block p-3 capitalize bg-primary text-gray-50" v-if="internStore.requiredHours === 0 && internStore.internshipLists.length > 0">Please ask your coordinator to set required hours</p>
-          <p class="p-3 bg-primary text-gray-50" v-else-if="!internStore.isProfileComplete && internStore.internshipLists.length > 0">
+          <p class="p-3 bg-primary text-gray-50" v-else-if="!internStore.isProfileComplete && internStore.internshipLists.length">
             Please complete your profile information. <router-link class="underline " :to="{name:'intern_profile'}">Click here</router-link>
           </p>
           <div v-else>
