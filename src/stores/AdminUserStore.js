@@ -122,9 +122,10 @@ export const useAdminUserStore = defineStore("user", () => {
     // console.log(payload);
     try {
       const response = await apiClient.post("/intern", payload);
-      await fetchUsers();
+ 
       console.log(response.data.message);
       alert(response.data.message)
+      await fetchUsers();
     } catch (err) {
       console.log(err.response.data.message);
       if(err.response.data.message){

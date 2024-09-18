@@ -11,9 +11,7 @@
         <section>
           <slot></slot>
         </section>
-        <menu v-if="!fixed">
-          <slot name="actions"> </slot>
-        </menu>
+
       </dialog>
     </transition>
   </teleport>
@@ -38,9 +36,6 @@ const props = defineProps({
 const emit = defineEmits(["close"]);
 
 function closeHandler() {
-  if (props.fixed) {
-    return;
-  }
   emit("close");
 }
 </script>
