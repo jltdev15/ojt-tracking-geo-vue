@@ -92,7 +92,6 @@ export const useAuthStore = defineStore("auth", () => {
         internInformation.brgy = response.data.content.profile.brgy;
         internInformation.municipality = response.data.content.profile.municipality;
         internInformation.province = response.data.content.profile.province;
-        internInformation.zipcode = response.data.content.profile.zipcode;
         internInformation.department = response.data.content.profile.department;
         internInformation.userName = response.data.content.username;
         isInternReady.value = response.data.content.profile.isInternshipReady;
@@ -237,7 +236,6 @@ export const useAuthStore = defineStore("auth", () => {
       brgy: internInformation.brgy,
       municipality: internInformation.municipality,
       province: internInformation.province,
-      zipcode: internInformation.zipcode,
       department: internInformation.department,
       email: internInformation.email
       

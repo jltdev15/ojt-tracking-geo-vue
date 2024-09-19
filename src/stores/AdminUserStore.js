@@ -19,8 +19,7 @@ export const useAdminUserStore = defineStore("user", () => {
   const vacancyList = ref([]);
   const coorRequestList = ref([]);
   const requestListBy = ref("");
-  const evaluationResults = ref('')
-
+  const evaluationResults = ref("");
 
   const userRoleList = reactive({
     hte: "",
@@ -122,14 +121,14 @@ export const useAdminUserStore = defineStore("user", () => {
     // console.log(payload);
     try {
       const response = await apiClient.post("/intern", payload);
- 
+
       console.log(response.data.message);
-      alert(response.data.message)
+      alert(response.data.message);
       await fetchUsers();
     } catch (err) {
       console.log(err.response.data.message);
-      if(err.response.data.message){
-        return alert('Duplicate username. Please try other one')
+      if (err.response.data.message) {
+        return alert("Duplicate username. Please try other one");
       }
     }
   };
@@ -467,9 +466,12 @@ export const useAdminUserStore = defineStore("user", () => {
       console.log(err);
     }
   };
-  const updateAnnouncement = async (idToUpdate,payload) => {
+  const updateAnnouncement = async (idToUpdate, payload) => {
     try {
-      const response = await apiClient.patch(`/announcement/update/${idToUpdate}`,payload);
+      const response = await apiClient.patch(
+        `/announcement/update/${idToUpdate}`,
+        payload
+      );
       console.log(response);
       await fetchAnnouncement();
     } catch (err) {
@@ -481,10 +483,10 @@ export const useAdminUserStore = defineStore("user", () => {
       const response = await apiClient.get(`/hte/view/evaluation/${internId}`);
       console.log(response);
       evaluationResults.value = await response.data.content;
-    }catch(err) {
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
   // Computed
   const getNumberOfVacancy = computed(() => {
     return vacancyList.value.length;
@@ -607,6 +609,6 @@ export const useAdminUserStore = defineStore("user", () => {
     getNumberOfVacancy,
     updateAnnouncement,
     evaluationResults,
-    getEvaluationItemResults
+    getEvaluationItemResults,
   };
 });
