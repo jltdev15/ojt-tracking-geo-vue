@@ -200,7 +200,7 @@
                 <label class="block" for="">Barangay</label>
                 <select class="w-full text-base select select-bordered " v-model="selectedBrgy" @change="onSelectBrgy" required>
                   <option value="" selected>{{ userStore.updateInfo.internBrgy }}</option>
-                  <option v-for="item in municipality" :key="item" :value="item">
+                  <option v-for="item in brgy" :key="item" :value="item">
                     {{ item.name }}
                   </option>
                 </select>
