@@ -12,18 +12,18 @@
     </div>
     <form @submit.prevent="updateInformationHandler">
       <section class="px-6">
-        <header class="pb-3">
-          <h1 class="text-3xl my-1 font-bold capitalize">
+        <header class="flex items-center justify-between pb-3 md:w-full lg:w-3/6">
+          <h1 class="my-1 text-3xl font-bold capitalize">
             {{ authStore.internInformation.firstName }}
             {{ authStore.internInformation.lastName }}
           </h1>
-          <p class="font-medium text-gray-50 rounded bg-primary inline-block p-1 px-3">
+          <p class="inline-block p-1 px-3 font-medium rounded text-gray-50 bg-primary">
             Intern ID : {{ authStore.internInformation.internId.substring(0, 10) }}
           </p>
         </header>
 
         <section
-          class="grid md:gap-6 md:grid-cols-2 shadow-md rounded-md md:w-full px-6 py-6 lg:w-3/6 bg-white"
+          class="grid px-6 py-6 bg-white rounded-md shadow-md md:gap-6 md:grid-cols-2 md:w-full lg:w-3/6"
         >
           <!-- Left side -->
           <div class="flex flex-col gap-4">
@@ -86,10 +86,13 @@
               <label class="block" for="">Contact</label>
               <input
                 :disabled="!isEditEnable"
-                type="number"
                 v-model="authStore.internInformation.contact"
                 placeholder="Type here"
                 class="w-full md:max-w-md input input-bordered"
+                minlength="11"
+                maxlength="11"
+                type="text"
+                pattern="\d{11}"
                 required
               />
             </div>
@@ -121,11 +124,12 @@
             <div>
               <label class="block" for="">Province</label>
               <select
-                class="select select-bordered w-full md:max-w-md"
+              :disabled="!isEditEnable"
+                class="w-full select select-bordered md:max-w-md"
                 v-model="selectedProvinces"
                 @change="onSelectProvince"
               >
-                <option selected disabled>Select Province</option>
+                <option value="" selected>{{ authStore.internInformation.province ? authStore.internInformation.province : 'Select Province'  }}</option>
                 <option v-for="item in provinces" :key="item" :value="item">
                   {{ item.name }}
                 </option>
@@ -134,11 +138,12 @@
             <div>
               <label class="block" for="">City or Municipality</label>
               <select
-                class="select select-bordered w-full md:max-w-md"
+              :disabled="!isEditEnable"
+                class="w-full select select-bordered md:max-w-md"
                 v-model="selectedMunicipality"
                 @change="onSelectMunicipality"
               >
-                <option selected disabled>Select City or Municipality</option>
+                <option selected value="">{{ authStore.internInformation.municipality ? authStore.internInformation.municipality : 'Select Municipality'  }}</option>
                 <option v-for="item in municipality" :key="item" :value="item">
                   {{ item.name }}
                 </option>
@@ -147,11 +152,12 @@
             <div>
               <label class="block" for="">Barangay</label>
               <select
-                class="select select-bordered w-full md:max-w-md"
+              :disabled="!isEditEnable"
+                class="w-full select select-bordered md:max-w-md"
                 v-model="selectedBrgy"
                 @change="onSelectBrgy"
               >
-                <option selected disabled>Select Brgy</option>
+                <option value="" selected >{{ authStore.internInformation.brgy ? authStore.internInformation.brgy : 'Select Barangay' }}</option>
                 <option v-for="item in brgy" :key="item" :value="item">
                   {{ item.name }}
                 </option>
@@ -169,7 +175,7 @@
               />
             </div>
           </div>
-          <div class="col-span-2 flex justify-end">
+          <div class="flex justify-end col-span-2">
             <button
               type="button"
               v-if="!isEditEnable"
@@ -204,9 +210,9 @@ const provinces = ref([]);
 const municipality = ref([]);
 const brgy = ref([]);
 const selected = ref([]);
-const selectedProvinces = ref("Select Province");
-const selectedMunicipality = ref("Select City or Municipality");
-const selectedBrgy = ref("Select Brgy");
+const selectedProvinces = ref("");
+const selectedMunicipality = ref("");
+const selectedBrgy = ref("");
 const updateInformationHandler = async () => {
   await authStore.updatePersonalInfo();
   alert("Update success!");

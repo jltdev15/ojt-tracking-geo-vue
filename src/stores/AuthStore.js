@@ -77,7 +77,7 @@ export const useAuthStore = defineStore("auth", () => {
         currentDepartment.value = response.data.content.profile.department;
         coorId.value = response.data.content.profile._id;
         currentRole.value = response.data.content.role;
-        return (currentUser.value = response.data.content.profile.fullName);
+        return (currentUser.value = response.data.content.profile.firstName);
       }
       if (userRole.value === "Intern") {
         internInformation.firstName = response.data.content.profile.firstName;
@@ -89,9 +89,9 @@ export const useAuthStore = defineStore("auth", () => {
         internInformation.internId = response.data.content.username;
         internInformation.birthday = response.data.content.profile.birthday;
         internInformation.street = response.data.content.profile.street;
-        internInformation.brgy = response.data.content.profile.brgy;
-        internInformation.municipality = response.data.content.profile.municipality;
-        internInformation.province = response.data.content.profile.province;
+        internInformation.brgy = await response.data.content.profile.brgy;
+        internInformation.municipality = await response.data.content.profile.municipality;
+        internInformation.province = await response.data.content.profile.province;
         internInformation.department = response.data.content.profile.department;
         internInformation.userName = response.data.content.username;
         isInternReady.value = response.data.content.profile.isInternshipReady;

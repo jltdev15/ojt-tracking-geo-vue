@@ -28,19 +28,28 @@ export const useAdminUserStore = defineStore("user", () => {
     admin: "",
   });
   const updateInfo = reactive({
+    // Coor
     coorId: "",
     username: "",
     email: "",
-    fullName: "",
+    firstName: "",
+    lastName: "",
     contactNumber: "",
     department: "",
+    street: "",
+    province: "",
+    municipality: "",
+    brgy: "",
 
     // HTE
-    companyAddress: "",
-    companyContact: "",
-    hasMoa: "",
-    location: "",
+    companyEmail: "",
     companyName: "",
+    companyContact: "",
+    companyProvince: "",
+    companyMunicipality: "",
+    companyBrgy: "",
+    companyStreet: "",
+    location: "",
     mapLocation: {
       lat: {
         type: Number,
@@ -51,15 +60,21 @@ export const useAdminUserStore = defineStore("user", () => {
     },
     hteProfileId: "",
     hasMoa: "",
-    companyEmail: "",
+
 
     // Intern
     internEmail: "",
-    internName: "",
+    internfirstName: "",
+    internlastName: "",
     internContact: "",
+    internProvince: "",
+    internMunicipality: "",
+    internBrgy: "",
+    internStreet: "",
     internDepartment: "",
     requiredHours: "",
     internId: "",
+    internMiddle:''
   });
 
   // Methods
@@ -228,8 +243,13 @@ export const useAdminUserStore = defineStore("user", () => {
       if (response.data.content.role === "Coordinator") {
         updateInfo.coorId = userId;
         updateInfo.email = response.data.content.email;
-        updateInfo.fullName = response.data.content.profile.fullName;
+        updateInfo.firstName = response.data.content.profile.firstName;
+        updateInfo.lastName = response.data.content.profile.lastName;
         updateInfo.contactNumber = response.data.content.profile.contact;
+        updateInfo.street = response.data.content.profile.street;
+        updateInfo.province = await response.data.content.profile.province;
+        updateInfo.municipality = await response.data.content.profile.municipality;
+        updateInfo.brgy = await response.data.content.profile.brgy;
         updateInfo.department = response.data.content.profile.department;
         updateInfo.username = response.data.content.username;
         currentRole.value = response.data.content.role;
@@ -248,9 +268,16 @@ export const useAdminUserStore = defineStore("user", () => {
       if (response.data.content.role === "Intern") {
         updateInfo.internId = userId;
         updateInfo.internEmail = response.data.content.email;
-        updateInfo.internName = response.data.content.profile.fullName;
+        updateInfo.internfirstName = response.data.content.profile.firstName;
+        updateInfo.internlastName = response.data.content.profile.lastName;
         updateInfo.requiredHours = response.data.content.profile.requiredHours;
         updateInfo.internContact = response.data.content.profile.contact;
+        updateInfo.internProvince = response.data.content.profile.province;
+        updateInfo.internMunicipality = response.data.content.profile.municipality;
+        updateInfo.internBrgy = response.data.content.profile.brgy;
+        updateInfo.internStreet = response.data.content.profile.street;
+        updateInfo.internMiddle = response.data.content.profile.middleInitial;
+
         updateInfo.internDepartment = response.data.content.profile.department;
         currentRole.value = response.data.content.role;
       }
@@ -260,10 +287,16 @@ export const useAdminUserStore = defineStore("user", () => {
   };
   const updateInformationCoor = async () => {
     const payload = {
-      fullname: updateInfo.fullName,
-      email: updateInfo.email,
-      contact: updateInfo.contactNumber,
+      firstName: updateInfo.firstName,
+      lastName: updateInfo.lastName,
+      contactNumber: updateInfo.contactNumber,
       department: updateInfo.department,
+      street: updateInfo.street,
+      brgy: updateInfo.brgy,
+      municipality: updateInfo.municipality,
+      province: updateInfo.province,
+      email: updateInfo.email,
+
     };
     console.log(updateInfo);
 
@@ -303,9 +336,15 @@ export const useAdminUserStore = defineStore("user", () => {
   const updateInformationIntern = async () => {
     const payload = {
       email: updateInfo.internEmail,
-      name: updateInfo.internName,
+      firstName: updateInfo.internfirstName,
+      lastName: updateInfo.internfirstName,
       contact: updateInfo.internContact,
-      requiredHours: updateInfo.requiredHours,
+      province: updateInfo.internProvince,
+      municipality: updateInfo.internMunicipality,
+      brgy: updateInfo.internBrgy,
+      street: updateInfo.internStreet,
+      middleInitial: updateInfo.internMiddle,
+      // requiredHours: updateInfo.requiredHours,
       department: updateInfo.internDepartment,
     };
     try {

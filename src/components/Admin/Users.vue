@@ -10,7 +10,9 @@
         </li>
       </ul>
     </div>
-    <header class="flex flex-col items-center gap-3 px-6 bg-gray-200 md:flex-row md:justify-between">
+    <header
+      class="flex flex-col items-center gap-3 px-6 bg-gray-200 md:flex-row md:justify-between"
+    >
       <h1 class="text-3xl">User <span class="text-3xl font-bold">Management</span></h1>
       <div>
         <button @click="handleToggleModal" class="btn btn-block">
@@ -29,16 +31,27 @@
       </select>
     </div>
     <section class="md:px-6">
-      <EasyDataTable :headers="headers" :items="userStore.getNumberOfUsersOnly" :search-field="searchField"
-        :search-value="searchValue" :rows-per-page="10" show-index table-class-name="customize-table">
+      <EasyDataTable
+        :headers="headers"
+        :items="userStore.getNumberOfUsersOnly"
+        :search-field="searchField"
+        :search-value="searchValue"
+        :rows-per-page="10"
+        show-index
+        table-class-name="customize-table"
+      >
         <template #item-operation="item">
           <div class="flex justify-between gap-3 py-2">
-            <button @click="toggleConfirmationModal(item._id)"
-              class="flex items-center justify-center w-24 gap-2 py-3 btn-accent btn btn-outline">
+            <button
+              @click="toggleConfirmationModal(item._id)"
+              class="flex items-center justify-center w-24 gap-2 py-3 btn-accent btn btn-outline"
+            >
               Remove<i class="fa-solid fa-trash"></i>
             </button>
-            <router-link :to="{ name: 'UpdateUser', params: { id: item._id } }"
-              class="flex items-center justify-center w-24 gap-2 py-3 btn btn-primary text-gray-50">
+            <router-link
+              :to="{ name: 'UpdateUser', params: { id: item._id } }"
+              class="flex items-center justify-center w-24 gap-2 py-3 btn btn-primary text-gray-50"
+            >
               Update <i class="fa-solid fa-pen-to-square"></i>
             </router-link>
           </div>
@@ -50,10 +63,17 @@
       <!-- <Modal :show="true" title="New Account"> -->
       <template #default>
         <div>
-          <p v-if="selectedRole === 'Select User Role'" class="pb-3 font-medium text-center text-gray-600">
+          <p
+            v-if="selectedRole === 'Select User Role'"
+            class="pb-3 font-medium text-center text-gray-600"
+          >
             Please select role to proceed
           </p>
-          <select @change="handleSelectChange" v-model.trim="selectedRole" class="w-full py-3 select select-bordered">
+          <select
+            @change="handleSelectChange"
+            v-model.trim="selectedRole"
+            class="w-full py-3 select select-bordered"
+          >
             <option selected disabled value="Select User Role">Select User Role</option>
             <option value="Admin">Admin</option>
             <option value="Coordinator">Coordinator</option>
@@ -61,51 +81,107 @@
             <option value="Intern">Intern</option>
           </select>
           <div v-if="selectedRole === 'Intern'">
-            <form @submit.prevent="handleInternUser" action="" class="flex flex-col gap-3 pt-3">
+            <form
+              @submit.prevent="handleInternUser"
+              action=""
+              class="flex flex-col gap-3 pt-3"
+            >
               <label class="flex items-center gap-2 input input-bordered">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
-                  class="w-4 h-4 opacity-70">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  class="w-4 h-4 opacity-70"
+                >
                   <path
-                    d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+                    d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z"
+                  />
                 </svg>
-                <input v-model.trim="intern.username" type="text" class="grow" placeholder="Username" required />
+                <input
+                  v-model.trim="intern.username"
+                  type="text"
+                  class="grow"
+                  placeholder="Username"
+                  required
+                />
               </label>
               <label class="flex items-center justify-between gap-2 input input-bordered">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
-                  class="w-4 h-4 opacity-70">
-                  <path fill-rule="evenodd"
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  class="w-4 h-4 opacity-70"
+                >
+                  <path
+                    fill-rule="evenodd"
                     d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
-                    clip-rule="evenodd" />
+                    clip-rule="evenodd"
+                  />
                 </svg>
-                <input class="grow" placeholder="Secure password" v-model.trim="intern.password"
-                  :type="passwordFieldType" required />
+                <input
+                  class="grow"
+                  placeholder="Secure password"
+                  v-model.trim="intern.password"
+                  :type="passwordFieldType"
+                  required
+                />
               </label>
               <div class="flex justify-end">
                 <div class="flex flex-row-reverse gap-3">
-                  <button class="ml-auto text-right btn btn-primary" @click="handleGeneratePassword">
+                  <button
+                    class="ml-auto text-right btn btn-primary"
+                    @click="handleGeneratePassword"
+                  >
                     Generate password
                   </button>
-                  <button class="ml-auto text-right btn btn-outline" @click="toggleShowPassword">
+                  <button
+                    class="ml-auto text-right btn btn-outline"
+                    @click="toggleShowPassword"
+                  >
                     {{ showPassword ? "Hide" : "Show" }}
                   </button>
                 </div>
               </div>
 
               <label class="flex items-center gap-2 input input-bordered">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
-                  class="w-4 h-4 opacity-70">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  class="w-4 h-4 opacity-70"
+                >
                   <path
-                    d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
+                    d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z"
+                  />
                   <path
-                    d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
+                    d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z"
+                  />
                 </svg>
-                <input v-model="intern.email" type="email" class="grow" placeholder="Email" required />
+                <input
+                  v-model="intern.email"
+                  type="email"
+                  class="grow"
+                  placeholder="Email"
+                  required
+                />
               </label>
               <label class="flex items-center gap-2 input input-bordered">
-                <input v-model="intern.firstName" type="text" class="grow" placeholder="First Name" required />
+                <input
+                  v-model="intern.firstName"
+                  type="text"
+                  class="grow"
+                  placeholder="First Name"
+                  required
+                />
               </label>
               <label class="flex items-center gap-2 input input-bordered">
-                <input v-model="intern.lastName" type="text" class="grow" placeholder="Last Name" required />
+                <input
+                  v-model="intern.lastName"
+                  type="text"
+                  class="grow"
+                  placeholder="Last Name"
+                  required
+                />
               </label>
               <!-- <label class="flex items-center gap-2 input input-bordered">
               <input
@@ -123,10 +199,17 @@
                 placeholder="Complete Address"
               />
             </label> -->
-              <select @change="handleSelectDepartmentIntern" class="w-full py-3 select select-bordered">
+              <select
+                @change="handleSelectDepartmentIntern"
+                class="w-full py-3 select select-bordered"
+              >
                 <option selected disabled value="">Select department</option>
 
-                <option v-for="item in userStore.departmentlist" :key="item._id" :value="item.name">
+                <option
+                  v-for="item in userStore.departmentlist"
+                  :key="item._id"
+                  :value="item.name"
+                >
                   {{ item.name }}
                 </option>
               </select>
@@ -134,7 +217,11 @@
                 <button type="submit" class="text-lg btn btn-primary btn-block">
                   Create User
                 </button>
-                <button type="button" class="text-lg btn-accent btn btn-outline btn-block" @click="handleToggleModal">
+                <button
+                  type="button"
+                  class="text-lg btn-accent btn btn-outline btn-block"
+                  @click="handleToggleModal"
+                >
                   Close
                 </button>
               </div>
@@ -144,153 +231,306 @@
           <div v-if="selectedRole === 'HTE'" class="flex gap-3 pt-3">
             <div class="flex flex-col w-full gap-3">
               <label class="flex items-center gap-2 input input-bordered">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
-                  class="w-4 h-4 opacity-70">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  class="w-4 h-4 opacity-70"
+                >
                   <path
-                    d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+                    d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z"
+                  />
                 </svg>
-                <input v-model="hte.username" type="text" class="grow" placeholder="Username" />
+                <input
+                  v-model="hte.username"
+                  type="text"
+                  class="grow"
+                  placeholder="Username"
+                />
               </label>
               <label class="flex items-center justify-between gap-2 input input-bordered">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
-                  class="w-4 h-4 opacity-70">
-                  <path fill-rule="evenodd"
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  class="w-4 h-4 opacity-70"
+                >
+                  <path
+                    fill-rule="evenodd"
                     d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
-                    clip-rule="evenodd" />
+                    clip-rule="evenodd"
+                  />
                 </svg>
-                <input class="grow" placeholder="Secure password" v-model.trim="hte.password"
-                  :type="passwordFieldType" />
+                <input
+                  class="grow"
+                  placeholder="Secure password"
+                  v-model.trim="hte.password"
+                  :type="passwordFieldType"
+                />
               </label>
               <div class="flex flex-row-reverse justify-start gap-3">
-                <button class="text-right btn btn-primary" @click="handleGeneratePassword">
+                <button
+                  class="text-right btn btn-primary"
+                  @click="handleGeneratePassword"
+                >
                   Generate password
                 </button>
-                <button class="text-right btn btn-accent btn-outline" @click="toggleShowPassword">
+                <button
+                  class="text-right btn btn-accent btn-outline"
+                  @click="toggleShowPassword"
+                >
                   {{ showPassword ? "Hide" : "Show" }}
                 </button>
               </div>
 
               <label class="flex items-center gap-2 input input-bordered">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
-                  class="w-4 h-4 opacity-70">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  class="w-4 h-4 opacity-70"
+                >
                   <path
-                    d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
+                    d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z"
+                  />
                   <path
-                    d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
+                    d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z"
+                  />
                 </svg>
-                <input v-model="hte.email" type="email" class="grow" placeholder="Email" />
+                <input
+                  v-model="hte.email"
+                  type="email"
+                  class="grow"
+                  placeholder="Email"
+                />
               </label>
               <label class="flex items-center gap-2 input input-bordered">
-                <input v-model="hte.fullName" type="text" class="grow" placeholder="Company name" />
+                <input
+                  v-model="hte.fullName"
+                  type="text"
+                  class="grow"
+                  placeholder="Company name"
+                />
               </label>
               <label class="flex items-center gap-2 input input-bordered">
-                <input v-model="hte.contactNumber" type="number" class="grow" placeholder="Contact number" />
+                <input
+                  v-model="hte.contactNumber"
+                  type="number"
+                  class="grow"
+                  placeholder="Contact number"
+                />
               </label>
 
               <label class="flex items-center gap-2 input input-bordered">
-                <input v-model="hte.address" type="text" class="grow" placeholder="Company Address" />
-                <input v-model="hte.address" type="text" class="grow" placeholder="Company Address" />
+                <input
+                  v-model="hte.address"
+                  type="text"
+                  class="grow"
+                  placeholder="Company Address"
+                />
+                <input
+                  v-model="hte.address"
+                  type="text"
+                  class="grow"
+                  placeholder="Company Address"
+                />
               </label>
               <p>
                 Please provide exact map coordinates
                 <span class="text-blue-500 underline">
-                  <a href="https://www.google.com/maps" target="_blank">open google map</a></span>
+                  <a href="https://www.google.com/maps" target="_blank"
+                    >open google map</a
+                  ></span
+                >
               </p>
               <label class="flex items-center gap-2 input input-bordered">
-                <input v-model="hte.mapLocation.lat" type="number" class="w-full" placeholder="Latitude" />
-                <input v-model="hte.mapLocation.lng" type="number" class="w-full" placeholder="Longtitude" />
+                <input
+                  v-model="hte.mapLocation.lat"
+                  type="number"
+                  class="w-full"
+                  placeholder="Latitude"
+                />
+                <input
+                  v-model="hte.mapLocation.lng"
+                  type="number"
+                  class="w-full"
+                  placeholder="Longtitude"
+                />
               </label>
 
-              <GoogleMap :api-key="apiKey" style="width: 100%; height: 500px" :center="center" :zoom="15"
-                mapId="DEMO_MAP_ID">
+              <GoogleMap
+                :api-key="apiKey"
+                style="width: 100%; height: 500px"
+                :center="center"
+                :zoom="15"
+                mapId="DEMO_MAP_ID"
+              >
                 <Marker :options="{ position: center }" />
               </GoogleMap>
-              <!-- <label for="" class="font-medium text-center"
-                >Is Memorandum of Agreement provided?</label
-              >
-              <div class="justify-center gap-3 pb-4 join">
-                <input
-                  class="join-item btn"
-                  type="radio"
-                  name="options"
-                  value="true"
-                  aria-label="Yes"
-                  v-model="hte.hasMoa"
-                  @change="onChange"
-                />
-                <input
-                  class="join-item btn"
-                  type="radio"
-                  name="options"
-                  value="false"
-                  aria-label="No"
-                  v-model="hte.hasMoa"
-                  @change="onChange"
-                />
-              </div> -->
+
               <div class="flex flex-col gap-2 mt-auto">
                 <button @click="handleHteUser" class="text-lg btn btn-primary btn-block">
                   Create User
                 </button>
-                <button class="text-lg btn btn-accent btn-outline btn-block" @click="handleToggleModal">
+                <button
+                  class="text-lg btn btn-accent btn-outline btn-block"
+                  @click="handleToggleModal"
+                >
                   Close
                 </button>
               </div>
             </div>
           </div>
           <div v-if="selectedRole === 'Coordinator'" class="flex flex-col gap-3 pt-3">
-            <!-- <div v-if="true" class="flex flex-col gap-3 pt-3"> -->
+          <!-- <div v-if="true" class="flex flex-col gap-3 pt-3"> -->
             <label class="flex items-center gap-2 input input-bordered">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
-                class="w-4 h-4 opacity-70">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="w-4 h-4 opacity-70"
+              >
                 <path
-                  d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+                  d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z"
+                />
               </svg>
-              <input v-model.trim="coordinator.username" type="text" class="grow" placeholder="Username" />
+              <input
+                v-model.trim="coordinator.username"
+                type="text"
+                class="grow"
+                placeholder="Username"
+              />
             </label>
             <label class="flex items-center justify-between gap-2 input input-bordered">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
-                class="w-4 h-4 opacity-70">
-                <path fill-rule="evenodd"
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="w-4 h-4 opacity-70"
+              >
+                <path
+                  fill-rule="evenodd"
                   d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
-                  clip-rule="evenodd" />
+                  clip-rule="evenodd"
+                />
               </svg>
-              <input class="grow" placeholder="Secure password" v-model.trim="coordinator.password"
-                :type="passwordFieldType" />
+              <input
+                class="grow"
+                placeholder="Secure password"
+                v-model.trim="coordinator.password"
+                :type="passwordFieldType"
+              />
             </label>
             <div class="flex justify-end">
               <div class="flex flex-row-reverse gap-3">
-                <button class="ml-auto text-right btn btn-primary" @click="handleGeneratePassword">
+                <button
+                  class="ml-auto text-right btn btn-primary"
+                  @click="handleGeneratePassword"
+                >
                   Generate password
                 </button>
-                <button class="ml-auto text-right btn btn-outline" @click="toggleShowPassword">
+                <button
+                  class="ml-auto text-right btn btn-outline"
+                  @click="toggleShowPassword"
+                >
                   {{ showPassword ? "Hide" : "Show" }}
                 </button>
               </div>
             </div>
+            <div class="flex gap-6">
+              <label class="flex items-center w-full gap-2 input input-bordered">
+                <input
+                  v-model="coordinator.firstName"
+                  type="text"
+                  class="grow"
+                  placeholder="Coordinator First Name"
+                />
+              </label>
+              <label class="flex items-center w-full gap-2 input input-bordered">
+                <input
+                  v-model="coordinator.lastName"
+                  type="text"
+                  class="grow"
+                  placeholder="Coordinator Last Name"
+                />
+              </label>
+            </div>
+            <div class="flex gap-6">
+              <label class="flex items-center w-full gap-2 input input-bordered">
+                <input
+                  v-model="coordinator.email"
+                  type="text"
+                  class="grow"
+                  placeholder="Email"
+                />
+              </label>
+              <label class="flex items-center w-full gap-2 input input-bordered">
+                <input
+                  v-model="coordinator.contactNumber"
+                  type="Number"
+                  class="grow"
+                  placeholder="Contact number"
+                  min="11"
+                  max="11"
+                />
+              </label>
+            </div>
 
-            <label class="flex items-center gap-2 input input-bordered">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
-                class="w-4 h-4 opacity-70">
-                <path
-                  d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
-                <path
-                  d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
-              </svg>
-              <input v-model="coordinator.email" type="text" class="grow" placeholder="Email" />
-            </label>
-            <label class="flex items-center gap-2 input input-bordered">
-              <input v-model="coordinator.fullName" type="text" class="grow" placeholder="Coordinator Full Name" />
-            </label>
-            <label class="flex items-center gap-2 input input-bordered">
-              <input v-model="coordinator.contactNumber" type="text" class="grow" placeholder="Contact number" />
-            </label>
+            <div class="flex gap-6">
+              <select
+                class="w-full select select-bordered md:max-w-xs"
+                v-model="selectedProvince"
+                @change="onSelectProvince"
+              >
+                <option selected disabled>Province</option>
+                <option v-for="item in provinces" :key="item" :value="item">
+                  {{ item.name }}
+                </option>
+              </select>
+              <select
+                class="w-full select select-bordered md:max-w-md"
+                v-model="selectedMunicipality"
+                @change="onSelectMunicipality"
+              >
+                <option selected disabled>Municipality/City</option>
+                <option v-for="item in municipality" :key="item" :value="item">
+                  {{ item.name }}
+                </option>
+              </select>
+            </div>
+            <div class="flex gap-6">
+              <select
+                class="w-full select select-bordered"
+                v-model="selectedBrgy"
+                @change="onSelectBrgy"
+              >
+                <option selected disabled>Brgy</option>
+                <option v-for="item in brgy" :key="item" :value="item">
+                  {{ item.name }}
+                </option>
+              </select>
+              <label class="flex items-center w-full gap-2 input input-bordered">
+                <input
+                  v-model="coordinator.street"
+                  type="text"
+                  class="grow"
+                  placeholder="Street/House Number"
+                />
+              </label>
+            </div>
 
             <div class="py-3">
-              <select @change="handleSelectDepartmentCoor" class="w-full py-3 select select-bordered">
+              <select
+                @change="handleSelectDepartmentCoor"
+                class="w-full py-3 select select-bordered"
+              >
                 <option selected disabled value="">Select department</option>
 
-                <option v-for="item in userStore.departmentlist" :key="item._id" :value="item.name">
+                <option
+                  v-for="item in userStore.departmentlist"
+                  :key="item._id"
+                  :value="item.name"
+                >
                   {{ item.name }}
                 </option>
               </select>
@@ -300,7 +540,10 @@
               <button @click="handleCoorUser" class="text-lg btn btn-primary btn-block">
                 Create Account
               </button>
-              <button class="text-lg btn btn-outline btn-block" @click="handleToggleModal">
+              <button
+                class="text-lg btn btn-outline btn-block btn-accent"
+                @click="handleToggleModal"
+              >
                 Close
               </button>
             </div>
@@ -312,10 +555,17 @@
       <template #default>
         <p class="text-xl font-medium">Are you sure you want to remove this account?</p>
         <div class="flex justify-end gap-3 pt-9">
-          <button @click="isConfirmationModalShow = !isConfirmationModalShow" class="btn btn-accent btn-outline">
+          <button
+            @click="isConfirmationModalShow = !isConfirmationModalShow"
+            class="btn btn-accent btn-outline"
+          >
             Cancel
           </button>
-          <button type="button" @click="handleDeleteAccount" class="bg-red-600 btn text-gray-50">
+          <button
+            type="button"
+            @click="handleDeleteAccount"
+            class="bg-red-600 btn text-gray-50"
+          >
             Proceed
           </button>
         </div>
@@ -325,6 +575,7 @@
 </template>
 
 <script setup>
+import axios from "axios";
 import { GoogleMap, Marker } from "vue3-google-map";
 import { useAdminUserStore } from "@/stores/AdminUserStore";
 import { useRouter } from "vue-router";
@@ -340,6 +591,56 @@ const passwordFieldType = ref("password");
 const showPassword = ref(false);
 const isConfirmationModalShow = ref(false);
 const apiKey = import.meta.env.VITE_API_GOOGLE_KEY;
+const provinces = ref([]);
+const municipality = ref([]);
+const brgy = ref([]);
+
+const selectedProvince = ref("Province");
+const selectedMunicipality = ref("Municipality/City");
+const selectedBrgy = ref("Brgy");
+const getProvinces = async () => {
+  try {
+    const response = await axios.get("https://psgc.gitlab.io/api/provinces/");
+    console.log(response.data);
+    provinces.value = response.data.sort((a, b) => a.name.localeCompare(b.name));
+  } catch (err) {
+    console.log(err);
+  }
+};
+const getMunicipalities = async (selectedProvince) => {
+  try {
+    const response = await axios.get(
+      `https://psgc.gitlab.io/api/provinces/${selectedProvince}/cities-municipalities/`
+    );
+    console.log(response.data);
+    municipality.value = response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+const getBrgy = async (selectedMunicipality) => {
+  try {
+    const response = await axios.get(
+      `https://psgc.gitlab.io/api/cities-municipalities/${selectedMunicipality}/barangays/`
+    );
+    console.log(response.data);
+    brgy.value = response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const onSelectProvince = async () => {
+  await getMunicipalities(selectedProvince.value.code);
+  coordinator.province = selectedProvince.value.name;
+};
+const onSelectMunicipality = async () => {
+  await getBrgy(selectedMunicipality.value.code);
+  coordinator.municipality = selectedMunicipality.value.name;
+};
+const onSelectBrgy = () => {
+  coordinator.brgy = selectedBrgy.value.name;
+};
 const handleUserFilter = async (event) => {
   console.log("====================================");
   console.log(event.target.value);
@@ -380,7 +681,12 @@ const coordinator = reactive({
   password: "",
   role: selectedRole.value,
   email: "",
-  fullName: "",
+  firstName: "",
+  lastName: "",
+  street: "",
+  brgy: "",
+  municipality: "",
+  province: "",
   contactNumber: "",
   department: "",
 });
@@ -440,10 +746,7 @@ const resetInternForms = () => {
   intern.password = "";
   intern.role = "Select Role";
   intern.email = "";
-  // intern.fullName = "";
   intern.department = "";
-  // intern.contact = "";
-  // intern.address = "";
   intern.firstName = "";
   intern.lastName = "";
 };
@@ -464,9 +767,14 @@ const resetCoorForms = () => {
   coordinator.password = "";
   coordinator.role = "Select Role";
   coordinator.email = "";
-  coordinator.fullName = "";
+  coordinator.firstName = "";
+  coordinator.lastName = "";
   coordinator.contactNumber = "";
   coordinator.department = "Select Department";
+  selectedProvince.value = "Province";
+  selectedMunicipality.value = "Municipality/City";
+  selectedBrgy.value = "Brgy";
+  coordinator.street = "";
 };
 
 const handleSelectDepartmentIntern = (event) => {
@@ -477,11 +785,6 @@ const handleSelectDepartmentCoor = (event) => {
   console.log(event.target.value);
   coordinator.department = event.target.value;
 };
-
-onMounted(async () => {
-  await userStore.fetchUsers();
-  await userStore.fetchDepartmentList();
-});
 
 const handleInternUser = async () => {
   try {
@@ -574,6 +877,12 @@ const headers = [
   { text: "DATE CREATED", value: "createdAt" },
   { text: "ACTIONS", value: "operation", width: 10 },
 ];
+
+onMounted(async () => {
+  await userStore.fetchUsers();
+  await userStore.fetchDepartmentList();
+  await getProvinces();
+});
 </script>
 
 <style></style>

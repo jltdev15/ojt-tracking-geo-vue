@@ -10,6 +10,7 @@ import StudentDashboard from "@/components/Student/Dashboard.vue";
 import StudentInternshipsList from "@/components/Student/InternshipsList.vue";
 import CoorDashBoard from "@/components/Coor/Dashboard.vue";
 import CoorDashBoardView from "../views/Coor/CoorDashBoardView.vue";
+import userProfileUpdate from '../components/Admin/UpdateUser.vue';
 import { useAuthStore } from "@/stores/AuthStore";
 
 const router = createRouter({
@@ -87,7 +88,7 @@ const router = createRouter({
         {
           path: "manage-users/:id",
           name: "UpdateUser",
-          component: () => import("../components/Admin/UpdateUser.vue"),
+          component: userProfileUpdate,
           meta: { requiresAuth: true, roles: ["Admin"] },
         },
 
