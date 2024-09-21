@@ -9,7 +9,9 @@
           <router-link :to="{ name: 'manage_users' }">Users management</router-link>
         </li>
         <li>
-          <router-link class="text-red-800" :to="{ name: 'UpdateUser' }">Update user</router-link>
+          <router-link class="text-red-800" :to="{ name: 'UpdateUser' }"
+            >Update user</router-link
+          >
         </li>
       </ul>
     </div>
@@ -18,40 +20,69 @@
         Update <span class="font-bold">Information</span> {{ userStore.currentRole }}
       </h1>
     </header>
-    <section class="grid w-4/6 gap-6 mx-6 ">
+    <section class="grid w-4/6 gap-6 mx-6">
       <div class="flex flex-col w-full gap-3 bg-white rounded-md shadow-md">
         <h2 class="p-3 text-2xl bg-red-800 text-gray-50">Profile Information</h2>
         <!-- Coord -->
         <form @submit.prevent="updateHandlerCoor" action="">
-          <section v-if="userStore.currentRole === 'Coordinator'" class="grid grid-cols-2 p-6 gap-x-6">
+          <section
+            v-if="userStore.currentRole === 'Coordinator'"
+            class="grid grid-cols-2 p-6 gap-x-6"
+          >
             <div class="flex flex-col gap-3">
               <div>
                 <label for="">Email</label>
-                <input v-model="userStore.updateInfo.email" type="text" placeholder="Type here"
-                  class="w-full input input-bordered" required />
+                <input
+                  v-model="userStore.updateInfo.email"
+                  type="text"
+                  placeholder="Type here"
+                  class="w-full input input-bordered"
+                  required
+                />
               </div>
               <div>
                 <label for="">First Name</label>
-                <input v-model="userStore.updateInfo.firstName" type="text" placeholder="Type here"
-                  class="w-full input input-bordered" required />
+                <input
+                  v-model="userStore.updateInfo.firstName"
+                  type="text"
+                  placeholder="Type here"
+                  class="w-full input input-bordered"
+                  required
+                />
               </div>
               <div>
                 <label for="">Last Name</label>
-                <input v-model="userStore.updateInfo.lastName" type="text" placeholder="Type here"
-                  class="w-full input input-bordered" required />
+                <input
+                  v-model="userStore.updateInfo.lastName"
+                  type="text"
+                  placeholder="Type here"
+                  class="w-full input input-bordered"
+                  required
+                />
               </div>
               <div>
                 <label for="">Contact Number</label>
-                <input v-model="userStore.updateInfo.contactNumber" minlength="10" maxlength="10" type="text"
-                  pattern="\d{10}" placeholder="Type here" class="w-full input input-bordered" required />
+                <input
+                  v-model="userStore.updateInfo.contactNumber"
+                  minlength="11"
+                  maxlength="11"
+                  type="text"
+                  pattern="\d{11}"
+                  placeholder="Type here"
+                  class="w-full input input-bordered"
+                  required
+                />
               </div>
-
             </div>
             <div class="flex flex-col gap-3">
               <div class="">
                 <label class="block" for="">Province</label>
-                <select class="w-full text-base select select-bordered" v-model="selectedProvince"
-                  @change="onSelectProvince" required>
+                <select
+                  class="w-full text-base select select-bordered"
+                  v-model="selectedProvince"
+                  @change="onSelectProvince"
+                  required
+                >
                   <option selected value="">{{ userStore.updateInfo.province }}</option>
                   <option v-for="item in provinces" :key="item" :value="item">
                     {{ item.name }}
@@ -60,9 +91,15 @@
               </div>
               <div>
                 <label class="block" for="">Municipality / City</label>
-                <select class="w-full text-base select select-bordered" v-model="selectedMunicipality"
-                  @change="onSelectMunicipality" required>
-                  <option value="" selected>{{ userStore.updateInfo.municipality }}</option>
+                <select
+                  class="w-full text-base select select-bordered"
+                  v-model="selectedMunicipality"
+                  @change="onSelectMunicipality"
+                  required
+                >
+                  <option value="" selected>
+                    {{ userStore.updateInfo.municipality }}
+                  </option>
                   <option v-for="item in municipality" :key="item" :value="item">
                     {{ item.name }}
                   </option>
@@ -70,8 +107,12 @@
               </div>
               <div>
                 <label class="block" for="">Barangay</label>
-                <select class="w-full text-base select select-bordered " v-model="selectedBrgy" @change="onSelectBrgy"
-                  required>
+                <select
+                  class="w-full text-base select select-bordered"
+                  v-model="selectedBrgy"
+                  @change="onSelectBrgy"
+                  required
+                >
                   <option value="" selected>{{ userStore.updateInfo.brgy }}</option>
                   <option v-for="item in brgy" :key="item" :value="item">
                     {{ item.name }}
@@ -80,63 +121,115 @@
               </div>
               <div>
                 <label for="">Street</label>
-                <input v-model="userStore.updateInfo.street" type="text" placeholder="Type here"
-                  class="w-full input input-bordered" required />
+                <input
+                  v-model="userStore.updateInfo.street"
+                  type="text"
+                  placeholder="Type here"
+                  class="w-full input input-bordered"
+                  required
+                />
               </div>
               <div>
                 <label for="">Select Department</label>
-                <select @change="handleSelectDepartment" v-model="userStore.updateInfo.department"
-                  class="w-full py-3 select select-bordered" required>
+                <select
+                  @change="handleSelectDepartment"
+                  v-model="userStore.updateInfo.department"
+                  class="w-full py-3 select select-bordered"
+                  required
+                >
                   <option selected disabled value="">Select department</option>
 
-                  <option v-for="item in userStore.departmentlist" :key="item._id" :value="item.name">
+                  <option
+                    v-for="item in userStore.departmentlist"
+                    :key="item._id"
+                    :value="item.name"
+                  >
                     {{ item.name }}
                   </option>
                 </select>
               </div>
-
             </div>
-            <div class="flex col-span-2 gap-3 mt-6 ml-auto ">
-              <router-link :to="{ name: 'manage_users' }" class="w-36 btn btn-accent btn-outline">
+            <div class="flex col-span-2 gap-3 mt-6 ml-auto">
+              <router-link
+                :to="{ name: 'manage_users' }"
+                class="w-36 btn btn-accent btn-outline"
+              >
                 Cancel
               </router-link>
-              <button type="submit" class="w-36 btn btn-primary">
-                Update
-              </button>
+              <button type="submit" class="w-36 btn btn-primary">Update</button>
             </div>
-
-
-
           </section>
         </form>
 
         <!-- HTE -->
         <section v-if="userStore.currentRole === 'HTE'" class="">
           <label for="">Company Name</label>
-          <input v-model="userStore.updateInfo.companyName" type="text" placeholder="Type here"
-            class="w-full input input-bordered" />
+          <input
+            v-model="userStore.updateInfo.companyName"
+            type="text"
+            placeholder="Type here"
+            class="w-full input input-bordered"
+          />
 
           <label class="block" for="">Company Email</label>
-          <input v-model="userStore.updateInfo.companyEmail" type="text" placeholder="Type here"
-            class="w-full input input-bordered" />
+          <input
+            v-model="userStore.updateInfo.companyEmail"
+            type="text"
+            placeholder="Type here"
+            class="w-full input input-bordered"
+          />
           <label class="block" for="">Company Address</label>
-          <input v-model="userStore.updateInfo.companyAddress" type="text" placeholder="Type here"
-            class="w-full input input-bordered" />
+          <input
+            v-model="userStore.updateInfo.companyAddress"
+            type="text"
+            placeholder="Type here"
+            class="w-full input input-bordered"
+          />
 
           <label for="">Contact Number</label>
-          <input v-model="userStore.updateInfo.companyContact" type="text" placeholder="Type here"
-            class="w-full input input-bordered" />
+          <input
+            v-model="userStore.updateInfo.companyContact"
+            type="text"
+            placeholder="Type here"
+            class="w-full input input-bordered"
+          />
           <p>Please provide exact map coordinates</p>
           <label class="flex items-center gap-2 input input-bordered">
-            <input v-model="userStore.updateInfo.mapLocation.lat" type="number" class="grow" placeholder="Latitude" />
-            <input v-model="userStore.updateInfo.mapLocation.lng" type="number" class="grow" placeholder="Longtitude" />
+            <input
+              v-model="userStore.updateInfo.mapLocation.lat"
+              type="number"
+              class="grow"
+              placeholder="Latitude"
+            />
+            <input
+              v-model="userStore.updateInfo.mapLocation.lng"
+              type="number"
+              class="grow"
+              placeholder="Longtitude"
+            />
           </label>
-          <label class="block py-3 text-center" for="">Has Memorandum of Agreement?</label>
+          <label class="block py-3 text-center" for=""
+            >Has Memorandum of Agreement?</label
+          >
           <div class="flex justify-center gap-3 pb-4 join">
-            <input class="join-item btn" type="radio" name="options" value="true" aria-label="Yes"
-              v-model="userStore.updateInfo.hasMoa" @change="onChange" />
-            <input class="join-item btn" type="radio" name="options" value="false" aria-label="No"
-              v-model="userStore.updateInfo.hasMoa" @change="onChange" />
+            <input
+              class="join-item btn"
+              type="radio"
+              name="options"
+              value="true"
+              aria-label="Yes"
+              v-model="userStore.updateInfo.hasMoa"
+              @change="onChange"
+            />
+            <input
+              class="join-item btn"
+              type="radio"
+              name="options"
+              value="false"
+              aria-label="No"
+              v-model="userStore.updateInfo.hasMoa"
+              @change="onChange"
+            />
           </div>
 
           <button @click="updateHandlerHTE" class="btn btn-primary btn-block">
@@ -145,42 +238,78 @@
         </section>
         <!-- Intern Information -->
         <form @submit.prevent="updateHandlerIntern" action="">
-          <section v-if="userStore.currentRole === 'Intern'" class="grid w-full grid-cols-2 p-6 gap-x-6">
+          <section
+            v-if="userStore.currentRole === 'Intern'"
+            class="grid w-full grid-cols-2 p-6 gap-x-6"
+          >
             <div class="flex flex-col gap-3">
               <div>
                 <label for="">Email</label>
-                <input v-model="userStore.updateInfo.internEmail" type="text" placeholder="Type here"
-                  class="w-full input input-bordered" required />
+                <input
+                  v-model="userStore.updateInfo.internEmail"
+                  type="text"
+                  placeholder="Type here"
+                  class="w-full input input-bordered"
+                  required
+                />
               </div>
               <div>
                 <label for="">First Name</label>
-                <input v-model="userStore.updateInfo.internfirstName" type="text" placeholder="Type here"
-                  class="w-full input input-bordered" required />
+                <input
+                  v-model="userStore.updateInfo.internfirstName"
+                  type="text"
+                  placeholder="Type here"
+                  class="w-full input input-bordered"
+                  required
+                />
               </div>
               <div>
                 <label for="">Middle Initial</label>
-                <input v-model="userStore.updateInfo.internMiddle" type="text" placeholder="Type here"
-                  class="w-full input input-bordered" required />
+                <input
+                  v-model="userStore.updateInfo.internMiddle"
+                  type="text"
+                  placeholder="Type here"
+                  class="w-full input input-bordered"
+                  required
+                />
               </div>
               <div>
                 <label for="">Last Name</label>
-                <input v-model="userStore.updateInfo.internlastName" type="text" placeholder="Type here"
-                  class="w-full input input-bordered" required />
+                <input
+                  v-model="userStore.updateInfo.internlastName"
+                  type="text"
+                  placeholder="Type here"
+                  class="w-full input input-bordered"
+                  required
+                />
               </div>
 
               <div>
                 <label for="">Contact Number</label>
-                <input v-model="userStore.updateInfo.internContact" minlength="11" maxlength="11" type="text"
-                  pattern="\d{11}" placeholder="Type here" class="w-full input input-bordered" required/>
+                <input
+                  v-model="userStore.updateInfo.internContact"
+                  minlength="11"
+                  maxlength="11"
+                  type="text"
+                  pattern="\d{11}"
+                  placeholder="Type here"
+                  class="w-full input input-bordered"
+                  required
+                />
               </div>
-
             </div>
             <div class="flex flex-col gap-3">
               <div class="">
                 <label class="block" for="">Province</label>
-                <select class="w-full text-base select select-bordered" v-model="selectedProvince"
-                  @change="onSelectProvince" required>
-                  <option selected value="">{{ userStore.updateInfo.internProvince }}</option>
+                <select
+                  class="w-full text-base select select-bordered"
+                  v-model="selectedProvince"
+                  @change="onSelectProvince"
+                  required
+                >
+                  <option selected value="">
+                    {{ userStore.updateInfo.internProvince }}
+                  </option>
                   <option v-for="item in provinces" :key="item" :value="item">
                     {{ item.name }}
                   </option>
@@ -188,9 +317,15 @@
               </div>
               <div>
                 <label class="block" for="">Municipality / City</label>
-                <select class="w-full text-base select select-bordered" v-model="selectedMunicipality"
-                  @change="onSelectMunicipality" required>
-                  <option value="" selected>{{ userStore.updateInfo.internMunicipality }}</option>
+                <select
+                  class="w-full text-base select select-bordered"
+                  v-model="selectedMunicipality"
+                  @change="onSelectMunicipality"
+                  required
+                >
+                  <option value="" selected>
+                    {{ userStore.updateInfo.internMunicipality }}
+                  </option>
                   <option v-for="item in municipality" :key="item" :value="item">
                     {{ item.name }}
                   </option>
@@ -198,7 +333,12 @@
               </div>
               <div>
                 <label class="block" for="">Barangay</label>
-                <select class="w-full text-base select select-bordered " v-model="selectedBrgy" @change="onSelectBrgy" required>
+                <select
+                  class="w-full text-base select select-bordered"
+                  v-model="selectedBrgy"
+                  @change="onSelectBrgy"
+                  required
+                >
                   <option value="" selected>{{ userStore.updateInfo.internBrgy }}</option>
                   <option v-for="item in brgy" :key="item" :value="item">
                     {{ item.name }}
@@ -207,28 +347,41 @@
               </div>
               <div>
                 <label for="">Street</label>
-                <input v-model="userStore.updateInfo.internStreet" type="text" placeholder="Type here"
-                  class="w-full input input-bordered" required/>
+                <input
+                  v-model="userStore.updateInfo.internStreet"
+                  type="text"
+                  placeholder="Type here"
+                  class="w-full input input-bordered"
+                  required
+                />
               </div>
               <div>
                 <label for="">Select Department</label>
-                <select @change="handleSelectDepartment" v-model="userStore.updateInfo.internDepartment"
-                  class="w-full py-3 select select-bordered" required>
+                <select
+                  @change="handleSelectDepartment"
+                  v-model="userStore.updateInfo.internDepartment"
+                  class="w-full py-3 select select-bordered"
+                  required
+                >
                   <option selected disabled value="">Select department</option>
-                  <option v-for="item in userStore.departmentlist" :key="item._id" :value="item.name">
+                  <option
+                    v-for="item in userStore.departmentlist"
+                    :key="item._id"
+                    :value="item.name"
+                  >
                     {{ item.name }}
                   </option>
                 </select>
               </div>
-
             </div>
-            <div class="flex col-span-2 gap-3 mt-6 ml-auto ">
-              <router-link :to="{ name: 'manage_users' }" class="w-36 btn btn-accent btn-outline">
+            <div class="flex col-span-2 gap-3 mt-6 ml-auto">
+              <router-link
+                :to="{ name: 'manage_users' }"
+                class="w-36 btn btn-accent btn-outline"
+              >
                 Cancel
               </router-link>
-              <button type="submit" class="w-36 btn btn-primary">
-                Update
-              </button>
+              <button type="submit" class="w-36 btn btn-primary">Update</button>
             </div>
           </section>
         </form>
@@ -246,9 +399,9 @@ import { onMounted, reactive } from "vue";
 const userStore = useAdminUserStore();
 const route = useRoute();
 const router = useRouter();
-const selectedProvince = ref('');
-const selectedMunicipality = ref('');
-const selectedBrgy = ref('');
+const selectedProvince = ref("");
+const selectedMunicipality = ref("");
+const selectedBrgy = ref("");
 const provinces = ref([]);
 const municipality = ref([]);
 const brgy = ref([]);
@@ -302,44 +455,44 @@ const getBrgy = async (selectedMunicipality) => {
 };
 const onSelectProvince = async () => {
   await getMunicipalities(selectedProvince.value.code);
-  if (userStore.currentRole === 'Coordinator') {
-    return userStore.updateInfo.province = selectedProvince.value.name
+  if (userStore.currentRole === "Coordinator") {
+    return (userStore.updateInfo.province = selectedProvince.value.name);
   }
-  if (userStore.currentRole === 'Intern') {
-    return userStore.updateInfo.internProvince = selectedProvince.value.name
+  if (userStore.currentRole === "Intern") {
+    return (userStore.updateInfo.internProvince = selectedProvince.value.name);
   }
-  if (userStore.currentRole === 'HTE') {
-    return userStore.updateInfo.companyProvince = selectedProvince.value.name
+  if (userStore.currentRole === "HTE") {
+    return (userStore.updateInfo.companyProvince = selectedProvince.value.name);
   }
 };
 const onSelectMunicipality = async () => {
   await getBrgy(selectedMunicipality.value.code);
-  if (userStore.currentRole === 'Coordinator') {
-    return userStore.updateInfo.municipality = selectedMunicipality.value.name
+  if (userStore.currentRole === "Coordinator") {
+    return (userStore.updateInfo.municipality = selectedMunicipality.value.name);
   }
-  if (userStore.currentRole === 'Intern') {
-    return userStore.updateInfo.internMunicipality = selectedMunicipality.value.name
+  if (userStore.currentRole === "Intern") {
+    return (userStore.updateInfo.internMunicipality = selectedMunicipality.value.name);
   }
-  if (userStore.currentRole === 'HTE') {
-    return userStore.updateInfo.companyMunicipality = selectedMunicipality.value.name
+  if (userStore.currentRole === "HTE") {
+    return (userStore.updateInfo.companyMunicipality = selectedMunicipality.value.name);
   }
 };
 const onSelectBrgy = () => {
-  if (userStore.currentRole === 'Coordinator') {
-    return userStore.updateInfo.brgy = selectedBrgy.value.name
+  if (userStore.currentRole === "Coordinator") {
+    return (userStore.updateInfo.brgy = selectedBrgy.value.name);
   }
-  if (userStore.currentRole === 'Intern') {
-    return userStore.updateInfo.internBrgy = selectedBrgy.value.name
+  if (userStore.currentRole === "Intern") {
+    return (userStore.updateInfo.internBrgy = selectedBrgy.value.name);
   }
-  if (userStore.currentRole === 'HTE') {
-    return userStore.updateInfo.companyBrgy = selectedBrgy.value.name
+  if (userStore.currentRole === "HTE") {
+    return (userStore.updateInfo.companyBrgy = selectedBrgy.value.name);
   }
   // coordinator.brgy = selectedBrgy.value.name;
 };
 onMounted(async () => {
   userStore.fetchUpdateInformation(route.params.id);
   await userStore.fetchDepartmentList();
-  await getProvinces()
+  await getProvinces();
 });
 </script>
 

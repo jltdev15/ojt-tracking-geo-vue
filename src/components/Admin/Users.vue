@@ -59,7 +59,12 @@
       </EasyDataTable>
     </section>
 
-    <Modal :show="isModalShow" @close="isModalShow = !isModalShow" title="New Account">
+    <Modal
+      :show="isModalShow"
+      @close="isModalShow = !isModalShow"
+      :size="selectedRole === 'HTE'"
+      title="New Account"
+    >
       <!-- <Modal :show="true" title="New Account"> -->
       <template #default>
         <div>
@@ -228,7 +233,9 @@
             </form>
           </div>
           <!-- <div v-if="selectedRole === 'HTE'" class="flex flex-col gap-3 pt-3"> -->
-          <div v-if="selectedRole === 'HTE'" class="flex gap-3 pt-3">
+          <div v-if="selectedRole === 'HTE'" class="grid grid-cols-2 gap-3 pt-3">
+            <!-- <div v-if="true" class="grid grid-cols-2 gap-3 pt-3"> -->
+            <!-- Left Side -->
             <div class="flex flex-col w-full gap-3">
               <label class="flex items-center gap-2 input input-bordered">
                 <svg
@@ -282,28 +289,6 @@
                   {{ showPassword ? "Hide" : "Show" }}
                 </button>
               </div>
-
-              <label class="flex items-center gap-2 input input-bordered">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 16 16"
-                  fill="currentColor"
-                  class="w-4 h-4 opacity-70"
-                >
-                  <path
-                    d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z"
-                  />
-                  <path
-                    d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z"
-                  />
-                </svg>
-                <input
-                  v-model="hte.email"
-                  type="email"
-                  class="grow"
-                  placeholder="Email"
-                />
-              </label>
               <label class="flex items-center gap-2 input input-bordered">
                 <input
                   v-model="hte.fullName"
@@ -312,61 +297,84 @@
                   placeholder="Company name"
                 />
               </label>
-              <label class="flex items-center gap-2 input input-bordered">
-                <input
-                  v-model="hte.contactNumber"
-                  type="number"
-                  class="grow"
-                  placeholder="Contact number"
-                />
-              </label>
+              <div class="flex gap-3">
+                <label class="flex items-center gap-2 input input-bordered">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    class="w-4 h-4 opacity-70"
+                  >
+                    <path
+                      d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z"
+                    />
+                    <path
+                      d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z"
+                    />
+                  </svg>
+                  <input
+                    v-model="hte.email"
+                    type="email"
+                    class="grow"
+                    placeholder="Email"
+                  />
+                </label>
 
-              <label class="flex items-center gap-2 input input-bordered">
-                <input
-                  v-model="hte.address"
-                  type="text"
-                  class="grow"
-                  placeholder="Company Address"
-                />
-                <input
-                  v-model="hte.address"
-                  type="text"
-                  class="grow"
-                  placeholder="Company Address"
-                />
-              </label>
-              <p>
-                Please provide exact map coordinates
-                <span class="text-blue-500 underline">
-                  <a href="https://www.google.com/maps" target="_blank"
-                    >open google map</a
-                  ></span
+                <label class="flex items-center w-full gap-2 input input-bordered">
+                  <input
+                    v-model="hte.contact"
+                    type="text"
+                    class="grow"
+                    placeholder="Contact number"
+                    minlength="11"
+                    maxlength="11"
+                    pattern="\d{11}"
+                  />
+                </label>
+              </div>
+
+              <div class="flex gap-3">
+                <select
+                  class="w-full select select-bordered"
+                  v-model="selectedProvince"
+                  @change="onSelectProvince"
                 >
-              </p>
-              <label class="flex items-center gap-2 input input-bordered">
-                <input
-                  v-model="hte.mapLocation.lat"
-                  type="number"
-                  class="w-full"
-                  placeholder="Latitude"
-                />
-                <input
-                  v-model="hte.mapLocation.lng"
-                  type="number"
-                  class="w-full"
-                  placeholder="Longtitude"
-                />
-              </label>
-
-              <GoogleMap
-                :api-key="apiKey"
-                style="width: 100%; height: 500px"
-                :center="center"
-                :zoom="15"
-                mapId="DEMO_MAP_ID"
-              >
-                <Marker :options="{ position: center }" />
-              </GoogleMap>
+                  <option selected disabled>Province</option>
+                  <option v-for="item in provinces" :key="item" :value="item">
+                    {{ item.name }}
+                  </option>
+                </select>
+                <select
+                  class="w-full select select-bordered"
+                  v-model="selectedMunicipality"
+                  @change="onSelectMunicipality"
+                >
+                  <option selected disabled>Municipality/City</option>
+                  <option v-for="item in municipality" :key="item" :value="item">
+                    {{ item.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="flex gap-3">
+                <select
+                  class="w-full select select-bordered"
+                  v-model="selectedBrgy"
+                  @change="onSelectBrgy"
+                >
+                  <option selected disabled>Brgy</option>
+                  <option v-for="item in brgy" :key="item" :value="item">
+                    {{ item.name }}
+                  </option>
+                </select>
+                <label class="flex items-center w-full gap-2 input input-bordered">
+                  <input
+                    v-model="hte.street"
+                    type="text"
+                    class="grow"
+                    placeholder="Street/House Number"
+                  />
+                </label>
+              </div>
 
               <div class="flex flex-col gap-2 mt-auto">
                 <button @click="handleHteUser" class="text-lg btn btn-primary btn-block">
@@ -380,9 +388,64 @@
                 </button>
               </div>
             </div>
+            <!-- Right Side -->
+            <div class="flex flex-col gap-3">
+              <div class="flex gap-3">
+                <label
+                  class="flex items-center justify-between input input-bordered w-full"
+                >
+                  <input
+                    v-model.trim="businessName"
+                    type="text"
+                    class="max-w-xs"
+                    placeholder="Business Name"
+                  />
+                </label>
+                <button
+                  @click="getBusinessLocation"
+                  class="btn btn-outline bt-bloc btn-accent"
+                >
+                  <i class="bx text-3xl bx-search-alt"></i>
+                </button>
+              </div>
+
+              <label class="flex items-center gap-2 input input-bordered">
+                <input
+                  v-model="hte.mapLocation.lat"
+                  type="number"
+                  class="w-full"
+                  placeholder="Latitude"
+                  readonly
+                />
+                <input
+                  v-model="hte.mapLocation.lng"
+                  type="number"
+                  class="w-full"
+                  placeholder="Longtitude"
+                  readonly
+                />
+              </label>
+              <div v-if="errorMessage" class="error text-center p-3">
+                {{ errorMessage }}
+              </div>
+              <div v-if="!locationRes && !errorMessage" class="error text-center p-3">
+                No results to show
+              </div>
+
+              <!-- <div v-if="locationRes" class="location-info">
+                <p><strong>Latitude:</strong> {{ locationRes.lat }}</p>
+                <p><strong>Longitude:</strong> {{ locationRes.lng }}</p>
+              </div> -->
+
+              <div
+                v-if="isMapShow"
+                id="map"
+                style="height: 300px; width: 100%; margin-top: 20px"
+              ></div>
+            </div>
           </div>
           <div v-if="selectedRole === 'Coordinator'" class="flex flex-col gap-3 pt-3">
-          <!-- <div v-if="true" class="flex flex-col gap-3 pt-3"> -->
+            <!-- <div v-if="true" class="flex flex-col gap-3 pt-3"> -->
             <label class="flex items-center gap-2 input input-bordered">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -467,11 +530,12 @@
               <label class="flex items-center w-full gap-2 input input-bordered">
                 <input
                   v-model="coordinator.contactNumber"
-                  type="Number"
+                  type="text"
                   class="grow"
                   placeholder="Contact number"
-                  min="11"
-                  max="11"
+                  minlength="11"
+                  maxlength="11"
+                  pattern="\d{11}"
                 />
               </label>
             </div>
@@ -576,12 +640,11 @@
 
 <script setup>
 import axios from "axios";
-import { GoogleMap, Marker } from "vue3-google-map";
 import { useAdminUserStore } from "@/stores/AdminUserStore";
 import { useRouter } from "vue-router";
 const userStore = useAdminUserStore();
 import { ref, onMounted, reactive } from "vue";
-const center = { lat: 40.689247, lng: -74.044502 };
+import { Loader } from "@googlemaps/js-api-loader";
 const router = useRouter();
 const searchField = ref("role");
 const searchValue = ref("");
@@ -590,11 +653,11 @@ const selectedRole = ref("Select User Role");
 const passwordFieldType = ref("password");
 const showPassword = ref(false);
 const isConfirmationModalShow = ref(false);
-const apiKey = import.meta.env.VITE_API_GOOGLE_KEY;
 const provinces = ref([]);
 const municipality = ref([]);
 const brgy = ref([]);
-
+const businessName = ref("");
+const locationResults = ref(null);
 const selectedProvince = ref("Province");
 const selectedMunicipality = ref("Municipality/City");
 const selectedBrgy = ref("Brgy");
@@ -632,14 +695,32 @@ const getBrgy = async (selectedMunicipality) => {
 
 const onSelectProvince = async () => {
   await getMunicipalities(selectedProvince.value.code);
-  coordinator.province = selectedProvince.value.name;
+  if (selectedRole.value === "HTE") {
+    return (hte.province = selectedProvince.value.name);
+  }
+  if (selectedRole.value === "Coordinator") {
+    return (coordinator.province = selectedProvince.value.name);
+  }
 };
 const onSelectMunicipality = async () => {
   await getBrgy(selectedMunicipality.value.code);
-  coordinator.municipality = selectedMunicipality.value.name;
+  // coordinator.municipality = selectedMunicipality.value.name;
+  // hte.municipality = selectedMunicipality.value.name;
+  if (selectedRole.value === "HTE") {
+    return (hte.municipality = selectedMunicipality.value.name);
+  }
+  if (selectedRole.value === "Coordinator") {
+    return (coordinator.municipality = selectedMunicipality.value.name);
+    e;
+  }
 };
 const onSelectBrgy = () => {
-  coordinator.brgy = selectedBrgy.value.name;
+  if (selectedRole.value === "HTE") {
+    return (hte.brgy = selectedBrgy.value.name);
+  }
+  if (selectedRole.value === "Coordinator") {
+    return (coordinator.brgy = selectedBrgy.value.name);
+  }
 };
 const handleUserFilter = async (event) => {
   console.log("====================================");
@@ -651,7 +732,6 @@ const intern = reactive({
   username: "",
   password: "",
   contact: "",
-  address: "",
   role: selectedRole.value,
   email: "",
   firstName: "",
@@ -664,9 +744,11 @@ const hte = reactive({
   role: selectedRole.value,
   email: "",
   fullName: "",
-  contactNumber: "",
-  address: "",
-  hasMoa: "",
+  contact: "",
+  province: "",
+  municipality: "",
+  brgy: "",
+  street: "",
   mapLocation: {
     lat: {
       type: Number,
@@ -740,6 +822,12 @@ const toggleShowPassword = () => {
 const handleToggleModal = async () => {
   isModalShow.value = !isModalShow.value;
   selectedRole.value = "Select User Role";
+  locationRes.value = null;
+  marker.value = null;
+  map.value = null;
+  hte.mapLocation.lat = "";
+  hte.mapLocation.lng = "";
+  businessName.value = "";
 };
 const resetInternForms = () => {
   intern.username = "";
@@ -756,11 +844,16 @@ const resetHTEForms = () => {
   hte.role = "Select Role";
   hte.email = "";
   hte.fullName = "";
-  hte.contactNumber = "";
+  hte.contact = "";
   hte.address = "";
   hte.hasMoa = "";
+  hte.street = "";
   hte.mapLocation.lat = "";
   hte.mapLocation.lng = "";
+  businessName.value = "";
+  selectedProvince.value = "Province";
+  selectedMunicipality.value = "Municipality/City";
+  selectedBrgy.value = "Brgy";
 };
 const resetCoorForms = () => {
   coordinator.username = "";
@@ -823,11 +916,20 @@ const handleHteUser = async () => {
     if (hte.fullName === "") {
       return alert("Please enter company name");
     }
-    if (hte.contactNumber === "") {
+    if (hte.contact === "") {
       return alert("Please enter contact number");
     }
-    if (hte.address === "") {
-      return alert("Please enter address");
+    if (hte.street === "") {
+      return alert("Please enter street");
+    }
+    if (hte.brgy === "") {
+      return alert("Please select brgy");
+    }
+    if (hte.municipality === "") {
+      return alert("Please select municipality");
+    }
+    if (hte.province === "") {
+      return alert("Please select province");
     }
     if (hte.mapLocation.lat === "") {
       return alert("Please enter lat value");
@@ -882,7 +984,103 @@ onMounted(async () => {
   await userStore.fetchUsers();
   await userStore.fetchDepartmentList();
   await getProvinces();
+  initMap();
 });
+
+const locationRes = ref(null);
+const errorMessage = ref(null);
+const map = ref(null);
+const marker = ref(null);
+const isMapShow = ref(true);
+
+const getBusinessLocation = async () => {
+  if (!businessName.value.trim()) {
+    hte.mapLocation.lat = "";
+    hte.mapLocation.lng = "";
+    errorMessage.value = "Please enter a business name.";
+    isMapShow.value = false;
+    return;
+  }
+  isMapShow.value = true;
+  errorMessage.value = null;
+  try {
+    const loader = new Loader({
+      apiKey: import.meta.env.VITE_API_GOOGLE_KEY, // Replace with your actual API key
+      libraries: ["places"],
+      version: "weekly",
+    });
+
+    const { PlacesService } = await loader.importLibrary("places");
+
+    const service = new PlacesService(document.createElement("div"));
+
+    const request = {
+      query: businessName.value,
+      fields: ["name", "geometry"],
+    };
+
+    service.findPlaceFromQuery(request, (results, status) => {
+      if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
+        const place = results[0];
+        locationRes.value = place.geometry.location.toJSON();
+        hte.mapLocation.lat = locationRes.value.lat;
+        hte.mapLocation.lng = locationRes.value.lng;
+        initMap();
+      } else {
+        errorMessage.value = "Business not found.";
+        locationRes.value = null;
+        isMapShow.value = false;
+        initMap();
+      }
+    });
+  } catch (err) {
+    console.error(err);
+    errorMessage.value = "An error occurred while fetching the location.";
+  }
+};
+
+const initMap = () => {
+  map.value = new google.maps.Map(document.getElementById("map"), {
+    center: locationRes.value,
+    zoom: 15,
+    mapId: "DEMO_MAP_ID",
+  });
+  marker.value = new google.maps.Marker({
+    position: locationRes.value,
+    map: map.value,
+  });
+
+  // if (map.value) {
+  //   map.value = new google.maps.Map(document.getElementById("map"), {
+  //     center: locationRes.value,
+  //     zoom: 15,
+  //     mapId: "DEMO_MAP_ID",
+  //   });
+
+  //   if (marker.value) {
+  //     marker.value = new google.maps.Marker({
+  //       position: locationRes.value,
+  //       map: map.value,
+  //     });
+  //   } else {
+  //     marker.value = new google.maps.Marker({
+  //       position: locationRes.value,
+  //       map: map.value,
+  //     });
+  //   }
+  // } else {
+  //   map.value = new google.maps.Map(document.getElementById("map"), {
+  //     center: locationRes.value,
+  //     zoom: 15,
+  //     mapId: "DEMO_MAP_ID",
+  //   });
+
+  //   marker.value = new google.maps.Marker({
+  //     position: locationRes.value,
+  //     map: map.value,
+  //   });
+  // }
+};
 </script>
 
 <style></style>

@@ -2,7 +2,12 @@
   <teleport to="body">
     <div v-if="show" @click="closeHandler" class="backdrop"></div>
     <transition name="dialog">
-      <dialog open v-if="show" class="w-5/6 rounded-lg md:w-4/12">
+      <dialog
+        open
+        v-if="show"
+        class="w-5/6 rounded-lg"
+        :class="{ 'md:w-6/12': size, 'md:w-4/12': !size }"
+      >
         <header class="bg-primary">
           <slot name="header">
             <h2 class="py-3 font-bold text-center md:text-2xl">{{ title }}</h2>
@@ -29,6 +34,9 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: false,
+  },
+  size: {
+    type: Boolean,
   },
 });
 
