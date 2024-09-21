@@ -34,7 +34,7 @@
                 <label for="">Email</label>
                 <input
                   v-model="userStore.updateInfo.email"
-                  type="text"
+                  type="email"
                   placeholder="Type here"
                   class="w-full input input-bordered"
                   required
@@ -66,7 +66,7 @@
                   v-model="userStore.updateInfo.contactNumber"
                   minlength="11"
                   maxlength="11"
-                  type="text"
+                  type="number"
                   pattern="\d{11}"
                   placeholder="Type here"
                   class="w-full input input-bordered"

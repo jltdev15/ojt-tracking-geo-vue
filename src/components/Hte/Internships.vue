@@ -68,24 +68,6 @@
             </button>
           </div>
         </template>
-        <!-- <template #item-applicants="item">
-        <div class="flex flex-col justify-between gap-3 py-2">
-          <div v-if="item.applicants.length">
-            <router-link
-              class="btn btn-outline"
-              :to="{ name: 'InternshipItem', params: { jobId: item._id } }"
-              >View Applicants</router-link
-            >
-          </div>
-          <p v-else>0</p>
-          <div v-if="item.applicants.length">
-            <p>{{ item.applicants }}</p>
-          </div>
-          <ul v-for="i in item.applicants" :key="i.id" class="flex flex-col">
-              <li class="flex ">{{i.fullName}}</li>
-          </ul>
-        </div>
-      </template> -->
       </EasyDataTable>
     </section>
 
@@ -116,14 +98,6 @@
                 type="text"
                 class="grow"
                 placeholder="Number of slots"
-              />
-            </label>
-            <label class="flex items-center gap-2 input input-bordered">
-              <input
-                v-model.trim="newInternship.location"
-                type="text"
-                class="grow"
-                placeholder="Location"
               />
             </label>
 
@@ -246,7 +220,7 @@ const newInternship = reactive({
   title: "",
   requirements: "",
   slots: "",
-  location: "",
+  location: authStore.hteInformation.address,
 });
 
 const handleToggleModal = async () => {

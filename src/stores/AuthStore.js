@@ -67,7 +67,7 @@ export const useAuthStore = defineStore("auth", () => {
         hteInformation.name = response.data.content.profile.fullName;
         hteInformation.email = response.data.content.email;
         hteInformation.contact = response.data.content.profile.contactNumber;
-        hteInformation.address = response.data.content.profile.address;
+        hteInformation.address = response.data.content.profile.street + ' ' + response.data.content.profile.brgy + ' ' +response.data.content.profile.municipality + ' ' +response.data.content.profile.province;
         hteInformation.location = response.data.content.profile.location;
         hteLocationDefault.lat = response.data.content.profile.location.lat;
         hteLocationDefault.lng = response.data.content.profile.location.lng;

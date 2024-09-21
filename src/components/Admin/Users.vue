@@ -13,7 +13,9 @@
     <header
       class="flex flex-col items-center gap-3 px-6 bg-gray-200 md:flex-row md:justify-between"
     >
-      <h1 class="text-3xl">User <span class="text-3xl font-bold">Management</span></h1>
+      <h1 class="text-3xl">
+        User <span class="text-3xl font-bold">Management</span> - {{ route.query.users }}
+      </h1>
       <div>
         <button @click="handleToggleModal" class="btn btn-block">
           <i class="ri-add-line"></i>Add New User
@@ -188,22 +190,6 @@
                   required
                 />
               </label>
-              <!-- <label class="flex items-center gap-2 input input-bordered">
-              <input
-                v-model="intern.contact"
-                type="number"
-                class="grow"
-                placeholder="Contact"
-              />
-            </label>
-            <label class="flex items-center gap-2 input input-bordered">
-              <input
-                v-model="intern.address"
-                type="text"
-                class="grow"
-                placeholder="Complete Address"
-              />
-            </label> -->
               <select
                 @change="handleSelectDepartmentIntern"
                 class="w-full py-3 select select-bordered"
@@ -323,7 +309,7 @@
                 <label class="flex items-center w-full gap-2 input input-bordered">
                   <input
                     v-model="hte.contact"
-                    type="text"
+                    type="number"
                     class="grow"
                     placeholder="Contact number"
                     minlength="11"
@@ -530,7 +516,7 @@
               <label class="flex items-center w-full gap-2 input input-bordered">
                 <input
                   v-model="coordinator.contactNumber"
-                  type="text"
+                  type="number"
                   class="grow"
                   placeholder="Contact number"
                   minlength="11"
@@ -794,6 +780,10 @@ const toggleConfirmationModal = (id) => {
 };
 const handleDeleteAccount = async () => {
   await userStore.removeAccount(userId.value);
+  router.push({
+    name: route.manage_users, // or use `path: route.path`
+    query: { users: "All" },
+  });
   isConfirmationModalShow.value = !isConfirmationModalShow.value;
 };
 const handleGeneratePassword = () => {
@@ -943,8 +933,13 @@ const handleHteUser = async () => {
 
     const response = await userStore.addHTE(hte);
     alert("HTE Added");
+
     resetHTEForms();
     await handleToggleModal();
+    router.push({
+      name: route.manage_users, // or use `path: route.path`
+      query: { users: "All" },
+    });
   } catch (err) {
     console.log(err);
   }
@@ -955,6 +950,10 @@ const handleCoorUser = async () => {
 
     await handleToggleModal();
     resetCoorForms();
+    router.push({
+      name: route.manage_users, // or use `path: route.path`
+      query: { users: "All" },
+    });
   } catch (err) {
     console.log(err);
   }
@@ -982,13 +981,6 @@ const headers = [
   { text: "DATE CREATED", value: "createdAt" },
   { text: "ACTIONS", value: "operation", width: 10 },
 ];
-const fetchUsersList = () => {
-  // const { users } = route.query;
-  // console.log(users);
-  userListFiltered.value;
-  console.log("12312312321312");
-  console.log(route.query.users);
-};
 
 watch(
   () => route.query,
