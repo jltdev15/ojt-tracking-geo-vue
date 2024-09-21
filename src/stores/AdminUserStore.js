@@ -84,11 +84,26 @@ export const useAdminUserStore = defineStore("user", () => {
     await fetchCoor();
     await fetchAdmin();
   };
-  const fetchUsers = async () => {
+  const fetchUsers = async (filterRole) => {
+    console.log('====================================');
+    console.log(filterRole);
+    console.log('====================================');
     try {
       const response = await apiClient.get("/users");
       console.log(response);
-      usersList.value = await response.data.content;
+      if(filterRole === 'All') {
+        usersList.value = await response.data.content;
+      }
+      if(filterRole === 'HTE') {
+        usersList.value = await response.data.content.filter((item) => item.role === filterRole);
+      }
+      if(filterRole === 'Intern') {
+        usersList.value = await response.data.content.filter((item) => item.role === filterRole);
+      }
+      if(filterRole === 'Coordinator') {
+        usersList.value = await response.data.content.filter((item) => item.role === filterRole);
+      }
+      // usersList.value = await response.data.content;
     } catch (err) {
       console.log(err);
     }
@@ -337,7 +352,7 @@ export const useAdminUserStore = defineStore("user", () => {
     const payload = {
       email: updateInfo.internEmail,
       firstName: updateInfo.internfirstName,
-      lastName: updateInfo.internfirstName,
+      lastName: updateInfo.internlastName,
       contact: updateInfo.internContact,
       province: updateInfo.internProvince,
       municipality: updateInfo.internMunicipality,

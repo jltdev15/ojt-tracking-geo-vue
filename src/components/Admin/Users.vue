@@ -33,7 +33,7 @@
     <section class="md:px-6">
       <EasyDataTable
         :headers="headers"
-        :items="userStore.getNumberOfUsersOnly"
+        :items="userStore.usersList"
         :search-field="searchField"
         :search-value="searchValue"
         :rows-per-page="10"
@@ -639,12 +639,14 @@
 </template>
 
 <script setup>
+import { useRoute } from "vue-router";
 import axios from "axios";
 import { useAdminUserStore } from "@/stores/AdminUserStore";
 import { useRouter } from "vue-router";
 const userStore = useAdminUserStore();
-import { ref, onMounted, reactive } from "vue";
+import { ref, onMounted, reactive, computed, watch } from "vue";
 import { Loader } from "@googlemaps/js-api-loader";
+const route = useRoute();
 const router = useRouter();
 const searchField = ref("role");
 const searchValue = ref("");
@@ -661,6 +663,7 @@ const locationResults = ref(null);
 const selectedProvince = ref("Province");
 const selectedMunicipality = ref("Municipality/City");
 const selectedBrgy = ref("Brgy");
+const userListFiltered = ref([]);
 const getProvinces = async () => {
   try {
     const response = await axios.get("https://psgc.gitlab.io/api/provinces/");
@@ -979,9 +982,22 @@ const headers = [
   { text: "DATE CREATED", value: "createdAt" },
   { text: "ACTIONS", value: "operation", width: 10 },
 ];
+const fetchUsersList = () => {
+  // const { users } = route.query;
+  // console.log(users);
+  userListFiltered.value;
+  console.log("12312312321312");
+  console.log(route.query.users);
+};
 
+watch(
+  () => route.query,
+  () => {
+    userStore.fetchUsers(route.query.users);
+  }
+);
 onMounted(async () => {
-  await userStore.fetchUsers();
+  await userStore.fetchUsers(route.query.users);
   await userStore.fetchDepartmentList();
   await getProvinces();
   initMap();

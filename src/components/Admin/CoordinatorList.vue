@@ -45,6 +45,9 @@
           </p>
           <p v-else>No request yet</p>
         </template>
+        <template #item-fullName="item">
+          <p>{{ item.firstName }} {{ item.lastName }}</p>
+        </template>
       </EasyDataTable>
     </section>
   </div>

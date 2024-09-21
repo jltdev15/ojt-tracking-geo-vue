@@ -1,5 +1,5 @@
 import "./assets/main.css";
-import * as deepEqual from 'fast-deep-equal';
+// import * as deepEqual from 'fast-deep-equal';
 import Vue3EasyDataTable from "vue3-easy-data-table";
 import "vue3-easy-data-table/dist/style.css";
 import { createApp } from "vue";
