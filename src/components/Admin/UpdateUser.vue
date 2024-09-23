@@ -1,12 +1,12 @@
 <template>
-  <div class="">
+  <div class="w-9/12 mx-auto ">
     <div class="px-2 py-6 text-sm md:p-6 breadcrumbs">
       <ul>
         <li>
           <router-link :to="{ name: 'admin_dashboard' }">Admin Dashboard</router-link>
         </li>
         <li>
-          <router-link :to="{ name: 'manage_users', query: { users: 'All' } }">Users management</router-link>
+          <router-link :to="{ name: 'manage_users' }">Users management</router-link>
         </li>
         <li>
           <router-link class="text-red-800" :to="{ name: 'UpdateUser' }">Update user</router-link>
@@ -19,8 +19,8 @@
         {{ userStore.currentRole === 'Coordinator' ? 'Coor' : userStore.currentRole }}
       </h1>
     </header>
-    <section class="gap-6 md:w-4/6 md:mx-6">
-      <div class="flex flex-col gap-3 bg-white rounded-md shadow-md">
+    <section class="gap-6 mx-auto bg-white rounded-md shadow-md md:mx-6">
+      <div class="flex flex-col gap-3 rounded-md shadow-md">
         <h2 class="p-3 text-2xl bg-red-800 text-gray-50">Profile Information</h2>
         <section v-if="userStore.currentRole === 'Coordinator'" class="grid p-3 md:p-6 md:grid-cols-2 gap-x-6">
           <div class="flex flex-col gap-3">
@@ -176,8 +176,9 @@
             </div>
           </div>
           <!-- Right side -->
-          <div class="flex flex-col w-full gap-3">
-            <div class="flex gap-3">
+          <div class="flex flex-col w-full">
+            <label for="">Business Name</label>
+            <div class="flex gap-3 pb-3">
               <label class="flex items-center justify-between w-full input input-bordered">
                 <input v-model.trim="businessName" type="text" class="max-w-xs" placeholder="Business Name" />
               </label>
@@ -596,39 +597,29 @@ const initMap = () => {
   marker.value = new google.maps.Marker({
     position: locationRes.value,
     map: map.value,
+    draggable: true,
+  });
+  marker.value.addListener('dragend', (event) => {
+    userStore.updateInfo.mapLocation.lat = event.latLng.lat().toFixed(6);
+    userStore.updateInfo.mapLocation.lng = event.latLng.lng().toFixed(6);
+  });
+  map.value.addListener('click', (event) => {
+    const clickedLocation = event.latLng;
+    userStore.updateInfo.mapLocation.lat = clickedLocation.lat().toFixed(6);
+    userStore.updateInfo.mapLocation.lng = clickedLocation.lng().toFixed(6);
+
+    // Move the marker to the clicked location
+    marker.value.setPosition(clickedLocation);
   });
 
-  // if (map.value) {
-  //   map.value = new google.maps.Map(document.getElementById("map"), {
-  //     center: locationRes.value,
-  //     zoom: 15,
-  //     mapId: "DEMO_MAP_ID",
-  //   });
 
-  //   if (marker.value) {
-  //     marker.value = new google.maps.Marker({
-  //       position: locationRes.value,
-  //       map: map.value,
-  //     });
-  //   } else {
-  //     marker.value = new google.maps.Marker({
-  //       position: locationRes.value,
-  //       map: map.value,
-  //     });
-  //   }
-  // } else {
-  //   map.value = new google.maps.Map(document.getElementById("map"), {
-  //     center: locationRes.value,
-  //     zoom: 15,
-  //     mapId: "DEMO_MAP_ID",
-  //   });
-
-  //   marker.value = new google.maps.Marker({
-  //     position: locationRes.value,
-  //     map: map.value,
-  //   });
-  // }
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+label {
+  font-weight: 600;
+  margin-bottom: 3px;
+  color: rgb(87, 42, 42);
+}
+</style>

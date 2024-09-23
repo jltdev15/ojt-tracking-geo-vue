@@ -90,9 +90,9 @@ export const useAdminUserStore = defineStore("user", () => {
     try {
       const response = await apiClient.get("/users");
       console.log(response);
-      if (filterRole === "All") {
-        return (usersList.value = await response.data.content);
-      }
+      // if (filterRole === "All") {
+      //   return (usersList.value = await response.data.content);
+      // }
       if (filterRole === "HTE") {
         return (usersList.value = await response.data.content.filter(
           (item) => item.role === filterRole
@@ -171,10 +171,17 @@ export const useAdminUserStore = defineStore("user", () => {
     console.log(payload);
     try {
       const response = await apiClient.post("/hte", payload);
+      console.log("====================================");
+      console.log(response);
+      console.log("====================================");
+      alert("HTE Added");
       await fetchUsers();
       return response.data.message;
     } catch (err) {
       console.log(err);
+      if (err.response.data.message) {
+        return alert("Duplicate username. Please try other one");
+      }
     }
   };
 

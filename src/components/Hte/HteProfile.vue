@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="p-6 text-sm breadcrumbs">
+  <div class="w-full">
+    <div class="w-11/12 py-6 mx-auto text-sm md:w-9/12 breadcrumbs">
       <ul>
         <li>
           <router-link :to="{ name: 'hte_dashboard' }">Hte Dashboard</router-link>
@@ -10,11 +10,11 @@
         </li>
       </ul>
     </div>
-    <section class="px-6">
+    <section class="w-11/12 p-6 mx-auto rounded-md shadow-md md:w-9/12 bg-gray-50">
       <header class="">
         <h1 class="text-3xl font-bold">{{ authStore.hteInformation.name }}</h1>
       </header>
-      <section class="grid grid-cols-1 p-1 md:w-4/6 md:grid-cols-2 md:p-3 gap-y-6 gap-x-6">
+      <section class="grid grid-cols-1 p-1 md:grid-cols-2 md:p-3 gap-y-6 gap-x-6">
         <!-- Left side HTE -->
         <div class="flex flex-col gap-3">
           <div>
@@ -80,8 +80,9 @@
           </div>
         </div>
         <!-- Right side -->
-        <div class="flex flex-col w-full gap-3">
-          <div class="flex gap-3">
+        <div class="flex flex-col w-full gap-0">
+          <label>Business Name</label>
+          <div class="flex gap-3 pb-3">
             <label class="flex items-center justify-between w-full input input-bordered">
               <input v-model.trim="businessName" type="text" class="max-w-xs" placeholder="Business Name" />
             </label>
@@ -109,7 +110,7 @@
             class="w-3/6 md:w-36 btn btn-accent btn-outline">
             Cancel
           </router-link>
-          <button type="button" @click="updateHandlerHTE" class="w-3/6 md:w-36 btn btn-md btn-primary">
+          <button type="button" @click="updateInformationHandler" class="w-3/6 md:w-36 btn btn-md btn-primary">
             Update
           </button>
         </div>
@@ -143,12 +144,9 @@ const updateInformationHandler = async () => {
   await authStore.updateHteInfo();
   alert("Update success!");
   router.replace({ name: "hte_profile" });
-  isEditEnable.value = !isEditEnable.value;
 };
 
-const toggleEdit = () => {
-  isEditEnable.value = !isEditEnable.value;
-};
+
 
 const getProvinces = async () => {
   try {
@@ -242,7 +240,7 @@ const getBusinessLocation = async () => {
         const place = results[0];
         locationRes.value = place.geometry.location.toJSON();
         authStore.hteInformation.lat = locationRes.value.lat;
-        authStore.hteInformation.lat = locationRes.value.lng;
+        authStore.hteInformation.lng = locationRes.value.lng;
         initMap();
       } else {
         errorMessage.value = "Business not found.";
@@ -266,6 +264,19 @@ const initMap = () => {
   marker.value = new google.maps.Marker({
     position: locationRes.value,
     map: map.value,
+    draggable: true,
+  });
+  marker.value.addListener('dragend', (event) => {
+    authStore.hteInformation.lat = event.latLng.lat().toFixed(6);
+    authStore.hteInformation.lng = event.latLng.lng().toFixed(6);
+  });
+  map.value.addListener('click', (event) => {
+    const clickedLocation = event.latLng;
+    authStore.hteInformation.lat = clickedLocation.lat().toFixed(6);
+    authStore.hteInformation.lng = clickedLocation.lng().toFixed(6);
+
+    // Move the marker to the clicked location
+    marker.value.setPosition(clickedLocation);
   });
 };
 
@@ -277,4 +288,9 @@ const initMap = () => {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+label {
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+</style>

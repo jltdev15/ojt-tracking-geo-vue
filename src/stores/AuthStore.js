@@ -276,9 +276,13 @@ export const useAuthStore = defineStore("auth", () => {
   };
   const updateHteInfo = async () => {
     const payload = {
+      name: hteInformation.name,
       email: hteInformation.email,
       contact: hteInformation.contact,
-      address: hteInformation.address,
+      province: hteInformation.province,
+      municipality: hteInformation.municipality,
+      brgy: hteInformation.brgy,
+      street: hteInformation.street,
       location: hteInformation.location,
     };
     console.log(payload);
@@ -288,7 +292,7 @@ export const useAuthStore = defineStore("auth", () => {
         `/hte/update/information`,
         payload
       );
-      console.log(response.status);
+      console.log(response);
     } catch (err) {
       console.log(err);
     }

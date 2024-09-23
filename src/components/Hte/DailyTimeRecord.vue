@@ -19,7 +19,7 @@
           v-model="searchValue" />
       </div>
       <EasyDataTable :headers="headers" :items="userStore.attendanceArr" :search-field="searchField"
-        :search-value="searchValue" show-index table-class-name="customize-table" border-cell>
+        :search-value="searchValue" table-class-name="customize-table" border-cell>
         <template #item-timeOut="item">
           <p v-if="item.timeOut != null">{{ item.timeOut }}</p>
           <p v-else>No time out data

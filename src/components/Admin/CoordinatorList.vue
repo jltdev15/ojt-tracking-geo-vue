@@ -1,6 +1,6 @@
 <template>
-  <div class="p-3">
-    <div class="py-6 md:p-6 text-sm breadcrumbs">
+  <div class="">
+    <div class="w-9/12 py-6 mx-auto text-sm md:py-6 breadcrumbs">
       <ul>
         <li>
           <router-link :to="{ name: 'admin_dashboard' }">Dashboard</router-link>
@@ -10,45 +10,35 @@
         </li>
       </ul>
     </div>
-    <header class="flex items-center justify-between md:px-6">
-      <h1 class="text-3xl font-bold">School Coordinator</h1>
-    </header>
-    <div class="flex justify-end gap-3 md:px-6 py-3">
-      <input
-        type="text"
-        placeholder="Type here"
-        class="w-full input input-bordered"
-        v-model="searchValue"
-      />
-      <select class="w-48 select select-bordered" v-model.trim="searchField">
-        <option selected disabled value="Set filter">Set filter</option>
-        <option value="department">Department</option>
-        <option value="fullName">Full Name</option>
-      </select>
-    </div>
-    <section class="md:px-6">
-      <EasyDataTable
-        :headers="headers"
-        :items="userStore.coordinatorList"
-        :search-field="searchField"
-        :search-value="searchValue"
-        table-class-name="customize-table"
-      >
-        <template #item-request="item">
-          <p v-if="item.requestList.length">
-            <router-link
-              :to="{ name: 'CoordinatorRequestItem', params: { id: item._id } }"
-              class="btn btn-outline btn-accent"
-            >
-              View requests
-            </router-link>
-          </p>
-          <p v-else>No request yet</p>
-        </template>
-        <template #item-fullName="item">
-          <p>{{ item.firstName }} {{ item.lastName }}</p>
-        </template>
-      </EasyDataTable>
+    <section class="w-9/12 p-3 py-3 mx-auto rounded-md shadow-md bg-gray-50">
+      <header class="flex items-center justify-between">
+        <h1 class="text-3xl font-bold">School Coordinator</h1>
+      </header>
+      <div class="flex justify-end gap-3 py-3 ">
+        <input type="text" placeholder="Type here" class="w-full input input-bordered" v-model="searchValue" />
+        <select class="w-48 select select-bordered" v-model.trim="searchField">
+          <option selected disabled value="Set filter">Set filter</option>
+          <option value="department">Department</option>
+          <option value="fullName">Full Name</option>
+        </select>
+      </div>
+      <section class="6">
+        <EasyDataTable :headers="headers" :items="userStore.coordinatorList" :search-field="searchField"
+          :search-value="searchValue" table-class-name="customize-table">
+          <template #item-request="item">
+            <p v-if="item.requestList.length">
+              <router-link :to="{ name: 'CoordinatorRequestItem', params: { id: item._id } }"
+                class="btn btn-outline btn-accent">
+                View requests
+              </router-link>
+            </p>
+            <p v-else>No request yet</p>
+          </template>
+          <template #item-fullName="item">
+            <p>{{ item.firstName }} {{ item.lastName }}</p>
+          </template>
+        </EasyDataTable>
+      </section>
     </section>
   </div>
 </template>
