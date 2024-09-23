@@ -1,26 +1,27 @@
 <template>
   <div
     v-if="props.id !== messengerStore.userStore.id"
-    class="flex flex-col items-center gap-1 p-3 cursor-pointer md:gap-3 hover:bg-gray-100 md:flex-row"
+    class="flex items-center my-3 md:my-0 shadow gap-3 p-3 cursor-pointer md:gap-3 transition-all rounded-md hover:bg-gray-100"
     @click="newConvo()"
   >
     <div class="relative">
       <img
-        class="w-12 h-10 rounded-full max-sm:max-w-10 max-sm:max-h-10"
-        src="/favicon.ico"
+        class="w-16 h-16 md:h-12 md:w-14 rounded-full"
+        src="https://laravelui.spruko.com/tailwind/ynex/build/assets/images/faces/9.jpg"
         alt="profile image"
       />
-
     </div>
-    <div class="flex flex-col justify-start w-24 text-lg font-medium md:w-full">
-      <p class="capitalize md:text-lg text-[0.7rem] leading-3 text-left">
+    <div class="flex flex-col justify-start text-lg font-medium md:w-full">
+      <p class="capitalize md:text-lg text-left">
         {{ props.name }}
       </p>
-      <div class="flex items-center gap-1 md:gap-2 md:justify-start">
-        <p v-if="props.department" class="text-[0.6rem] md:text-xs">
+      <div
+        class="flex text-gray-400 font-medium text-sm items-center gap-3 md:gap-2 md:justify-start"
+      >
+        <p v-if="props.department" class="">
           {{ props.department ? props.department : "" }}
         </p>
-        <span class="text-[0.6rem] md:text-xs">{{ props.role ? props.role : "" }}</span>
+        <span class="">{{ props.role ? props.role : "" }}</span>
       </div>
     </div>
   </div>
@@ -61,18 +62,6 @@ const newConvo = async () => {
 onMounted(async () => {
   await messengerStore.fetchUser();
   await fetchConversation();
-  socket.value = io("ws://localhost:8900");
-  socket.value.on("getUsers", (users) => {
-    try {
-      const activeUser = users.find((user) => user.userId === props.id);
-      if (activeUser) {
-        UsersActive.activeUsers = activeUser.userId;
-      }
-      if (!activeUser) {
-        UsersActive.activeUsers = null;
-      }
-    } catch (err) {}
-  });
 });
 onUnmounted(() => {});
 </script>

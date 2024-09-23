@@ -6,7 +6,7 @@ export const useInternStore = defineStore("intern", () => {
   const applicationLists = ref([]);
   const requiredHours = ref(null);
   const workedHours = ref(null);
-  const isProfileComplete = ref(null)
+  const isProfileComplete = ref(null);
   const isClockIn = ref(false);
   const isLocationEnabled = ref(false);
   const errorMessage = ref("");
@@ -18,7 +18,7 @@ export const useInternStore = defineStore("intern", () => {
   });
   const hteInformation = ref({});
   const attendanceArr = ref([]);
-  const evaluationResults = ref('')
+  const evaluationResults = ref("");
   const applicationInfo = reactive({
     resume: "",
     resumePath: "",
@@ -65,7 +65,6 @@ export const useInternStore = defineStore("intern", () => {
       const response = await apiClient.get(`/intern/applications`);
       console.log(response);
       applicationLists.value = await response.data.content;
-      
     } catch (err) {
       console.log(err);
     }
@@ -91,7 +90,7 @@ export const useInternStore = defineStore("intern", () => {
       workedHours.value = response.data.content.workedHours;
       isInternReady.value = response.data.content.isInternshipReady;
       isEvalReady.value = response.data.content.isEvaluationReady;
-      isProfileComplete.value = response.data.content.isProfileComplete
+      isProfileComplete.value = response.data.content.isProfileComplete;
       console.log(response);
     } catch (err) {
       console.log(err);
@@ -106,9 +105,9 @@ export const useInternStore = defineStore("intern", () => {
         );
       }
       const response = await apiClient.post("/intern/timein", payload);
-  
+
       await fetchRequiredHours();
-   
+
       return response;
     } catch (err) {
       console.log(err);
@@ -133,12 +132,12 @@ export const useInternStore = defineStore("intern", () => {
           locationData.lat = position.coords.latitude;
           locationData.lng = position.coords.longitude;
           isLocationEnabled.value = true;
-          console.log('====================================');
+          console.log("====================================");
           console.log(locationData.lat);
-          console.log('====================================');
-          console.log('====================================');
+          console.log("====================================");
+          console.log("====================================");
           console.log(locationData.lng);
-          console.log('====================================');
+          console.log("====================================");
         },
         (err) => {
           errorMessage.value = `Error: ${err.message}`;
@@ -151,7 +150,7 @@ export const useInternStore = defineStore("intern", () => {
   const sendLocationHandler = async () => {
     // await fetchRequiredHours()
     try {
-      if ((isClockIn.value)) {
+      if (isClockIn.value) {
         const response = await apiClient.put(
           "intern/currentlocation",
           locationData
@@ -242,7 +241,7 @@ export const useInternStore = defineStore("intern", () => {
       console.log(err);
       return err;
     }
-  }
+  };
   // Computed Properties
   const getNumberOfApplication = computed(() => {
     return applicationLists.value.length;
@@ -270,7 +269,7 @@ export const useInternStore = defineStore("intern", () => {
     return requiredHours.value;
   });
   const getNumberOfHoursWorked = computed(() => {
-    return Math.floor(workedHours.value);
+    return Math.ceil(workedHours.value);
   });
   return {
     fetchInternshipLists,
@@ -307,6 +306,6 @@ export const useInternStore = defineStore("intern", () => {
     isEvalReady,
     evaluationResults,
     fetchEvaluationResults,
-    isProfileComplete
+    isProfileComplete,
   };
 });

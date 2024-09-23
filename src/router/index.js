@@ -10,7 +10,7 @@ import StudentDashboard from "@/components/Student/Dashboard.vue";
 import StudentInternshipsList from "@/components/Student/InternshipsList.vue";
 import CoorDashBoard from "@/components/Coor/Dashboard.vue";
 import CoorDashBoardView from "../views/Coor/CoorDashBoardView.vue";
-import userProfileUpdate from '../components/Admin/UpdateUser.vue';
+import userProfileUpdate from "../components/Admin/UpdateUser.vue";
 import { useAuthStore } from "@/stores/AuthStore";
 
 const router = createRouter({
@@ -182,15 +182,13 @@ const router = createRouter({
         {
           path: "list/:id",
           name: "CoorDailyTimeRecord",
-          component: () =>
-            import("../components/Coor/CoorDTR.vue"),
+          component: () => import("../components/Coor/CoorDTR.vue"),
           meta: { requiresAuth: true, roles: ["Coordinator"] },
         },
         {
           path: "evaluated",
           name: "EvaluatedList",
-          component: () =>
-            import("../components/Coor/InternEvaluatedList.vue"),
+          component: () => import("../components/Coor/InternEvaluatedList.vue"),
           meta: { requiresAuth: true, roles: ["Coordinator"] },
         },
         {
@@ -381,8 +379,7 @@ const router = createRouter({
         {
           path: "evaluation",
           name: "EvaluationResults",
-          component: () =>
-            import("../components/Student/InternEvaluation.vue"),
+          component: () => import("../components/Student/InternEvaluation.vue"),
           meta: { requiresAuth: true, roles: ["Intern"] },
         },
         {
@@ -421,8 +418,6 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  console.log("test");
-
   const authStore = useAuthStore();
   await authStore.checkAuth();
   if (to.meta.requiresAuth) {

@@ -1,6 +1,6 @@
 <template>
   <div class="p-3">
-    <div class="p-6 text-sm breadcrumbs">
+    <div class="py-6 md:p-6 text-sm breadcrumbs">
       <ul>
         <li>
           <router-link :to="{ name: 'admin_dashboard' }">Dashboard</router-link>
@@ -10,10 +10,10 @@
         </li>
       </ul>
     </div>
-    <header class="flex items-center justify-between px-6">
+    <header class="flex items-center justify-between md:px-6">
       <h1 class="text-3xl font-bold">School Coordinator</h1>
     </header>
-    <div class="flex justify-end gap-3 px-6 py-3">
+    <div class="flex justify-end gap-3 md:px-6 py-3">
       <input
         type="text"
         placeholder="Type here"

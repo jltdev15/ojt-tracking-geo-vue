@@ -1,21 +1,19 @@
 <template>
   <div class="p-3">
-    <div class="p-6 text-sm breadcrumbs">
+    <div class="md:p-6 text-sm breadcrumbs">
       <ul>
         <li>
           <router-link :to="{ name: 'admin_dashboard' }">Dashboard</router-link>
         </li>
         <li>
-          <router-link class="font-medium" :to="{ name: 'Hte_Listing' }"
-            >HTE Listings</router-link
-          >
+          <router-link class="" :to="{ name: 'Hte_Listing' }">HTE Listings</router-link>
         </li>
       </ul>
     </div>
-    <header class="p-6">
+    <header class="py-6 md:p-6">
       <h1 class="text-3xl font-bold">Internships Posted</h1>
     </header>
-    <section class="px-6">
+    <section class="md:px-6">
       <div class="flex justify-end gap-3 py-3">
         <input
           type="text"

@@ -8,9 +8,7 @@
         <header class="py-3">
           <h1 class="text-xl font-semibold text-gray-400 capitalize">Hours Required</h1>
         </header>
-        <div
-          class="grid items-end grid-cols-2 gap-7 sm:grid-cols-2 justify-self-right lg:grid-cols-3"
-        >
+        <div class="grid items-end grid-cols-2 gap-7 sm:grid-cols-2 justify-self-right lg:grid-cols-3">
           <div class="p-5 bg-white rounded shadow-sm">
             <div class="flex items-center space-x-4 space-y-2">
               <div>
@@ -26,7 +24,7 @@
               <div>
                 <div class="text-sm text-gray-400 md:text-base">Rendered Hours</div>
                 <div class="text-2xl font-bold text-gray-900">
-                  {{ internStore.getNumberOfHoursWorked.toFixed(0) }}
+                  {{ internStore.getNumberOfHoursWorked }}
                 </div>
               </div>
             </div>
@@ -38,10 +36,10 @@
                 <div class="text-2xl font-bold text-gray-900">
                   {{
                     internStore.getNumberOfHoursWorked >=
-                    internStore.getNumberOfHoursRequired
+                      internStore.getNumberOfHoursRequired
                       ? "0"
                       : internStore.getNumberOfHoursRequired -
-                        internStore.getNumberOfHoursWorked.toFixed(0)
+                      internStore.getNumberOfHoursWorked.toFixed(0)
                   }}
                 </div>
               </div>
@@ -64,18 +62,12 @@
               </div>
             </div>
           </div>
-          <div
-            class="p-5 rounded shadow-sm"
-            :class="{
-              'bg-red-700 text-gray-50': internStore.getNumberOfApprovedApplication != 0,
-              'bg-white': internStore.getNumberOfApprovedApplication == 0,
-            }"
-          >
-            <router-link
-              v-if="internStore.getNumberOfApprovedApplication != 0"
-              :to="{ name: 'ApplicationStatus' }"
-              class="flex items-center space-x-4 space-y-2"
-            >
+          <div class="p-5 rounded shadow-sm" :class="{
+            'bg-red-700 text-gray-50': internStore.getNumberOfApprovedApplication != 0,
+            'bg-white': internStore.getNumberOfApprovedApplication == 0,
+          }">
+            <router-link v-if="internStore.getNumberOfApprovedApplication != 0" :to="{ name: 'ApplicationStatus' }"
+              class="flex items-center space-x-4 space-y-2">
               <div>
                 <div class="">Approved</div>
 
@@ -102,19 +94,13 @@
               </div>
             </div>
           </div>
-          <div
-            class="p-5 rounded shadow-sm"
-            :class="{
-              'bg-green-600 text-slate-50':
-                internStore.getNumberOfAcceptedApplication != 0,
-              'bg-white': internStore.getNumberOfAcceptedApplication == 0,
-            }"
-          >
-            <router-link
-              v-if="internStore.getNumberOfAcceptedApplication != 0"
-              :to="{ name: 'ApplicationStatus' }"
-              class="flex items-center space-x-4 space-y-2"
-            >
+          <div class="p-5 rounded shadow-sm" :class="{
+            'bg-green-600 text-slate-50':
+              internStore.getNumberOfAcceptedApplication != 0,
+            'bg-white': internStore.getNumberOfAcceptedApplication == 0,
+          }">
+            <router-link v-if="internStore.getNumberOfAcceptedApplication != 0" :to="{ name: 'ApplicationStatus' }"
+              class="flex items-center space-x-4 space-y-2">
               <div>
                 <div class="">Accepted</div>
                 <div class="text-2xl font-bold">
@@ -142,15 +128,8 @@
           <ul class="flex flex-col h-screen gap-3 p-2 overflow-auto rounded shadow-sm">
             <p v-if="adminUserStore.announcementList.length === 0">No announcement yet</p>
 
-            <AnnouncementItem
-              v-for="data in adminUserStore.announcementList"
-              :key="data.id"
-              :title="data.title"
-              :description="data.description"
-              :author="data.author"
-              :date="data.date"
-              :role="data.role"
-            />
+            <AnnouncementItem v-for="data in adminUserStore.announcementList" :key="data.id" :title="data.title"
+              :description="data.description" :author="data.author" :date="data.date" :role="data.role" />
           </ul>
         </section>
       </div>

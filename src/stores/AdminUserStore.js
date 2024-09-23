@@ -49,7 +49,7 @@ export const useAdminUserStore = defineStore("user", () => {
     companyMunicipality: "",
     companyBrgy: "",
     companyStreet: "",
-    location: "",
+    companyLocation: "",
     mapLocation: {
       lat: {
         type: Number,
@@ -60,7 +60,6 @@ export const useAdminUserStore = defineStore("user", () => {
     },
     hteProfileId: "",
     hasMoa: "",
-
 
     // Intern
     internEmail: "",
@@ -74,7 +73,7 @@ export const useAdminUserStore = defineStore("user", () => {
     internDepartment: "",
     requiredHours: "",
     internId: "",
-    internMiddle:''
+    internMiddle: "",
   });
 
   // Methods
@@ -85,25 +84,31 @@ export const useAdminUserStore = defineStore("user", () => {
     await fetchAdmin();
   };
   const fetchUsers = async (filterRole) => {
-    console.log('====================================');
+    console.log("====================================");
     console.log(filterRole);
-    console.log('====================================');
+    console.log("====================================");
     try {
       const response = await apiClient.get("/users");
       console.log(response);
-      if(filterRole === 'All') {
-        usersList.value = await response.data.content;
+      if (filterRole === "All") {
+        return (usersList.value = await response.data.content);
       }
-      if(filterRole === 'HTE') {
-        usersList.value = await response.data.content.filter((item) => item.role === filterRole);
+      if (filterRole === "HTE") {
+        return (usersList.value = await response.data.content.filter(
+          (item) => item.role === filterRole
+        ));
       }
-      if(filterRole === 'Intern') {
-        usersList.value = await response.data.content.filter((item) => item.role === filterRole);
+      if (filterRole === "Intern") {
+        return (usersList.value = await response.data.content.filter(
+          (item) => item.role === filterRole
+        ));
       }
-      if(filterRole === 'Coordinator') {
-        usersList.value = await response.data.content.filter((item) => item.role === filterRole);
+      if (filterRole === "Coordinator") {
+        return (usersList.value = await response.data.content.filter(
+          (item) => item.role === filterRole
+        ));
       }
-      // usersList.value = await response.data.content;
+      return (usersList.value = await response.data.content);
     } catch (err) {
       console.log(err);
     }
@@ -263,7 +268,8 @@ export const useAdminUserStore = defineStore("user", () => {
         updateInfo.contactNumber = response.data.content.profile.contact;
         updateInfo.street = response.data.content.profile.street;
         updateInfo.province = await response.data.content.profile.province;
-        updateInfo.municipality = await response.data.content.profile.municipality;
+        updateInfo.municipality = await response.data.content.profile
+          .municipality;
         updateInfo.brgy = await response.data.content.profile.brgy;
         updateInfo.department = response.data.content.profile.department;
         updateInfo.username = response.data.content.username;
@@ -272,8 +278,13 @@ export const useAdminUserStore = defineStore("user", () => {
       if (response.data.content.role === "HTE") {
         updateInfo.hteProfileId = userId;
         updateInfo.companyName = response.data.content.profile.fullName;
-        updateInfo.companyAddress = response.data.content.profile.address;
+        updateInfo.companyStreet = response.data.content.profile.street;
+        updateInfo.companyBrgy = response.data.content.profile.brgy;
+        updateInfo.companyMunicipality =
+          response.data.content.profile.municipality;
+        updateInfo.companyProvince = response.data.content.profile.province;
         updateInfo.companyContact = response.data.content.profile.contactNumber;
+        updateInfo.companyLocation = response.data.content.profile.location;
         updateInfo.mapLocation.lat = response.data.content.profile.location.lat;
         updateInfo.mapLocation.lng = response.data.content.profile.location.lng;
         updateInfo.hasMoa = response.data.content.profile.hasMoa;
@@ -288,7 +299,8 @@ export const useAdminUserStore = defineStore("user", () => {
         updateInfo.requiredHours = response.data.content.profile.requiredHours;
         updateInfo.internContact = response.data.content.profile.contact;
         updateInfo.internProvince = response.data.content.profile.province;
-        updateInfo.internMunicipality = response.data.content.profile.municipality;
+        updateInfo.internMunicipality =
+          response.data.content.profile.municipality;
         updateInfo.internBrgy = response.data.content.profile.brgy;
         updateInfo.internStreet = response.data.content.profile.street;
         updateInfo.internMiddle = response.data.content.profile.middleInitial;
@@ -311,7 +323,6 @@ export const useAdminUserStore = defineStore("user", () => {
       municipality: updateInfo.municipality,
       province: updateInfo.province,
       email: updateInfo.email,
-
     };
     console.log(updateInfo);
 
@@ -332,10 +343,12 @@ export const useAdminUserStore = defineStore("user", () => {
       email: updateInfo.companyEmail,
 
       name: updateInfo.companyName,
-      address: updateInfo.companyAddress,
       contactNumber: updateInfo.companyContact,
+      street: updateInfo.companyStreet,
+      brgy: updateInfo.companyBrgy,
+      municipality: updateInfo.companyMunicipality,
+      province: updateInfo.companyProvince,
       location: updateInfo.mapLocation,
-      hasMoa: updateInfo.hasMoa,
     };
     try {
       const response = await apiClient.patch(

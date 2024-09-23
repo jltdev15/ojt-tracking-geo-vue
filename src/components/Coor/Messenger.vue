@@ -1,18 +1,22 @@
 <template>
   <div class="flex md:h-[100dvh] max-sm:flex-col max-sm:h-auto max-sm:relative">
-    <div class="w-full md:h-[100dvh] pt-3 max-sm:w-full max-sm:p-0 max-sm:order-3">
+    <div
+      :class="{ 'hidden md:block': setConversation === null }"
+      class="w-full md:h-[100dvh] pt-3 max-sm:w-full max-sm:p-0 max-sm:order-3"
+    >
       <conversation
         v-for="item in messengerStore.userStore.allUser"
         :name="item.profile?.firstName || item.profile.fullName"
         :id="item._id"
         :key="item._id"
+        @back="setConversation = null"
       />
       <div
         ref="scrollView"
         class="p-6 overflow-y-scroll h-4/6 scroll-smooth max-sm:h-full max-sm:overflow-y-auto max-sm:fixed max-sm:w-full max-sm:pb-80"
       >
         <div v-if="setConversation === null">
-          <h1 class="pt-20 text-4xl text-center">Start a conversation</h1>
+          <h1 class="md:pt-20 text-4xl text-center">Start a conversation</h1>
         </div>
         <div v-if="setConversation !== null">
           <message
@@ -45,11 +49,10 @@
       </div>
     </div>
     <div
-      class="w-1/4 md:pt-3 md:p-6 flex md:flex-col gap-3 max-sm:flex max-sm:w-full max-sm:overflow-y-auto max-sm:pt-0 max-sm:bg-gray-200 bg-white max-sm:order-1"
+      :class="{ 'hidden md:flex ': setConversation != null }"
+      class="w-1/4 md:pt-3 md:p-6 flex-col gap-3 max-sm:w-full max-sm:overflow-y-auto max-sm:pt-0 max-sm:bg-gray-50 bg-white max-sm:order-1"
     >
-      <h2 class="font-bold text-center text-3xl p-2 hidden md:block text-gray-800">
-        Contacts
-      </h2>
+      <h2 class="font-bold text-center text-3xl p-2 text-gray-800">Contacts</h2>
       <allUsers
         v-for="item in messengerStore.userStore.allUser"
         :id="item._id"
@@ -87,20 +90,7 @@ let intervalid = null;
 onMounted(async () => {
   await messengerStore.fetchUser();
   await messengerStore.fetchAllUser();
-  socket.value = io("ws://localhost:8900");
-  socket.value.on("getMessage", (data) => {
-    arrivalMessage.value = {
-      sender: data.senderId,
-      text: data.text,
-      createdAt: Date.now(),
-    };
-  });
-  await socket.value.emit("addUser", messengerStore.userId);
-  await socket.value.on("getUsers", (users) => {
-    // console.log("====================================");
-    // console.log(users);
-    // console.log("====================================");
-  });
+
   if (intervalid) {
     clearInterval(intervalid);
   }
@@ -138,11 +128,11 @@ const addNewMessage = async () => {
       return alert("Input is blank");
     }
 
-    socket.value.emit("sendMessage", {
-      senderId: messengerStore.userId,
-      receiverId: getFreindId.value,
-      text: inputMessage.text,
-    });
+    // socket.value.emit("sendMessage", {
+    //   senderId: messengerStore.userId,
+    //   receiverId: getFreindId.value,
+    //   text: inputMessage.text,
+    // });
 
     await newMessage(
       inputMessage.SenderConversationId,
@@ -151,7 +141,7 @@ const addNewMessage = async () => {
       inputMessage.receiverId,
       inputMessage.text
     );
-    inputMessage.text = "";
+    // inputMessage.text = "";
     await fetchMessage();
     scrollToBottom();
   } catch (err) {

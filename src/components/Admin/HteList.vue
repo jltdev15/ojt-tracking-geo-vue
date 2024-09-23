@@ -1,6 +1,6 @@
 <template>
   <div class="p-3">
-    <div class="p-6 text-sm breadcrumbs">
+    <div class="py-6 text-sm md:p-6 breadcrumbs">
       <ul>
         <li>
           <router-link :to="{ name: 'admin_dashboard' }">Dashboard</router-link>
@@ -13,34 +13,22 @@
                 </li> -->
       </ul>
     </div>
-    <header class="flex items-center justify-center md:justify-between md:px-6">
-      <h1 class="text-lg md:text-3xl font-bold">Register Host Training Establishments</h1>
+    <header class="flex items-center md:justify-between md:px-6">
+      <h1 class="text-lg font-bold md:text-3xl">Register Host Training Establishments</h1>
     </header>
-    <div class="flex justify-end gap-3 p-6">
-      <input
-        type="text"
-        placeholder="Type here"
-        class="w-full input input-bordered"
-        v-model="searchValue"
-      />
+    <div class="flex justify-end gap-3 py-6 md:p-6">
+      <input type="text" placeholder="Type here" class="w-full input input-bordered" v-model="searchValue" />
       <select class="w-48 select select-bordered" v-model.trim="searchField">
         <option selected disabled value="Set filter">Set filter</option>
         <option value="Username">Username</option>
       </select>
     </div>
     <div class="md:px-6">
-      <EasyDataTable
-        :headers="headers"
-        :items="useUserStore.htesList"
-        :search-field="searchField"
-        :search-value="searchValue"
-        table-class-name="customize-table"
-      >
+      <EasyDataTable :headers="headers" :items="useUserStore.htesList" :search-field="searchField"
+        :search-value="searchValue" table-class-name="customize-table">
         <template #item-moa="item">
           <div v-if="item.moaAttachement">
-            <a class="text-blue-500 underline" :href="item.moaAttachement" target="_blank"
-              >View MOA</a
-            >
+            <a class="text-blue-500 underline" :href="item.moaAttachement" target="_blank">View MOA</a>
           </div>
           <div v-else>
             <button @click="openUpdateModal(item._id, item.name)" class="btn btn-primary">
@@ -50,10 +38,12 @@
         </template>
         <template #item-internships="item">
           <div>
-            <router-link :to="{ name: 'hteItem', params: { id: item._id } }"
-              >View</router-link
-            >
+            <router-link class="bg-blue-500 btn text-gray-50"
+              :to="{ name: 'hteItem', params: { id: item._id } }">View</router-link>
           </div>
+        </template>
+        <template #item-address="item">
+          <p>{{ item.street }} {{ item.brgy }} {{ item.municipality }} {{ item.province }}</p>
         </template>
       </EasyDataTable>
       <Modal :show="isUpdateModalShow" title="Update MOA">
@@ -66,17 +56,9 @@
               </h2>
             </header>
             <div class="py-1 mb-3 border">
-              <input
-                placeholder="Supporting documents"
-                type="file"
-                name="files"
-                accept="application/pdf, image/jpeg, image/png"
-                id="supporting_document"
-                ref="fileInput "
-                class="w-full max-w-3xl file-input file-input-bordered"
-                @change="handleFileChange"
-                required
-              />
+              <input placeholder="Supporting documents" type="file" name="files"
+                accept="application/pdf, image/jpeg, image/png" id="supporting_document" ref="fileInput "
+                class="w-full max-w-3xl file-input file-input-bordered" @change="handleFileChange" required />
               <p v-if="isFileSizeExceed" class="p-1 text-red-800">
                 Files size exceeded. Please upload other documents
               </p>
@@ -85,10 +67,8 @@
               <button type="submit" class="text-lg btn btn-primary btn-block">
                 Update
               </button>
-              <button
-                class="text-lg btn btn-accent btn-outline btn-block"
-                @click="isUpdateModalShow = !isUpdateModalShow"
-              >
+              <button class="text-lg btn btn-accent btn-outline btn-block"
+                @click="isUpdateModalShow = !isUpdateModalShow">
                 Close
               </button>
             </div>
@@ -156,5 +136,11 @@ onMounted(async () => {
 .customize-table {
   --easy-table-header-font-color: #fff;
   --easy-table-header-background-color: #ae1818;
+}
+
+@media only screen and (max-width: 390px) {
+  .customize-table {
+    --easy-table-header-item-padding: 10px 25px;
+  }
 }
 </style>

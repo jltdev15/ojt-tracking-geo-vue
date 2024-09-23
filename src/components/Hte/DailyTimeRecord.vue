@@ -13,28 +13,22 @@
     <header class="flex items-center justify-between px-6">
       <h1 class="text-3xl font-bold">Attendance Logs</h1>
     </header>
-    <div class="w-3/6 p-3 m-3 shadow-md rounded-xl">
+    <div class="p-3 m-3 shadow-md md:w-full xl:w-4/6 rounded-xl">
       <div class="flex justify-end gap-3 py-3">
-        <input
-          type="text"
-          placeholder="Type here"
-          class="w-full input input-bordered"
-          v-model="searchValue"
-        />
-        <select class="w-48 select select-bordered" v-model.trim="searchField">
-          <option selected disabled value="Set filter">Set filter</option>
-          <option value="date">Date</option>
-        </select>
+        <input type="text" placeholder="Search date e.g MM/DD/YYYY" class="w-full input input-bordered"
+          v-model="searchValue" />
       </div>
-      <EasyDataTable
-        :headers="headers"
-        :items="userStore.attendanceArr"
-        :search-field="searchField"
-        :search-value="searchValue"
-        show-index
-        table-class-name="customize-table"
-        border-cell
-      >
+      <EasyDataTable :headers="headers" :items="userStore.attendanceArr" :search-field="searchField"
+        :search-value="searchValue" show-index table-class-name="customize-table" border-cell>
+        <template #item-timeOut="item">
+          <p v-if="item.timeOut != null">{{ item.timeOut }}</p>
+          <p v-else>No time out data
+          </p>
+        </template>
+        <!-- <template #item-action="item">
+
+          <button class="btn btn-primary" v-if="item.timeOut === null">Set Time Out</button>
+        </template> -->
       </EasyDataTable>
     </div>
   </div>
@@ -46,22 +40,30 @@ import { onMounted, ref } from "vue";
 import { useAdminUserStore } from "@/stores/AdminUserStore";
 const userStore = useAdminUserStore();
 const route = useRoute();
-const searchField = ref("Set filter");
+const searchField = ref("date");
 const searchValue = ref("");
 onMounted(async () => {
   await userStore.fetchInternDailyLogs(route.params.internId);
 });
 
 const headers = [
-  { text: "DATE", value: "date", width: 200 },
-  { text: "TIME IN", value: "timeIn" },
-  { text: "TIME OUT", value: "timeOut" },
+  { text: "DATE", value: "date", width: 100 },
+  { text: "TIME IN", value: "timeIn", width: 100 },
+  { text: "TIME OUT", value: "timeOut", width: 100 },
+  // { text: "ACTIONS", value: "action" },
 ];
 </script>
 
-<style scoped>
+<style>
 .customize-table {
+  --easy-table-border: 1px rounded #445269;
+  --easy-table-header-font-size: 16px;
+  --easy-table-header-height: 60px;
   --easy-table-header-font-color: #fff;
   --easy-table-header-background-color: #ae1818;
+  --easy-table-body-row-font-size: 16px;
+
+  --easy-table-body-row-height: 50px;
+  --easy-table-body-row-font-size: 16px;
 }
 </style>

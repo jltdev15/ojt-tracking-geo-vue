@@ -38,16 +38,21 @@ export const useAuthStore = defineStore("auth", () => {
     brgy: "",
     municipality: "",
     province: "",
-    zipcode: "",
     department: "",
-    email:'',
-    userName:''
+    email: "",
+    userName: "",
   });
   const hteInformation = reactive({
     name: "",
     email: "",
     contact: "",
+    province: "",
+    municipality: "",
+    brgy: "",
+    street: "",
     address: "",
+    lat: "",
+    lng: "",
     location: {},
   });
 
@@ -63,14 +68,29 @@ export const useAuthStore = defineStore("auth", () => {
         return (currentUser.value = response.data.content.profile.firstname);
       }
       if (userRole.value === "HTE") {
-        hteId.value = response.data.content.profile._id
+        hteId.value = response.data.content.profile._id;
         hteInformation.name = response.data.content.profile.fullName;
         hteInformation.email = response.data.content.email;
         hteInformation.contact = response.data.content.profile.contactNumber;
-        hteInformation.address = response.data.content.profile.street + ' ' + response.data.content.profile.brgy + ' ' +response.data.content.profile.municipality + ' ' +response.data.content.profile.province;
+        hteInformation.province = response.data.content.profile.province;
+        hteInformation.municipality =
+          response.data.content.profile.municipality;
+        hteInformation.brgy = response.data.content.profile.brgy;
+        hteInformation.street = response.data.content.profile.street;
+
+        hteInformation.address =
+          response.data.content.profile.street +
+          " " +
+          response.data.content.profile.brgy +
+          " " +
+          response.data.content.profile.municipality +
+          " " +
+          response.data.content.profile.province;
         hteInformation.location = response.data.content.profile.location;
         hteLocationDefault.lat = response.data.content.profile.location.lat;
         hteLocationDefault.lng = response.data.content.profile.location.lng;
+        hteInformation.lat = response.data.content.profile.location.lat;
+        hteInformation.lng = response.data.content.profile.location.lng;
         return (currentUser.value = response.data.content.profile.fullName);
       }
       if (userRole.value === "Coordinator") {
@@ -81,7 +101,8 @@ export const useAuthStore = defineStore("auth", () => {
       }
       if (userRole.value === "Intern") {
         internInformation.firstName = response.data.content.profile.firstName;
-        internInformation.middleInitial = response.data.content.profile.middleInitial;
+        internInformation.middleInitial =
+          response.data.content.profile.middleInitial;
         internInformation.lastName = response.data.content.profile.lastName;
         internInformation.email = response.data.content.email;
         internInformation.contact = response.data.content.profile.contact;
@@ -90,8 +111,10 @@ export const useAuthStore = defineStore("auth", () => {
         internInformation.birthday = response.data.content.profile.birthday;
         internInformation.street = response.data.content.profile.street;
         internInformation.brgy = await response.data.content.profile.brgy;
-        internInformation.municipality = await response.data.content.profile.municipality;
-        internInformation.province = await response.data.content.profile.province;
+        internInformation.municipality = await response.data.content.profile
+          .municipality;
+        internInformation.province = await response.data.content.profile
+          .province;
         internInformation.department = response.data.content.profile.department;
         internInformation.userName = response.data.content.username;
         isInternReady.value = response.data.content.profile.isInternshipReady;
@@ -237,8 +260,7 @@ export const useAuthStore = defineStore("auth", () => {
       municipality: internInformation.municipality,
       province: internInformation.province,
       department: internInformation.department,
-      email: internInformation.email
-      
+      email: internInformation.email,
     };
     console.log(payload);
 

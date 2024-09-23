@@ -16,27 +16,16 @@
     <header class="flex items-center justify-between px-6">
       <h1 class="text-3xl font-bold">Attendance Logs</h1>
     </header>
-    <div class="md:w-3/6 p-3 m-3 shadow-md rounded-xl">
+    <div class="p-3 m-3 shadow-md md:w-3/6 rounded-xl">
       <div class="flex justify-end gap-3 py-3">
-        <input
-          type="text"
-          placeholder="Type here"
-          class="w-full input input-bordered"
-          v-model="searchValue"
-        />
+        <input type="text" placeholder="Type here" class="w-full input input-bordered" v-model="searchValue" />
         <select class="w-48 select select-bordered" v-model.trim="searchField">
           <option selected disabled value="Set filter">Set filter</option>
           <option value="date">Date</option>
         </select>
       </div>
-      <EasyDataTable
-        :headers="headers"
-        :items="userStore.attendanceArr"
-        :search-field="searchField"
-        :search-value="searchValue"
-        show-index
-        table-class-name="customize-table"
-      >
+      <EasyDataTable :headers="headers" :items="userStore.attendanceArr" :search-field="searchField"
+        :search-value="searchValue" show-index table-class-name="customize-table">
       </EasyDataTable>
     </div>
   </div>
@@ -56,8 +45,8 @@ onMounted(async () => {
 
 const headers = [
   { text: "DATE", value: "date", width: 200 },
-  { text: "TIME IN", value: "timeIn" },
-  { text: "TIME OUT", value: "timeOut" },
+  { text: "TIME IN", value: "timeIn", width: 200 },
+  { text: "TIME OUT", value: "timeOut", width: 200 },
 ];
 </script>
 

@@ -13,52 +13,33 @@
     <header class="px-6">
       <h1 class="text-3xl font-bold">Interns List</h1>
     </header>
-    <div class="flex justify-end gap-3 p-6">
-      <input
-        type="text"
-        placeholder="Search here"
-        class="w-full input input-bordered"
-        v-model="searchValue"
-      />
+    <div class="flex justify-end gap-3 px-3 py-6 md:p-6">
+      <input type="text" placeholder="Search here" class="w-full input input-bordered" v-model="searchValue" />
       <select class="w-48 select select-bordered" v-model.trim="searchField">
         <option selected disabled value="Set filter">Set filter</option>
         <option value="fullName">Intern Name</option>
         <option value="evaluation">Evaluation</option>
       </select>
     </div>
-    <div class="px-6 py-1">
-      <EasyDataTable
-        :headers="headers"
-        :search-field="searchField"
-        :search-value="searchValue"
-        :items="coorStore.internList"
-        border-cell
-        table-class-name="customize-table"
-      >
+    <div class="px-3 py-1 md:px-6">
+      <EasyDataTable :headers="headers" :search-field="searchField" :search-value="searchValue"
+        :items="coorStore.internList" border-cell table-class-name="customize-table">
         <template #item-dtr="item">
           <div v-if="item.dailyTimeRecords.length === 0" class="flex gap-3">
             <p>Not available</p>
           </div>
           <div v-if="item.dailyTimeRecords.length > 0">
-            <router-link :to="{ name: 'CoorDailyTimeRecord', params: { id: item._id } }"
-              >View DTR</router-link
-            >
+            <router-link :to="{ name: 'CoorDailyTimeRecord', params: { id: item._id } }">View DTR</router-link>
           </div>
         </template>
         <template #item-operation="item">
           <div v-if="item.requiredHours === 0" class="flex gap-3">
-            <button
-              @click="toggleRequiredHoursModal(item._id)"
-              class="btn btn-block btn-primary"
-            >
+            <button @click="toggleRequiredHoursModal(item._id)" class="btn btn-block btn-primary">
               Set required hours
             </button>
           </div>
           <div v-if="item.requiredHours != 0" class="">
-            <button
-              @click="toggleRequiredHoursModal(item._id)"
-              class="btn btn-block btn-primary"
-            >
+            <button @click="toggleRequiredHoursModal(item._id)" class="p-3 my-3 btn btn-md btn-primary">
               Update Required Hours
             </button>
           </div>
@@ -75,7 +56,7 @@
           <p>{{ item.workedHours.toFixed() }}</p>
         </template>
         <template #item-fullName="item">
-          <p v-if="item.firstName===null && item.lastName === null">
+          <p v-if="item.firstName === null && item.lastName === null">
             Profile not updated
           </p>
           <p>{{ item.firstName }} {{ item.lastName }}</p>
@@ -84,12 +65,8 @@
       <Modal :show="setRequiredHours" title="Set Required Hours">
         <template #default>
           <section class="">
-            <input
-              v-model="coorStore.requiredHours"
-              type="number"
-              placeholder="Type here"
-              class="w-full input input-bordered"
-            />
+            <input v-model="coorStore.requiredHours" type="number" placeholder="Type here"
+              class="w-full input input-bordered" />
             <div class="flex items-center justify-end gap-3">
               <button @click="toggleRequiredHoursModal" class="btn btn-secondary">
                 Close
@@ -129,11 +106,11 @@ const setHoursHandler = async () => {
   }
 };
 const headers = [
-  { text: "Name", value: "fullName" },
-  { text: "Department", value: "department" },
-  { text: "Hours Required", value: "requiredHours" },
-  { text: "Hours Rendered", value: "rendered" },
-  { text: "Daily Time Record", value: "dtr" },
+  { text: "Name", value: "fullName", width: "150" },
+  { text: "Department", value: "department", width: "150" },
+  { text: "Hours Required", value: "requiredHours", width: "150" },
+  { text: "Hours Rendered", value: "rendered", width: "150" },
+  { text: "Daily Time Record", value: "dtr", width: "150" },
   { text: "Action", value: "operation", width: "250" },
 ];
 
