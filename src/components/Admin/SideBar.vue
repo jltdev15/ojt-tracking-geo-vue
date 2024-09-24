@@ -137,19 +137,20 @@
 
         <ul :class="{ 'h-0 hidden': !isDropDownShow, block: isDropDownShow }" class="mt-2 transition-all pl-7">
           <li class="mb-4">
-            <router-link :to="{ name: 'manage_users' }" href=""
+            <router-link :to="{ name: 'manage_users' }" href="" active-class="active-link"
               class="text-gray-900 text-sm flex items-center hover:text-[#f84525] before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">All</router-link>
           </li>
           <li class="mb-4">
-            <router-link :to="{ name: 'manage_users', query: { users: 'HTE' } }"
+            <router-link :to="{ name: 'manage_users', query: { users: 'HTE' } }" active-class="active-link"
               class="text-gray-900 text-sm flex items-center hover:text-[#f84525] before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">HTE</router-link>
           </li>
           <li class="mb-4">
-            <router-link :to="{ name: 'manage_users', query: { users: 'Intern' } }" href=""
+            <router-link :to="{ name: 'manage_users', query: { users: 'Intern' } }" active-class="active-link" href=""
               class="text-gray-900 text-sm flex items-center hover:text-[#f84525] before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Intern</router-link>
           </li>
           <li class="mb-4">
-            <router-link :to="{ name: 'manage_users', query: { users: 'Coordinator' } }" href=""
+            <router-link :to="{ name: 'manage_users', query: { users: 'Coordinator' } }" active-class="active-link"
+              href=""
               class="text-gray-900 text-sm flex items-center hover:text-[#f84525] before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Coordinator</router-link>
           </li>
         </ul>
@@ -157,13 +158,13 @@
 
       <span class="font-bold text-gray-400 uppercase">Coordinator</span>
       <li class="mb-1 group">
-        <router-link :to="{ name: 'CoordinatorList' }"
+        <router-link :to="{ name: 'CoordinatorList' }" active-class="active-link"
           class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100 sidebar-dropdown-toggle">
           <i class="mr-3 text-lg bx bx-group"></i>
           <span class="text-sm">Manage Coordinator</span>
           <i class="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-180"></i>
         </router-link>
-        <router-link :to="{ name: 'CoordinatorRequest' }"
+        <router-link :to="{ name: 'CoordinatorRequest' }" active-class="active-link"
           class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100 sidebar-dropdown-toggle">
           <i class="mr-3 text-lg bx bx-git-pull-request"></i>
           <span class="text-sm">View Request</span>
@@ -173,7 +174,7 @@
 
       <span class="font-bold text-gray-400 uppercase">Interns</span>
       <li class="mb-1 group">
-        <router-link :to="{ name: 'InternsList' }"
+        <router-link :to="{ name: 'InternsList' }" active-class="active-link"
           class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100 sidebar-dropdown-toggle">
           <i class="mr-3 text-lg bx bx-list-ul"></i>
           <span class="text-sm">Manage Interns</span>
@@ -182,7 +183,7 @@
       </li>
       <span class="font-bold text-gray-400 uppercase">HTE</span>
       <li class="mb-1 group">
-        <router-link :to="{ name: 'hteLists' }"
+        <router-link :to="{ name: 'hteLists' }" active-class="active-link"
           class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100 sidebar-dropdown-toggle">
           <i class="mr-3 text-lg bx bxs-buildings"></i>
           <span class="text-sm">Manage HTE</span>
@@ -190,7 +191,7 @@
         </router-link>
       </li>
       <li class="mb-1 group">
-        <router-link :to="{ name: 'Hte_Listing' }"
+        <router-link :to="{ name: 'Hte_Listing' }" active-class="active-link"
           class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100 sidebar-dropdown-toggle">
           <i class="mr-3 text-lg bx bx-hard-hat"></i>
           <span class="text-sm">View Internships</span>
@@ -199,7 +200,7 @@
 
       <span class="font-bold text-gray-400">SETTINGS</span>
       <li class="mb-1 group">
-        <router-link :to="{ name: 'appSettings' }"
+        <router-link :to="{ name: 'appSettings' }" active-class="active-link"
           class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
           <i class="mr-3 text-lg bx bx-cog"></i>
           <span class="text-sm">App Settings</span>
@@ -207,14 +208,14 @@
       </li>
       <span class="font-bold text-gray-400 uppercase">Communication</span>
       <li class="mb-1 group">
-        <router-link :to="{ name: 'admin_messenger' }"
+        <router-link :to="{ name: 'admin_messenger' }" active-class="active-link"
           class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
           <i class="mr-3 text-lg bx bx-envelope"></i>
           <span class="text-sm">Messages</span>
         </router-link>
       </li>
       <li class="mb-1 group">
-        <router-link :to="{ name: 'admin_announcement' }" href=""
+        <router-link :to="{ name: 'admin_announcement' }" href="" active-class="active-link"
           class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
           <i class="mr-3 text-lg bx bx-list-ol"></i>
           <span class="text-sm">Announcement</span>
@@ -249,5 +250,10 @@ const toggleSideLink = () => {
 
 .translate-x-full {
   transform: translateX(-100%);
+}
+
+.active-link {
+  font-weight: bold;
+  color: blue;
 }
 </style>

@@ -40,6 +40,11 @@
             class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-[#f84525] hover:bg-gray-50">Profile</router-link>
         </li>
         <li>
+          <router-link @click="handleToggleDropDown" :to="{ name: 'admin_change_password' }"
+            class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-[#f84525] hover:bg-gray-50">Account
+            Settings</router-link>
+        </li>
+        <li>
           <a href="javascript:void(0)" @click="handleLogout"
             class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-[#f84525] hover:bg-gray-50">
             Logout</a>

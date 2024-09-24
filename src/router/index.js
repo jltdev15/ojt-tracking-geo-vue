@@ -105,6 +105,13 @@ const router = createRouter({
           meta: { requiresAuth: true, roles: ["Admin"] },
         },
         {
+          path: "change-password",
+          name: "admin_change_password",
+          component: () =>
+            import("../components/Admin/AdminChangePassword.vue"),
+          meta: { requiresAuth: true, roles: ["Admin"] },
+        },
+        {
           path: "hte",
           name: "hteLists",
           component: () => import("../components/Admin/HteList.vue"),
