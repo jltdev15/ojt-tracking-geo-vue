@@ -1,15 +1,10 @@
 <template>
   <div>
-    <SideBar :isSidebarHidden="isSidebarHidden" />
-    <div
-      @click="handletoggleSidebar"
+    <SideBar @toggleSideBarLink="handletoggleSidebar" :isSidebarHidden="isSidebarHidden" />
+    <div @click="handletoggleSidebar"
       class="fixed top-0 left-0 z-40 w-full h-full bg-black/50 md:hidden sidebar-overlay"
-      :class="{ hidden: isSidebarHidden }"
-    ></div>
-    <MainContainer
-      :isSidebarHidden="isSidebarHidden"
-      @toggleSidebar="handletoggleSidebar"
-    />
+      :class="{ hidden: isSidebarHidden }"></div>
+    <MainContainer :isSidebarHidden="isSidebarHidden" @toggleSidebar="handletoggleSidebar" />
   </div>
 </template>
 

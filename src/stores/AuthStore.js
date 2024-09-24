@@ -55,6 +55,16 @@ export const useAuthStore = defineStore("auth", () => {
     lng: "",
     location: {},
   });
+  const adminInformation = reactive({
+    firstName: "",
+    lastName: "",
+    contact: "",
+    street: "",
+    brgy: "",
+    municipality: "",
+    province: "",
+    email: "",
+  });
 
   const checkAuth = async () => {
     try {
@@ -64,6 +74,15 @@ export const useAuthStore = defineStore("auth", () => {
       userId.value = response.data.content._id;
       isAuthenticated.value = true;
       if (userRole.value === "Admin") {
+        adminInformation.firstName = response.data.content.profile.firstName;
+        adminInformation.lastName = response.data.content.profile.lastName;
+        adminInformation.contact = response.data.content.profile.contact;
+        adminInformation.street = response.data.content.profile.street;
+        adminInformation.brgy = response.data.content.profile.brgy;
+        adminInformation.municipality =
+          response.data.content.profile.municipality;
+        adminInformation.province = response.data.content.profile.municipality;
+        adminInformation.email = response.data.content.email;
         currentRole.value = response.data.content.role;
         return (currentUser.value = response.data.content.profile.firstname);
       }
@@ -297,6 +316,51 @@ export const useAuthStore = defineStore("auth", () => {
       console.log(err);
     }
   };
+  const updateAdminInfo = async () => {
+    if (adminInformation.firstName === null && "") {
+      return alert("First Name must not empty");
+    }
+    if (adminInformation.lastName == null && "") {
+      return alert("Last Name must not empty");
+    }
+    if (adminInformation.contact == null) {
+      return alert("Contact must not empty");
+    }
+    if (adminInformation.street == null || "") {
+      return alert("Street must not empty");
+    }
+    if (adminInformation.brgy == null || "") {
+      return alert("Barangay must not empty");
+    }
+    if (adminInformation.municipality == null || "") {
+      return alert("Municipality must not empty");
+    }
+    if (adminInformation.province == null || "") {
+      return alert("Province must not empty");
+    }
+    if (adminInformation.street == null || "") {
+      return alert("Street must not empty");
+    }
+    const payload = {
+      firstName: adminInformation.firstName,
+      lastName: adminInformation.lastName,
+      contact: adminInformation.contact,
+      province: adminInformation.province,
+      municipality: adminInformation.municipality,
+      brgy: adminInformation.brgy,
+      street: adminInformation.street,
+      email: adminInformation.email,
+    };
+    try {
+      const response = await apiClient.patch(`/admin/update/info`, payload);
+      if (response.status === 201) {
+        alert("Update success!!");
+      }
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return {
     checkAuth,
@@ -327,5 +391,7 @@ export const useAuthStore = defineStore("auth", () => {
     currentRole,
     hteId,
     hteLocationDefault,
+    adminInformation,
+    updateAdminInfo,
   };
 });
