@@ -1,5 +1,5 @@
 <template>
-  <div class="p-3 w-5/6 mx-auto">
+  <div class="p-3 w-full md:w-5/6 mx-auto">
     <div class="py-6 px-3 text-sm breadcrumbs">
       <ul>
         <li>
@@ -11,12 +11,12 @@
       </ul>
     </div>
 
-    <section class="grid grid-cols-2 gap-6 bg-gray-50 p-6">
-      <header class="flex items-center justify-between col-span-2">
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-3 md:p-6">
+      <header class="flex items-center justify-between md:col-span-2">
         <h1 class="text-3xl font-bold">Manage Settings</h1>
       </header>
       <div class="">
-        <p class="py-3 font-bold capitalize">Department List</p>
+        <p class="md:py-3 font-bold capitalize">Department List</p>
         <div class="flex items-center justify-between gap-3">
           <input
             v-model.trim="departmentName"
@@ -32,7 +32,7 @@
           />
           <button @click="addDepartmentHandler" class="btn w-1/6 btn-primary">Add</button>
         </div>
-        <div class="py-3 h-[50dvh] overflow-auto">
+        <div class="py-3 h-[50dvh] md:h-[50dvh] overflow-auto">
           <ul class="flex flex-col gap-3">
             <p
               class="font-medium text-center"
@@ -46,8 +46,8 @@
               :key="index"
               class="flex flex-col items-center justify-between p-2 bg-gray-100 pb-3 rounded-md shadow-md"
             >
-              <div class="w-full px-3">
-                <div class="flex py-3 gap-3 items-center">
+              <div class="w-full md:px-3">
+                <div class="flex md:py-3 gap-3 items-center">
                   <label for="">Name</label>
                   <input
                     :disabled="updateEnabled !== index"
@@ -67,7 +67,7 @@
                 </div>
               </div>
 
-              <div class="flex justify-end ml-auto items-center gap-3 px-3">
+              <div class="flex justify-end ml-auto items-center gap-3 md:px-3">
                 <span
                   @click="adminUserStore.deleteDepartmentList(item._id)"
                   class="cursor-pointer btn-outline btn btn-accent w-24"
@@ -86,7 +86,6 @@
       </div>
       <div class="">
         <p class="py-3 font-bold capitalize">Reset Device Restrictions</p>
-        <span></span>
         <div class="flex justify-end gap-3">
           <input
             type="text"
