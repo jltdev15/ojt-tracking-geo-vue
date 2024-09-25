@@ -9,7 +9,10 @@
           <h1 class="text-xl font-semibold text-gray-400 uppercase">Internships</h1>
         </header>
         <div class="grid gap-7 grid-cols-2 lg:grid-cols-3">
-          <div class="p-5 bg-gray-500 rounded shadow-sm">
+          <div
+            class="p-5 rounded shadow-sm"
+            :class="{ 'bg-green-500': coorStore.getNumberOfInterns !== 0 }"
+          >
             <router-link
               v-if="coorStore.getNumberOfInterns !== 0"
               :to="{ name: 'InternDepartmentList' }"

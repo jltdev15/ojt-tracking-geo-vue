@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="w-7/12 mx-auto">
     <div class="p-6 text-sm breadcrumbs">
       <ul>
         <li>
@@ -12,7 +12,7 @@
     </div>
     <form @submit.prevent="updateInformationHandler">
       <section class="px-6">
-        <header class="flex items-center justify-between pb-3 md:w-full lg:w-3/6">
+        <header class="flex items-center justify-between pb-3">
           <h1 class="my-1 text-3xl font-bold capitalize">
             {{ authStore.internInformation.firstName }}
             {{ authStore.internInformation.lastName }}
@@ -22,60 +22,120 @@
           </p>
         </header>
 
-        <section class="grid px-6 py-6 bg-white rounded-md shadow-md md:gap-6 md:grid-cols-2 md:w-full lg:w-3/6">
+        <section
+          class="grid px-6 py-6 bg-white rounded-md shadow-md md:gap-6 md:grid-cols-2"
+        >
           <!-- Left side -->
           <div class="flex flex-col gap-4">
             <div>
-              <label for="">Department</label>
-              <input disabled type="text" v-model="authStore.internInformation.department" placeholder="Type here"
-                class="w-full md:max-w-md input input-bordered" />
+              <label class="block" for="">Department</label>
+              <input
+                disabled
+                type="text"
+                v-model="authStore.internInformation.department"
+                placeholder="Type here"
+                class="w-full md:max-w-md input input-bordered"
+              />
             </div>
             <div>
               <label class="block" for="">First Name</label>
-              <input :disabled="!isEditEnable" type="text" v-model="authStore.internInformation.firstName"
-                placeholder="Type here" class="w-full md:max-w-md input input-bordered" required />
+              <input
+                :disabled="!isEditEnable"
+                type="text"
+                v-model="authStore.internInformation.firstName"
+                placeholder="Type here"
+                class="w-full md:max-w-md input input-bordered"
+                required
+              />
             </div>
 
             <div>
               <label class="block" for="">Middle Initial</label>
-              <input :disabled="!isEditEnable" type="text" v-model="authStore.internInformation.middleInitial"
-                placeholder="Type here" class="w-full md:max-w-md input input-bordered" required />
+              <input
+                :disabled="!isEditEnable"
+                type="text"
+                v-model="authStore.internInformation.middleInitial"
+                placeholder="Type here"
+                class="w-full md:max-w-md input input-bordered"
+                required
+              />
             </div>
             <div>
               <label class="block" for="">Last Name</label>
-              <input :disabled="!isEditEnable" type="text" v-model="authStore.internInformation.lastName"
-                placeholder="Type here" class="w-full md:max-w-md input input-bordered" required />
+              <input
+                :disabled="!isEditEnable"
+                type="text"
+                v-model="authStore.internInformation.lastName"
+                placeholder="Type here"
+                class="w-full md:max-w-md input input-bordered"
+                required
+              />
             </div>
             <div>
               <label class="block" for="">Email</label>
-              <input :disabled="!isEditEnable" type="text" v-model="authStore.internInformation.email"
-                placeholder="Type here" class="w-full md:max-w-md input input-bordered" required />
+              <input
+                :disabled="!isEditEnable"
+                type="text"
+                v-model="authStore.internInformation.email"
+                placeholder="Type here"
+                class="w-full md:max-w-md input input-bordered"
+                required
+              />
             </div>
             <div>
               <label class="block" for="">Contact</label>
-              <input :disabled="!isEditEnable" v-model="authStore.internInformation.contact" placeholder="Type here"
-                class="w-full md:max-w-md input input-bordered" minlength="10" maxlength="10" type="number"
-                pattern="\d{10}" required />
+              <input
+                :disabled="!isEditEnable"
+                v-model="authStore.internInformation.contact"
+                placeholder="Type here"
+                class="w-full md:max-w-md input input-bordered"
+                minlength="10"
+                maxlength="10"
+                type="number"
+                pattern="\d{10}"
+                required
+              />
             </div>
           </div>
           <!-- right side -->
           <div class="flex flex-col gap-4">
             <div>
               <label class="block" for="">Age</label>
-              <input :disabled="!isEditEnable" type="number" v-model="authStore.internInformation.age"
-                placeholder="Type here" class="w-full md:max-w-md input input-bordered" required />
+              <input
+                :disabled="!isEditEnable"
+                type="number"
+                v-model="authStore.internInformation.age"
+                placeholder="Type here"
+                class="w-full md:max-w-md input input-bordered"
+                required
+              />
             </div>
             <div>
               <label class="block" for="">Birthday</label>
-              <input :disabled="!isEditEnable" type="date" v-model="authStore.internInformation.birthday"
-                placeholder="Type here" class="w-full md:max-w-md input input-bordered" required />
+              <input
+                :disabled="!isEditEnable"
+                type="date"
+                v-model="authStore.internInformation.birthday"
+                placeholder="Type here"
+                class="w-full md:max-w-md input input-bordered"
+                required
+              />
             </div>
             <div>
               <label class="block" for="">Province</label>
-              <select :disabled="!isEditEnable" class="w-full select select-bordered md:max-w-md"
-                v-model="selectedProvinces" @change="onSelectProvince">
-                <option value="" selected>{{ authStore.internInformation.province ? authStore.internInformation.province
-                  : 'Select Province' }}</option>
+              <select
+                :disabled="!isEditEnable"
+                class="w-full select select-bordered md:max-w-md"
+                v-model="selectedProvinces"
+                @change="onSelectProvince"
+              >
+                <option value="" selected>
+                  {{
+                    authStore.internInformation.province
+                      ? authStore.internInformation.province
+                      : "Select Province"
+                  }}
+                </option>
                 <option v-for="item in provinces" :key="item" :value="item">
                   {{ item.name }}
                 </option>
@@ -83,10 +143,19 @@
             </div>
             <div>
               <label class="block" for="">City or Municipality</label>
-              <select :disabled="!isEditEnable" class="w-full select select-bordered md:max-w-md"
-                v-model="selectedMunicipality" @change="onSelectMunicipality">
-                <option selected value="">{{ authStore.internInformation.municipality ?
-                  authStore.internInformation.municipality : 'Select Municipality' }}</option>
+              <select
+                :disabled="!isEditEnable"
+                class="w-full select select-bordered md:max-w-md"
+                v-model="selectedMunicipality"
+                @change="onSelectMunicipality"
+              >
+                <option selected value="">
+                  {{
+                    authStore.internInformation.municipality
+                      ? authStore.internInformation.municipality
+                      : "Select Municipality"
+                  }}
+                </option>
                 <option v-for="item in municipality" :key="item" :value="item">
                   {{ item.name }}
                 </option>
@@ -94,26 +163,46 @@
             </div>
             <div>
               <label class="block" for="">Barangay</label>
-              <select :disabled="!isEditEnable" class="w-full select select-bordered md:max-w-md" v-model="selectedBrgy"
-                @change="onSelectBrgy">
-                <option value="" selected>{{ authStore.internInformation.brgy ? authStore.internInformation.brgy :
-                  'Select Barangay' }}</option>
+              <select
+                :disabled="!isEditEnable"
+                class="w-full select select-bordered md:max-w-md"
+                v-model="selectedBrgy"
+                @change="onSelectBrgy"
+              >
+                <option value="" selected>
+                  {{
+                    authStore.internInformation.brgy
+                      ? authStore.internInformation.brgy
+                      : "Select Barangay"
+                  }}
+                </option>
                 <option v-for="item in brgy" :key="item" :value="item">
                   {{ item.name }}
                 </option>
               </select>
             </div>
             <div>
-              <label for="">House No. / Street</label>
-              <input :disabled="!isEditEnable" type="text" v-model="authStore.internInformation.street"
-                placeholder="Type here" class="w-full md:max-w-md input input-bordered" required />
+              <label class="block" for="">House No. / Street</label>
+              <input
+                :disabled="!isEditEnable"
+                type="text"
+                v-model="authStore.internInformation.street"
+                placeholder="Type here"
+                class="w-full md:max-w-md input input-bordered"
+                required
+              />
             </div>
           </div>
           <div class="flex justify-end col-span-2">
-            <button type="button" v-if="!isEditEnable" @click="toggleEdit" class="btn btn-outline btn-block btn-accent">
+            <button
+              type="button"
+              v-if="!isEditEnable"
+              @click="toggleEdit"
+              class="btn btn-outline w-32 btn-accent"
+            >
               Edit Profile
             </button>
-            <button type="submit" v-if="isEditEnable" class="w-full btn md:btn-block btn-primary">
+            <button type="submit" v-if="isEditEnable" class="w-32 btn btn-primary">
               Update Profile
             </button>
           </div>

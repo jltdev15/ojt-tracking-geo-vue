@@ -84,7 +84,7 @@ export const useAuthStore = defineStore("auth", () => {
         adminInformation.province = response.data.content.profile.municipality;
         adminInformation.email = response.data.content.email;
         currentRole.value = response.data.content.role;
-        return (currentUser.value = response.data.content.profile.firstname);
+        return (currentUser.value = response.data.content.profile.firstName);
       }
       if (userRole.value === "HTE") {
         hteId.value = response.data.content.profile._id;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SideBar @toggleSideBarLink="handletoggleSidebar" :isSidebarHidden="isSidebarHidden" />
+    <SideBar @toggleSideBarLink="toggleFromSideBarEvent" :isSidebarHidden="isSidebarHidden" />
     <div @click="handletoggleSidebar"
       class="fixed top-0 left-0 z-40 w-full h-full bg-black/50 md:hidden sidebar-overlay"
       :class="{ hidden: isSidebarHidden }"></div>
@@ -17,6 +17,9 @@ const isSidebarHidden = ref(false);
 const handletoggleSidebar = () => {
   isSidebarHidden.value = !isSidebarHidden.value;
 };
+const toggleFromSideBarEvent = () => {
+  isSidebarHidden.value = !isSidebarHidden.value;
+}
 </script>
 
 <style>

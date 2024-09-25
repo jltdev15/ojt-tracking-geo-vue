@@ -198,6 +198,19 @@ export const useAdminUserStore = defineStore("user", () => {
       alert(err.response.data.message);
     }
   };
+  const addAdmin = async (payload) => {
+    console.log(payload);
+    try {
+      const response = await apiClient.post("/user", payload);
+      alert(response.data.message);
+      await fetchUsers();
+      console.log(response);
+      return response;
+    } catch (err) {
+      console.log(err);
+      alert(err.response.data.message);
+    }
+  };
   //#region Department List
   const fetchDepartmentList = async () => {
     try {
@@ -684,5 +697,6 @@ export const useAdminUserStore = defineStore("user", () => {
     updateAnnouncement,
     evaluationResults,
     getEvaluationItemResults,
+    addAdmin,
   };
 });

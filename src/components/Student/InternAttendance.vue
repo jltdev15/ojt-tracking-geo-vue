@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="p-6 text-sm breadcrumbs">
+  <div class="w-9/12 mx-auto">
+    <div class="py-6 text-sm breadcrumbs">
       <ul>
         <li>
           <router-link :to="{ name: 'hte_dashboard' }">Intern Dashboard</router-link>
@@ -10,20 +10,30 @@
         </li>
       </ul>
     </div>
-    <header class="flex items-center justify-between p-3 bg-gray-50">
+    <header class="flex items-center justify-between py-3">
       <h1 class="text-3xl font-bold">Attendance Logs</h1>
     </header>
-    <div class="p-3 shadow-md md:w-4/6 rounded-xl">
-      <input type="text" placeholder="Search date e.g MM/DD/YYYY" class="w-full my-3 input input-bordered"
-        v-model="searchValue" />
-      <EasyDataTable :search-field="searchField" :search-value="searchValue" :headers="headers"
-        :items="internStore.attendanceArr" table-class-name="customize-table">
-
-
+    <div class="p-3 shadow-md bg-gray-50 rounded-xl">
+      <input
+        type="text"
+        placeholder="Search date e.g MM/DD/YYYY"
+        class="w-full my-3 input input-bordered"
+        v-model="searchValue"
+      />
+      <EasyDataTable
+        :search-field="searchField"
+        :search-value="searchValue"
+        :headers="headers"
+        :items="internStore.attendanceArr"
+        table-class-name="customize-table"
+      >
         <template #item-timeOut="item">
           <p v-if="item.timeOut">{{ item.timeOut }}</p>
-          <p v-else>No time out data
-          </p>
+          <p v-else>No time out data</p>
+        </template>
+        <template #item-hours="item">
+          <p v-if="item.totalHours">{{ item.totalHours }}</p>
+          <p v-else>Waiting for Time Out data</p>
         </template>
       </EasyDataTable>
     </div>
@@ -44,6 +54,7 @@ const headers = [
   { text: "DATE", value: "date", width: 200 },
   { text: "TIME IN", value: "timeIn", width: 200 },
   { text: "TIME OUT", value: "timeOut", width: 200 },
+  { text: "TOTAL HOURS", value: "hours", width: 200 },
 ];
 </script>
 

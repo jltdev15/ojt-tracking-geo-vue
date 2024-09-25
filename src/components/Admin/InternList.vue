@@ -1,21 +1,29 @@
 <template>
-  <div class="p-3">
-    <div class="py-6 text-sm md:p-6 breadcrumbs">
+  <div class="w-10/12 mx-auto">
+    <div class="py-6 text-sm breadcrumbs">
       <ul>
         <li>
           <router-link :to="{ name: 'admin_dashboard' }">Dashboard</router-link>
         </li>
         <li>
-          <router-link class="font-medium" :to="{ name: 'InternsList' }">Intern List</router-link>
+          <router-link class="font-medium" :to="{ name: 'InternsList' }"
+            >Intern List</router-link
+          >
         </li>
       </ul>
     </div>
-    <header class="md:px-6 md:text-left">
-      <h1 class="text-3xl font-bold">Interns List</h1>
-    </header>
-    <section class="md:px-6">
+
+    <section class="bg-gray-50 p-3 rounded-md shadow-md">
+      <header class="py-3 md:text-left">
+        <h1 class="text-3xl font-bold">Interns List</h1>
+      </header>
       <div class="flex justify-end gap-3 py-3">
-        <input type="text" placeholder="Type here" class="w-full input input-bordered" v-model="searchValue" />
+        <input
+          type="text"
+          placeholder="Type here"
+          class="w-full input input-bordered"
+          v-model="searchValue"
+        />
         <select class="w-48 select select-bordered" v-model.trim="searchField">
           <option selected disabled value="Set filter">Set filter</option>
           <option value="department">Department</option>
@@ -23,13 +31,22 @@
         </select>
       </div>
 
-      <EasyDataTable :headers="headers" :items="userStore.internsList" :search-field="searchField"
-        :search-value="searchValue" border-cell header-text-direction="left" table-class-name="customize-table"
-        body-text-direction="left">
+      <EasyDataTable
+        :headers="headers"
+        :items="userStore.internsList"
+        :search-field="searchField"
+        :search-value="searchValue"
+        border-cell
+        header-text-direction="left"
+        table-class-name="customize-table"
+        body-text-direction="left"
+      >
         <template #item-dailytimerecord="item">
           <div class="flex justify-between gap-3 py-2">
-            <router-link :to="{ name: 'DTRList', params: { id: item._id } }"
-              class="btn btn-accent btn-block btn-outline text-gray-50">
+            <router-link
+              :to="{ name: 'DTRList', params: { id: item._id } }"
+              class="btn btn-accent btn-block btn-outline text-gray-50"
+            >
               View
             </router-link>
           </div>
@@ -49,8 +66,11 @@
         </template>
         <template #item-evaluation="item">
           <div v-if="item.isEvaluationReady === 'Finished'">
-            <router-link class="bg-blue-500 text-gray-50 btn"
-              :to="{ name: 'AdminEvaluation', params: { id: item._id } }">View evaluation</router-link>
+            <router-link
+              class="bg-blue-500 text-gray-50 btn"
+              :to="{ name: 'AdminEvaluation', params: { id: item._id } }"
+              >View evaluation</router-link
+            >
           </div>
           <div v-else>
             <p>No evaluation found</p>

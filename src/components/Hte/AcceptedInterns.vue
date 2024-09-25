@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="max-w-7xl mx-auto">
     <div class="p-6 text-sm breadcrumbs">
       <ul>
         <li>
@@ -10,7 +10,7 @@
         </li>
       </ul>
     </div>
-    <section class="px-6">
+    <section class="px-6 bg">
       <header class="flex items-center justify-between pb-6">
         <h1 class="text-3xl font-bold">Interns</h1>
       </header>
@@ -75,7 +75,7 @@
         </template>
         <template #item-evaluation="item">
           <div v-if="item.evaluationStatus === 'Not Ready'">
-            <p>{{item.evaluationStatus}}</p>
+            <p>{{ item.evaluationStatus }}</p>
           </div>
           <div v-if="item.evaluationStatus === 'Ready'">
             <router-link
@@ -87,10 +87,9 @@
           </div>
           <div v-if="item.evaluationStatus === 'Finished'">
             <router-link :to="{ name: 'EvaluationView', params: { id: item.internId } }"
-            >View Results</router-link
-          >
+              >View Results</router-link
+            >
           </div>
-
         </template>
       </EasyDataTable>
     </section>
@@ -224,9 +223,4 @@ const headers = [
 ];
 </script>
 
-<style scoped>
-.customize-table {
-  --easy-table-header-font-color: #fff;
-  --easy-table-header-background-color: #ae1818;
-}
-</style>
+<style scoped></style>

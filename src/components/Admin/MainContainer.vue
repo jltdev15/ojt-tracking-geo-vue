@@ -20,7 +20,9 @@
               </div>
             </div>
             <div class="p-2 text-left md:block">
-              <h2 class="text-sm font-semibold text-gray-800">Admin</h2>
+              <h2 class="text-sm font-semibold text-gray-800">
+                {{ authStore.currentUser }}
+              </h2>
               <p class="text-xs text-gray-500">Administrator</p>
             </div>
           </button>

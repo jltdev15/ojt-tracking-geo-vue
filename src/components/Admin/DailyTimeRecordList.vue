@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="w-10/12 mx-auto">
     <div class="p-6 text-sm breadcrumbs">
       <ul>
         <li>
@@ -16,16 +16,26 @@
     <header class="flex items-center justify-between px-6">
       <h1 class="text-3xl font-bold">Attendance Logs</h1>
     </header>
-    <div class="p-3 m-3 shadow-md md:w-3/6 rounded-xl">
+    <div class="p-3 m-3 rounded-md shadow-md bg-gray-50">
       <div class="flex justify-end gap-3 py-3">
-        <input type="text" placeholder="Type here" class="w-full input input-bordered" v-model="searchValue" />
-        <select class="w-48 select select-bordered" v-model.trim="searchField">
-          <option selected disabled value="Set filter">Set filter</option>
-          <option value="date">Date</option>
-        </select>
+        <input
+          type="text"
+          placeholder="Search date e.g MM/DD/YYYY"
+          class="w-full input input-bordered"
+          v-model="searchValue"
+        />
       </div>
-      <EasyDataTable :headers="headers" :items="userStore.attendanceArr" :search-field="searchField"
-        :search-value="searchValue" show-index table-class-name="customize-table">
+      <EasyDataTable
+        :headers="headers"
+        :items="userStore.attendanceArr"
+        :search-field="searchField"
+        :search-value="searchValue"
+        table-class-name="customize-table"
+      >
+        <template #item-timeOut="item">
+          <p v-if="item.timeOut != null">{{ item.timeOut }}</p>
+          <p v-else>No time out data</p>
+        </template>
       </EasyDataTable>
     </div>
   </div>
@@ -37,7 +47,7 @@ import { onMounted, ref } from "vue";
 import { useAdminUserStore } from "@/stores/AdminUserStore";
 const userStore = useAdminUserStore();
 const route = useRoute();
-const searchField = ref("Set filter");
+const searchField = ref("date");
 const searchValue = ref("");
 onMounted(async () => {
   await userStore.fetchInternDailyLogs(route.params.id);

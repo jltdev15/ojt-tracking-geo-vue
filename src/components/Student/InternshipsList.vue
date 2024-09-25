@@ -1,6 +1,6 @@
 <template>
-  <section class="">
-    <div class="p-6 text-sm breadcrumbs">
+  <section class="w-9/12 mx-auto">
+    <div class="py-6 text-sm breadcrumbs">
       <ul>
         <li>
           <router-link :to="{ name: 'student_dashboard' }">Dashboard</router-link>
@@ -10,7 +10,7 @@
         </li>
       </ul>
     </div>
-    <header class="flex items-center justify-between px-6 pb-3 bg-gray-200">
+    <header class="flex items-center justify-between pb-3 bg-gray-200">
       <h1 class="text-3xl font-bold">Internships Job</h1>
       <div>
         <button @click="handleToggleModal" class="btn btn-block">
@@ -18,20 +18,44 @@
         </button>
       </div>
     </header>
-    <div class="flex justify-center min-h-screen md:justify-normal">
-      <div class="md:p-5">
-        <div class="grid justify-center gap-6 md:grid-cols-3">
-          <p v-if="internStore.internshipLists.length === 0">No listing available</p>
-          <p class="inline-block p-3 capitalize bg-primary text-gray-50" v-if="internStore.requiredHours === 0 && internStore.internshipLists.length > 0">Please ask your coordinator to set required hours</p>
-          <p class="p-3 bg-primary text-gray-50" v-else-if="!internStore.isProfileComplete && internStore.internshipLists.length">
-            Please complete your profile information. <router-link class="underline " :to="{name:'intern_profile'}">Click here</router-link>
+    <div class="grid grid-cols-3 gap-3">
+      <InternshipItem />
+      <p v-if="internStore.internshipLists.length === 0">No listing available</p>
+      <p
+        class="p-3 bg-primary text-gray-50"
+        v-if="!internStore.isProfileComplete && internStore.internshipLists.length"
+      >
+        Please complete your profile information.
+        <router-link class="underline" :to="{ name: 'intern_profile' }"
+          >Click here</router-link
+        >
+      </p>
+
+      <!-- <div class="flex">
+          
+          <p
+            class="inline-block p-3 capitalize bg-primary text-gray-50"
+            v-if="
+              internStore.requiredHours === 0 && internStore.internshipLists.length > 0
+            "
+          >
+            Please ask your coordinator to set required hours
+          </p>
+          <p
+            class="p-3 bg-primary text-gray-50"
+            v-else-if="
+              !internStore.isProfileComplete && internStore.internshipLists.length
+            "
+          >
+            Please complete your profile information.
+            <router-link class="underline" :to="{ name: 'intern_profile' }"
+              >Click here</router-link
+            >
           </p>
           <div v-else>
-            <InternshipItem />
+         
           </div>
-
-        </div>
-      </div>
+        </div> -->
     </div>
   </section>
 </template>
