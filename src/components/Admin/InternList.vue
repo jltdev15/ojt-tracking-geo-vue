@@ -1,5 +1,5 @@
 <template>
-  <div class="w-10/12 mx-auto">
+  <div class="p-3 py-3 mx-auto md:w-10/12">
     <div class="py-6 text-sm breadcrumbs">
       <ul>
         <li>
@@ -13,8 +13,8 @@
       </ul>
     </div>
 
-    <section class="bg-gray-50 p-3 rounded-md shadow-md">
-      <header class="py-3 md:text-left">
+    <section class="p-6 rounded-md shadow-md bg-gray-50">
+      <header class="flex items-center justify-between">
         <h1 class="text-3xl font-bold">Interns List</h1>
       </header>
       <div class="flex justify-end gap-3 py-3">
@@ -36,16 +36,15 @@
         :items="userStore.internsList"
         :search-field="searchField"
         :search-value="searchValue"
-        border-cell
-        header-text-direction="left"
         table-class-name="customize-table"
-        body-text-direction="left"
+        :rows-per-page="5"
+        :hide-rows-per-page="true"
       >
         <template #item-dailytimerecord="item">
-          <div class="flex justify-between gap-3 py-2">
+          <div class="flex justify-center gap-3 py-2">
             <router-link
               :to="{ name: 'DTRList', params: { id: item._id } }"
-              class="btn btn-accent btn-block btn-outline text-gray-50"
+              class="btn btn-accent btn-sm w-32 btn-outline text-gray-50"
             >
               View
             </router-link>

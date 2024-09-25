@@ -21,7 +21,8 @@
         :search-field="searchField"
         :search-value="searchValue"
         table-class-name="customize-table"
-        show-index
+        :rows-per-page="5"
+        :hide-rows-per-page="true"
       >
       </EasyDataTable>
     </section>

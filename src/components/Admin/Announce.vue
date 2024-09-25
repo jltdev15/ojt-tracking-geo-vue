@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="p-3 py-3 mx-auto md:w-10/12">
     <div class="p-6 text-sm breadcrumbs">
       <ul>
         <li>
@@ -12,48 +12,49 @@
         </li>
       </ul>
     </div>
-    <header
-      class="flex items-center gap-3 md:flex-row flex-col justify-between px-6 bg-gray-200"
-    >
-      <h1 class="text-lg md:text-3xl">
-        Announcement <span class="text-lg md:text-3xl font-bold">Management</span>
-      </h1>
-      <div>
-        <button @click="toggleNewAnnouncement" class="btn btn-block">
-          <i class="ri-add-line"></i>Add New Announcement
-        </button>
-      </div>
-    </header>
-    <section class="p-6">
-      <EasyDataTable
-        :headers="headers"
-        :items="userStore.getAdminAnnouncementList"
-        :search-field="searchField"
-        :search-value="searchValue"
-        show-index
-        table-class-name="customize-table"
-      >
-        <template #item-date="item">
-          <p>{{ moment(item.date).tz("Asia/Manila").format("YYYY-MM-DD") }}</p>
-        </template>
-        <template #item-operation="item">
-          <div class="flex justify-between gap-3 py-2">
-            <button
-              @click="toggleConfirmationModal(item._id)"
-              class="flex items-center justify-center w-24 gap-2 py-3 btn-accent btn btn-outline"
-            >
-              Remove<i class="fa-solid fa-trash"></i>
-            </button>
-            <button
-              @click="toggleUpdateAnnouncement(item._id, item.title, item.description)"
-              class="flex items-center justify-center w-24 gap-2 py-3 btn btn-primary text-gray-50"
-            >
-              Update <i class="fa-solid fa-pen-to-square"></i>
-            </button>
-          </div>
-        </template>
-      </EasyDataTable>
-    </section>
+    <div class="bg-gray-50 rounded-md p-6 shadow-md">
+      <header class="flex items-center gap-3 py-6 md:flex-row flex-col justify-between">
+        <h1 class="text-lg md:text-3xl">
+          Announcement <span class="text-lg md:text-3xl font-bold">Management</span>
+        </h1>
+        <div>
+          <button @click="toggleNewAnnouncement" class="btn btn-block">
+            <i class="ri-add-line"></i>Add New Announcement
+          </button>
+        </div>
+      </header>
+      <section class="">
+        <EasyDataTable
+          :headers="headers"
+          :items="userStore.getAdminAnnouncementList"
+          :search-field="searchField"
+          :search-value="searchValue"
+          :hide-rows-per-page="true"
+          table-class-name="customize-table"
+        >
+          <template #item-date="item">
+            <p>{{ moment(item.date).tz("Asia/Manila").format("YYYY-MM-DD") }}</p>
+          </template>
+          <template #item-operation="item">
+            <div class="flex justify-between gap-3 py-2">
+              <button
+                @click="toggleConfirmationModal(item._id)"
+                class="flex items-center justify-center w-24 gap-2 py-3 btn-accent btn btn-outline"
+              >
+                Remove<i class="fa-solid fa-trash"></i>
+              </button>
+              <button
+                @click="toggleUpdateAnnouncement(item._id, item.title, item.description)"
+                class="flex items-center justify-center w-24 gap-2 py-3 btn btn-primary text-gray-50"
+              >
+                Update <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+            </div>
+          </template>
+        </EasyDataTable>
+      </section>
+    </div>
+
     <Modal :show="isNewModalShow" title="New Announcement">
       <template #default>
         <form @submit.prevent="createAnnouncementHandler" action="">
@@ -192,7 +193,7 @@ const headers = [
   { text: "Title", value: "title" },
   { text: "Description", value: "description" },
   { text: "Date Created", value: "date" },
-  { text: "Actions", value: "operation", width: 10 },
+  { text: "Actions", value: "operation", width: 200 },
 ];
 onMounted(async () => {
   await userStore.fetchAnnouncement();

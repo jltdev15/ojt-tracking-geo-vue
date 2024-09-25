@@ -57,6 +57,14 @@
       >
         <li>
           <router-link
+            @click="handleToggleDropDown"
+            :to="{ name: 'coor_profile' }"
+            class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-[#f84525] hover:bg-gray-50"
+            >Profile</router-link
+          >
+        </li>
+        <li>
+          <router-link
             :to="{ name: 'CoorSettings' }"
             class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-[#f84525] hover:bg-gray-50"
             >Settings</router-link

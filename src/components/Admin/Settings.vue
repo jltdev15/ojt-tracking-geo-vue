@@ -106,6 +106,8 @@
             :search-field="searchField"
             :search-value="searchValue"
             table-class-name="customize-table"
+            :rows-per-page="5"
+            :hide-rows-per-page="true"
           >
             <template #item-department="item">
               <p>{{ item.profile.department }}</p>

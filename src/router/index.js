@@ -186,6 +186,12 @@ const router = createRouter({
           meta: { requiresAuth: true, roles: ["Coordinator"] },
         },
         {
+          path: "profile",
+          name: "coor_profile",
+          component: () => import("../components/Coor/CoorProfile.vue"),
+          meta: { requiresAuth: true, roles: ["Coordinator"] },
+        },
+        {
           path: "list",
           name: "InternDepartmentList",
           component: () =>

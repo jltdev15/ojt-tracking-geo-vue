@@ -1,5 +1,5 @@
 <template>
-  <div class="w-10/12 mx-auto">
+  <div class="md:w-10/12 p-3 py-3 mx-auto">
     <div class="py-6 text-sm breadcrumbs">
       <ul>
         <li>
@@ -13,23 +13,19 @@
                 </li> -->
       </ul>
     </div>
-    <section class="bg-gray-50 p-3 px-6 rounded-md shadow-md">
-      <header class="flex items-center md:justify-between">
+    <section class="bg-gray-50 rounded-md shadow-md p-6">
+      <header class="flex items-center justify-between">
         <h1 class="text-lg font-bold md:text-3xl">
           Register Host Training Establishments
         </h1>
       </header>
-      <div class="flex justify-end gap-3 py-6">
+      <div class="flex justify-end gap-3 py-3">
         <input
           type="text"
-          placeholder="Type here"
+          placeholder="Search Company Name"
           class="w-full input input-bordered"
           v-model="searchValue"
         />
-        <select class="w-48 select select-bordered" v-model.trim="searchField">
-          <option selected disabled value="Set filter">Set filter</option>
-          <option value="Username">Username</option>
-        </select>
       </div>
       <div class="">
         <EasyDataTable
@@ -40,9 +36,9 @@
           table-class-name="customize-table"
         >
           <template #item-moa="item">
-            <div v-if="item.moaAttachement">
+            <div v-if="item.moaAttachement" class="flex justify-center">
               <a
-                class="text-blue-500 underline"
+                class="btn btn-sm w-32 btn-outline btn-accent text-gray-50"
                 :href="item.moaAttachement"
                 target="_blank"
                 >View MOA</a
@@ -58,9 +54,9 @@
             </div>
           </template>
           <template #item-internships="item">
-            <div>
+            <div class="flex justify-center">
               <router-link
-                class="bg-blue-500 btn text-gray-50"
+                class="btn w-32 btn-sm btn-outline btn-accent text-gray-50"
                 :to="{ name: 'hteItem', params: { id: item._id } }"
                 >View</router-link
               >
@@ -124,7 +120,7 @@ import { useAdminUserStore } from "@/stores/AdminUserStore";
 import { useCoorStore } from "@/stores/CoorStore";
 const coorStore = useCoorStore();
 const useUserStore = useAdminUserStore();
-const searchField = ref("Set filter");
+const searchField = ref("fullName");
 const searchValue = ref("");
 const isUpdateModalShow = ref(false);
 const isFileSizeExceed = ref(false);
@@ -163,7 +159,7 @@ const headers = [
   { text: "Address", value: "address" },
   { text: "Contact", value: "contactNumber" },
   { text: "Memorandum of Agreement", value: "moa" },
-  { text: "Internships", value: "internships" },
+  { text: "Internships", value: "internships", width: 200 },
 ];
 
 onMounted(async () => {

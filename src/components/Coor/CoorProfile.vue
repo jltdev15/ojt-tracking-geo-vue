@@ -11,16 +11,16 @@
       </ul>
     </div>
 
-    <section class="">
+    <section class="pt-6">
       <header
         class="md:w-full col-span-2 p-3 lg:w-full bg-[#ae1818] text-gray-50 rounded-t-md"
       >
         <h1 class="my-1 text-3xl font-bold capitalize">
-          {{ authStore.adminInformation.firstName }}
-          {{ authStore.adminInformation.lastName }}
+          {{ authStore.coorInformation.firstName }}
+          {{ authStore.coorInformation.lastName }}
         </h1>
-        <p class="bg-gray-50 inline-block py-1 px-3 font-bold rounded-md text-gray-800">
-          {{ authStore.currentRole }}
+        <p class="bg-gray-50 inline-block py-1 px-3 font-bold rounded text-gray-800">
+          {{ authStore.currentRole }} - {{ authStore.coorInformation.department }}
         </p>
       </header>
       <section class="grid p-6 bg-white rounded-b-md shadow-md md:gap-6 md:grid-cols-2">
@@ -30,7 +30,7 @@
             <label class="block" for="">First Name</label>
             <input
               type="text"
-              v-model="authStore.adminInformation.firstName"
+              v-model="authStore.coorInformation.firstName"
               placeholder="Type here"
               class="w-full md:max-w-md input md:input-sm xl:input-md xl:w-full input-bordered"
               required
@@ -40,7 +40,7 @@
             <label class="block" for="">Last Name</label>
             <input
               type="text"
-              v-model="authStore.adminInformation.lastName"
+              v-model="authStore.coorInformation.lastName"
               placeholder="Type here"
               class="w-full md:max-w-md input md:input-sm xl:input-md input-bordered"
               required
@@ -50,7 +50,7 @@
             <label class="block" for="">Email</label>
             <input
               type="text"
-              v-model="authStore.adminInformation.email"
+              v-model="authStore.coorInformation.email"
               placeholder="Type here"
               class="w-full md:max-w-md input xl:input-md md:input-sm input-bordered"
               required
@@ -59,7 +59,7 @@
           <div>
             <label class="block" for="">Contact</label>
             <input
-              v-model="authStore.adminInformation.contact"
+              v-model="authStore.coorInformation.contact"
               placeholder="Type here"
               class="w-full md:max-w-md input input-sm xl:input-md input-bordered"
               minlength="10"
@@ -81,8 +81,8 @@
             >
               <option value="" selected>
                 {{
-                  authStore.adminInformation.province
-                    ? authStore.adminInformation.province
+                  authStore.coorInformation.province
+                    ? authStore.coorInformation.province
                     : "Select Province"
                 }}
               </option>
@@ -100,8 +100,8 @@
             >
               <option selected value="">
                 {{
-                  authStore.adminInformation.municipality
-                    ? authStore.adminInformation.municipality
+                  authStore.coorInformation.municipality
+                    ? authStore.coorInformation.municipality
                     : "Select Municipality"
                 }}
               </option>
@@ -119,8 +119,8 @@
             >
               <option value="" selected>
                 {{
-                  authStore.adminInformation.brgy
-                    ? authStore.adminInformation.brgy
+                  authStore.coorInformation.brgy
+                    ? authStore.coorInformation.brgy
                     : "Select Barangay"
                 }}
               </option>
@@ -133,7 +133,7 @@
             <label class="block" for="">House No. / Street</label>
             <input
               type="text"
-              v-model="authStore.adminInformation.street"
+              v-model="authStore.coorInformation.street"
               placeholder="Type here"
               class="w-full md:max-w-md md:input-sm xl:input-md input input-bordered"
               required
@@ -154,7 +154,7 @@
             </button>
             <button
               type="button"
-              @click="updateAdminInfoHandler"
+              @click="updateCoorInfoHandler"
               class="btn-md btn btn-primary"
             >
               Update Profile
@@ -223,25 +223,23 @@ const getBrgy = async (selectedMunicipality) => {
 
 const onSelectProvince = async () => {
   await getMunicipalities(selectedProvinces.value.code);
-  authStore.adminInformation.province = selectedProvinces.value.name;
-  console.log(selectedProvinces.value.code);
-  console.log(selectedProvinces.value.name);
+  authStore.coorInformation.province = selectedProvinces.value.name;
 };
 const onSelectMunicipality = async () => {
   await getBrgy(selectedMunicipality.value.code);
-  authStore.adminInformation.municipality = selectedMunicipality.value.name;
+  authStore.coorInformation.municipality = selectedMunicipality.value.name;
 };
 const onSelectBrgy = () => {
-  authStore.adminInformation.brgy = selectedBrgy.value.name;
+  authStore.coorInformation.brgy = selectedBrgy.value.name;
 };
 
 const toggleEdit = () => {
   isEditEnable.value = !isEditEnable.value;
 };
 
-const updateAdminInfoHandler = async () => {
-  await authStore.updateAdminInfo();
-  router.replace({ name: "admin_profile" });
+const updateCoorInfoHandler = async () => {
+  await authStore.updateCoorInfo();
+  router.replace({ name: "coor_profile" });
   isEditing.value = !isEditing.value;
 };
 

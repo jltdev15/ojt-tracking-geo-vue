@@ -1,5 +1,5 @@
 <template>
-  <section class="w-9/12 mx-auto">
+  <section class="p-3 py-3 mx-auto md:w-10/12">
     <div class="py-6 text-sm md:py-6 breadcrumbs">
       <ul>
         <li>
@@ -10,7 +10,7 @@
         </li>
       </ul>
     </div>
-    <section class="p-3 rounded-md shadow-lg bg-gray-50">
+    <section class="p-6 rounded-md shadow-lg bg-gray-50">
       <header
         class="flex items-center justify-between gap-3 md:flex-row md:justify-between"
       >
@@ -41,8 +41,8 @@
           :items="userStore.usersList"
           :search-field="searchField"
           :search-value="searchValue"
-          :rows-per-page="10"
-          show-index
+          :rows-per-page="5"
+          :hide-rows-per-page="true"
           table-class-name="customize-table"
         >
           <template #item-operation="item">
@@ -231,7 +231,7 @@
             >
               <!-- <div v-if="true" class="grid grid-cols-2 gap-3 pt-3"> -->
               <!-- Left Side -->
-              <div class="flex flex-col w-full gap-3">
+              <div class="flex flex-col gap-3 w-72">
                 <label class="flex items-center gap-2 input input-bordered">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -349,9 +349,9 @@
                     </option>
                   </select>
                 </div>
-                <div class="flex gap-3 md:flex-row">
+                <div class="flex flex-col w-full gap-3 md:flex-row">
                   <select
-                    class="w-3/6 md:w-full select select-bordered"
+                    class="w-full select select-bordered"
                     v-model="selectedBrgy"
                     @change="onSelectBrgy"
                   >
@@ -360,7 +360,7 @@
                       {{ item.name }}
                     </option>
                   </select>
-                  <label class="flex items-center w-full gap-2 input input-bordered">
+                  <label class="flex items-center gap-2 input input-bordered">
                     <input
                       v-model="hte.street"
                       type="text"

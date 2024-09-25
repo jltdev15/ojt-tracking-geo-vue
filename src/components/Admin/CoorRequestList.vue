@@ -1,5 +1,5 @@
 <template>
-  <div class="w-10/12 mx-auto">
+  <div class="p-3 py-3 mx-auto md:w-10/12">
     <div class="py-6 text-sm breadcrumbs">
       <ul>
         <li>
@@ -14,11 +14,11 @@
       </ul>
     </div>
 
-    <div class="bg-white rounded-md shadow-md">
+    <div class="p-6 rounded-md shadow-md bg-gray-50">
       <header class="flex items-center justify-between">
-        <h1 class="text-3xl px-6 py-3 font-bold">Visit Request</h1>
+        <h1 class="text-3xl font-bold">Request</h1>
       </header>
-      <div class="flex justify-end px-6 py-3 gap-3">
+      <div class="flex justify-end gap-3 py-3">
         <input
           type="text"
           placeholder="Type here"
@@ -30,14 +30,23 @@
           <option value="Username">Username</option>
         </select>
       </div>
-      <div class="px-6">
+      <div class="">
         <EasyDataTable
           :headers="headers"
           :items="adminUserStore.requestList"
           :search-field="searchField"
           :search-value="searchValue"
+          :hide-rows-per-page="true"
           table-class-name="customize-table"
         >
+          <template #item-status="item">
+            <p
+              class="bg-red-600 text-center rounded-md py-1 text-gray-50"
+              v-if="item.status === 'Pending'"
+            >
+              {{ item.status }}
+            </p>
+          </template>
         </EasyDataTable>
       </div>
     </div>

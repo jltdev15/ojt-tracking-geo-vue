@@ -65,6 +65,17 @@ export const useAuthStore = defineStore("auth", () => {
     province: "",
     email: "",
   });
+  const coorInformation = reactive({
+    firstName: "",
+    lastName: "",
+    contact: "",
+    street: "",
+    brgy: "",
+    municipality: "",
+    province: "",
+    email: "",
+    department:''
+  });
 
   const checkAuth = async () => {
     try {
@@ -116,7 +127,17 @@ export const useAuthStore = defineStore("auth", () => {
         currentDepartment.value = response.data.content.profile.department;
         coorId.value = response.data.content.profile._id;
         currentRole.value = response.data.content.role;
-        return (currentUser.value = response.data.content.profile.firstName);
+        coorInformation.firstName = response.data.content.profile.firstName;
+        coorInformation.lastName = response.data.content.profile.lastName;
+        coorInformation.email = response.data.content.email;
+        coorInformation.department = response.data.content.profile.department;
+        coorInformation.contact = response.data.content.profile.contact;
+        coorInformation.street = response.data.content.profile.street;
+        coorInformation.brgy = response.data.content.profile.brgy;
+        coorInformation.municipality = response.data.content.profile.municipality;
+        coorInformation.province = response.data.content.profile.province;
+        coorInformation.firstName = response.data.content.profile.firstName;
+        return (currentUser.value = response.data.content.profile.firstName + ' ' + response.data.content.profile.lastName);
       }
       if (userRole.value === "Intern") {
         internInformation.firstName = response.data.content.profile.firstName;
@@ -361,6 +382,54 @@ export const useAuthStore = defineStore("auth", () => {
       console.log(err);
     }
   };
+  const updateCoorInfo = async () => {
+    if (coorInformation.firstName ===  "") {
+      return alert("First Name must not empty");
+    }
+    if (coorInformation.lastName === "") {
+      return alert("Last Name must not empty");
+    }
+    if (coorInformation.contact === null) {
+      return alert("Contact must not empty");
+    }
+    if (coorInformation.street === "") {
+      return alert("Street must not empty");
+    }
+    if (coorInformation.brgy === "") {
+      return alert("Barangay must not empty");
+    }
+    if (coorInformation.municipality === "") {
+      return alert("Municipality must not empty");
+    }
+    if (coorInformation.province ===  "") {
+      return alert("Province must not empty");
+    }
+    if (coorInformation.street ==="") {
+      return alert("Street must not empty");
+    }
+    if (coorInformation.email ==="") {
+      return alert("Email must not empty");
+    }
+    const payload = {
+      firstName: coorInformation.firstName,
+      lastName: coorInformation.lastName,
+      contact: coorInformation.contact,
+      province: coorInformation.province,
+      municipality: coorInformation.municipality,
+      brgy: coorInformation.brgy,
+      street: coorInformation.street,
+      email: coorInformation.email,
+    };
+    try {
+      const response = await apiClient.patch(`/coor/change/info`, payload);
+      if (response.status === 201) {
+        alert("Update success!!");
+      }
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return {
     checkAuth,
@@ -393,5 +462,7 @@ export const useAuthStore = defineStore("auth", () => {
     hteLocationDefault,
     adminInformation,
     updateAdminInfo,
+    coorInformation,
+    updateCoorInfo
   };
 });

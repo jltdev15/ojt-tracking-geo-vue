@@ -1,6 +1,6 @@
 <template>
-  <div class="w-10/12 mx-auto">
-    <div class="p-6 text-sm breadcrumbs">
+  <div class="p-3 py-3 mx-auto md:w-10/12">
+    <div class="py-6 text-sm breadcrumbs">
       <ul>
         <li>
           <router-link :to="{ name: 'admin_dashboard' }">Dashboard</router-link>
@@ -13,30 +13,34 @@
         </li>
       </ul>
     </div>
-    <header class="flex items-center justify-between px-6">
-      <h1 class="text-3xl font-bold">Attendance Logs</h1>
-    </header>
-    <div class="p-3 m-3 rounded-md shadow-md bg-gray-50">
-      <div class="flex justify-end gap-3 py-3">
-        <input
-          type="text"
-          placeholder="Search date e.g MM/DD/YYYY"
-          class="w-full input input-bordered"
-          v-model="searchValue"
-        />
+    <div class="p-6 rounded-md shadow-md bg-gray-50">
+      <header class="flex items-center justify-between">
+        <h1 class="text-3xl font-bold">Attendance Logs</h1>
+      </header>
+      <div class="">
+        <div class="flex justify-end gap-3 py-3">
+          <input
+            type="text"
+            placeholder="Search date e.g MM/DD/YYYY"
+            class="w-full input input-bordered"
+            v-model="searchValue"
+          />
+        </div>
+        <EasyDataTable
+          :headers="headers"
+          :items="userStore.attendanceArr"
+          :search-field="searchField"
+          :search-value="searchValue"
+          table-class-name="customize-table"
+          :rows-per-page="5"
+          :hide-rows-per-page="true"
+        >
+          <template #item-timeOut="item">
+            <p v-if="item.timeOut != null">{{ item.timeOut }}</p>
+            <p v-else>No time out data</p>
+          </template>
+        </EasyDataTable>
       </div>
-      <EasyDataTable
-        :headers="headers"
-        :items="userStore.attendanceArr"
-        :search-field="searchField"
-        :search-value="searchValue"
-        table-class-name="customize-table"
-      >
-        <template #item-timeOut="item">
-          <p v-if="item.timeOut != null">{{ item.timeOut }}</p>
-          <p v-else>No time out data</p>
-        </template>
-      </EasyDataTable>
     </div>
   </div>
 </template>

@@ -20,4 +20,10 @@ import TheHeader from "./components/TheHeader.vue";
   --easy-table-body-row-height: 50px;
   --easy-table-body-row-font-size: 16px;
 }
+@media only screen and (max-width: 390px) {
+  .customize-table {
+    --easy-table-body-item-padding: 0px 10px;
+    --easy-table-body-row-font-size: 12px;
+  }
+}
 </style>

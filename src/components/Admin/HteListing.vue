@@ -1,5 +1,5 @@
 <template>
-  <div class="w-10/12 mx-auto">
+  <div class="p-3 py-3 mx-auto md:w-10/12">
     <div class="md:py-6 text-sm breadcrumbs">
       <ul>
         <li>
@@ -14,55 +14,55 @@
       <header class="">
         <h1 class="text-3xl font-bold">Internships Posted</h1>
       </header>
-      <section class="">
-        <div class="flex justify-end gap-3 py-3">
-          <input
-            type="text"
-            placeholder="Type here"
-            class="w-full input input-bordered"
-            v-model="searchValue"
-          />
-          <select class="w-48 select select-bordered" v-model.trim="searchField">
-            <option selected disabled value="Set filter">Set filter</option>
-            <option value="title">Title</option>
-            <option value="requirements">Requirements</option>
-          </select>
-        </div>
-        <EasyDataTable
-          :headers="headers"
-          :items="userStore.vacancyList"
-          :search-field="searchField"
-          :search-value="searchValue"
-          table-class-name="customize-table"
-        >
-          <template #item-dailytimerecord="item">
-            <div class="flex justify-between gap-3 py-2">
-              <router-link
-                :to="{ name: 'DTRList', params: { id: item._id } }"
-                class="btn btn-accent btn-outline text-gray-50"
-              >
-                View
-              </router-link>
-            </div>
-          </template>
-          <template #item-status="item">
-            <div v-if="item.isInternshipReady">
-              <p>Ongoing Internship</p>
-            </div>
-            <div v-else>
-              <p>On going application</p>
-            </div>
-          </template>
-          <template #item-evaluation="item">
-            <div v-if="item.isEvaluationReady">
-              <router-link>View evaluation</router-link>
-            </div>
-            <div v-else>
-              <p>No evaluation found</p>
-            </div>
-          </template>
-        </EasyDataTable>
-      </section>
+      <div class="flex justify-end gap-3 py-3">
+        <input
+          type="text"
+          placeholder="Type here"
+          class="w-full input input-bordered"
+          v-model="searchValue"
+        />
+        <select class="w-48 select select-bordered" v-model.trim="searchField">
+          <option selected disabled value="Set filter">Set filter</option>
+          <option value="title">Title</option>
+          <option value="requirements">Requirements</option>
+        </select>
+      </div>
+      <EasyDataTable
+        :headers="headers"
+        :items="userStore.vacancyList"
+        :search-field="searchField"
+        :search-value="searchValue"
+        table-class-name="customize-table"
+        :rows-per-page="5"
+        :hide-rows-per-page="true"
+      >
+        <template #item-dailytimerecord="item">
+          <div class="flex justify-between gap-3 py-2">
+            <router-link
+              :to="{ name: 'DTRList', params: { id: item._id } }"
+              class="btn btn-accent btn-outline text-gray-50"
+            >
+              View
+            </router-link>
+          </div>
+        </template>
+        <template #item-status="item">
+          <div v-if="item.isInternshipReady">
+            <p>Ongoing Internship</p>
+          </div>
+          <div v-else>
+            <p>On going application</p>
+          </div>
+        </template>
+        <template #item-evaluation="item">
+          <div v-if="item.isEvaluationReady">
+            <router-link>View evaluation</router-link>
+          </div>
+          <div v-else>
+            <p>No evaluation found</p>
+          </div>
+        </template>
+      </EasyDataTable>
     </section>
   </div>
 </template>
@@ -77,7 +77,7 @@ const headers = [
   { text: "Title", value: "title" },
   { text: "Requirements", value: "requirements" },
   { text: "Slots", value: "slots" },
-  { text: "Location", value: "location" },
+  { text: "Location", value: "location", width: 400 },
 ];
 
 onMounted(async () => {
