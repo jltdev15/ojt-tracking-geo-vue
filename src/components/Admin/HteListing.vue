@@ -1,6 +1,6 @@
 <template>
-  <div class="p-3 py-3 mx-auto md:w-10/12">
-    <div class="md:py-6 text-sm breadcrumbs">
+  <div class="p-3 py-3 mx-auto md:w-11/12">
+    <div class="text-sm md:py-6 breadcrumbs">
       <ul>
         <li>
           <router-link :to="{ name: 'admin_dashboard' }">Dashboard</router-link>
@@ -10,7 +10,7 @@
         </li>
       </ul>
     </div>
-    <section class="bg-gray-50 rounded-md p-6 shadow-md">
+    <section class="p-6 rounded-md shadow-md bg-gray-50">
       <header class="">
         <h1 class="text-3xl font-bold">Internships Posted</h1>
       </header>

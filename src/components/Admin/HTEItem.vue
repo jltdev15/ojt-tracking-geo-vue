@@ -1,5 +1,5 @@
 <template>
-  <div class="w-10/12 mx-auto">
+  <div class="w-11/12 mx-auto">
     <div class="py-6 text-sm breadcrumbs">
       <ul>
         <li>
@@ -9,13 +9,13 @@
           <router-link class="" :to="{ name: 'hteLists' }">List</router-link>
         </li>
         <li>
-          <router-link class="font-bold" :to="{ name: 'hteItem' }"
+          <router-link class="" :to="{ name: 'hteItem' }"
             >Internships</router-link
           >
         </li>
       </ul>
     </div>
-    <section class="bg-gray-50 p-6 rounded-md shadow-md">
+    <section class="p-6 rounded-md shadow-md bg-gray-50">
       <header class="flex items-center justify-between pb-3">
         <h1 class="text-3xl font-bold">Internships</h1>
       </header>
@@ -39,6 +39,9 @@
           :search-value="searchValue"
           table-class-name="customize-table"
         >
+        <template #item-status="item">
+          <p class="inline-block px-3 py-2 bg-green-600 rounded-md text-gray-50">{{ item.status }}</p>
+        </template>
           <template #item-applicants="item">
             <div v-if="item.applicants.length > 0">
               <router-link
@@ -71,7 +74,7 @@ const headers = [
   { text: "Requirements", value: "requirements" },
   { text: "Slots", value: "slots" },
   { text: "Status", value: "status" },
-  { text: "Number of Applicants", value: "applicants" },
+  { text: "Number of Applicants", value: "applicants", width:150 },
 ];
 
 onMounted(async () => {

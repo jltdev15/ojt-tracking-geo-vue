@@ -10,11 +10,11 @@
         </li>
       </ul>
     </div>
-    <div class="p-6 rounded-md shadow-md bg-gray-50">
-      <header class="flex flex-col items-center justify-between gap-3 md:flex-row">
-        <div>
-          <h1 class="text-3xl font-bold">Internships Listing</h1>
-          <p>No. of listing {{ hteStore.getNumberOfListing }}</p>
+    <div class="p-3 rounded-md shadow-md md:p-6 bg-gray-50">
+      <header class="flex items-center justify-between gap-3 md:flex-row">
+        <div >
+          <h1 class="font-bold md:text-3xl">Internships Listing</h1>
+          <!-- <p>No. of listing {{ hteStore.getNumberOfListing }}</p> -->
         </div>
 
         <div>
@@ -34,7 +34,9 @@
         </div>
         <section class="">
           <EasyDataTable :headers="headers" :items="hteStore.internshipList" :search-field="searchField"
-            :search-value="searchValue" table-class-name="customize-table">
+            :search-value="searchValue"        
+            :rows-per-page="5"
+            :hide-rows-per-page="true" table-class-name="customize-table">
             <!-- <template #item-applicants="item">
           <div class="flex justify-between gap-3 py-2">
             <h1>{{ item.applicants }}</h1>
@@ -209,16 +211,16 @@ onMounted(async () => {
 const headers = [
   { text: "TITLE", value: "title" },
 
-  { text: "REQUIREMENTS", value: "requirements" },
-  { text: "SLOTS", value: "slots" },
-  { text: "LOCATION", value: "location" },
-  { text: "POSTED ON", value: "createdAt" },
-  { text: "STATUS", value: "status" },
-  { text: "ACTIONS", value: "operation", width: "50" },
+  { text: "REQUIREMENTS", value: "requirements",width:100 },
+  { text: "SLOTS", value: "slots",width:100 },
+  { text: "LOCATION", value: "location", width:200 },
+  { text: "POSTED ON", value: "createdAt",width:100 },
+  { text: "STATUS", value: "status",width:100 },
+  { text: "ACTIONS", value: "operation", width:100 },
 ];
 </script>
 
-<style>
+<style scoped>
 textarea {
   resize: none;
 }
@@ -226,5 +228,12 @@ textarea {
 .customize-table {
   --easy-table-header-font-color: #fff;
   --easy-table-header-background-color: #ae1818;
+  --easy-table-body-row-font-size: 14px;
+}
+@media only screen and (max-width: 390px) {
+  .customize-table {
+    --easy-table-body-item-padding: 0px 10px;
+    --easy-table-body-row-font-size: 12px;
+  }
 }
 </style>

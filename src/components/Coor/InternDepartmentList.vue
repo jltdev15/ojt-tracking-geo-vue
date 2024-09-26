@@ -1,5 +1,5 @@
 <template>
-  <div class="p-3 py-3 mx-auto md:w-10/12">
+  <div class="p-3 py-3 mx-auto md:w-11/12">
     <div class="py-6 text-sm breadcrumbs">
       <ul>
         <li>
@@ -10,18 +10,18 @@
         </li>
       </ul>
     </div>
-    <div class="bg-gray-50 rounded-md p-6 shadow-md">
+    <div class="p-6 rounded-md shadow-md bg-gray-50">
       <header class="">
-        <h1 class="text-3xl font-bold">Interns List</h1>
+        <h1 class="font-bold md:text-3xl">Interns List</h1>
       </header>
-      <div class="flex justify-end gap-3 py-3">
+      <div class="flex flex-col justify-end gap-3 py-3 md:flex-row">
         <input
           type="text"
           placeholder="Search here"
           class="w-full input input-bordered"
           v-model="searchValue"
         />
-        <select class="w-48 select select-bordered" v-model.trim="searchField">
+        <select class="md:w-48 select select-bordered" v-model.trim="searchField">
           <option selected disabled value="Set filter">Set filter</option>
           <option value="fullName">Intern Name</option>
           <option value="evaluation">Evaluation</option>
@@ -33,15 +33,17 @@
           :search-field="searchField"
           :search-value="searchValue"
           :items="coorStore.internList"
+                    :rows-per-page="5"
+          :hide-rows-per-page="true"
           border-cell
           table-class-name="customize-table"
         >
           <template #item-dtr="item">
-            <div v-if="item.dailyTimeRecords.length === 0" class="flex gap-3">
+            <div v-if="item.dailyTimeRecords.length === 0" class="flex justify-center gap-3">
               <p>Not available</p>
             </div>
-            <div v-if="item.dailyTimeRecords.length > 0">
-              <router-link :to="{ name: 'CoorDailyTimeRecord', params: { id: item._id } }"
+            <div v-if="item.dailyTimeRecords.length > 0" class="flex justify-center">
+              <router-link class="btn btn-outline btn-accent btn-sm md:btn-md" :to="{ name: 'CoorDailyTimeRecord', params: { id: item._id } }"
                 >View DTR</router-link
               >
             </div>
@@ -55,12 +57,12 @@
                 Set required hours
               </button>
             </div>
-            <div v-if="item.requiredHours != 0" class="">
+            <div v-if="item.requiredHours != 0" class="flex justify-center">
               <button
                 @click="toggleRequiredHoursModal(item._id)"
-                class="p-3 my-3 btn btn-md btn-primary"
+                class="p-3 btn btn-md btn-primary"
               >
-                Update Required Hours
+                Update Hours
               </button>
             </div>
           </template>

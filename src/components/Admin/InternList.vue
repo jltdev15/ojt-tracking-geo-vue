@@ -1,5 +1,5 @@
 <template>
-  <div class="p-3 py-3 mx-auto md:w-10/12">
+  <div class="p-3 py-3 mx-auto md:w-11/12">
     <div class="py-6 text-sm breadcrumbs">
       <ul>
         <li>
@@ -44,7 +44,7 @@
           <div class="flex justify-center gap-3 py-2">
             <router-link
               :to="{ name: 'DTRList', params: { id: item._id } }"
-              class="btn btn-accent btn-sm w-32 btn-outline text-gray-50"
+              class="w-32 btn btn-accent btn-sm btn-outline text-gray-50"
             >
               View
             </router-link>
@@ -99,8 +99,8 @@ const headers = [
   { text: "REQUIRED HOURS", value: "requiredHours" },
   { text: "RENDERED HOURS", value: "renderedHours" },
   { text: "DAILY TIME RECORD", value: "dailytimerecord" },
-  { text: "EVALUATION RESULTS", value: "evaluation" },
-  { text: "STATUS", value: "status" },
+  { text: "EVALUATION RESULTS", value: "evaluation",width: 200 },
+  { text: "STATUS", value: "status",width: 200 },
 ];
 
 onMounted(async () => {

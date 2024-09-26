@@ -7,7 +7,7 @@
     <template #item-status="item">
       <p
         v-if="item.status === 'Accepted'"
-        class="inline-block w-full p-2 font-medium text-center text-gray-50"
+        class="inline-block w-full p-2 font-medium text-center rounded-md text-gray-50"
         :class="{ 'bg-green-600': item.status === 'Accepted' }"
       >
         {{ item.status }}
@@ -21,7 +21,7 @@
       </p>
       <p
         v-if="item.status === 'Pending'"
-        class="inline-block w-full p-2 font-medium text-center text-gray-50"
+        class="inline-block w-full p-2 font-medium text-center rounded-md text-gray-50"
         :class="{ 'bg-red-700': item.status === 'Pending' }"
       >
         {{ item.status }}
@@ -43,10 +43,10 @@
     </template>
     <template #item-operation="item">
       <div v-if="item.status === 'Accepted'" class="flex gap-3">
-        <p class="bg-gray-500 rounded p-2 text-gray-50">No action needed</p>
+        <p class="p-2 bg-gray-500 rounded text-gray-50">No action needed</p>
       </div>
       <div v-if="item.status === 'Finished'" class="flex gap-3">
-        <p class="bg-blue-500 rounded p-2 text-gray-50">
+        <p class="p-2 bg-blue-500 rounded text-gray-50">
           <router-link :to="{ name: 'EvaluationResults' }">View evaluation</router-link>
         </p>
       </div>
@@ -76,7 +76,7 @@
       <div v-if="item.status === 'Pending'">
         <button
           @click="removeApplication(item.applicationId)"
-          class="btn btn-outline btn-accent"
+          class="btn btn-sm btn-block btn-outline btn-accent"
         >
           Cancel Application
         </button>
@@ -100,7 +100,7 @@ const props = defineProps({
 });
 
 const headers = [
-  { text: "APPLICATION ID", value: "applicationId" },
+  // { text: "APPLICATION ID", value: "applicationId" },
   { text: "DATE APPLIED", value: "DateApplied" },
   { text: "COMPANY NAME", value: "company" },
   { text: "JOB TITLE", value: "jobTitle" },

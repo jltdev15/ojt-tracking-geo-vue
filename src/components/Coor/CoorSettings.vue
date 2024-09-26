@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="p-3 py-3 mx-auto ">
         <div class="p-6 text-sm breadcrumbs">
             <ul>
                 <li>
@@ -9,8 +9,8 @@
                     <router-link :to="{ name: 'CoorSettings' }">Settings</router-link>
                 </li>
             </ul>
-            <section>
-                <header class="flex items-center justify-between py-3 bg-gray-200">
+            <section class="p-6 rounded-md shadow-md bg-gray-50">
+                <header class="flex items-center justify-between py-3">
                     <h1 class="text-3xl">
                         Change <span class="text-3xl font-bold">Password</span>
                     </h1>

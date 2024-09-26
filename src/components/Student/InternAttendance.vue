@@ -10,8 +10,8 @@
         </li>
       </ul>
     </div>
-    <div class="p-6 rounded-md shadow-md bg-gray-50">
-      <header class="flex items-center justify-between py-3">
+    <div class="p-3 rounded-md shadow-md md:p-6 bg-gray-50">
+      <header class="flex items-center justify-between md:py-3">
         <h1 class="text-3xl font-bold">Attendance Logs</h1>
       </header>
       <div class="flex justify-end gap-3 py-3">

@@ -10,9 +10,9 @@
         </li>
       </ul>
     </div>
-    <section class="p-6 rounded-md shadow-md bg-gray-50">
-      <header class="flex items-center justify-between pb-6">
-        <h1 class="text-3xl font-bold">List of Interns Evaluated</h1>
+    <section class="p-3 rounded-md shadow-md md:p-6 bg-gray-50">
+      <header class="flex items-center justify-between md:pb-6">
+        <h1 class="text-lg font-bold md:text-3xl">List of Interns Evaluated</h1>
       </header>
       <div class="flex justify-end gap-3 pb-3">
         <input type="text" placeholder="Type here" class="w-full input input-bordered" v-model="searchValue" />
@@ -23,7 +23,8 @@
         </select>
       </div>
       <EasyDataTable :headers="headers" :items="hteStore.getListOfFinishedInterns" :search-field="searchField"
-        :search-value="searchValue" table-class-name="customize-table" show-index>
+        :search-value="searchValue" table-class-name="customize-table"      :rows-per-page="5"
+        :hide-rows-per-page="true">
         <template #item-results="item">
           <router-link :to="{ name: 'EvaluationView', params: { id: item.internId } }">View Results</router-link>
         </template>
@@ -40,11 +41,11 @@ const searchValue = ref("");
 const hteStore = useHteStore();
 
 const headers = [
-  { text: "INTERNSHIP POSITION", value: "jobTitle" },
-  { text: "INTERN", value: "name" },
-  { text: "DEPARTMENT", value: "department" },
-  { text: "REMARKS", value: "evaluationStatus" },
-  { text: "EVALUATION", value: "results" },
+  { text: "INTERNSHIP POSITION", value: "jobTitle",width: 150 },
+  { text: "INTERN", value: "name",width: 150 },
+  { text: "DEPARTMENT", value: "department",width: 150 },
+  { text: "REMARKS", value: "evaluationStatus",width: 150 },
+  { text: "EVALUATION", value: "results",width: 150 },
 ];
 
 onMounted(async () => {

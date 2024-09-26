@@ -1,6 +1,6 @@
 <template>
-  <div class="p-3">
-    <div class="p-6 text-sm breadcrumbs">
+  <div class="p-3 py-3 mx-auto md:w-11/12">
+    <div class="text-sm md:py-6 breadcrumbs">
       <ul>
         <li>
           <router-link :to="{ name: 'hte_dashboard' }">Dashboard</router-link>
@@ -10,18 +10,18 @@
         </li>
       </ul>
     </div>
-    <section class="px-6">
+    <section class="p-6 rounded-md shadow-md bg-gray-50">
       <header class="flex items-center justify-between">
-        <h1 class="text-3xl font-bold">List of Interns Evaluated</h1>
+        <h1 class="font-bold md:text-3xl">List of Interns Evaluated</h1>
       </header>
-      <div class="flex justify-end gap-3 py-3">
+      <div class="flex flex-col justify-end gap-3 py-3 md:flex-row">
         <input
           type="text"
           placeholder="Search here"
           class="w-full input input-bordered"
           v-model="searchValue"
         />
-        <select class="w-48 select select-bordered" v-model.trim="searchField">
+        <select class="md:w-48 select select-bordered" v-model.trim="searchField">
           <option selected disabled value="Set filter">Set filter</option>
           <option value="fullName">HTE Name</option>
           <option value="Intern">Intern Name</option>
@@ -33,8 +33,9 @@
         :items="coorStore.internEvaluationList"
         :search-field="searchField"
         :search-value="searchValue"
+                  :rows-per-page="5"
+          :hide-rows-per-page="true"
         table-class-name="customize-table"
-        show-index
       >
         <template #item-results="item">
           <router-link :to="{ name: 'CoorEvaluationView', params: { id: item.internId } }"
@@ -54,9 +55,9 @@ const searchValue = ref("");
 const coorStore = useCoorStore();
 
 const headers = [
-  { text: "INTERN", value: "internName" },
-  { text: "HTE NAME", value: "hteName" },
-  { text: "REMARKS", value: "comment" },
+  { text: "INTERN", value: "internName", widht:150 },
+  { text: "HTE NAME", value: "hteName",width:150 },
+  { text: "REMARKS", value: "comment",width:150 },
   { text: "EVALUATION", value: "results" },
 ];
 

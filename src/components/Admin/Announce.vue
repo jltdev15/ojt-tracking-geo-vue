@@ -1,6 +1,6 @@
 <template>
   <div class="p-3 py-3 mx-auto md:w-10/12">
-    <div class="p-6 text-sm breadcrumbs">
+    <div class="py-6 text-sm md:p-6 breadcrumbs">
       <ul>
         <li>
           <router-link :to="{ name: 'admin_dashboard' }">Admin Dashboard</router-link>
@@ -12,14 +12,14 @@
         </li>
       </ul>
     </div>
-    <div class="bg-gray-50 rounded-md p-6 shadow-md">
-      <header class="flex items-center gap-3 py-6 md:flex-row flex-col justify-between">
+    <div class="p-3 rounded-md shadow-md md:p-6 bg-gray-50">
+      <header class="flex items-center justify-between gap-3 py-6 md:flex-row">
         <h1 class="text-lg md:text-3xl">
-          Announcement <span class="text-lg md:text-3xl font-bold">Management</span>
+          Announcement <span class="text-lg font-bold md:text-3xl">Management</span>
         </h1>
-        <div>
-          <button @click="toggleNewAnnouncement" class="btn btn-block">
-            <i class="ri-add-line"></i>Add New Announcement
+        <div class="flex justify-center">
+          <button @click="toggleNewAnnouncement" class="w-32 btn md:btn-block btn-primary">
+           New 
           </button>
         </div>
       </header>
@@ -190,10 +190,10 @@ const updateAnnouncementHandler = async () => {
 };
 
 const headers = [
-  { text: "Title", value: "title" },
-  { text: "Description", value: "description" },
-  { text: "Date Created", value: "date" },
-  { text: "Actions", value: "operation", width: 200 },
+  { text: "Title", value: "title", width: 150 },
+  { text: "Description", value: "description",width: 150 },
+  { text: "Date Created", value: "date",width: 150 },
+  { text: "Actions", value: "operation", width: 150 },
 ];
 onMounted(async () => {
   await userStore.fetchAnnouncement();

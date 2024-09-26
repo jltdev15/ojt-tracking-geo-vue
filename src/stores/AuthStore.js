@@ -162,7 +162,7 @@ export const useAuthStore = defineStore("auth", () => {
         if (sessionCode.value !== localStorage.getItem("sessionCode")) {
           await submitLogout();
         }
-        return (currentUser.value = response.data.content.profile.firstName);
+        return (currentUser.value = response.data.content.profile.firstName + " " + response.data.content.profile.lastName);
       }
     } catch (err) {
       console.log(err);

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="p-6 text-sm breadcrumbs">
+  <div class="p-3 py-3 mx-auto md:w-11/12">
+    <div class="py-6 text-sm breadcrumbs">
       <ul>
         <li>
           <router-link :to="{ name: 'coor_dashboard' }">Dashboard</router-link>
@@ -12,25 +12,25 @@
         </li>
       </ul>
     </div>
-    <header
-      class="flex items-center flex-col md:flex-row justify-between px-6 bg-gray-200"
-    >
-      <h1 class="text-xl md:text-3xl text-center">
-        Announcement <span class="text-xl md:text-3xl font-bold">Management</span>
+    <div class="p-6 rounded-md shadow-md bg-gray-50">
+      <header class="flex items-center justify-between pb-3">
+      <h1 class="text-xl text-center md:text-3xl">
+        Announcement <span class="text-xl font-bold md:text-3xl">Management</span>
       </h1>
       <div class="p-6 md:p-0">
-        <button @click="toggleNewAnnouncement" class="btn btn-block">
-          <i class="ri-add-line"></i>Add New Announcement
+        <button @click="toggleNewAnnouncement" class="btn btn-block btn-primary">
+          <i class="ri-add-line"></i>New Announcement
         </button>
       </div>
     </header>
-    <section class="p-6">
+    <section class="">
       <EasyDataTable
         :headers="headers"
         :items="userStore.getCoorAnnouncementList"
         :search-field="searchField"
         :search-value="searchValue"
-        show-index
+                               :rows-per-page="5"
+          :hide-rows-per-page="true"
         table-class-name="customize-table"
       >
         <template #item-date="item">
@@ -52,11 +52,13 @@
             </button>
           </div>
         </template>
-        <!-- <template #item-dateCreated="item">
- 
-          </template> -->
+        <template #item-description="item">
+            <p>{{ truncateString(item.description, 50)}}</p>
+          </template>
       </EasyDataTable>
     </section>
+    </div>
+   
     <Modal :show="isNewModalShow" title="New Announcement">
       <template #default>
         <form @submit.prevent="createAnnouncementHandler" action="">
@@ -203,6 +205,12 @@ const headers = [
   { text: "Author", value: "author" },
   { text: "Actions", value: "operation", width: 10 },
 ];
+function truncateString(str, maxLength) {
+  if (str.length > maxLength) {
+    return str.substring(0, maxLength) + '...';
+  }
+  return str;
+}
 onMounted(async () => {
   console.log(authStore.currentRole);
   await userStore.fetchAnnouncement();
@@ -210,12 +218,5 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.customize-table {
-  --easy-table-body-row-font-size: 16px;
-}
-@media (max-width: 390px) {
-  .customize-table {
-    --easy-table-body-row-font-size: 8px;
-  }
-}
+
 </style>

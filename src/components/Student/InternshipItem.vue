@@ -1,5 +1,5 @@
 <template>
-  <section v-if="show" class="grid w-full grid-cols-3 gap-3">
+  <section v-if="show" class="grid w-full gap-3 p-3 md:grid-cols-3">
     <div 
     v-for="(item, index) in internStore.internshipLists"
     :key="index"
@@ -39,7 +39,7 @@
       </div>
       <button
         :disabled="authStore.isInternReady"
-        class="w-full btn rounded-xl " 
+        class="w-full btn rounded-xl " :class="{'btn-primary': !authStore.isInternReady}" 
         @click="handleApply(item._id)"
       >
         {{ authStore.isInternReady ? 'You already accept Internship' : 'Apply Now' }}

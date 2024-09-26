@@ -10,21 +10,23 @@
         </li>
       </ul>
     </div>
-    <section class="p-6 rounded-md shadow-md bg-gray-50">
-      <header class="flex items-center justify-between pb-6">
-        <h1 class="text-3xl font-bold">Applicants</h1>
+    <section class="p-3 rounded-md shadow-md md:p-6 bg-gray-50">
+      <header class="flex items-center justify-between md:pb-6">
+        <h1 class="text-lg font-bold md:text-3xl">Applicants</h1>
       </header>
       <div class="">
-        <div class="flex justify-end gap-3 pb-3">
+        <div class="flex flex-col justify-end gap-3 pb-3 md:flex-row">
           <input type="text" placeholder="Search here" class="w-full input input-bordered" v-model="searchValue" />
-          <select class="w-48 select select-bordered" v-model.trim="searchField">
+          <select class="md:w-48 select select-bordered" v-model.trim="searchField">
             <option selected disabled value="Set filter">Set filter</option>
             <option value="status">Status</option>
             <option value="applicantName">Applicant Name</option>
             <option value="title">Job Title</option>
           </select>
         </div>
-        <EasyDataTable :headers="headers" :items="hteStore.getListOfInternApplication" :search-field="searchField"
+        <EasyDataTable :headers="headers" :items="hteStore.getListOfInternApplication" :search-field="searchField"     
+        :rows-per-page="5"
+            :hide-rows-per-page="true"
           :search-value="searchValue" table-class-name="customize-table" border-cell>
           <template #item-viewRequirements="item">
             <div class="flex justify-between gap-3 py-2">
@@ -32,6 +34,9 @@
                 Check Requirements
               </p>
             </div>
+          </template>
+          <template #item-status="item">
+            <p class="inline-block px-3 py-2 bg-red-600 rounded-md text-gray-50">{{ item.status }}</p>
           </template>
           <template #item-remarks="item">
             <div v-if="item.remarks === null">
@@ -222,13 +227,13 @@ const rejectApplicantHandler = async (applicationId) => {
   router.push({ name: "hte_dashboard" });
 };
 const headers = [
-  { text: "APPLICATION ID", value: "applicationId" },
-  { text: "JOB TITLE", value: "title" },
-  { text: "APPLICANT NAME", value: "name" },
-  { text: "DEPARTMENT", value: "department" },
-  { text: "REQUIREMENTS LIST", value: "viewRequirements" },
-  { text: "STATUS", value: "status" },
-  { text: "REMARKS", value: "remarks" },
+  // { text: "APPLICATION ID", value: "applicationId" },
+  { text: "JOB TITLE", value: "title",width:120 },
+  { text: "APPLICANT NAME", value: "name",width:120 },
+  { text: "DEPARTMENT", value: "department",width:120 },
+  { text: "REQUIREMENTS LIST", value: "viewRequirements",width:120 },
+  { text: "STATUS", value: "status",width:120 },
+  { text: "REMARKS", value: "remarks" ,width:120},
 ];
 </script>
 

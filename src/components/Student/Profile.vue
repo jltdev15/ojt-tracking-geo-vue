@@ -1,5 +1,5 @@
 <template>
-  <div class="p-3 py-3 mx-auto md:w-10/12 xl:w-11/12">
+  <div class="py-3 mx-auto md:w-10/12 xl:w-10/12">
     <div class="p-6 text-sm breadcrumbs">
       <ul>
         <li>
@@ -11,22 +11,27 @@
       </ul>
     </div>
     <form @submit.prevent="updateInformationHandler">
-      <section class="px-6">
-        <header class="flex items-center justify-between pb-3">
-          <h1 class="my-1 text-3xl font-bold capitalize">
-            {{ authStore.internInformation.firstName }}
-            {{ authStore.internInformation.lastName }}
-          </h1>
+      <section class="px-2 md:px-6">
+        <header class="flex items-center justify-between pb-3 bg-[#ae1818] rounded-t-md">
+          <div class="px-3 py-1">
+            <h1 class="font-bold apitalize text-base- md:text-3xl text-gray-50">
+              {{ authStore.internInformation.firstName }}
+              {{ authStore.internInformation.lastName }}
+            </h1>
+            <p class="text-gray-50"> {{authStore.internInformation.department}}</p>
+          </div>
+
           <p class="inline-block p-1 px-3 font-medium rounded text-gray-50 bg-primary">
             Intern ID : {{ authStore.internInformation.internId.substring(0, 10) }}
           </p>
+     
         </header>
 
         <section
-          class="grid px-6 py-6 bg-white rounded-md shadow-md md:gap-6 md:grid-cols-2"
+          class="grid px-3 py-3 bg-white rounded-md shadow-md md:gap-6 md:grid-cols-2"
         >
           <!-- Left side -->
-          <div class="flex flex-col gap-4">
+          <div class="flex flex-col w-full gap-1">
             <div>
               <label class="block" for="">Department</label>
               <input
@@ -98,7 +103,7 @@
             </div>
           </div>
           <!-- right side -->
-          <div class="flex flex-col gap-4">
+          <div class="flex flex-col gap-1">
             <div>
               <label class="block" for="">Age</label>
               <input
@@ -193,16 +198,16 @@
               />
             </div>
           </div>
-          <div class="flex justify-end col-span-2">
+          <div class="flex justify-end py-6 pb-3 md:col-span-2">
             <button
               type="button"
               v-if="!isEditEnable"
               @click="toggleEdit"
-              class="w-32 btn btn-outline btn-accent"
+              class="w-full md:w-32 btn btn-outline btn-accent"
             >
               Edit Profile
             </button>
-            <button type="submit" v-if="isEditEnable" class="w-48 btn btn-primary">
+            <button type="submit" v-if="isEditEnable" class="w-full md:w-48 btn btn-primary">
               Update Profile
             </button>
           </div>

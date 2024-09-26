@@ -10,7 +10,7 @@
         </li>
       </ul>
     </div>
-    <section class="p-6 rounded-md shadow-md bg-gray-50">
+    <section class="p-3 rounded-md shadow-md md:p-6 bg-gray-50">
       <header class="flex items-center justify-between pb-6">
         <h1 class="text-3xl font-bold">Interns</h1>
       </header>
@@ -166,13 +166,13 @@ const handleAcceptApplicant = async (applicationId) => {
   router.push({ name: "hte_dashboard" });
 };
 const headers = [
-  { text: "INTERNSHIP POSITION", value: "jobTitle" },
-  { text: "INTERN", value: "name" },
-  { text: "DEPARTMENT", value: "department" },
-  { text: "HOURS RENDERED", value: "workedHours" },
-  { text: "Daily Time Record", value: "dailytimerecord" },
-  { text: "Online Status", value: "online" },
-  { text: "REMARKS", value: "evaluation" },
+  { text: "INTERNSHIP POSITION", value: "jobTitle",width:120 },
+  { text: "INTERN", value: "name",width:150 },
+  { text: "DEPARTMENT", value: "department",width:150 },
+  { text: "HOURS RENDERED", value: "workedHours",width:120 },
+  { text: "Daily Time Record", value: "dailytimerecord",width:200 },
+  { text: "Online Status", value: "online",width:120 },
+  { text: "REMARKS", value: "evaluation",width:120 },
 ];
 </script>
 

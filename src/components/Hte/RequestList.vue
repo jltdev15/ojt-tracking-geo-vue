@@ -3,30 +3,31 @@
     <div class="text-sm md:py-6 breadcrumbs">
       <ul>
         <li>
-          <router-link :to="{ name: 'hte_dashboard' }">HTE Dashboard</router-link>
+          <router-link :to="{ name: 'hte_dashboard' }">Dashboard</router-link>
         </li>
         <li>
           <router-link :to="{ name: 'VisitRequest' }">Request</router-link>
         </li>
       </ul>
     </div>
-    <div class="p-6 rounded-md shadow-md bg-gray-50">
-      <header class="flex items-center justify-between pb-6">
-        <h1 class="text-3xl">
-          Visitation <span class="text-3xl font-bold">Request</span>
+    <div class="p-3 rounded-md shadow-md md:p-6 bg-gray-50">
+      <header class="flex items-center justify-between md:pb-6">
+        <h1 class="md:text-3xl">
+          Visitation <span class="font-bold md:text-3xl">Request</span>
         </h1>
       </header>
-      <div class="flex justify-end gap-3 py-3">
+      <div class="flex flex-col justify-end gap-3 py-3 md:flex-row">
         <input type="text" placeholder="Search here" class="w-full input input-bordered" v-model="searchValue" />
-        <select class="w-48 select select-bordered" v-model.trim="searchField">
+        <select class="md:w-48 select select-bordered" v-model.trim="searchField">
           <option selected disabled value="Set filter">Set filter</option>
-          <option value="status">Status</option>
-          <option value="title">Title</option>
+          <option value="requestorName">Name of Requestor</option>
         </select>
       </div>
       <section class="">
         <EasyDataTable :headers="headers" :items="hteStore.requestList" :search-field="searchField"
-          :search-value="searchValue" table-class-name="customize-table" show-index>
+          :search-value="searchValue" table-class-name="customize-table"      
+          :rows-per-page="5"
+          :hide-rows-per-page="true">
           <template #item-operation="item">
             <div v-if="item.status === 'Pending'" class="flex justify-center gap-3 py-2">
               <button @click="handleToggleAcceptModal(item._id)" class="btn-primary btn text-gray-50">
@@ -152,14 +153,13 @@ const handleAcceptRequest = async () => {
 };
 
 const headers = [
-  { text: "REQUESTOR", value: "requestorName" },
-
-  { text: "REQUEST DATE", value: "scheduledDate" },
-  { text: "REQUEST TIME", value: "scheduledtime" },
-  { text: "DEPARTMENT", value: "department" },
-  { text: "REMARKS", value: "remarks" },
-  { text: "STATUS", value: "status" },
-  { text: "ACTIONS", value: "operation" },
+  { text: "REQUESTOR", value: "requestorName", width: 150 },
+  { text: "REQUEST DATE", value: "scheduledDate",width: 150 },
+  { text: "REQUEST TIME", value: "scheduledtime",width: 150 },
+  { text: "DEPARTMENT", value: "department",width: 150 },
+  { text: "REMARKS", value: "remarks",width: 150 },
+  { text: "STATUS", value: "status",width: 150 },
+  { text: "ACTIONS", value: "operation",width: 150 },
 ];
 
 onMounted(async () => {

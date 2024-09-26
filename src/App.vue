@@ -11,7 +11,7 @@ import TheHeader from "./components/TheHeader.vue";
 <style>
 .customize-table {
   --easy-table-border: 1px rounded #445269;
-  --easy-table-header-font-size: 14px;
+  --easy-table-header-font-size: 12px;
   --easy-table-header-height: 60px;
   --easy-table-header-font-color: #fff;
   --easy-table-header-background-color: #ae1818;

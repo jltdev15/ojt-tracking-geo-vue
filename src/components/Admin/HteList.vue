@@ -1,5 +1,5 @@
 <template>
-  <div class="md:w-10/12 p-3 py-3 mx-auto">
+  <div class="p-3 py-3 mx-auto md:w-11/12">
     <div class="py-6 text-sm breadcrumbs">
       <ul>
         <li>
@@ -13,7 +13,7 @@
                 </li> -->
       </ul>
     </div>
-    <section class="bg-gray-50 rounded-md shadow-md p-6">
+    <section class="p-6 rounded-md shadow-md bg-gray-50">
       <header class="flex items-center justify-between">
         <h1 class="text-lg font-bold md:text-3xl">
           Register Host Training Establishments
@@ -38,7 +38,7 @@
           <template #item-moa="item">
             <div v-if="item.moaAttachement" class="flex justify-center">
               <a
-                class="btn btn-sm w-32 btn-outline btn-accent text-gray-50"
+                class="w-32 btn btn-sm btn-outline btn-accent text-gray-50"
                 :href="item.moaAttachement"
                 target="_blank"
                 >View MOA</a
@@ -56,7 +56,7 @@
           <template #item-internships="item">
             <div class="flex justify-center">
               <router-link
-                class="btn w-32 btn-sm btn-outline btn-accent text-gray-50"
+                class="w-32 btn btn-sm btn-outline btn-accent text-gray-50"
                 :to="{ name: 'hteItem', params: { id: item._id } }"
                 >View</router-link
               >

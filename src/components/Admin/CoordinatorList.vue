@@ -1,5 +1,5 @@
 <template>
-  <div class="md:w-10/12 p-3 py-3 mx-auto">
+  <div class="p-3 py-3 mx-auto md:w-11/12">
     <div class="py-6 mx-auto text-sm md:py-6 breadcrumbs">
       <ul>
         <li>
@@ -10,7 +10,7 @@
         </li>
       </ul>
     </div>
-    <section class="bg-gray-50 rounded-md shadow-md p-6">
+    <section class="p-6 rounded-md shadow-md bg-gray-50">
       <header class="flex items-center justify-between">
         <h1 class="text-3xl font-bold">School Coordinator</h1>
       </header>
@@ -41,7 +41,7 @@
             <p v-if="item.requestList.length">
               <router-link
                 :to="{ name: 'CoordinatorRequestItem', params: { id: item._id } }"
-                class="btn btn-outline btn-sm w-32 btn-accent"
+                class="w-32 btn btn-outline btn-sm btn-accent"
               >
                 View requests
               </router-link>
