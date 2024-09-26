@@ -157,9 +157,4 @@ onUnmounted(async () => {
 });
 </script>
 
-<style scoped>
-.customize-table {
-  --easy-table-header-font-color: #fff;
-  --easy-table-header-background-color: #ae1818;
-}
-</style>
+<style scoped></style>

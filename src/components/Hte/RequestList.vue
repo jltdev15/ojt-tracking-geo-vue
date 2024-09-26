@@ -17,23 +17,39 @@
         </h1>
       </header>
       <div class="flex flex-col justify-end gap-3 py-3 md:flex-row">
-        <input type="text" placeholder="Search here" class="w-full input input-bordered" v-model="searchValue" />
+        <input
+          type="text"
+          placeholder="Search here"
+          class="w-full input input-bordered"
+          v-model="searchValue"
+        />
         <select class="md:w-48 select select-bordered" v-model.trim="searchField">
           <option selected disabled value="Set filter">Set filter</option>
           <option value="requestorName">Name of Requestor</option>
         </select>
       </div>
       <section class="">
-        <EasyDataTable :headers="headers" :items="hteStore.requestList" :search-field="searchField"
-          :search-value="searchValue" table-class-name="customize-table"      
+        <EasyDataTable
+          :headers="headers"
+          :items="hteStore.requestList"
+          :search-field="searchField"
+          :search-value="searchValue"
+          table-class-name="customize-table"
           :rows-per-page="5"
-          :hide-rows-per-page="true">
+          :hide-rows-per-page="true"
+        >
           <template #item-operation="item">
             <div v-if="item.status === 'Pending'" class="flex justify-center gap-3 py-2">
-              <button @click="handleToggleAcceptModal(item._id)" class="btn-primary btn text-gray-50">
+              <button
+                @click="handleToggleAcceptModal(item._id)"
+                class="btn-primary btn text-gray-50"
+              >
                 Accept
               </button>
-              <button @click="handleToggleRejectModal(item._id)" class="btn btn-accent btn-outline text-gray-50">
+              <button
+                @click="handleToggleRejectModal(item._id)"
+                class="btn btn-accent btn-outline text-gray-50"
+              >
                 Reject
               </button>
             </div>
@@ -67,10 +83,17 @@
       <template #default>
         <p class="text-xl text-center">Are you sure you want to accept this request?</p>
         <div class="flex justify-end gap-3 py-6">
-          <button @click="isConfirmModalShow = !isConfirmModalShow" class="btn btn-accent btn-outline">
+          <button
+            @click="isConfirmModalShow = !isConfirmModalShow"
+            class="btn btn-accent btn-outline"
+          >
             Cancel
           </button>
-          <button type="button" @click="handleAcceptRequest" class="btn btn-primary text-gray-50">
+          <button
+            type="button"
+            @click="handleAcceptRequest"
+            class="btn btn-primary text-gray-50"
+          >
             Confirm
           </button>
         </div>
@@ -82,10 +105,17 @@
         <p class="text-xl text-center">Are you sure you want to remove this request</p>
         <textarea class="textarea textarea-bordered" placeholder="Bio"></textarea>
         <div class="flex justify-end gap-3 py-6">
-          <button @click="isRemoveModalShow = !isRemoveModalShow" class="btn btn-accent btn-outline">
+          <button
+            @click="isRemoveModalShow = !isRemoveModalShow"
+            class="btn btn-accent btn-outline"
+          >
             Cancel
           </button>
-          <button type="button" @click="handleRemoveRequest" class="btn btn-primary text-gray-50">
+          <button
+            type="button"
+            @click="handleRemoveRequest"
+            class="btn btn-primary text-gray-50"
+          >
             Confirm
           </button>
         </div>
@@ -96,15 +126,25 @@
       <template #default>
         <p class="text-xl text-center">Are you sure you want to reject this request?</p>
         <div class="px-6 pt-6">
-          <textarea v-model.trim="hteRemarks" class="w-full px-3 textarea textarea-bordered"
-            placeholder="Put reason for rejection"></textarea>
+          <textarea
+            v-model.trim="hteRemarks"
+            class="w-full px-3 textarea textarea-bordered"
+            placeholder="Put reason for rejection"
+          ></textarea>
         </div>
 
         <div class="flex justify-end gap-3 py-6">
-          <button @click="isConfirmModalShow = !isConfirmModalShow" class="btn btn-accent btn-outline">
+          <button
+            @click="isRejectModalShow = !isRejectModalShow"
+            class="btn btn-accent btn-outline"
+          >
             Cancel
           </button>
-          <button type="button" @click="handleRejectRequest" class="btn btn-primary text-gray-50">
+          <button
+            type="button"
+            @click="handleRejectRequest"
+            class="btn btn-primary text-gray-50"
+          >
             Confirm
           </button>
         </div>
@@ -132,7 +172,7 @@ const handleToggleRemove = async (id) => {
   visitId.value = id;
   isRemoveModalShow.value = !isRemoveModalShow.value;
 };
-const handleRemoveRequest = async () => { };
+const handleRemoveRequest = async () => {};
 
 const handleToggleAcceptModal = async (id) => {
   visitId.value = id;
@@ -154,12 +194,12 @@ const handleAcceptRequest = async () => {
 
 const headers = [
   { text: "REQUESTOR", value: "requestorName", width: 150 },
-  { text: "REQUEST DATE", value: "scheduledDate",width: 150 },
-  { text: "REQUEST TIME", value: "scheduledtime",width: 150 },
-  { text: "DEPARTMENT", value: "department",width: 150 },
-  { text: "REMARKS", value: "remarks",width: 150 },
-  { text: "STATUS", value: "status",width: 150 },
-  { text: "ACTIONS", value: "operation",width: 150 },
+  { text: "REQUEST DATE", value: "scheduledDate", width: 150 },
+  { text: "REQUEST TIME", value: "scheduledtime", width: 150 },
+  { text: "DEPARTMENT", value: "department", width: 150 },
+  { text: "REMARKS", value: "remarks", width: 150 },
+  { text: "STATUS", value: "status", width: 150 },
+  { text: "ACTIONS", value: "operation", width: 150 },
 ];
 
 onMounted(async () => {
@@ -167,16 +207,4 @@ onMounted(async () => {
 });
 </script>
 
-<style>
-.customize-table {
-  --easy-table-border: 1px rounded #445269;
-  --easy-table-header-font-size: 12px;
-  --easy-table-header-height: 50px;
-  --easy-table-header-font-color: #fff;
-  --easy-table-header-background-color: #ae1818;
-  --easy-table-body-row-font-size: 16px;
-
-  --easy-table-body-row-height: 100px;
-  --easy-table-body-row-font-size: 16px;
-}
-</style>
+<style></style>

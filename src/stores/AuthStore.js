@@ -98,6 +98,8 @@ export const useAuthStore = defineStore("auth", () => {
         return (currentUser.value = response.data.content.profile.firstName);
       }
       if (userRole.value === "HTE") {
+        hteInformation.lat = response.data.content.profile.location.lat;
+        hteInformation.lng =  response.data.content.profile.location.lng;
         hteId.value = response.data.content.profile._id;
         hteInformation.name = response.data.content.profile.fullName;
         hteInformation.email = response.data.content.email;
@@ -119,8 +121,7 @@ export const useAuthStore = defineStore("auth", () => {
         hteInformation.location = response.data.content.profile.location;
         hteLocationDefault.lat = response.data.content.profile.location.lat;
         hteLocationDefault.lng = response.data.content.profile.location.lng;
-        hteInformation.lat = response.data.content.profile.location.lat;
-        hteInformation.lng = response.data.content.profile.location.lng;
+     
         return (currentUser.value = response.data.content.profile.fullName);
       }
       if (userRole.value === "Coordinator") {

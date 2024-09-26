@@ -19,26 +19,42 @@
         <div class="flex flex-col gap-3">
           <div>
             <label for="">Company Name</label>
-            <input v-model.trim="authStore.hteInformation.name" type="text" placeholder="Type here"
-              class="w-full input input-bordered" />
+            <input
+              v-model.trim="authStore.hteInformation.name"
+              type="text"
+              placeholder="Type here"
+              class="w-full input input-bordered"
+            />
           </div>
 
           <div>
             <label class="block" for="">Company Email</label>
-            <input v-model.trim="authStore.hteInformation.email" type="text" placeholder="Type here"
-              class="w-full input input-bordered" />
+            <input
+              v-model.trim="authStore.hteInformation.email"
+              type="text"
+              placeholder="Type here"
+              class="w-full input input-bordered"
+            />
           </div>
 
           <div>
             <label for="">Contact Number</label>
-            <input v-model.trim="authStore.hteInformation.contact" type="text" placeholder="Type here"
-              class="w-full input input-bordered" />
+            <input
+              v-model.trim="authStore.hteInformation.contact"
+              type="text"
+              placeholder="Type here"
+              class="w-full input input-bordered"
+            />
           </div>
 
           <div class="">
             <label class="block" for="">Province</label>
-            <select class="w-full text-base select select-bordered" v-model="selectedProvince"
-              @change="onSelectProvince" required>
+            <select
+              class="w-full text-base select select-bordered"
+              v-model="selectedProvince"
+              @change="onSelectProvince"
+              required
+            >
               <option selected value="">
                 {{ authStore.hteInformation.province }}
               </option>
@@ -49,8 +65,12 @@
           </div>
           <div class="">
             <label class="block" for="">Municipality/City</label>
-            <select class="w-full text-base select select-bordered" v-model="selectedMunicipality"
-              @change="onSelectMunicipality" required>
+            <select
+              class="w-full text-base select select-bordered"
+              v-model="selectedMunicipality"
+              @change="onSelectMunicipality"
+              required
+            >
               <option selected value="">
                 {{ authStore.hteInformation.municipality }}
               </option>
@@ -62,8 +82,12 @@
           <div class="flex flex-col w-full gap-3 md:flex-row">
             <div class="md:w-96">
               <label class="block" for="">Barangay</label>
-              <select class="w-full text-base select select-bordered" v-model="selectedBrgy" @change="onSelectBrgy"
-                required>
+              <select
+                class="w-full text-base select select-bordered"
+                v-model="selectedBrgy"
+                @change="onSelectBrgy"
+                required
+              >
                 <option selected value="">
                   {{ authStore.hteInformation.brgy }}
                 </option>
@@ -74,8 +98,12 @@
             </div>
             <div class="md:w-3/6">
               <label class="block" for="">Street </label>
-              <input v-model="authStore.hteInformation.street" type="text" placeholder="Type here"
-                class="w-full input input-bordered" />
+              <input
+                v-model="authStore.hteInformation.street"
+                type="text"
+                placeholder="Type here"
+                class="w-full input input-bordered"
+              />
             </div>
           </div>
         </div>
@@ -84,18 +112,36 @@
           <label>Business Name</label>
           <div class="flex gap-3 pb-3">
             <label class="flex items-center justify-between w-full input input-bordered">
-              <input v-model.trim="businessName" type="text" class="max-w-xs" placeholder="Business Name" />
+              <input
+                v-model.trim="businessName"
+                type="text"
+                class="max-w-xs"
+                placeholder="Business Name"
+              />
             </label>
-            <button @click="getBusinessLocation" class="btn btn-outline bt-bloc btn-accent">
+            <button
+              @click="getBusinessLocation"
+              class="btn btn-outline bt-bloc btn-accent"
+            >
               <i class="text-3xl bx bx-search-alt"></i>
             </button>
           </div>
 
           <label class="flex items-center gap-2 input input-bordered">
-            <input v-model="authStore.hteInformation.lat" type="number" class="w-full" placeholder="Latitude"
-              readonly />
-            <input v-model="authStore.hteInformation.lng" type="number" class="w-full" placeholder="Longtitude"
-              readonly />
+            <input
+              v-model="authStore.hteInformation.lat"
+              type="number"
+              class="w-full"
+              placeholder="Latitude"
+              readonly
+            />
+            <input
+              v-model="authStore.hteInformation.lng"
+              type="number"
+              class="w-full"
+              placeholder="Longtitude"
+              readonly
+            />
           </label>
           <div v-if="errorMessage" class="p-3 text-center error">
             {{ errorMessage }}
@@ -106,11 +152,17 @@
           <div v-if="isMapShow" id="map" class="h-[300px] w-[100%] mt-3"></div>
         </div>
         <div class="flex justify-between gap-3 md:col-span-2 md:mt-6 md:ml-auto">
-          <router-link :to="{ name: 'manage_users', query: { users: 'HTE' } }"
-            class="w-3/6 md:w-36 btn btn-accent btn-outline">
+          <router-link
+            :to="{ name: 'manage_users', query: { users: 'HTE' } }"
+            class="w-3/6 md:w-36 btn btn-accent btn-outline"
+          >
             Cancel
           </router-link>
-          <button type="button" @click="updateInformationHandler" class="w-3/6 md:w-36 btn btn-md btn-primary">
+          <button
+            type="button"
+            @click="updateInformationHandler"
+            class="w-3/6 md:w-36 btn btn-md btn-primary"
+          >
             Update
           </button>
         </div>
@@ -120,9 +172,7 @@
 </template>
 
 <script setup>
-import {
-  Loader
-} from "@googlemaps/js-api-loader";
+import { Loader } from "@googlemaps/js-api-loader";
 import axios from "axios";
 import { ref, onMounted } from "vue";
 import { useAuthStore } from "@/stores/AuthStore";
@@ -137,16 +187,14 @@ const selectedBrgy = ref("");
 const provinces = ref([]);
 const municipality = ref([]);
 const brgy = ref([]);
-const businessName = ref(authStore.hteInformation.name);
-
+// const businessName = ref(authStore.hteInformation.name);
+const businessName = ref("");
 
 const updateInformationHandler = async () => {
   await authStore.updateHteInfo();
   alert("Update success!");
   router.replace({ name: "hte_profile" });
 };
-
-
 
 const getProvinces = async () => {
   try {
@@ -181,25 +229,22 @@ const getBrgy = async (selectedMunicipality) => {
 };
 const onSelectProvince = async () => {
   await getMunicipalities(selectedProvince.value.code);
-  authStore.hteInformation.province = selectedProvince.value.name
-
+  authStore.hteInformation.province = selectedProvince.value.name;
 };
 const onSelectMunicipality = async () => {
   await getBrgy(selectedMunicipality.value.code);
-  authStore.hteInformation.municipality = selectedMunicipality.value.name
-
+  authStore.hteInformation.municipality = selectedMunicipality.value.name;
 };
 const onSelectBrgy = () => {
-  authStore.hteInformation.brgy = selectedBrgy.value.name
+  authStore.hteInformation.brgy = selectedBrgy.value.name;
 
   // coordinator.brgy = selectedBrgy.value.name;
 };
 onMounted(async () => {
-
   await getProvinces();
-  businessName.value = authStore.hteInformation.name;
-  await getBusinessLocation();
-})
+  // businessName.value = authStore.hteInformation.name;
+  // await getBusinessLocation();
+});
 
 const locationRes = ref(null);
 const errorMessage = ref(null);
@@ -210,7 +255,7 @@ const isMapShow = ref(true);
 const getBusinessLocation = async () => {
   if (!businessName.value.trim()) {
     authStore.hteInformation.lat = "";
-    authStore.hteInformation.lat = "";
+    authStore.hteInformation.lng = "";
     errorMessage.value = "Please enter a business name.";
     isMapShow.value = false;
     return;
@@ -224,9 +269,7 @@ const getBusinessLocation = async () => {
       version: "weekly",
     });
 
-    const {
-      PlacesService
-    } = await loader.importLibrary("places");
+    const { PlacesService } = await loader.importLibrary("places");
 
     const service = new PlacesService(document.createElement("div"));
 
@@ -266,11 +309,11 @@ const initMap = () => {
     map: map.value,
     draggable: true,
   });
-  marker.value.addListener('dragend', (event) => {
+  marker.value.addListener("dragend", (event) => {
     authStore.hteInformation.lat = event.latLng.lat().toFixed(6);
     authStore.hteInformation.lng = event.latLng.lng().toFixed(6);
   });
-  map.value.addListener('click', (event) => {
+  map.value.addListener("click", (event) => {
     const clickedLocation = event.latLng;
     authStore.hteInformation.lat = clickedLocation.lat().toFixed(6);
     authStore.hteInformation.lng = clickedLocation.lng().toFixed(6);
@@ -279,13 +322,6 @@ const initMap = () => {
     marker.value.setPosition(clickedLocation);
   });
 };
-
-
-
-
-
-
-
 </script>
 
 <style scoped>

@@ -18,34 +18,70 @@
         <form @submit.prevent="changePasswordHandler" action="">
           <div class="flex flex-col max-w-md gap-4">
             <label class="flex items-center gap-2 input input-bordered">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
-                class="w-4 h-4 opacity-70">
-                <path fill-rule="evenodd"
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="w-4 h-4 opacity-70"
+              >
+                <path
+                  fill-rule="evenodd"
                   d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
-                  clip-rule="evenodd" />
+                  clip-rule="evenodd"
+                />
               </svg>
-              <input v-model.trim="passwordData.oldPassword" type="password" class="grow" value=""
-                placeholder="Old Password" required />
+              <input
+                v-model.trim="passwordData.oldPassword"
+                type="password"
+                class="grow"
+                value=""
+                placeholder="Old Password"
+                required
+              />
             </label>
             <label class="flex items-center gap-2 input input-bordered">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
-                class="w-4 h-4 opacity-70">
-                <path fill-rule="evenodd"
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="w-4 h-4 opacity-70"
+              >
+                <path
+                  fill-rule="evenodd"
                   d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
-                  clip-rule="evenodd" />
+                  clip-rule="evenodd"
+                />
               </svg>
-              <input v-model.trim="passwordData.newPassword" type="password" class="grow" value=""
-                placeholder="New Password" required />
+              <input
+                v-model.trim="passwordData.newPassword"
+                type="password"
+                class="grow"
+                value=""
+                placeholder="New Password"
+                required
+              />
             </label>
             <label class="flex items-center gap-2 input input-bordered">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
-                class="w-4 h-4 opacity-70">
-                <path fill-rule="evenodd"
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="w-4 h-4 opacity-70"
+              >
+                <path
+                  fill-rule="evenodd"
                   d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
-                  clip-rule="evenodd" />
+                  clip-rule="evenodd"
+                />
               </svg>
-              <input v-model.trim="passwordData.confirmPassword" type="password" class="grow" value=""
-                placeholder="Confirm Password" required />
+              <input
+                v-model.trim="passwordData.confirmPassword"
+                type="password"
+                class="grow"
+                value=""
+                placeholder="Confirm Password"
+                required
+              />
             </label>
             <button type="submit" class="btn btn-primary">Change Password</button>
           </div>
@@ -57,21 +93,34 @@
         </h1>
         <span></span>
         <div class="flex justify-end gap-3 py-3">
-          <input type="text" placeholder="Type here" class="w-full input input-bordered" v-model="searchValue" />
+          <input
+            type="text"
+            placeholder="Type here"
+            class="w-full input input-bordered"
+            v-model="searchValue"
+          />
           <select class="w-48 select select-bordered" v-model.trim="searchField">
             <option selected disabled value="Set filter">Set filter</option>
             <option value="name">Intern name</option>
           </select>
         </div>
         <div class="py-3">
-          <EasyDataTable :headers="headers" :items="hteStore.getListOfAcceptedInternsSession"
-            :search-field="searchField" :search-value="searchValue" table-class-name="customize-table">
+          <EasyDataTable
+            :headers="headers"
+            :items="hteStore.getListOfAcceptedInternsSession"
+            :search-field="searchField"
+            :search-value="searchValue"
+            table-class-name="customize-table"
+          >
             <template #item-department="item">
               <p>{{ item.department }}</p>
             </template>
             <template #item-operation="item">
               <div>
-                <button @click="toggleConfirmationModal(item.internId)" class="btn btn-sm btn-accent">
+                <button
+                  @click="toggleConfirmationModal(item.internId)"
+                  class="btn btn-sm btn-accent"
+                >
                   Reset Account
                 </button>
               </div>
@@ -82,10 +131,17 @@
           <template #default>
             <p class="text-xl font-medium capitalize">Reset account restriction?</p>
             <div class="flex justify-end gap-3 pt-9">
-              <button @click="confirmModalShow = !confirmModalShow" class="btn btn-accent btn-outline">
+              <button
+                @click="confirmModalShow = !confirmModalShow"
+                class="btn btn-accent btn-outline"
+              >
                 Cancel
               </button>
-              <button type="button" @click="resetDeviceHandler" class="btn-primary btn text-gray-50">
+              <button
+                type="button"
+                @click="resetDeviceHandler"
+                class="btn-primary btn text-gray-50"
+              >
                 Proceed
               </button>
             </div>
@@ -153,10 +209,4 @@ const resetDeviceHandler = async () => {
 };
 </script>
 
-<style scoped>
-.customize-table {
-  --easy-table-header-font-color: #fff;
-  --easy-table-header-background-color: #ae1818;
-
-}
-</style>
+<style scoped></style>

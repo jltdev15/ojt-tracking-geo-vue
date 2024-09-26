@@ -197,7 +197,7 @@ export const useAdminUserStore = defineStore("user", () => {
       return response;
     } catch (err) {
       console.log(err);
-      alert(err.response.data.message);
+      alert("Duplicate username. Please try other one");
     }
   };
   const addAdmin = async (payload) => {
@@ -210,7 +210,7 @@ export const useAdminUserStore = defineStore("user", () => {
       return response;
     } catch (err) {
       console.log(err);
-      alert(err.response.data.message);
+      alert("Duplicate username. Please try other one");
     }
   };
   //#region Department List

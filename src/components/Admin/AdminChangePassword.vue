@@ -1,5 +1,5 @@
 <template>
-  <div class="w-5/12 mx-auto rounded-md shadow-md mt-9 lg:w-3/12 bg-gray-50">
+  <div class="w-11/12 mx-auto rounded-md shadow-md mt-9 lg:w-3/12 bg-gray-50">
     <div class="p-6 text-sm breadcrumbs">
       <ul>
         <li>

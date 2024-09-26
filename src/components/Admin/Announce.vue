@@ -1,9 +1,9 @@
 <template>
-  <div class="p-3 py-3 mx-auto md:w-10/12">
-    <div class="py-6 text-sm md:p-6 breadcrumbs">
+  <div class="p-3 py-3 mx-auto md:w-11/12">
+    <div class="py-6 text-sm md:py-6 breadcrumbs">
       <ul>
         <li>
-          <router-link :to="{ name: 'admin_dashboard' }">Admin Dashboard</router-link>
+          <router-link :to="{ name: 'admin_dashboard' }">Dashboard</router-link>
         </li>
         <li>
           <router-link class="" :to="{ name: 'admin_announcement' }"
@@ -18,8 +18,11 @@
           Announcement <span class="text-lg font-bold md:text-3xl">Management</span>
         </h1>
         <div class="flex justify-center">
-          <button @click="toggleNewAnnouncement" class="w-32 btn md:btn-block btn-primary">
-           New 
+          <button
+            @click="toggleNewAnnouncement"
+            class="w-32 btn md:btn-block btn-primary"
+          >
+            New
           </button>
         </div>
       </header>
@@ -191,8 +194,8 @@ const updateAnnouncementHandler = async () => {
 
 const headers = [
   { text: "Title", value: "title", width: 150 },
-  { text: "Description", value: "description",width: 150 },
-  { text: "Date Created", value: "date",width: 150 },
+  { text: "Description", value: "description", width: 150 },
+  { text: "Date Created", value: "date", width: 150 },
   { text: "Actions", value: "operation", width: 150 },
 ];
 onMounted(async () => {
