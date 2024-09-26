@@ -34,27 +34,28 @@
           :search-field="searchField"
           :search-value="searchValue"
           table-class-name="customize-table"
+          border-cell
         >
           <template #item-moa="item">
-            <div v-if="item.moaAttachement" class="flex justify-center">
-              <a
-                class="w-32 btn btn-sm btn-outline btn-accent text-gray-50"
+            <div v-if="item.moaAttachement" class="flex justify-start">
+              <button
+                class="w-32 btn btn-sm btn-primary text-gray-50"
                 :href="item.moaAttachement"
                 target="_blank"
-                >View MOA</a
+                >View MOA</button
               >
             </div>
-            <div v-else>
+            <div v-else class="flex justify-start">
               <button
                 @click="openUpdateModal(item._id, item.name)"
-                class="btn btn-primary"
+                class="w-32 btn btn-sm btn-outline btn-accent text-gray-50"
               >
                 Upload MOA
               </button>
             </div>
           </template>
           <template #item-internships="item">
-            <div class="flex justify-center">
+            <div class="flex justify-start">
               <router-link
                 class="w-32 btn btn-sm btn-outline btn-accent text-gray-50"
                 :to="{ name: 'hteItem', params: { id: item._id } }"

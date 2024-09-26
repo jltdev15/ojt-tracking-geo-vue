@@ -19,11 +19,11 @@
           {{ authStore.adminInformation.firstName }}
           {{ authStore.adminInformation.lastName }}
         </h1>
-        <p class="bg-gray-50 inline-block py-1 px-3 font-bold rounded-md text-gray-800">
+        <p class="inline-block px-3 py-1 font-bold text-gray-800 rounded-md bg-gray-50">
           {{ authStore.currentRole }}
         </p>
       </header>
-      <section class="grid p-6 bg-white rounded-b-md shadow-md md:gap-6 md:grid-cols-2">
+      <section class="grid p-6 bg-white shadow-md rounded-b-md md:gap-6 md:grid-cols-2">
         <!-- Left side -->
         <div class="flex flex-col gap-2">
           <div class="w-full">
@@ -62,11 +62,11 @@
               v-model="authStore.adminInformation.contact"
               placeholder="Type here"
               class="w-full md:max-w-md input input-sm xl:input-md input-bordered"
-              minlength="10"
-              maxlength="10"
-              type="number"
-              pattern="\d{10}"
-              required
+              minlength="11"
+              maxlength="11"
+              type="tel"
+              pattern="\d{11}"
+              @input="validateContactNumber"
             />
           </div>
         </div>
@@ -248,6 +248,22 @@ const updateAdminInfoHandler = async () => {
 onMounted(async () => {
   await getProvinces();
 });
+
+
+const validateContactNumber = () => {
+      // Remove any non-digit characters
+
+      authStore.adminInformation.contact =authStore.adminInformation.contact.replace(/\D/g, '');
+      authStore.adminInformation.contact =authStore.adminInformation.contact.slice(0, 11);
+      // Check if the input exceeds 11 digits
+      // if (contactNumber.value.length > 11) {
+      //   errorMessage.value = 'Contact number cannot exceed 11 digits';
+      //   // Truncate the value to 11 digits
+      
+      // } else {
+      //   errorMessage.value = '';
+      // }
+    };
 </script>
 
 <style scoped>

@@ -39,9 +39,10 @@
         table-class-name="customize-table"
         :rows-per-page="5"
         :hide-rows-per-page="true"
+        border-cell
       >
         <template #item-dailytimerecord="item">
-          <div class="flex justify-center gap-3 py-2">
+          <div class="flex justify-start gap-3 py-2">
             <router-link
               :to="{ name: 'DTRList', params: { id: item._id } }"
               class="w-32 btn btn-accent btn-sm btn-outline text-gray-50"
@@ -52,7 +53,7 @@
         </template>
         <template #item-status="item">
           <div v-if="item.isEvaluationReady === 'Not Ready'">
-            <p>Ongoing Internship</p>
+            <button border-0 class="bg-red-600 rounded btn-sm text-gray-50">Ongoing Internship</button>
           </div>
           <div v-if="item.isInternshipReady && item.isEvaluationReady === 'Ready'">
             <p>Waiting for evaluation</p>

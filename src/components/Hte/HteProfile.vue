@@ -41,9 +41,13 @@
             <label for="">Contact Number</label>
             <input
               v-model.trim="authStore.hteInformation.contact"
-              type="text"
-              placeholder="Type here"
+              type="tel"
+              placeholder="11 Digits Contact Number"
+              minlength="11"
+              maxlength="11"
+              pattern="[0-9]{11,11}"
               class="w-full input input-bordered"
+              @input="validateContactNumber"
             />
           </div>
 
@@ -322,6 +326,21 @@ const initMap = () => {
     marker.value.setPosition(clickedLocation);
   });
 };
+
+
+const validateContactNumber = () => {
+      // Remove any non-digit characters
+      authStore.hteInformation.contact = authStore.hteInformation.contact.replace(/\D/g, '');
+      authStore.hteInformation.contact = authStore.hteInformation.contact.slice(0, 11);
+      // Check if the input exceeds 11 digits
+      // if (contactNumber.value.length > 11) {
+      //   errorMessage.value = 'Contact number cannot exceed 11 digits';
+      //   // Truncate the value to 11 digits
+      
+      // } else {
+      //   errorMessage.value = '';
+      // }
+    };
 </script>
 
 <style scoped>

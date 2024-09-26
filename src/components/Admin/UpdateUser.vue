@@ -1,5 +1,5 @@
 <template>
-  <div class="px-1 md:px-0 md:w-9/12 mx-auto">
+  <div class="px-1 mx-auto md:px-0 md:w-9/12">
     <div class="px-2 py-6 text-sm md:p-6 breadcrumbs">
       <ul>
         <li>
@@ -63,13 +63,13 @@
               <label for="">Contact Number</label>
               <input
                 v-model="userStore.updateInfo.contactNumber"
+                 class="w-full input input-bordered"
                 minlength="11"
                 maxlength="11"
-                type="number"
+                type="tel"
                 pattern="\d{11}"
-                placeholder="Type here"
-                class="w-full input input-bordered"
-                required
+                 placeholder="11 Digits Contact Number"
+                @input="validateContactNumber"
               />
             </div>
           </div>
@@ -197,10 +197,15 @@
               <label for="">Contact Number</label>
               <input
                 v-model="userStore.updateInfo.companyContact"
-                type="text"
-                placeholder="Type here"
                 class="w-full input input-bordered"
+                type="tel"
+                placeholder="11 Digits Contact Number"
+                minlength="11"
+                maxlength="11"
+                pattern="[0-9]{11,11}"
+                @input="validateContactNumber"
               />
+              <p v-if="errMessage">{{ errMessage }}</p>
             </div>
 
             <div class="">
@@ -516,6 +521,25 @@ const provinces = ref([]);
 const municipality = ref([]);
 const brgy = ref([]);
 const businessName = ref(userStore.updateInfo.companyName);
+const errMessage = ref('');
+
+const validateContactNumber = () => {
+      // Remove any non-digit characters
+      userStore.updateInfo.companyContact = userStore.updateInfo.companyContact.replace(/\D/g, '');
+      userStore.updateInfo.companyContact = userStore.updateInfo.companyContact.slice(0, 11);
+
+      userStore.updateInfo.contactNumber =userStore.updateInfo.contactNumber.replace(/\D/g, '');
+      userStore.updateInfo.contactNumber =userStore.updateInfo.contactNumber.slice(0, 11);
+      // Check if the input exceeds 11 digits
+      // if (contactNumber.value.length > 11) {
+      //   errorMessage.value = 'Contact number cannot exceed 11 digits';
+      //   // Truncate the value to 11 digits
+      
+      // } else {
+      //   errorMessage.value = '';
+      // }
+    };
+
 
 const updateHandlerCoor = async () => {
   if (userStore.updateInfo.email === "") {
@@ -548,15 +572,15 @@ const updateHandlerCoor = async () => {
   const response = await userStore.updateInformationCoor();
   alert(response.data.message);
   router.push({
-    name: "manage_users",
-    query: {
-      users: "All",
-    },
+    name: "manage_users"
   });
 };
 
 // Update HTE function
 async function updateHandlerHTE() {
+  if (userStore.updateInfo.companyName !== businessName.value) {
+    return alert("Company Name and Business must be the same");
+  }
   if (userStore.updateInfo.companyEmail === "") {
     return alert("Email cannot be empty");
   }

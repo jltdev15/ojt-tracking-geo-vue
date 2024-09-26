@@ -58,16 +58,16 @@
               </p>
             </template>
             <template #item-operation="item">
-              <div class="flex justify-between gap-3 py-2">
+              <div class="flex justify-end gap-3 py-2">
                 <button
                   @click="handleToggleUpdateModal(item._id)"
-                  class="flex items-center justify-center gap-2 py-3 btn btn-primary text-gray-50"
+                  class="gap-2 btn btn-primary text-gray-50"
                 >
                   Update
                 </button>
                 <button
                   @click="handleDeleteModalToggle(item._id)"
-                  class="flex items-center justify-center w-24 gap-2 py-3 btn btn-outline btn-accent text-gray-50"
+                  class="w-24 btn btn-outline btn-accent text-gray-50"
                 >
                   Remove
                 </button>
@@ -81,6 +81,7 @@
     <Modal :show="isModalShow" title="New Internship">
       <!-- <Modal :show="true" title="New Account"> -->
       <template #default>
+        <form @submit.prevent="handleNewInternship" action="">
         <div>
           <div class="flex flex-col gap-3 pt-3">
             <label class="flex items-center gap-2 input input-bordered">
@@ -89,13 +90,15 @@
                 type="text"
                 class="grow"
                 placeholder="Title"
+                required
               />
             </label>
             <label class="flex items-center justify-between gap-2">
               <textarea
-                class="w-full textarea textarea-bordered"
+                class="w-full text-base textarea textarea-bordered"
                 placeholder="Description"
-                v-model.trim="newInternship.description"
+                v-model.trim="newInternship.requirements"
+                required
               ></textarea>
             </label>
 
@@ -105,12 +108,12 @@
                 type="number"
                 class="grow"
                 placeholder="Number of slots"
+                required
               />
             </label>
 
             <div class="flex flex-col gap-2">
-              <button
-                @click="handleNewInternship"
+              <button type="submit"
                 class="text-lg btn btn-primary btn-block"
               >
                 Add Internship
@@ -124,20 +127,24 @@
             </div>
           </div>
         </div>
+      </form>
       </template>
     </Modal>
     <Modal :show="isConfirmationModalShow" title="Confirmation">
       <template #default>
         <p class="text-xl font-medium">Are you sure you want to remove this listing?</p>
-        <div class="flex justify-between pt-9">
-          <button @click="handleDeleteModalToggle" class="btn btn-outline">Cancel</button>
-          <button
-            type="button"
-            @click="handleDeleteItem"
-            class="bg-red-600 btn text-gray-50"
-          >
-            Remove
-          </button>
+        <div class="flex justify-end pt-9">
+          <div class="flex gap-3">
+            <button @click="handleDeleteModalToggle" class="btn btn-outline btn-accent">Cancel</button>
+            <button
+              type="button"
+              @click="handleDeleteItem"
+              class="btn-primary btn-accent btn "
+            >
+              Remove
+            </button>
+          </div>
+
         </div>
       </template>
     </Modal>
@@ -258,9 +265,8 @@ const handleDeleteItem = async () => {
 const handleNewInternship = async () => {
   await hteStore.postInternship(newInternship);
   newInternship.title = "";
-  newInternship.description = "";
+  newInternship.requirements = "";
   newInternship.slots = "";
-  newInternship.location = "";
   await handleToggleModal();
 };
 const handleSelectStatus = async (event) => {
@@ -272,14 +278,14 @@ onMounted(async () => {
 });
 
 const headers = [
-  { text: "TITLE", value: "title" },
+  { text: "TITLE", value: "title",width: 100 },
 
   { text: "REQUIREMENTS", value: "requirements", width: 100 },
   { text: "SLOTS", value: "slots", width: 100 },
   { text: "LOCATION", value: "location", width: 200 },
   { text: "POSTED ON", value: "createdAt", width: 100 },
   { text: "STATUS", value: "status", width: 100 },
-  { text: "ACTIONS", value: "operation", width: 100 },
+  { text: "ACTIONS", value: "operation", width:50 },
 ];
 </script>
 

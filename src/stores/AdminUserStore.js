@@ -84,9 +84,6 @@ export const useAdminUserStore = defineStore("user", () => {
     await fetchAdmin();
   };
   const fetchUsers = async (filterRole) => {
-    console.log("====================================");
-    console.log(filterRole);
-    console.log("====================================");
     try {
       const response = await apiClient.get("/users");
       console.log(response);

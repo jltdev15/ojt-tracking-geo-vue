@@ -402,7 +402,7 @@
                         required
                       />
                     </label>
-                    <button
+                    <button type="button"
                       @click="getBusinessLocation"
                       class="btn btn-outline bt-bloc btn-accent"
                     >
@@ -440,7 +440,7 @@
                 <div class="flex flex-row-reverse col-span-2 gap-2 md:mt-auto">
                   <button type="submit" class="w-32 btn btn-primary">Create User</button>
                   <button
-                    class="w-32 text-lg btn btn-accent btn-outline"
+                    class="w-32 btn btn-accent btn-outline"
                     @click="handleToggleModal"
                   >
                     Close
