@@ -53,10 +53,11 @@
         </div>
       </div>
     </section>
-    <section v-else class="w-96 p-6">
-      <div>
-        <p class="text-center p-6 bg-red-600 font-bold text-gray-50">
-          Please apply internship
+    <section v-else class="flex items-center justify-center h-[70dvh] p-6 ">
+      <div class="text-center">
+        <i class='bg-red-700 rounded-full text-7xl bx bx-question-mark text-gray-50'></i>
+        <p class="p-6 font-bold text-center text-gray-800">
+          No exisiting internship found
         </p>
         <router-link
           to="/student/dashboard/internships"

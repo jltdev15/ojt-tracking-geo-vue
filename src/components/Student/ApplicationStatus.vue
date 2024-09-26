@@ -1,6 +1,6 @@
 <template>
-  <div class="p-3">
-    <div class="md:p-6 text-sm breadcrumbs">
+  <div class="p-3 py-3 mx-auto md:w-10/12 xl:w-11/12">
+    <div class="text-sm md:py-6 breadcrumbs">
       <ul>
         <li>
           <router-link :to="{ name: 'student_dashboard' }">Intern Dashboard</router-link>
@@ -10,18 +10,21 @@
         </li>
       </ul>
     </div>
-    <header
-      class="flex flex-col md:flex-row md:items-center md:justify-between md:px-6 pb-6"
+    <div class="p-3 rounded-md shadow-md bg-gray-50">
+      <header
+      class="flex flex-col pb-6 md:flex-row md:items-center md:justify-between "
     >
-      <h1 class="text-xl md:text-3xl font-bold">Application Status</h1>
+      <h1 class="text-xl font-bold md:text-3xl">Application Status</h1>
       <div>
         <p class="text-sm font-medium">Number of Applications</p>
         <span>{{ internStore.getNumberOfApplication }}</span>
       </div>
     </header>
-    <section class="md:px-6">
+    <section class="">
       <ApplicationStatusItem :appInfoArr="applicationLists" />
     </section>
+    </div>
+    
   </div>
 </template>
 

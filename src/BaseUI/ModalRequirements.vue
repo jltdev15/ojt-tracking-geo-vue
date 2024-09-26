@@ -58,7 +58,7 @@ function closeHandler() {
 
 dialog {
   position: fixed;
-  top: 50%;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, -70%);
   z-index: 999;
@@ -94,7 +94,7 @@ menu {
 @media (min-width: 1280px) {
   dialog {
     position: fixed;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -70%);
   }

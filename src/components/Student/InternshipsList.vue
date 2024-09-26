@@ -1,5 +1,5 @@
 <template>
-  <section class="w-9/12 mx-auto">
+  <section class="p-3 py-3 mx-auto md:w-10/12 xl:w-11/12">
     <div class="py-6 text-sm breadcrumbs">
       <ul>
         <li>
@@ -18,11 +18,11 @@
         </button>
       </div>
     </header>
-    <div class="grid grid-cols-3 gap-3">
-      <InternshipItem />
+    <div class="">
+      <InternshipItem :show="internStore.isProfileComplete === true && internStore.internshipLists.length != 0"/>
       <p v-if="internStore.internshipLists.length === 0">No listing available</p>
       <p
-        class="p-3 bg-primary text-gray-50"
+        class="w-full p-3 bg-primary text-gray-50"
         v-if="!internStore.isProfileComplete && internStore.internshipLists.length"
       >
         Please complete your profile information.

@@ -10,8 +10,8 @@
         </div>
         <form @submit.prevent="handleLogin" action="#">
           <div class="mb-4">
-            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-50">Registered Email
-              Address</label>
+            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-50">Registered
+              Username</label>
             <input v-model.trim="username" type="text" id="email"
               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               placeholder="your@email.com" required />

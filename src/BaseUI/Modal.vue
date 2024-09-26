@@ -3,7 +3,7 @@
     <div v-if="show" @click="closeHandler" class="backdrop"></div>
     <transition name="dialog">
       <dialog open v-if="show" class="w-5/6 overflow-y-auto rounded-lg"
-        :class="{ 'w-5/6 md:w-6/12': size, 'md:w-4/12': !size }">
+        :class="{ 'w-5/6 md:w-6/12 lg:w-8/12': size, 'md:w-4/12': !size }">
         <header class="bg-primary">
           <slot name="header">
             <h2 class="py-3 font-bold text-center md:text-2xl">{{ title }}</h2>

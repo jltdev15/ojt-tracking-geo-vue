@@ -212,7 +212,7 @@
           </div>
         </section>
         <!-- Intern Information -->
-        <section v-if="userStore.currentRole === 'Intern'" class="grid w-full p-3 md:p-6 md:grid-cols-2 gap-x-6">
+        <section v-if="userStore.currentRole === 'Intern'" class="grid w-full p-3 md:p-6 xl:p-2 xl:px-3 md:grid-cols-2 gap-x-6">
           <div class="flex flex-col gap-3">
             <div>
               <label for="">Email</label>
@@ -247,7 +247,7 @@
               <select class="w-full text-base select select-bordered" v-model="selectedProvince"
                 @change="onSelectProvince" required>
                 <option selected value="">
-                  {{ userStore.updateInfo.internProvince }}
+                  {{ userStore.updateInfo.internProvince ? userStore.updateInfo.internProvince : 'Select Province' }}
                 </option>
                 <option v-for="item in provinces" :key="item" :value="item">
                   {{ item.name }}
@@ -259,7 +259,7 @@
               <select class="w-full text-base select select-bordered" v-model="selectedMunicipality"
                 @change="onSelectMunicipality" required>
                 <option value="" selected>
-                  {{ userStore.updateInfo.internMunicipality }}
+                  {{ userStore.updateInfo.internMunicipality ? userStore.updateInfo.internMunicipality : 'Select Municipality' }}
                 </option>
                 <option v-for="item in municipality" :key="item" :value="item">
                   {{ item.name }}
@@ -271,7 +271,7 @@
               <select class="w-full text-base select select-bordered" v-model="selectedBrgy" @change="onSelectBrgy"
                 required>
                 <option value="" selected>
-                  {{ userStore.updateInfo.internBrgy }}
+                  {{ userStore.updateInfo.internBrgy  ?  userStore.updateInfo.internBrgy : 'Select Barangay'}}
                 </option>
                 <option v-for="item in brgy" :key="item" :value="item">
                   {{ item.name }}

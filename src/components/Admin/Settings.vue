@@ -1,6 +1,6 @@
 <template>
-  <div class="p-3 w-full md:w-5/6 mx-auto">
-    <div class="py-6 px-3 text-sm breadcrumbs">
+  <div class="w-full p-3 mx-auto md:w-5/6">
+    <div class="px-3 py-6 text-sm breadcrumbs">
       <ul>
         <li>
           <router-link :to="{ name: 'admin_dashboard' }">Dashboard</router-link>
@@ -11,12 +11,12 @@
       </ul>
     </div>
 
-    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-3 md:p-6">
+    <section class="grid grid-cols-1 gap-6 p-3 rounded-md shadow-md md:grid-cols-2 bg-gray-50 md:p-6">
       <header class="flex items-center justify-between md:col-span-2">
         <h1 class="text-3xl font-bold">Manage Settings</h1>
       </header>
       <div class="">
-        <p class="md:py-3 font-bold capitalize">Department List</p>
+        <p class="font-bold capitalize md:py-3">Department List</p>
         <div class="flex items-center justify-between gap-3">
           <input
             v-model.trim="departmentName"
@@ -30,7 +30,7 @@
             class="w-3/6 input"
             placeholder="Required Hours"
           />
-          <button @click="addDepartmentHandler" class="btn w-1/6 btn-primary">Add</button>
+          <button @click="addDepartmentHandler" class="w-1/6 btn btn-primary">Add</button>
         </div>
         <div class="py-3 h-[50dvh] md:h-[50dvh] overflow-auto">
           <ul class="flex flex-col gap-3">
@@ -44,10 +44,10 @@
               v-else
               v-for="(item, index) in adminUserStore.departmentlist"
               :key="index"
-              class="flex flex-col items-center justify-between p-2 bg-gray-100 pb-3 rounded-md shadow-md"
+              class="flex flex-col items-center justify-between p-2 pb-3 bg-gray-100 rounded-md shadow-md"
             >
               <div class="w-full md:px-3">
-                <div class="flex md:py-3 gap-3 items-center">
+                <div class="flex items-center gap-3 md:py-3">
                   <label for="">Name</label>
                   <input
                     :disabled="updateEnabled !== index"
@@ -56,7 +56,7 @@
                     v-model="item.name"
                   />
                 </div>
-                <div class="flex py-3 gap-3 justify-end items-center">
+                <div class="flex items-center justify-end gap-3 py-3">
                   <p>Hours</p>
                   <input
                     :disabled="updateEnabled !== index"
@@ -67,15 +67,15 @@
                 </div>
               </div>
 
-              <div class="flex justify-end ml-auto items-center gap-3 md:px-3">
+              <div class="flex items-center justify-end gap-3 ml-auto md:px-3">
                 <span
                   @click="adminUserStore.deleteDepartmentList(item._id)"
-                  class="cursor-pointer btn-outline btn btn-accent w-24"
+                  class="w-24 cursor-pointer btn-outline btn btn-accent"
                   >Remove</span
                 >
                 <span
                   @click="toggleEdit(index, item, item._id)"
-                  class="cursor-pointer btn bg-primary btn-primary w-24"
+                  class="w-24 cursor-pointer btn bg-primary btn-primary"
                 >
                   {{ updateEnabled === index ? "Save" : "Edit" }}</span
                 >

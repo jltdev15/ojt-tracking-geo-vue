@@ -1,14 +1,15 @@
 <template>
-  <div
+  <section v-if="show" class="grid w-full grid-cols-3 gap-3">
+    <div 
     v-for="(item, index) in internStore.internshipLists"
     :key="index"
-    class="shadow-xl card card-compact bg-base-100 w-full md:w-96"
+    class="w-full shadow-xl card card-compact bg-base-100 "
   >
     <div class="flex items-center justify-between p-2 text-xs text-right">
       <p class="p-3 bg-gray-400 rounded-lg text-gray-50">Internship</p>
       <p
         v-if="item.hte.moaAttachement"
-        class="inline-block px-6 py-3 bg-green-600 text-gray-50 rounded-lg"
+        class="inline-block px-6 py-3 bg-green-600 rounded-lg text-gray-50"
       >
         has Moa
       </p>
@@ -38,13 +39,15 @@
       </div>
       <button
         :disabled="authStore.isInternReady"
-        class="btn btn-primary rounded-xl w-full"
+        class="w-full btn rounded-xl " 
         @click="handleApply(item._id)"
       >
-        Apply now
+        {{ authStore.isInternReady ? 'You already accept Internship' : 'Apply Now' }}
       </button>
     </div>
   </div>
+  </section>
+
 </template>
 
 <script setup>
@@ -55,6 +58,7 @@ import { useRouter } from "vue-router";
 const internStore = useInternStore();
 const emit = defineEmits([""]);
 const router = useRouter();
+const props = defineProps(['show'])
 
 const handleApply = async (jobId) => {
   console.log(jobId);

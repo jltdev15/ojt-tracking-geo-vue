@@ -108,7 +108,9 @@ export const useAdminUserStore = defineStore("user", () => {
           (item) => item.role === filterRole
         ));
       }
-      return (usersList.value = await response.data.content);
+      return (usersList.value = await response.data.content.filter(
+        (item) => item.role != authStore.currentRole
+      ));
     } catch (err) {
       console.log(err);
     }

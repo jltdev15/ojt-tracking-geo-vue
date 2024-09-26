@@ -1,6 +1,6 @@
 <template>
-  <div class="p-3">
-    <div class="p-6 text-sm breadcrumbs">
+  <div class="p-3 py-3 mx-auto md:w-11/12">
+    <div class="p-6 text-sm md:py-6 breadcrumbs">
       <ul>
         <li>
           <router-link :to="{ name: 'hte_dashboard' }">Dashboard</router-link>
@@ -10,22 +10,22 @@
         </li>
       </ul>
     </div>
-    <section class="px-6">
-      <header class="flex items-center justify-between">
+    <section class="p-6 rounded-md shadow-md bg-gray-50">
+      <header class="flex items-center justify-between pb-6">
         <h1 class="text-3xl font-bold">List of Interns Evaluated</h1>
       </header>
-      <EasyDataTable
-        :headers="headers"
-        :items="hteStore.getListOfFinishedInterns"
-        :search-field="searchField"
-        :search-value="searchValue"
-        table-class-name="customize-table"
-        show-index
-      >
+      <div class="flex justify-end gap-3 pb-3">
+        <input type="text" placeholder="Type here" class="w-full input input-bordered" v-model="searchValue" />
+        <select class="w-48 select select-bordered" v-model.trim="searchField">
+          <option selected disabled value="Set filter">Set filter</option>
+          <option value="department">Department</option>
+          <option value="fullName">Full Name</option>
+        </select>
+      </div>
+      <EasyDataTable :headers="headers" :items="hteStore.getListOfFinishedInterns" :search-field="searchField"
+        :search-value="searchValue" table-class-name="customize-table" show-index>
         <template #item-results="item">
-          <router-link :to="{ name: 'EvaluationView', params: { id: item.internId } }"
-            >View Results</router-link
-          >
+          <router-link :to="{ name: 'EvaluationView', params: { id: item.internId } }">View Results</router-link>
         </template>
       </EasyDataTable>
     </section>

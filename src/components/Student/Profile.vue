@@ -1,5 +1,5 @@
 <template>
-  <div class="w-7/12 mx-auto">
+  <div class="p-3 py-3 mx-auto md:w-10/12 xl:w-11/12">
     <div class="p-6 text-sm breadcrumbs">
       <ul>
         <li>
@@ -198,11 +198,11 @@
               type="button"
               v-if="!isEditEnable"
               @click="toggleEdit"
-              class="btn btn-outline w-32 btn-accent"
+              class="w-32 btn btn-outline btn-accent"
             >
               Edit Profile
             </button>
-            <button type="submit" v-if="isEditEnable" class="w-32 btn btn-primary">
+            <button type="submit" v-if="isEditEnable" class="w-48 btn btn-primary">
               Update Profile
             </button>
           </div>
