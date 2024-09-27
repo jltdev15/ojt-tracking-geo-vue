@@ -611,10 +611,7 @@ async function updateHandlerHTE() {
   const response = await userStore.updateInformationHTE();
   alert(response.data.message);
   router.push({
-    name: "manage_users",
-    query: {
-      users: "HTE",
-    },
+    name: "manage_users"
   });
 }
 // Update Intern function

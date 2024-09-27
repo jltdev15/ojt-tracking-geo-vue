@@ -1,5 +1,5 @@
 <template>
-  <div class="py-3 mx-auto md:w-10/12 xl:w-10/12">
+  <div class="py-3 mx-auto md:w-10/12 xl:w-7/12">
     <div class="p-6 text-sm breadcrumbs">
       <ul>
         <li>
@@ -94,10 +94,10 @@
                 v-model="authStore.internInformation.contact"
                 placeholder="Type here"
                 class="w-full md:max-w-md input input-bordered"
-                minlength="10"
-                maxlength="10"
-                type="number"
-                pattern="\d{10}"
+                minlength="11"
+                maxlength="11"
+                type="tel"
+                pattern="\d{11}"
                 required
               />
             </div>
@@ -235,7 +235,7 @@ const selectedBrgy = ref("");
 const updateInformationHandler = async () => {
   await authStore.updatePersonalInfo();
   alert("Update success!");
-  router.replace({ name: "intern_profile" });
+  router.push({ name: "internships_list" });
   isEditEnable.value = !isEditEnable.value;
 };
 
