@@ -44,8 +44,14 @@
         >
           <template #item-status="item">
             <p
-              class="bg-red-600 text-center rounded-md py-1 text-gray-50"
+              class="py-1 text-center bg-red-600 rounded-md text-gray-50"
               v-if="item.status === 'Pending'"
+            >
+              {{ item.status }}
+            </p>
+            <p
+              class="py-1 text-center bg-green-600 rounded-md text-gray-50"
+              v-if="item.status === 'Done'"
             >
               {{ item.status }}
             </p>

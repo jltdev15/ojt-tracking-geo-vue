@@ -1369,12 +1369,12 @@ const initMap = () => {
   });
 
   marker.value.addListener("dragend", (event) => {
-    hte.mapLocation.lat = event.latLng.lat().toFixed(6);
+    hte.mapLocation.lat = event.latLng.lat().toFixed(7);
     hte.mapLocation.lng = event.latLng.lng().toFixed(6);
   });
   map.value.addListener("click", (event) => {
     const clickedLocation = event.latLng;
-    hte.mapLocation.lat = clickedLocation.lat().toFixed(6);
+    hte.mapLocation.lat = clickedLocation.lat().toFixed(7);
     hte.mapLocation.lng = clickedLocation.lng().toFixed(6);
 
     // Move the marker to the clicked location

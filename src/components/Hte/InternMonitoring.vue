@@ -88,10 +88,23 @@ async function initMap() {
     map: map,
     title: location.title,
   });
-
-  const infoWindow = new google.maps.InfoWindow({
-    content: `<h3>${location.title}</h3>`,
-  });
+  // const circleOptions = {
+  //     strokeColor: '#FF0000',
+  //     strokeOpacity: 0.8,
+  //     strokeWeight: 2,
+  //     fillColor: '#FF0000',
+  //     fillOpacity: 0.35,
+  //   };
+  new google.maps.Circle({
+        strokeColor: circleOptions.strokeColor,
+        strokeOpacity: circleOptions.strokeOpacity,
+        strokeWeight: circleOptions.strokeWeight,
+        fillColor: circleOptions.fillColor,
+        fillOpacity: circleOptions.fillOpacity,
+        map: map,
+        center: { lat: authStore.hteLocationDefault.lat, lng: authStore.hteLocationDefault.lng },
+        radius: 50,
+      });
   marker.addListener("click", () => {
     infoWindow.open(map, marker);
   });
@@ -105,10 +118,9 @@ function addMarkers() {
       position: { lat: location.lat, lng: location.lng },
       map: map,
       title: location.title,
-    });
-    markers.value[location._id] = marker;
+    });;
     const infoWindow = new google.maps.InfoWindow({
-      content: `<h3>${location.title}</h3>`,
+      content: `<h3>${location.name}</h3>`,
     });
 
     marker.addListener("click", () => {
@@ -117,12 +129,12 @@ function addMarkers() {
   });
 }
 
-watch(hteStore.onlineInternList, (newValue) => {
+watch(hteStore.onlineInternList, async (newValue) => {
   console.log("====================================");
   console.log(newValue);
   console.log("====================================");
   if (newValue) {
-    initMap();
+    await initMap();
   }
 });
 

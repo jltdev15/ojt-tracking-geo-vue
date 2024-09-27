@@ -16,7 +16,7 @@
               Training Period: {{ evaluationResults.startDate }} -
               {{ evaluationResults.endDate }}
             </p>
-            <p>Rendered Hours: {{ evaluationResults.numberOfHoursRendered.toFixed(0) }}</p>
+            <p>Rendered Hours: {{ evaluationResults.numberOfHoursRendered }}</p>
           </div>
         </div>
       </section>

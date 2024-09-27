@@ -46,6 +46,12 @@
             >
               {{ item.status }}
             </p>
+            <p
+              class="py-1 text-center bg-green-600 rounded-md text-gray-50"
+              v-if="item.status === 'Done'"
+            >
+              {{ item.status }}
+            </p>
           </template>
         </EasyDataTable>
       </div>

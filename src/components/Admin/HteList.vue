@@ -38,11 +38,11 @@
         >
           <template #item-moa="item">
             <div v-if="item.moaAttachement" class="flex justify-start">
-              <button
+              <a
                 class="w-32 btn btn-sm btn-primary text-gray-50"
                 :href="item.moaAttachement"
                 target="_blank"
-                >View MOA</button
+                >View MOA</a
               >
             </div>
             <div v-else class="flex justify-start">

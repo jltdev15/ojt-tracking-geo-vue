@@ -7,35 +7,35 @@
     <template #item-status="item">
       <p
         v-if="item.status === 'Accepted'"
-        class="inline-block w-full p-2 font-medium text-center rounded-md text-gray-50"
+        class="inline-block p-2 font-medium text-center rounded-md text-gray-50"
         :class="{ 'bg-green-600': item.status === 'Accepted' }"
       >
         {{ item.status }}
       </p>
       <p
         v-if="item.status === 'Finished'"
-        class="inline-block w-full p-2 font-medium text-center text-gray-50"
+        class="inline-block w-full p-2 text-center text-gray-50"
         :class="{ 'bg-green-800': item.status === 'Finished' }"
       >
         {{ item.status }}
       </p>
       <p
         v-if="item.status === 'Pending'"
-        class="inline-block w-full p-2 font-medium text-center rounded-md text-gray-50"
+        class="inline-block w-full p-2 text-center rounded-md text-gray-50"
         :class="{ 'bg-red-700': item.status === 'Pending' }"
       >
         {{ item.status }}
       </p>
       <p
         v-if="item.status === 'Approved'"
-        class="inline-block w-full p-2 font-medium text-center text-gray-50"
-        :class="{ 'bg-gray-400': item.status === 'Approved' }"
+        class="inline-block p-2 text-center rounded-md text-gray-50"
+        :class="{ 'bg-green-600': item.status === 'Approved' }"
       >
         {{ item.status }}
       </p>
       <p
         v-if="item.status === 'Rejected'"
-        class="inline-block w-full p-2 font-medium text-center text-gray-50"
+        class="inline-block w-full p-2 text-center text-gray-50"
         :class="{ 'bg-red-900': item.status === 'Rejected' }"
       >
         {{ item.status }}
@@ -43,7 +43,7 @@
     </template>
     <template #item-operation="item">
       <div v-if="item.status === 'Accepted'" class="flex gap-3">
-        <p class="p-2 bg-gray-500 rounded text-gray-50">No action needed</p>
+        <p class="inline-block p-2 bg-gray-500 rounded-md text-gray-50">No action needed</p>
       </div>
       <div v-if="item.status === 'Finished'" class="flex gap-3">
         <p class="p-2 bg-blue-500 rounded text-gray-50">
@@ -63,7 +63,7 @@
           Remove Application
         </button>
       </div>
-      <div v-if="item.status === 'Approved'" class="flex gap-3">
+      <div v-if="item.status === 'Approved' && !authStore.isInternReady" class="flex gap-3">
         <button
           :disabled="authStore.isInternReady"
           @click="acceptOffer(item.applicationId)"
@@ -71,6 +71,15 @@
         >
           Accept
         </button>
+        <button class="btn btn-outline">Decline</button>
+      </div>
+      <div v-if="item.status === 'Approved' && authStore.isInternReady" class="flex gap-3">
+        <button
+        @click="removeApplication(item.applicationId)"
+        class="btn btn-block btn-primary"
+      >
+        Remove Application
+      </button>
         <button class="btn btn-outline">Decline</button>
       </div>
       <div v-if="item.status === 'Pending'">
