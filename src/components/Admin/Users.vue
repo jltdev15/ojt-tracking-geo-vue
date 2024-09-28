@@ -1046,6 +1046,7 @@ const resetInternForms = () => {
   intern.hours = 0;
   intern.firstName = "";
   intern.lastName = "";
+  departmenValue.value ="Select department";
 };
 const resetHTEForms = () => {
   hte.username = "";
@@ -1217,7 +1218,6 @@ const handleCoorUser = async () => {
     resetCoorForms();
     router.push({
       name: route.manage_users, // or use `path: route.path`
-      query: { users: "All" },
     });
   } catch (err) {
     console.log(err);
