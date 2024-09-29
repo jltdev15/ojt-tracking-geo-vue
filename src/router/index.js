@@ -437,7 +437,9 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+
   const authStore = useAuthStore();
+  authStore.isLoading = true;
   await authStore.checkAuth();
   if (to.meta.requiresAuth) {
     if (!authStore.isAuthenticated && to.meta.roles.includes("Admin")) {
@@ -483,6 +485,18 @@ router.beforeEach(async (to, from, next) => {
   } else {
     next();
   }
+});
+
+router.afterEach(() => {
+  const authStore = useAuthStore();
+  console.log('Route loaded');
+
+  // setTimeout(() => {
+  //   authStore.isLoading = false; 
+  // },500)
+    authStore.isLoading = false; 
+
+// Stop loading after the route has loaded
 });
 
 export default router;

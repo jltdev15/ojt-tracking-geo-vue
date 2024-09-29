@@ -363,6 +363,7 @@
   </div>
 </template>
 <script setup>
+
 import AnnouncementItem from "../AnnouncementItem.vue";
 import { onMounted } from "vue";
 import { useAuthStore } from "@/stores/AuthStore";

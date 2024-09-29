@@ -20,6 +20,7 @@ export const useAuthStore = defineStore("auth", () => {
   const toast = useToast();
   const sessionCode = ref("");
   const currentRole = ref("");
+  const isLoading = ref(Boolean)
 
   const hteLocationDefault = reactive({
     lat: "",
@@ -467,6 +468,7 @@ export const useAuthStore = defineStore("auth", () => {
     adminInformation,
     updateAdminInfo,
     coorInformation,
-    updateCoorInfo
+    updateCoorInfo,
+    isLoading
   };
 });

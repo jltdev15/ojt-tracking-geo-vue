@@ -53,11 +53,13 @@
         </li>
       </ul>
     </div>
+      <FullPageLoader />
     <router-view />
   </main>
 </template>
 
 <script setup>
+import FullPageLoader from '../../BaseUI/BasePageLoader.vue';
 import { useAuthStore } from "@/stores/AuthStore";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
