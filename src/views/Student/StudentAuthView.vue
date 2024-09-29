@@ -29,7 +29,7 @@
 
           <button type="submit"
             class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-[#da1f26] border border-transparent rounded-md shadow-sm hover:bg-[#da1f25d8] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Login
+            <span v-if="isLoadingShow" class="loading loading-spinner loading-sm"></span> {{isLoadingShow ? '' : 'Login'}}
           </button>
           <div class="text-center capitalize text-gray-50">
             <router-link class="inline-block w-full py-3" to="/">
@@ -49,16 +49,32 @@ const router = useRouter();
 const authStore = useAuthStore();
 const username = ref("");
 const password = ref("");
-
+const isLoadingShow = ref(false)
 const sessionCode = ref(localStorage.getItem("sessionCode"));
 
 const handleLogin = async () => {
+  isLoadingShow.value = true;
   const loginData = {
     username: username.value,
     password: password.value,
     sessionCode: sessionCode.value,
   };
-  await authStore.internLogin(loginData);
+  try {
+    setTimeout(async () => {
+      const response = await authStore.internLogin(loginData);
+    if(response) {
+      isLoadingShow.value = false;
+    }
+}, 2000);
+  
+
+  }catch(err) {
+    isLoadingShow.value = true;
+    console.log(err);
+    
+  }
+
+  
 };
 </script>
 

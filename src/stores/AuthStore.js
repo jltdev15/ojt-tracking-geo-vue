@@ -207,6 +207,7 @@ export const useAuthStore = defineStore("auth", () => {
         sessionCode.value = localStorage.getItem("sessionCode");
       }
       await checkAuth();
+      return response.data.message
     } catch (err) {
       console.log(err);
       alert(err.response.data.message);
