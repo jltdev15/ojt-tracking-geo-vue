@@ -81,11 +81,13 @@
         </li>
       </ul>
     </div>
+    <FullPageLoader />
     <router-view />
   </main>
 </template>
 
 <script setup>
+import FullPageLoader from '../../BaseUI/BasePageLoader.vue';
 import { ref, onMounted, onUnmounted } from "vue";
 import { useAuthStore } from "@/stores/AuthStore";
 import { useRouter } from "vue-router";
