@@ -211,6 +211,7 @@ export const useAuthStore = defineStore("auth", () => {
     } catch (err) {
       console.log(err);
       alert(err.response.data.message);
+      return err.response
     }
   };
   const submitLogout = async () => {

@@ -66,10 +66,9 @@ const handleLogin = async () => {
       isLoadingShow.value = false;
     }
 }, 2000);
-  
 
   }catch(err) {
-    isLoadingShow.value = true;
+    isLoadingShow.value = false;
     console.log(err);
     
   }
