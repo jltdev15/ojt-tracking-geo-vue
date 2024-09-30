@@ -313,7 +313,6 @@ export const useAuthStore = defineStore("auth", () => {
         `/intern/update/information`,
         payload
       );
-      await checkAuth();
       console.log(response.status);
     } catch (err) {
       console.log(err);

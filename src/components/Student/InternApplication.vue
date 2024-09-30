@@ -1,16 +1,29 @@
 <template>
-  <div>
+  <div class="p-3 py-3 mx-auto md:w-10/12 xl:w-19/12">
+    <div class="text-sm md:py-6 breadcrumbs">
+      <ul>
+        <li>
+          <router-link :to="{ name: 'student_dashboard' }">Dashboard</router-link>
+        </li>
+        <li>
+          <router-link :to="{ name: 'internships_list' }">Internships List</router-link>
+        </li>
+        <li>
+          <p >Application Form</p>
+        </li>
+      </ul>
+    </div>
     <header class="">
-      <h1 class="md:p-6 px-6 pt-6 text-xl md:text-3xl font-bold">
+      <h1 class="text-xl font-bold md:text-3xl">
         Internship Application Form
       </h1>
-      <p class="px-6 text-sm text-gray-500 font-extralight">
+      <p class="text-sm text-gray-500 font-extralight">
         Accepts only JPEG or PDF format(5MB Max size)
       </p>
     </header>
 
     <form @submit.prevent="uploadFile" enctype="multipart/form-data">
-      <div class="max-w-5xl p-6 grid md:grid-cols-2 gap-3">
+      <div class="grid gap-3 py-6 md:grid-cols-2">
         <div>
           <header class="">
             <h2 class="flex items-center text-xl font-bold">
@@ -165,7 +178,7 @@
         </div>
       </div>
       <div
-        class="md:max-w-5xl p-6 gap-3 justify-between md:justify-end flex items-center"
+        class="flex items-center justify-between gap-3 p-6 md:justify-end"
       >
         <router-link
           to="/student/dashboard/internships"

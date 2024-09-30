@@ -54,7 +54,7 @@
       </div>
     </section>
     <section v-else class="flex items-center justify-center h-[70dvh] p-6 ">
-      <div class="text-center">
+      <div class="p-5 text-center rounded-md shadow-md bg-gray-50">
         <i class='bg-red-700 rounded-full text-7xl bx bx-question-mark text-gray-50'></i>
         <p class="p-6 font-bold text-center text-gray-800">
           No exisiting internship found

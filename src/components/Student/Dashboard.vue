@@ -9,7 +9,7 @@
         <header class="py-3">
           <h1 class="text-xl font-semibold text-gray-400 capitalize">Hours Required</h1>
         </header>
-        <div class="grid items-end grid-cols-2 gap-7 sm:grid-cols-2 justify-self-right lg:grid-cols-3">
+        <div class="grid items-end grid-cols-2 gap-7 sm:grid-cols-2 justify-self-right lg:grid-cols-4">
           <div class="p-5 bg-white rounded shadow-sm">
             <div class="flex items-center space-x-4 space-y-2">
               <div>
@@ -46,6 +46,16 @@
               </div>
             </div>
           </div>
+          <router-link :to="{name:'DTR'}" class="p-5 bg-white rounded shadow-sm" >
+            <div class="flex items-center space-x-4 space-y-2">
+              <div>
+                <div class="text-sm font-medium md:text-base">DTR</div>
+                <div class="text-2xl font-bold ">
+                  <i class='bx bx-time' ></i>
+                </div>
+              </div>
+            </div>
+          </router-link>
 
         </div>
         <header class="py-3">

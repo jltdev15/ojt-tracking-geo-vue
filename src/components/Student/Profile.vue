@@ -33,16 +33,6 @@
           <!-- Left side -->
           <div class="flex flex-col w-full gap-1">
             <div>
-              <label class="block" for="">Department</label>
-              <input
-                disabled
-                type="text"
-                v-model="authStore.internInformation.department"
-                placeholder="Type here"
-                class="w-full md:max-w-md input input-bordered"
-              />
-            </div>
-            <div>
               <label class="block" for="">First Name</label>
               <input
                 :disabled="!isEditEnable"
@@ -101,9 +91,6 @@
                 required
               />
             </div>
-          </div>
-          <!-- right side -->
-          <div class="flex flex-col gap-1">
             <div>
               <label class="block" for="">Age</label>
               <input
@@ -115,6 +102,10 @@
                 required
               />
             </div>
+          </div>
+          <!-- right side -->
+          <div class="flex flex-col gap-1">
+
             <div>
               <label class="block" for="">Birthday</label>
               <input
@@ -222,6 +213,8 @@ import axios from "axios";
 import { onMounted, ref } from "vue";
 import { useAuthStore } from "@/stores/AuthStore";
 import { useRouter } from "vue-router";
+import { useInternStore } from "@/stores/InternStore";
+const internStore = useInternStore()
 const router = useRouter();
 const authStore = useAuthStore();
 const isEditEnable = ref(false);
@@ -234,8 +227,9 @@ const selectedMunicipality = ref("");
 const selectedBrgy = ref("");
 const updateInformationHandler = async () => {
   await authStore.updatePersonalInfo();
+  await internStore.fetchRequiredHours()
   alert("Update success!");
-  router.push({ name: "internships_list" });
+  router.push({ name: "intern_profile" });
   isEditEnable.value = !isEditEnable.value;
 };
 
