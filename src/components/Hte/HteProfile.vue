@@ -314,12 +314,12 @@ const initMap = () => {
     draggable: true,
   });
   marker.value.addListener("dragend", (event) => {
-    authStore.hteInformation.lat = event.latLng.lat().toFixed(6);
+    authStore.hteInformation.lat = event.latLng.lat().toFixed(7);
     authStore.hteInformation.lng = event.latLng.lng().toFixed(6);
   });
   map.value.addListener("click", (event) => {
     const clickedLocation = event.latLng;
-    authStore.hteInformation.lat = clickedLocation.lat().toFixed(6);
+    authStore.hteInformation.lat = clickedLocation.lat().toFixed(7);
     authStore.hteInformation.lng = clickedLocation.lng().toFixed(6);
 
     // Move the marker to the clicked location

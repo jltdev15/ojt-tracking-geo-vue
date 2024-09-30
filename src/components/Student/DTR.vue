@@ -138,9 +138,10 @@ const timeOutHandler = async () => {
 const startInterval = () => {
   intervalid = setInterval(() => {
     internStore.sendLocationHandler();
-  }, 1000);
+  }, 3000);
 };
 onMounted(async () => {
+  await internStore.checkDTRStatus()
   await internStore.fetchRequiredHours();
   if (internStore.isClockIn) {
     startInterval();

@@ -10,15 +10,16 @@
         </li>
       </ul>
     </div>
-    <header class="flex items-center justify-between pb-3 bg-gray-200">
-      <h1 class="text-3xl font-bold">Internships Job</h1>
-      <div>
-        <button @click="handleToggleModal" class="btn btn-block">
-          <i class="bx bx-recycle"></i>Refresh
-        </button>
-      </div>
-    </header>
-    <div class="">
+
+    <div class="w-full h-screen p-3 bg-white rounded-md">
+      <header class="flex items-center justify-between pb-3 ">
+        <h1 class="text-3xl font-bold">Internships Job</h1>
+        <div>
+          <button @click="handleToggleModal" class="btn btn-block">
+            <i class="bx bx-recycle"></i>Refresh
+          </button>
+        </div>
+      </header>
       <InternshipItem :show="internStore.isProfileComplete === true && internStore.internshipLists.length != 0"/>
       <p v-if="internStore.internshipLists.length === 0">No listing available</p>
       <p

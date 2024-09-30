@@ -125,6 +125,20 @@ export const useInternStore = defineStore("intern", () => {
       return err;
     }
   };
+  const checkDTRStatus = async() => {
+    const payload = {
+      date: new Date().toLocaleDateString()
+    }
+    try {
+      const response = await apiClient.patch("/intern/check/status",payload);
+      console.log('====================================');
+      console.log(response);
+      console.log('====================================');
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  }
   const getLocationHandler = async () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -307,5 +321,6 @@ export const useInternStore = defineStore("intern", () => {
     evaluationResults,
     fetchEvaluationResults,
     isProfileComplete,
+    checkDTRStatus
   };
 });

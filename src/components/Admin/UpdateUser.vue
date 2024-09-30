@@ -62,7 +62,7 @@
             <div>
               <label for="">Contact Number</label>
               <input
-                v-model="userStore.updateInfo.contactNumber"
+                v-model="userStore.contactNumbers"
                  class="w-full input input-bordered"
                 minlength="11"
                 maxlength="11"
@@ -196,7 +196,7 @@
             <div>
               <label for="">Contact Number</label>
               <input
-                v-model="userStore.updateInfo.companyContact"
+                v-model="userStore.contactNumbers"
                 class="w-full input input-bordered"
                 type="tel"
                 placeholder="11 Digits Contact Number"
@@ -380,14 +380,14 @@
             <div>
               <label for="">Contact Number</label>
               <input
-                v-model="userStore.updateInfo.internContact"
-                minlength="10"
-                maxlength="10"
-                type="number"
-                pattern="\d{10}"
+                v-model="userStore.contactNumbers"
+                minlength="11"
+                maxlength="11"
+                type="tel"
+                pattern="\d{11}"
                 placeholder="Type here"
                 class="w-full input input-bordered"
-                required
+                @input="validateContactNumber"
               />
             </div>
           </div>
@@ -484,12 +484,12 @@
           <div
             class="flex justify-between w-full gap-3 mt-6 ml-auto md:justify-end md:col-span-2"
           >
-            <router-link
-              :to="{ name: 'manage_users', query: { users: 'Intern' } }"
+            <button
+               @click="router.back()"
               class="w-36 btn btn-accent btn-outline"
             >
               Cancel
-            </router-link>
+            </button>
             <button
               type="button"
               @click="updateHandlerIntern"
@@ -520,16 +520,13 @@ const selectedBrgy = ref("");
 const provinces = ref([]);
 const municipality = ref([]);
 const brgy = ref([]);
-const businessName = ref(userStore.updateInfo.companyName);
+const businessName = ref('');
 const errMessage = ref('');
 
 const validateContactNumber = () => {
       // Remove any non-digit characters
-      userStore.updateInfo.companyContact = userStore.updateInfo.companyContact.replace(/\D/g, '');
-      userStore.updateInfo.companyContact = userStore.updateInfo.companyContact.slice(0, 11);
-
-      userStore.updateInfo.contactNumber =userStore.updateInfo.contactNumber.replace(/\D/g, '');
-      userStore.updateInfo.contactNumber =userStore.updateInfo.contactNumber.slice(0, 11);
+      userStore.contactNumbers = userStore.contactNumbers.replace(/\D/g, '');
+      userStore.contactNumbers = userStore.contactNumbers.slice(0, 11);
       // Check if the input exceeds 11 digits
       // if (contactNumber.value.length > 11) {
       //   errorMessage.value = 'Contact number cannot exceed 11 digits';
@@ -551,8 +548,11 @@ const updateHandlerCoor = async () => {
   if (userStore.updateInfo.lastName === "") {
     return alert("Last Name cannot be empty");
   }
-  if (userStore.updateInfo.contactNumber === "") {
+  if (userStore.contactNumbers === "") {
     return alert("Contact number cannot be empty");
+  }
+  if (userStore.contactNumbers.length < 11 ) {
+    return alert("Contact number must 11 digits");
   }
   if (userStore.updateInfo.department === "") {
     return alert("Department cannot be empty");
@@ -578,17 +578,17 @@ const updateHandlerCoor = async () => {
 
 // Update HTE function
 async function updateHandlerHTE() {
-  if (userStore.updateInfo.companyName !== businessName.value) {
-    return alert("Company Name and Business must be the same");
-  }
   if (userStore.updateInfo.companyEmail === "") {
     return alert("Email cannot be empty");
   }
   if (userStore.updateInfo.companyName === "") {
     return alert("Company Name cannot be empty");
   }
-  if (userStore.updateInfo.companyContact === "") {
-    return alert("Contact Number cannot be empty");
+  if (userStore.contactNumbers === "") {
+    return alert("Contact number cannot be empty");
+  }
+  if (userStore.contactNumbers.length < 11 ) {
+    return alert("Contact number must 11 digits");
   }
   if (userStore.updateInfo.companyStreet === "") {
     return alert("Street cannot be empty");
@@ -628,8 +628,11 @@ const updateHandlerIntern = async () => {
   if (userStore.updateInfo.internlastName === "") {
     return alert("Last Name cannot be empty");
   }
-  if (userStore.updateInfo.internContact === "") {
-    return alert("Contact cannot be empty");
+  if (userStore.contactNumbers === "") {
+    return alert("Contact number cannot be empty");
+  }
+  if (userStore.contactNumbers.length < 11 ) {
+    return alert("Contact number must 11 digits");
   }
   if (userStore.updateInfo.internProvince === "") {
     return alert("Province cannot be empty");
@@ -732,9 +735,7 @@ onMounted(async () => {
   userStore.fetchUpdateInformation(route.params.id);
   await userStore.fetchDepartmentList();
   await getProvinces();
-
-  businessName.value = userStore.updateInfo.companyName;
-  await getBusinessLocation();
+  // await getBusinessLocation();
 });
 
 const locationRes = ref(null);
@@ -800,12 +801,12 @@ const initMap = () => {
     draggable: true,
   });
   marker.value.addListener("dragend", (event) => {
-    userStore.updateInfo.mapLocation.lat = event.latLng.lat().toFixed(6);
+    userStore.updateInfo.mapLocation.lat = event.latLng.lat().toFixed(7);
     userStore.updateInfo.mapLocation.lng = event.latLng.lng().toFixed(6);
   });
   map.value.addListener("click", (event) => {
     const clickedLocation = event.latLng;
-    userStore.updateInfo.mapLocation.lat = clickedLocation.lat().toFixed(6);
+    userStore.updateInfo.mapLocation.lat = clickedLocation.lat().toFixed(7);
     userStore.updateInfo.mapLocation.lng = clickedLocation.lng().toFixed(6);
 
     // Move the marker to the clicked location

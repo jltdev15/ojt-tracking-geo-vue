@@ -20,6 +20,7 @@ export const useAdminUserStore = defineStore("user", () => {
   const coorRequestList = ref([]);
   const requestListBy = ref("");
   const evaluationResults = ref("");
+  const contactNumbers =ref('')
 
   const userRoleList = reactive({
     hte: "",
@@ -284,7 +285,7 @@ export const useAdminUserStore = defineStore("user", () => {
         updateInfo.email = response.data.content.email;
         updateInfo.firstName = response.data.content.profile.firstName;
         updateInfo.lastName = response.data.content.profile.lastName;
-        updateInfo.contactNumber = response.data.content.profile.contact;
+        contactNumbers.value = response.data.content.profile.contact;
         updateInfo.street = response.data.content.profile.street;
         updateInfo.province = await response.data.content.profile.province;
         updateInfo.municipality = await response.data.content.profile
@@ -302,7 +303,7 @@ export const useAdminUserStore = defineStore("user", () => {
         updateInfo.companyMunicipality =
           response.data.content.profile.municipality;
         updateInfo.companyProvince = response.data.content.profile.province;
-        updateInfo.companyContact = response.data.content.profile.contactNumber;
+        contactNumbers.value = response.data.content.profile.contactNumber;
         updateInfo.companyLocation = response.data.content.profile.location;
         updateInfo.mapLocation.lat = response.data.content.profile.location.lat;
         updateInfo.mapLocation.lng = response.data.content.profile.location.lng;
@@ -316,7 +317,7 @@ export const useAdminUserStore = defineStore("user", () => {
         updateInfo.internfirstName = response.data.content.profile.firstName;
         updateInfo.internlastName = response.data.content.profile.lastName;
         updateInfo.requiredHours = response.data.content.profile.requiredHours;
-        updateInfo.internContact = response.data.content.profile.contact;
+        contactNumbers.value = response.data.content.profile.contact;
         updateInfo.internProvince = response.data.content.profile.province;
         updateInfo.internMunicipality =
           response.data.content.profile.municipality;
@@ -335,7 +336,7 @@ export const useAdminUserStore = defineStore("user", () => {
     const payload = {
       firstName: updateInfo.firstName,
       lastName: updateInfo.lastName,
-      contactNumber: updateInfo.contactNumber,
+      contactNumber: contactNumbers.value,
       department: updateInfo.department,
       street: updateInfo.street,
       brgy: updateInfo.brgy,
@@ -362,7 +363,7 @@ export const useAdminUserStore = defineStore("user", () => {
       email: updateInfo.companyEmail,
 
       name: updateInfo.companyName,
-      contactNumber: updateInfo.companyContact,
+      contactNumber: contactNumbers.value,
       street: updateInfo.companyStreet,
       brgy: updateInfo.companyBrgy,
       municipality: updateInfo.companyMunicipality,
@@ -385,7 +386,7 @@ export const useAdminUserStore = defineStore("user", () => {
       email: updateInfo.internEmail,
       firstName: updateInfo.internfirstName,
       lastName: updateInfo.internlastName,
-      contact: updateInfo.internContact,
+      contact: contactNumbers.value,
       province: updateInfo.internProvince,
       municipality: updateInfo.internMunicipality,
       brgy: updateInfo.internBrgy,
@@ -697,5 +698,6 @@ export const useAdminUserStore = defineStore("user", () => {
     evaluationResults,
     getEvaluationItemResults,
     addAdmin,
+    contactNumbers
   };
 });

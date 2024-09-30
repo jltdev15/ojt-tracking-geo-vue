@@ -3,7 +3,7 @@
     <header class="flex items-center justify-between p-3 bg-gray-50">
       <h1 class="text-3xl font-bold">Intern Monitoring</h1>
     </header>
-    <div class="grid w-full md:grid-cols-2 gap-6">
+    <div class="grid w-full gap-6 md:grid-cols-2">
       <EasyDataTable
         :headers="headers"
         :items="hteStore.onlineInternList"
@@ -132,7 +132,7 @@ onMounted(async () => {
   // await hteStore.fetchApplicantList();
   // await hteStore.fetchApplicantAccepted();
   await hteStore.getOnlineInterns();
-  intervalid = setInterval(getOnlineInternHandler, 1000);
+  intervalid = setInterval(getOnlineInternHandler, 3000);
   console.log("====================================");
   console.log(hteStore.onlineInternList);
   console.log("====================================");

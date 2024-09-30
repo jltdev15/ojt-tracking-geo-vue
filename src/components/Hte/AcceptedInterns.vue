@@ -41,7 +41,7 @@
         <template #item-dailytimerecord="item">
           <div class="flex justify-between gap-3 py-2">
             <router-link :to="{ name: 'DailyTimeRecord', params: { internId: item.internId } }"
-              class="btn-accent btn-block btn btn-outline text-gray-50">
+              class="w-32 btn-accent btn btn-outline text-gray-50">
               View
             </router-link>
           </div>
@@ -67,7 +67,7 @@
             </router-link>
           </div>
           <div v-if="item.evaluationStatus === 'Finished'">
-            <router-link :to="{ name: 'EvaluationView', params: { id: item.internId } }">View Results</router-link>
+            <router-link class="p-3 font-bold bg-green-700 rounded text-gray-50" :to="{ name: 'EvaluationView', params: { id: item.internId } }">View Results</router-link>
           </div>
         </template>
       </EasyDataTable>

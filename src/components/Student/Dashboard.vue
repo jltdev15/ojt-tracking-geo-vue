@@ -2,6 +2,7 @@
   <div class="p-3">
     <header class="flex items-center justify-between p-3 bg-gray-50">
       <h1 class="text-3xl font-bold">Dashboard</h1>
+      <p class="p-3 bg-red-600 rounded-md text-gray-50" v-if=" internStore.getNumberOfHoursWorked >= internStore.getNumberOfHoursRequired">Congratulations! Goodluck to your next Journey!</p>
     </header>
     <div class="flex flex-col min-h-screen bg-gray-100 md:flex-row">
       <div class="container max-w-6xl p-5">
@@ -22,16 +23,6 @@
           <div class="p-5 bg-white rounded shadow-sm">
             <div class="flex items-center space-x-4 space-y-2">
               <div>
-                <div class="text-sm text-gray-400 md:text-base">Rendered Hours</div>
-                <div class="text-2xl font-bold text-gray-900">
-                  {{ internStore.getNumberOfHoursWorked }}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="p-5 bg-white rounded shadow-sm">
-            <div class="flex items-center space-x-4 space-y-2">
-              <div>
                 <div class="text-sm text-gray-400">Remaining Hours</div>
                 <div class="text-2xl font-bold text-gray-900">
                   {{
@@ -45,6 +36,17 @@
               </div>
             </div>
           </div>
+          <div class="p-5 rounded shadow-sm" :class="{'bg-green-600 text-gray-50':  internStore.getNumberOfHoursWorked >= internStore.getNumberOfHoursRequired,'text-gray-900 bg-white':internStore.getNumberOfHoursWorked < internStore.getNumberOfHoursRequired }">
+            <div class="flex items-center space-x-4 space-y-2">
+              <div>
+                <div class="text-sm md:text-base">Rendered Hours</div>
+                <div class="text-2xl font-bold ">
+                  {{ internStore.getNumberOfHoursWorked }}
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
         <header class="py-3">
           <h1 class="text-xl font-semibold text-gray-400 capitalize">

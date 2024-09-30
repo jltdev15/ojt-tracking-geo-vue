@@ -1,11 +1,11 @@
 <template>
   <div class="p-3">
     <main class="w-5/6 bg-gray-50">
-      <section class="pt-6 px-6">
-        <h1 class="font-bold text-xl pb-2">Evaluation Summary</h1>
-        <div class="grid gap-6 grid-cols-2">
-          <div class="flex flex-col gap-2 text-sm">
-            <p>Intern Name : {{ evaluationResults.internName }}</p>
+      <section class="px-6 pt-6">
+        <h1 class="pb-2 text-xl font-bold">Evaluation Summary</h1>
+        <div class="grid grid-cols-2 gap-6 ">
+          <div class="flex flex-col gap-2 text-sm ">
+            <p class="font-bold">Intern Name : {{ evaluationResults.internName }}</p>
             <p>HTE : {{ evaluationResults.hteName }}</p>
             <p>Address: {{ evaluationResults.address }}</p>
             <p>HTE Evaluator: {{ evaluationResults.hteEvaluator }}</p>
@@ -16,14 +16,14 @@
               Training Period: {{ evaluationResults.startDate }} -
               {{ evaluationResults.endDate }}
             </p>
-            <p>Rendered Hours: {{ evaluationResults.numberOfHoursRendered }}</p>
+            <p>Rendered Hours: {{ evaluationResults.numberOfHoursRendered.toFixed(0) }}</p>
           </div>
         </div>
       </section>
-      <section class="grid grid-cols-2 pt-1 gap-6 px-6 pb-6">
+      <section class="grid grid-cols-2 gap-6 px-6 pt-1 pb-6">
         <div class="">
           <p class="p-2 font-bold bg-gray-50">Team Work</p>
-          <section class="text-sm grid">
+          <section class="grid text-sm">
             <ul class="flex flex-col gap-2">
               <li class="flex justify-between">
                 <p>1. Consistently works with others to finish the tasks and goals.</p>
@@ -52,7 +52,7 @@
             </ul>
           </section>
           <p class="p-2 font-bold bg-gray-50">Communication</p>
-          <section class="text-sm grid">
+          <section class="grid text-sm">
             <ul class="flex flex-col gap-2">
               <li class="flex justify-between">
                 <p>6. Attentively listens to HTE supervisor and coordinator(s)</p>
@@ -75,7 +75,7 @@
             </ul>
           </section>
           <p class="p-2 font-bold bg-gray-50">Attendance and Punctuality</p>
-          <section class="text-sm grid">
+          <section class="grid text-sm">
             <ul class="flex flex-col gap-2">
               <li class="flex justify-between">
                 <p>10. Maintains participation and good attendance</p>
@@ -90,7 +90,7 @@
         </div>
         <div>
           <p class="p-2 font-bold bg-gray-50">Productivity Resilience</p>
-          <section class="text-sm grid">
+          <section class="grid text-sm">
             <ul class="flex flex-col gap-2">
               <li class="flex justify-between">
                 <p>12. Consistently delivers quality results</p>
@@ -109,7 +109,7 @@
             </ul>
           </section>
           <p class="p-2 font-bold bg-gray-50">Initiative/Proactivity</p>
-          <section class="text-sm grid">
+          <section class="grid text-sm">
             <ul class="flex flex-col gap-2">
               <li class="flex justify-between">
                 <p>15. Completes tasks with minimal supervision</p>
@@ -122,7 +122,7 @@
             </ul>
           </section>
           <p class="p-2 font-bold bg-gray-50">Dependability/Reliability</p>
-          <section class="text-sm grid">
+          <section class="grid text-sm">
             <ul class="flex flex-col gap-2">
               <li class="flex justify-between">
                 <p>17. Ably follows through and meet deadlines</p>
@@ -143,7 +143,7 @@
             </ul>
           </section>
           <p class="p-2 font-bold bg-gray-50">Results</p>
-          <section class="text-sm grid">
+          <section class="grid text-sm">
             <ul class="flex flex-col gap-2">
               <li class="flex items-center justify-between">
                 <p>Total Score</p>

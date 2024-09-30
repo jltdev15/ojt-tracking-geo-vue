@@ -631,7 +631,9 @@
                 </button>
               </div>
             </div>
+            <form @submit.prevent="handleAdminUser" action="">
             <div v-if="selectedRole === 'Admin'" class="flex flex-col gap-3 pt-3">
+
               <!-- <div v-if="true" class="flex flex-col gap-3 pt-3"> -->
               <label
                 class="flex items-center gap-2 md:input-md input-sm input input-bordered"
@@ -786,13 +788,12 @@
               </div>
 
               <div class="flex flex-col gap-2">
-                <button
-                  @click="handleAdminUser"
+                <button type="submit"
                   class="text-lg btn btn-primary btn-block"
                 >
                   Create Account
                 </button>
-                <button
+                <button type="button"
                   class="text-lg btn btn-outline btn-block btn-accent"
                   @click="handleToggleModal"
                 >
@@ -800,6 +801,7 @@
                 </button>
               </div>
             </div>
+          </form>
           </div>
         </template>
       </Modal>
@@ -807,7 +809,7 @@
         <template #default>
           <p class="text-xl font-medium">Are you sure you want to remove this account?</p>
           <div class="flex justify-end gap-3 pt-9">
-            <button
+            <button type="button"
               @click="isConfirmationModalShow = !isConfirmationModalShow"
               class="btn btn-accent btn-outline"
             >
@@ -1076,6 +1078,19 @@ const resetCoorForms = () => {
   selectedBrgy.value = "Brgy";
   coordinator.street = "";
 };
+const resetAdminForms = () => {
+  admin.username = "";
+  admin.password = "";
+  admin.role = "Select Role";
+  admin.email = "";
+  admin.firstName = "";
+  admin.lastName = "";
+  admin.contactNumber = null;;
+  selectedProvince.value = "Province";
+  selectedMunicipality.value = "Municipality/City";
+  selectedBrgy.value = "Brgy";
+  coordinator.street = "";
+};
 
 const handleSelectDepartmentIntern = () => {
   intern.department = departmenValue.value.name;
@@ -1209,11 +1224,7 @@ const handleCoorUser = async () => {
   }
 };
 const handleAdminUser = async () => {
-  // function limitLength(input, maxLength) {
-  //   if (input.value.length > maxLength) {
-  //     input.value = input.value.slice(0, maxLength); // Limit to maxLength digits
-  //   }
-  // }
+
   if (admin.username === "") {
     return alert("Please enter username");
   }
@@ -1248,7 +1259,7 @@ const handleAdminUser = async () => {
     await userStore.addAdmin(admin);
 
     await handleToggleModal();
-    // resetCoorForms();
+    resetAdminForms()
     router.push({
       name: route.manage_users, // or use `path: route.path`
     });

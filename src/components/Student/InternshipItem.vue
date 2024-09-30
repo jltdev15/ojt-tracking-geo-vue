@@ -1,12 +1,12 @@
 <template>
-  <section v-if="show" class="grid w-full gap-3 p-3 md:grid-cols-3">
+  <section v-if="show" class="grid w-full gap-3 md:grid-cols-4">
     <div 
     v-for="(item, index) in internStore.internshipLists"
     :key="index"
-    class="w-full shadow-xl card card-compact bg-base-100 "
+    class="w-full transition border rounded-md shadow-md cursor-pointer border-1 bg-base-100 hover:bg-gray-50"
   >
     <div class="flex items-center justify-between p-2 text-xs text-right">
-      <p class="p-3 bg-gray-400 rounded-lg text-gray-50">Internship</p>
+      <p class="p-3 bg-gray-700 rounded-lg text-gray-50">Internship</p>
       <p
         v-if="item.hte.moaAttachement"
         class="inline-block px-6 py-3 bg-green-600 rounded-lg text-gray-50"
@@ -39,7 +39,7 @@
       </div>
       <button
         :disabled="authStore.isInternReady"
-        class="w-full btn rounded-xl " :class="{'btn-primary': !authStore.isInternReady}" 
+        class="w-full pb-3 rounded-xl" :class="{'btn btn-primary': !authStore.isInternReady}" 
         @click="handleApply(item._id)"
       >
         {{ authStore.isInternReady ? 'You already accept Internship' : 'Apply Now' }}
