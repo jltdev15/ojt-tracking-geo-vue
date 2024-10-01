@@ -91,7 +91,7 @@ onMounted(async () => {
     fillOpacity: 0.35,
     map: map.value,
     center: { lat: authStore.hteLocationDefault.lat, lng: authStore.hteLocationDefault.lng }, // Center of the geofence
-    radius: 5, // Geofence radius in meters
+    radius: 15, // Geofence radius in meters
   });
   const results = hteStore.onlineInternList.map((location) => {
     let position = null;
