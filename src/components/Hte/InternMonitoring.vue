@@ -1,49 +1,47 @@
 <template>
-  <div class="p-3">
-    <header class="flex items-center justify-between p-3 bg-gray-50">
-      <h1 class="text-3xl font-bold">Intern Monitoring</h1>
-    </header>
-    <div class="grid w-full gap-6 md:grid-cols-2">
-      <EasyDataTable
-        :headers="headers"
-        :items="hteStore.onlineInternList"
-        border-cell
-        :rows-per-page="10"
-        table-class-name="customize-table"
-      >
-        <template #item-status="item">
-          <div
-            v-if="
-              item.currentLocation.lat === authStore.hteLocationDefault.lat &&
-              item.currentLocation.lng === authStore.hteLocationDefault.lng
-            "
-          >
-            <p class="inline-block p-3 font-bold bg-green-600 rounded-md text-gray-50">
-              Inside
-            </p>
-          </div>
-          <div
-            v-else-if="
-              item.currentLocation.lat === null && item.currentLocation.lng === null
-            "
-          >
-            <p class="inline-block p-3 font-bold bg-red-600 rounded-md text-gray-50">
-              Connection lost
-            </p>
-          </div>
-          <div v-else>
-            <p class="inline-block p-3 font-bold bg-red-600 rounded-md text-gray-50">
-              Outside
-            </p>
-          </div>
-        </template>
-      </EasyDataTable>
-      <div id="map" style="height: 300px; width: 100%"></div>
+  <div class="p-3 py-3 mx-auto md:w-11/12">
+    <div class="py-6 text-sm breadcrumbs">
+      <ul>
+        <li>
+          <router-link :to="{ name: 'hte_dashboard' }">Dashboard</router-link>
+        </li>
+        <li>
+          <router-link :to="{ name: 'AcceptedList' }">Monitoring</router-link>
+        </li>
+      </ul>
     </div>
+    <div class="p-3 rounded-md shadow-md md:p-6 bg-gray-50">
+      <header class="flex items-center justify-between">
+        <h1 class="text-3xl font-bold">Intern Monitoring</h1>
+      </header>
+      <div class="grid w-full gap-6 md:grid-cols-2">
+        <EasyDataTable :headers="headers" :items="locationArr" border-cell :rows-per-page="10"
+          table-class-name="customize-table">
+          <template #item-status="item">
+            <div class="text-center" v-if="item.isInside">
+              <p class="font-bold bg-green-600 rounded-md text-gray-50">
+                Inside
+              </p>
+            </div>
+            <div v-else class="w-full text-center">
+              <p class="font-bold bg-red-600 rounded-md text-gray-50">
+                Outside
+              </p>
+            </div>
+          </template>
+        </EasyDataTable>
+        <div>
+          <div id="map" style="height: 300px; width: 100%"></div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script setup>
+import { Loader } from "@googlemaps/js-api-loader";
 import { useRouter } from "vue-router";
 import { onMounted, ref, onUnmounted, watch } from "vue";
 import { useHteStore } from "@/stores/HteStore";
@@ -51,7 +49,6 @@ import { useAuthStore } from "@/stores/AuthStore";
 const authStore = useAuthStore();
 const hteStore = useHteStore();
 const isMapShow = ref(false);
-const markers = ref({});
 const headers = [
   { text: "INTERN", value: "name" },
   { text: "TIME IN", value: "timeIn" },
@@ -60,113 +57,91 @@ const headers = [
 
 const getOnlineInternHandler = async () => {
   await hteStore.getOnlineInterns();
-  addMarkers();
 };
-
-let intervalid = null;
-let map;
-async function initMap() {
-  const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
-  const mapCenter =
-    hteStore.onlineLocationList.length >= 0
-      ? {
-          lat: authStore.hteLocationDefault.lat,
-          lng: authStore.hteLocationDefault.lng,
-        }
-      : { lat: 0, lng: 0 };
-
-  map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 15,
-    center: mapCenter,
-    mapId: "DEMO_MAP_ID",
-  });
-  const marker = new google.maps.marker.AdvancedMarkerElement({
-    position: {
-      lat: authStore.hteLocationDefault.lat,
-      lng: authStore.hteLocationDefault.lng,
-    },
-    map: map,
-    title: location.title,
-  });
-  // const circleOptions = {
-  //     strokeColor: '#FF0000',
-  //     strokeOpacity: 0.8,
-  //     strokeWeight: 2,
-  //     fillColor: '#FF0000',
-  //     fillOpacity: 0.35,
-  //   };
-  new google.maps.Circle({
-        strokeColor: circleOptions.strokeColor,
-        strokeOpacity: circleOptions.strokeOpacity,
-        strokeWeight: circleOptions.strokeWeight,
-        fillColor: circleOptions.fillColor,
-        fillOpacity: circleOptions.fillOpacity,
-        map: map,
-        center: { lat: authStore.hteLocationDefault.lat, lng: authStore.hteLocationDefault.lng },
-        radius: 50,
-      });
-  marker.addListener("click", () => {
-    infoWindow.open(map, marker);
-  });
-
-  addMarkers();
-}
-
-function addMarkers() {
-  hteStore.onlineLocationList.forEach((location) => {
-    const marker = new google.maps.marker.AdvancedMarkerElement({
-      position: { lat: location.lat, lng: location.lng },
-      map: map,
-      title: location.title,
-    });;
-    const infoWindow = new google.maps.InfoWindow({
-      content: `<h3>${location.name}</h3>`,
-    });
-
-    marker.addListener("click", () => {
-      infoWindow.open(map, marker);
-    });
-  });
-}
-
-watch(hteStore.onlineInternList, async (newValue) => {
-  console.log("====================================");
-  console.log(newValue);
-  console.log("====================================");
-  if (newValue) {
-    await initMap();
-  }
-});
-
-// Watch the internLocations array for changes and refresh the map
-
+const map = ref(null);
+const geofenceCircle = ref(null);
+const userLocationMarker = ref(null);
+const markers = ref([]);
+const locationArr = ref([])
 onMounted(async () => {
-  // await hteStore.fetchApplicantList();
-  // await hteStore.fetchApplicantAccepted();
   await hteStore.getOnlineInterns();
-  intervalid = setInterval(getOnlineInternHandler, 3000);
-  console.log("====================================");
-  console.log(hteStore.onlineInternList);
-  console.log("====================================");
-  // if (hteStore.onlineInternList.length > 0) {
-  //   intervalid = setInterval(getOnlineInternHandler, 1000);
-  // } else {
-  //   clearInterval(intervalid);
-  // }
-  // locationList.value = hteStore.onlineInternList;
-  // Dynamically load the Google Maps script
-  const script = document.createElement("script");
-  script.src = `https://maps.googleapis.com/maps/api/js?key=${
-    import.meta.env.VITE_API_GOOGLE_KEY
-  }&callback=initMap`;
-  script.async = true;
-  script.defer = true;
-  window.initMap = initMap; // Assign initMap to the global window object
-  document.head.appendChild(script);
+  const loader = new Loader({
+    apiKey: import.meta.env.VITE_API_GOOGLE_KEY,
+    version: 'weekly',
+  });
+
+  // Import both the maps and geometry libraries
+  const googleMaps = await loader.importLibrary('maps');
+  const googleGeometry = await loader.importLibrary('geometry');
+
+  const mapOptions = {
+    center: { lat: authStore.hteLocationDefault.lat, lng: authStore.hteLocationDefault.lng }, // Your default map center
+    mapId: "DEMO_MAP_ID",
+    zoom: 20,
+    mapTypeControl: false,
+  };
+
+  map.value = new googleMaps.Map(document.getElementById('map'), mapOptions);
+
+  geofenceCircle.value = new googleMaps.Circle({
+    strokeColor: '#FF0000',
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: '#FF0000',
+    fillOpacity: 0.35,
+    map: map.value,
+    center: { lat: authStore.hteLocationDefault.lat, lng: authStore.hteLocationDefault.lng }, // Center of the geofence
+    radius: 5, // Geofence radius in meters
+  });
+  const results = hteStore.onlineInternList.map((location) => {
+    let position = null;
+    let isInsideGeofence = null;
+    if (!location.currentLocation.lat && !location.currentLocation.lng) {
+      position = null;
+    } else {
+      position = new google.maps.LatLng(location.currentLocation.lat, location.currentLocation.lng);
+      isInsideGeofence = googleGeometry.spherical.computeDistanceBetween(
+        position,
+        geofenceCircle.value.getCenter()
+      ) <= geofenceCircle.value.getRadius();
+    }
+
+    const marker = new google.maps.Marker({
+      position: position,
+      map: map.value,
+    });
+
+    // Store marker in markers array
+    // markers.value.push(marker.position);
+    // Check if marker is inside geofence
+
+    console.log(isInsideGeofence);
+
+    const objLocation = {
+      name: location.name,
+      timeIn: location.timeIn,
+      isInside: isInsideGeofence,
+      position: position
+
+    }
+    if (isInsideGeofence) {
+      marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png'); // Set green icon for inside
+    } else {
+      marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png'); // Set red icon for outside
+    }
+
+    return objLocation;
+
+
+  });
+
+  locationArr.value.push(...results)
+
+  console.log(locationArr.value);
+
+
 });
-onUnmounted(async () => {
-  clearInterval(intervalid);
-});
+
 </script>
 
 <style scoped></style>
