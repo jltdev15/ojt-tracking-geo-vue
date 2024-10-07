@@ -161,15 +161,15 @@ const generateFence = async (onlineInterns) => {
 
   locationArr.value.push(...results);
 };
-const refreshMap = () => {
-  if (map.value) {
-    google.maps.event.trigger(map.value, "resize");
-    map.value.setCenter({
-      lat: authStore.hteLocationDefault.lat,
-      lng: authStore.hteLocationDefault.lng,
-    });
-  }
-};
+// const refreshMap = () => {
+//   if (map.value) {
+//     google.maps.event.trigger(map.value, "resize");
+//     map.value.setCenter({
+//       lat: authStore.hteLocationDefault.lat,
+//       lng: authStore.hteLocationDefault.lng,
+//     });
+//   }
+// };
 const pollOnlineInterns = async () => {
   intervalId = setInterval(async () => {
     const response = await apiClient.get(`/hte/internship/online`);
