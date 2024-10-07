@@ -101,7 +101,7 @@ const initMap = async () => {
       lat: authStore.hteLocationDefault.lat,
       lng: authStore.hteLocationDefault.lng,
     }, // Center of the geofence
-    radius: 500, // Geofence radius in meters
+    radius: 15, // Geofence radius in meters
   });
 };
 
