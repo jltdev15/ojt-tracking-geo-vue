@@ -143,12 +143,16 @@ export const useHteStore = defineStore("hte", () => {
     try {
       const response = await apiClient.get(`/hte/internship/online`);
       console.log(response.data.content);
+
       onlineInternList.value = response.data.content;
-      if (onlineInternList.value.length > 0) {
-        onlineInternList.value.forEach((element) => {
-          onlineLocationList.value.push(element.currentLocation);
-        });
-      }
+      // onlineInternList.value = onlineInternList.value.filter(newIntern => {
+      //   !onlineInternList.value.some(existingIntern => existingIntern.internId === newIntern.internId)
+      // })
+      // if (onlineInternList.value.length > 0) {
+      //   onlineInternList.value.forEach((element) => {
+      //     onlineLocationList.value.push(element.currentLocation);
+      //   });
+      // }
     } catch (err) {
       console.log(err);
     }

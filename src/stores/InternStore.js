@@ -2,6 +2,7 @@ import { ref, computed, reactive } from "vue";
 import { defineStore } from "pinia";
 import apiClient from "@/config/axiosClient";
 export const useInternStore = defineStore("intern", () => {
+  const hteList = ref([])
   const internshipLists = ref([]);
   const applicationLists = ref([]);
   const requiredHours = ref(null);
@@ -41,6 +42,15 @@ export const useInternStore = defineStore("intern", () => {
     try {
       const response = await apiClient.get(`/intern/vacancy`);
       internshipLists.value = response.data.content;
+      console.log(response.data.content);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const fetchHTEList = async () => {
+    try {
+      const response = await apiClient.get(`/admin/hte/list`);
+      hteList.value = response.data.content;
       console.log(response.data.content);
     } catch (err) {
       console.log(err);
@@ -283,7 +293,8 @@ export const useInternStore = defineStore("intern", () => {
     return requiredHours.value;
   });
   const getNumberOfHoursWorked = computed(() => {
-    return Math.ceil(workedHours.value);
+    // return Math.round(workedHours.value)
+    return workedHours.value
   });
   return {
     fetchInternshipLists,
@@ -321,6 +332,8 @@ export const useInternStore = defineStore("intern", () => {
     evaluationResults,
     fetchEvaluationResults,
     isProfileComplete,
-    checkDTRStatus
+    checkDTRStatus,
+    hteList,
+    fetchHTEList
   };
 });

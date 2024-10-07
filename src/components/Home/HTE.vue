@@ -10,31 +10,40 @@
         <h1 class="p-6 text-xl font-bold text-left md:text-5xl text-primary">
           Partner's Host Training Establishments
         </h1>
-        <section class="bg grid gap-12 md:grid-cols-3">
+        <section class="bg grid gap-12 md:grid-cols-3 p-6">
           <div
             v-for="item in props.internships"
             :key="item.id"
-            class="aspect-square flex gap-3 flex-col bg-gray-50 p-6 shadow-md rounded-lg"
+            class="flex gap-3 flex-col bg-gray-50 p-6 shadow-md rounded-lg w-96 h-72"
           >
-            <div class="flex justify-between text-3xl font-bold">
-              <p class="">{{ item.hte.fullName }}</p>
+            <div class="text-left text-3xl font-bold">
+              <p class="text-xs text-gray-500">Company</p>
+              <p class="capitalize">{{ item.fullName }}</p>
             </div>
-
-            <div class="">
-              <div class="text-xl font-bold text-left">{{ item.title }}</div>
-              <p class="text-xs text-gray-700 text-left">
-                {{ item.requirements }}
+            <div class="text-left">
+              <p class="text-xs text-gray-500 font-bold">Details</p>
+              <p class="font-bold">{{ item.contactNumber }}</p>
+              <p class="font-bold">
+                {{ item.street }} {{ item.brgy }} {{ item.municipality }}
+                {{ item.province }}
               </p>
             </div>
-            <div class="flex flex-col items-start w-full p-3">
-              <p class="text-base font-bold">Slots {{ item.slots }}</p>
-              <p class="text-sm font-medium text-gray-400">{{ item.location }}</p>
+            <div class="text-left mt-auto">
+              <p class="text-xs text-gray-500 font-bold">Number of Internships</p>
+              <div class="flex items-center justify-between">
+                <p class="font-bold text-3xl">{{ item.internVacancy.length }}</p>
+                <router-link :to="{ name: 'student_auth' }">
+                  <i
+                    class="bx bx-chevron-right text-3xl btn btn-outline border-0 shadow-0 btn-accent"
+                  ></i>
+                </router-link>
+              </div>
             </div>
-            <router-link
+            <!-- <router-link
               :to="{ name: 'student_auth' }"
               class="mt-auto p-3 btn-primary btn"
               >Apply Now</router-link
-            >
+            > -->
           </div>
         </section>
       </div>

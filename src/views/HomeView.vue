@@ -4,7 +4,7 @@
 
     <About />
     <Hero />
-    <HTE :internships="internshipLists" />
+    <HTE :internships="hteList" />
     <Testimonials />
     <ContactForm />
     <Footer />
@@ -24,12 +24,12 @@ import Footer from "@/components/Home/Footer.vue";
 import { useInternStore } from "@/stores/InternStore";
 const internStore = useInternStore();
 import { storeToRefs } from "pinia";
-const { internshipLists } = storeToRefs(internStore);
+const { hteList } = storeToRefs(internStore);
 const authStore = useAuthStore();
 
 onMounted(async () => {
   await authStore.checkAuth();
-  await internStore.fetchInternshipLists();
+  await internStore.fetchHTEList();
 });
 </script>
 
