@@ -234,7 +234,10 @@
                     No results to show
                   </div>
 
-                  <div v-if="isMapShow" class="w-full h-[300px]" id="map"></div>
+                  <div v-if="isMapShow" class="w-full h-[250px]" id="map"></div>
+                  <label class="flex items-center w-full gap-2 input input-bordered">
+                    <input v-model="hte.landMark" type="text" class="grow" placeholder="Enter Landmark" required />
+                  </label>
                 </div>
                 <div class="flex flex-row-reverse col-span-2 gap-2 md:mt-auto">
                   <button type="submit" class="w-32 btn btn-primary">Create User</button>
@@ -571,6 +574,7 @@ const hte = reactive({
   municipality: "",
   brgy: "",
   street: "",
+  landMark: "",
   mapLocation: {
     lat: {
       type: Number,
@@ -682,6 +686,7 @@ const resetHTEForms = () => {
   hte.address = "";
   hte.hasMoa = "";
   hte.street = "";
+  hte.landmark = "";
   hte.mapLocation.lat = "";
   hte.mapLocation.lng = "";
   businessName.value = "";
@@ -841,7 +846,7 @@ const handleCoorUser = async () => {
     await handleToggleModal();
     resetCoorForms();
     router.push({
-      name: route.manage_users, // or use `path: route.path`
+      name: route.manage_users // or use `path: route.path`
     });
   } catch (err) {
     console.log(err);

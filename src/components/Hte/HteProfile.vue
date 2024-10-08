@@ -10,55 +10,36 @@
         </li>
       </ul>
     </div>
-    <section class="w-11/12 p-6 mx-auto rounded-md shadow-md md:w-9/12 bg-gray-50">
-      <header class="">
+    <section class="w-11/12 mx-auto rounded-md shadow-md md:w-9/12 bg-gray-50">
+      <header class="p-3 bg-primary text-gray-50">
         <h1 class="text-3xl font-bold">{{ authStore.hteInformation.name }}</h1>
       </header>
-      <section class="grid grid-cols-1 p-1 md:grid-cols-2 md:p-3 gap-y-6 gap-x-6">
+      <section class="grid grid-cols-1 p-6 md:grid-cols-2 md:py-3 gap-y-6 gap-x-6">
         <!-- Left side HTE -->
         <div class="flex flex-col gap-3">
           <div>
             <label for="">Company Name</label>
-            <input
-              v-model.trim="authStore.hteInformation.name"
-              type="text"
-              placeholder="Type here"
-              class="w-full input input-bordered"
-            />
+            <input v-model.trim="authStore.hteInformation.name" type="text" placeholder="Type here"
+              class="w-full input input-bordered" />
           </div>
 
           <div>
             <label class="block" for="">Company Email</label>
-            <input
-              v-model.trim="authStore.hteInformation.email"
-              type="text"
-              placeholder="Type here"
-              class="w-full input input-bordered"
-            />
+            <input v-model.trim="authStore.hteInformation.email" type="text" placeholder="Type here"
+              class="w-full input input-bordered" />
           </div>
 
           <div>
             <label for="">Contact Number</label>
-            <input
-              v-model.trim="authStore.hteInformation.contact"
-              type="tel"
-              placeholder="11 Digits Contact Number"
-              minlength="11"
-              maxlength="11"
-              pattern="[0-9]{11,11}"
-              class="w-full input input-bordered"
-              @input="validateContactNumber"
-            />
+            <input v-model.trim="authStore.hteInformation.contact" type="tel" placeholder="11 Digits Contact Number"
+              minlength="11" maxlength="11" pattern="[0-9]{11,11}" class="w-full input input-bordered"
+              @input="validateContactNumber" />
           </div>
 
           <div class="">
             <label class="block" for="">Province</label>
-            <select
-              class="w-full text-base select select-bordered"
-              v-model="selectedProvince"
-              @change="onSelectProvince"
-              required
-            >
+            <select class="w-full text-base select select-bordered" v-model="selectedProvince"
+              @change="onSelectProvince" required>
               <option selected value="">
                 {{ authStore.hteInformation.province }}
               </option>
@@ -69,12 +50,8 @@
           </div>
           <div class="">
             <label class="block" for="">Municipality/City</label>
-            <select
-              class="w-full text-base select select-bordered"
-              v-model="selectedMunicipality"
-              @change="onSelectMunicipality"
-              required
-            >
+            <select class="w-full text-base select select-bordered" v-model="selectedMunicipality"
+              @change="onSelectMunicipality" required>
               <option selected value="">
                 {{ authStore.hteInformation.municipality }}
               </option>
@@ -86,12 +63,8 @@
           <div class="flex flex-col w-full gap-3 md:flex-row">
             <div class="md:w-96">
               <label class="block" for="">Barangay</label>
-              <select
-                class="w-full text-base select select-bordered"
-                v-model="selectedBrgy"
-                @change="onSelectBrgy"
-                required
-              >
+              <select class="w-full text-base select select-bordered" v-model="selectedBrgy" @change="onSelectBrgy"
+                required>
                 <option selected value="">
                   {{ authStore.hteInformation.brgy }}
                 </option>
@@ -102,12 +75,8 @@
             </div>
             <div class="md:w-3/6">
               <label class="block" for="">Street </label>
-              <input
-                v-model="authStore.hteInformation.street"
-                type="text"
-                placeholder="Type here"
-                class="w-full input input-bordered"
-              />
+              <input v-model="authStore.hteInformation.street" type="text" placeholder="Type here"
+                class="w-full input input-bordered" />
             </div>
           </div>
         </div>
@@ -116,36 +85,18 @@
           <label>Business Name</label>
           <div class="flex gap-3 pb-3">
             <label class="flex items-center justify-between w-full input input-bordered">
-              <input
-                v-model.trim="businessName"
-                type="text"
-                class="max-w-xs"
-                placeholder="Business Name"
-              />
+              <input v-model.trim="businessName" type="text" class="max-w-xs" placeholder="Business Name" />
             </label>
-            <button
-              @click="getBusinessLocation"
-              class="btn btn-outline bt-bloc btn-accent"
-            >
+            <button @click="getBusinessLocation" class="btn btn-outline bt-bloc btn-accent">
               <i class="text-3xl bx bx-search-alt"></i>
             </button>
           </div>
 
           <label class="flex items-center gap-2 input input-bordered">
-            <input
-              v-model="authStore.hteInformation.lat"
-              type="number"
-              class="w-full"
-              placeholder="Latitude"
-              readonly
-            />
-            <input
-              v-model="authStore.hteInformation.lng"
-              type="number"
-              class="w-full"
-              placeholder="Longtitude"
-              readonly
-            />
+            <input v-model="authStore.hteInformation.lat" type="number" class="w-full" placeholder="Latitude"
+              readonly />
+            <input v-model="authStore.hteInformation.lng" type="number" class="w-full" placeholder="Longtitude"
+              readonly />
           </label>
           <div v-if="errorMessage" class="p-3 text-center error">
             {{ errorMessage }}
@@ -153,20 +104,17 @@
           <div v-if="!locationRes && !errorMessage" class="p-3 text-center error">
             No results to show
           </div>
-          <div v-if="isMapShow" id="map" class="h-[300px] w-[100%] mt-3"></div>
+          <div v-if="isMapShow" id="map" class="h-[250px] w-[100%] mt-3"></div>
+          <label class="flex items-center justify-between w-full mt-auto input input-bordered">
+            <input v-model.trim="authStore.hteInformation.landMark" type="text" class="w-full" placeholder="LandMark" />
+          </label>
         </div>
         <div class="flex justify-between gap-3 md:col-span-2 md:mt-6 md:ml-auto">
-          <router-link
-            :to="{ name: 'manage_users', query: { users: 'HTE' } }"
-            class="w-3/6 md:w-36 btn btn-accent btn-outline"
-          >
+          <router-link :to="{ name: 'manage_users', query: { users: 'HTE' } }"
+            class="w-3/6 md:w-36 btn btn-accent btn-outline">
             Cancel
           </router-link>
-          <button
-            type="button"
-            @click="updateInformationHandler"
-            class="w-3/6 md:w-36 btn btn-md btn-primary"
-          >
+          <button type="button" @click="updateInformationHandler" class="w-3/6 md:w-36 btn btn-md btn-primary">
             Update
           </button>
         </div>
@@ -329,18 +277,18 @@ const initMap = () => {
 
 
 const validateContactNumber = () => {
-      // Remove any non-digit characters
-      authStore.hteInformation.contact = authStore.hteInformation.contact.replace(/\D/g, '');
-      authStore.hteInformation.contact = authStore.hteInformation.contact.slice(0, 11);
-      // Check if the input exceeds 11 digits
-      // if (contactNumber.value.length > 11) {
-      //   errorMessage.value = 'Contact number cannot exceed 11 digits';
-      //   // Truncate the value to 11 digits
-      
-      // } else {
-      //   errorMessage.value = '';
-      // }
-    };
+  // Remove any non-digit characters
+  authStore.hteInformation.contact = authStore.hteInformation.contact.replace(/\D/g, '');
+  authStore.hteInformation.contact = authStore.hteInformation.contact.slice(0, 11);
+  // Check if the input exceeds 11 digits
+  // if (contactNumber.value.length > 11) {
+  //   errorMessage.value = 'Contact number cannot exceed 11 digits';
+  //   // Truncate the value to 11 digits
+
+  // } else {
+  //   errorMessage.value = '';
+  // }
+};
 </script>
 
 <style scoped>

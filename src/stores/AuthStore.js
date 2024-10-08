@@ -52,6 +52,7 @@ export const useAuthStore = defineStore("auth", () => {
     brgy: "",
     street: "",
     address: "",
+    landMark:"",
     lat: "",
     lng: "",
     location: {},
@@ -122,6 +123,7 @@ export const useAuthStore = defineStore("auth", () => {
         hteInformation.location = response.data.content.profile.location;
         hteLocationDefault.lat = response.data.content.profile.location.lat;
         hteLocationDefault.lng = response.data.content.profile.location.lng;
+        hteInformation.landMark = response.data.content.profile.landMark;
      
         return (currentUser.value = response.data.content.profile.fullName);
       }
@@ -328,6 +330,7 @@ export const useAuthStore = defineStore("auth", () => {
       brgy: hteInformation.brgy,
       street: hteInformation.street,
       location: hteInformation.location,
+      landMark: hteInformation.landMark
     };
     console.log(payload);
 

@@ -189,7 +189,6 @@ export const useInternStore = defineStore("intern", () => {
     try {
       const response = await apiClient.get("/intern/attendance");
       console.log(response.data.content);
-
       attendanceArr.value = response.data.content;
       return response;
     } catch (err) {

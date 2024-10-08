@@ -9,9 +9,7 @@
           <router-link :to="{ name: 'manage_users' }">Users management</router-link>
         </li>
         <li>
-          <router-link class="text-red-800" :to="{ name: 'UpdateUser' }"
-            >Update user</router-link
-          >
+          <router-link class="text-red-800" :to="{ name: 'UpdateUser' }">Update user</router-link>
         </li>
       </ul>
     </div>
@@ -24,64 +22,35 @@
     <section class="gap-6 mx-auto bg-white rounded-md shadow-md md:mx-6">
       <div class="flex flex-col gap-3 rounded-md shadow-md">
         <h2 class="p-3 text-2xl bg-red-800 text-gray-50">Profile Information</h2>
-        <section
-          v-if="userStore.currentRole === 'Coordinator'"
-          class="grid p-3 md:p-6 md:grid-cols-2 gap-x-6"
-        >
+        <section v-if="userStore.currentRole === 'Coordinator'" class="grid p-3 md:p-6 md:grid-cols-2 gap-x-6">
           <div class="flex flex-col gap-3">
             <div>
               <label for="">Email</label>
-              <input
-                v-model="userStore.updateInfo.email"
-                type="email"
-                placeholder="Type here"
-                class="w-full input input-bordered"
-                required
-              />
+              <input v-model="userStore.updateInfo.email" type="email" placeholder="Type here"
+                class="w-full input input-bordered" required />
             </div>
             <div>
               <label for="">First Name</label>
-              <input
-                v-model="userStore.updateInfo.firstName"
-                type="text"
-                placeholder="Type here"
-                class="w-full input input-bordered"
-                required
-              />
+              <input v-model="userStore.updateInfo.firstName" type="text" placeholder="Type here"
+                class="w-full input input-bordered" required />
             </div>
             <div>
               <label for="">Last Name</label>
-              <input
-                v-model="userStore.updateInfo.lastName"
-                type="text"
-                placeholder="Type here"
-                class="w-full input input-bordered"
-                required
-              />
+              <input v-model="userStore.updateInfo.lastName" type="text" placeholder="Type here"
+                class="w-full input input-bordered" required />
             </div>
             <div>
               <label for="">Contact Number</label>
-              <input
-                v-model="userStore.contactNumbers"
-                 class="w-full input input-bordered"
-                minlength="11"
-                maxlength="11"
-                type="tel"
-                pattern="\d{11}"
-                 placeholder="11 Digits Contact Number"
-                @input="validateContactNumber"
-              />
+              <input v-model="userStore.contactNumbers" class="w-full input input-bordered" minlength="11"
+                maxlength="11" type="tel" pattern="\d{11}" placeholder="11 Digits Contact Number"
+                @input="validateContactNumber" />
             </div>
           </div>
           <div class="flex flex-col gap-3">
             <div class="">
               <label class="block" for="">Province</label>
-              <select
-                class="w-full text-base select select-bordered"
-                v-model="selectedProvince"
-                @change="onSelectProvince"
-                required
-              >
+              <select class="w-full text-base select select-bordered" v-model="selectedProvince"
+                @change="onSelectProvince" required>
                 <option selected value="">
                   {{ userStore.updateInfo.province }}
                 </option>
@@ -92,12 +61,8 @@
             </div>
             <div>
               <label class="block" for="">Municipality / City</label>
-              <select
-                class="w-full text-base select select-bordered"
-                v-model="selectedMunicipality"
-                @change="onSelectMunicipality"
-                required
-              >
+              <select class="w-full text-base select select-bordered" v-model="selectedMunicipality"
+                @change="onSelectMunicipality" required>
                 <option value="" selected>
                   {{ userStore.updateInfo.municipality }}
                 </option>
@@ -108,12 +73,8 @@
             </div>
             <div>
               <label class="block" for="">Barangay</label>
-              <select
-                class="w-full text-base select select-bordered"
-                v-model="selectedBrgy"
-                @change="onSelectBrgy"
-                required
-              >
+              <select class="w-full text-base select select-bordered" v-model="selectedBrgy" @change="onSelectBrgy"
+                required>
                 <option value="" selected>
                   {{ userStore.updateInfo.brgy }}
                 </option>
@@ -124,41 +85,23 @@
             </div>
             <div>
               <label for="">Street</label>
-              <input
-                v-model="userStore.updateInfo.street"
-                type="text"
-                placeholder="Type here"
-                class="w-full input input-bordered"
-                required
-              />
+              <input v-model="userStore.updateInfo.street" type="text" placeholder="Type here"
+                class="w-full input input-bordered" required />
             </div>
             <div>
               <label for="">Select Department</label>
-              <select
-                @change="handleSelectDepartmentCoor"
-                v-model="userStore.updateInfo.department"
-                class="w-full py-3 select select-bordered"
-                required
-              >
+              <select @change="handleSelectDepartmentCoor" v-model="userStore.updateInfo.department"
+                class="w-full py-3 select select-bordered" required>
                 <option selected disabled value="">Select department</option>
 
-                <option
-                  v-for="item in userStore.departmentlist"
-                  :key="item._id"
-                  :value="item.name"
-                >
+                <option v-for="item in userStore.departmentlist" :key="item._id" :value="item.name">
                   {{ item.name }}
                 </option>
               </select>
             </div>
           </div>
-          <div
-            class="flex justify-between w-full gap-3 mt-6 ml-auto md:justify-end md:col-span-2"
-          >
-            <router-link
-              :to="{ name: 'manage_users' }"
-              class="w-36 btn btn-accent btn-outline"
-            >
+          <div class="flex justify-between w-full gap-3 mt-6 ml-auto md:justify-end md:col-span-2">
+            <router-link :to="{ name: 'manage_users' }" class="w-36 btn btn-accent btn-outline">
               Cancel
             </router-link>
             <button type="button" @click="updateHandlerCoor" class="w-36 btn btn-primary">
@@ -167,55 +110,34 @@
           </div>
         </section>
         <!-- HTE -->
-        <section
-          v-if="userStore.currentRole === 'HTE'"
-          class="grid grid-cols-1 p-1 md:grid-cols-2 md:p-3 gap-y-6 gap-x-6"
-        >
+        <section v-if="userStore.currentRole === 'HTE'"
+          class="grid grid-cols-1 p-1 md:grid-cols-2 md:p-3 gap-y-6 gap-x-6">
           <!-- Left side HTE -->
           <div class="flex flex-col gap-3">
             <div>
               <label for="">Company Name</label>
-              <input
-                v-model="userStore.updateInfo.companyName"
-                type="text"
-                placeholder="Type here"
-                class="w-full input input-bordered"
-              />
+              <input v-model="userStore.updateInfo.companyName" type="text" placeholder="Type here"
+                class="w-full input input-bordered" />
             </div>
 
             <div>
               <label class="block" for="">Company Email</label>
-              <input
-                v-model="userStore.updateInfo.companyEmail"
-                type="text"
-                placeholder="Type here"
-                class="w-full input input-bordered"
-              />
+              <input v-model="userStore.updateInfo.companyEmail" type="text" placeholder="Type here"
+                class="w-full input input-bordered" />
             </div>
 
             <div>
               <label for="">Contact Number</label>
-              <input
-                v-model="userStore.contactNumbers"
-                class="w-full input input-bordered"
-                type="tel"
-                placeholder="11 Digits Contact Number"
-                minlength="11"
-                maxlength="11"
-                pattern="[0-9]{11,11}"
-                @input="validateContactNumber"
-              />
+              <input v-model="userStore.contactNumbers" class="w-full input input-bordered" type="tel"
+                placeholder="11 Digits Contact Number" minlength="11" maxlength="11" pattern="[0-9]{11,11}"
+                @input="validateContactNumber" />
               <p v-if="errMessage">{{ errMessage }}</p>
             </div>
 
             <div class="">
               <label class="block" for="">Province</label>
-              <select
-                class="w-full text-base select select-bordered"
-                v-model="selectedProvince"
-                @change="onSelectProvince"
-                required
-              >
+              <select class="w-full text-base select select-bordered" v-model="selectedProvince"
+                @change="onSelectProvince" required>
                 <option selected value="">
                   {{ userStore.updateInfo.companyProvince }}
                 </option>
@@ -226,12 +148,8 @@
             </div>
             <div class="">
               <label class="block" for="">Municipality/City</label>
-              <select
-                class="w-full text-base select select-bordered"
-                v-model="selectedMunicipality"
-                @change="onSelectMunicipality"
-                required
-              >
+              <select class="w-full text-base select select-bordered" v-model="selectedMunicipality"
+                @change="onSelectMunicipality" required>
                 <option selected value="">
                   {{ userStore.updateInfo.companyMunicipality }}
                 </option>
@@ -243,12 +161,8 @@
             <div class="flex flex-col w-full gap-3 md:flex-row">
               <div class="md:w-96">
                 <label class="block" for="">Barangay</label>
-                <select
-                  class="w-full text-base select select-bordered"
-                  v-model="selectedBrgy"
-                  @change="onSelectBrgy"
-                  required
-                >
+                <select class="w-full text-base select select-bordered" v-model="selectedBrgy" @change="onSelectBrgy"
+                  required>
                   <option selected value="">
                     {{ userStore.updateInfo.companyBrgy }}
                   </option>
@@ -259,12 +173,8 @@
               </div>
               <div class="md:w-3/6">
                 <label class="block" for="">Street </label>
-                <input
-                  v-model="userStore.updateInfo.companyStreet"
-                  type="text"
-                  placeholder="Type here"
-                  class="w-full input input-bordered"
-                />
+                <input v-model="userStore.updateInfo.companyStreet" type="text" placeholder="Type here"
+                  class="w-full input input-bordered" />
               </div>
             </div>
           </div>
@@ -272,39 +182,19 @@
           <div class="flex flex-col w-full">
             <label for="">Business Name</label>
             <div class="flex gap-3 pb-3">
-              <label
-                class="flex items-center justify-between w-full input input-bordered"
-              >
-                <input
-                  v-model.trim="businessName"
-                  type="text"
-                  class="max-w-xs"
-                  placeholder="Business Name"
-                />
+              <label class="flex items-center justify-between w-full input input-bordered">
+                <input v-model.trim="businessName" type="text" class="max-w-xs" placeholder="Business Name" />
               </label>
-              <button
-                @click="getBusinessLocation"
-                class="btn btn-outline bt-bloc btn-accent"
-              >
+              <button @click="getBusinessLocation" class="btn btn-outline bt-bloc btn-accent">
                 <i class="text-3xl bx bx-search-alt"></i>
               </button>
             </div>
 
             <label class="flex items-center gap-2 input input-bordered">
-              <input
-                v-model="userStore.updateInfo.mapLocation.lat"
-                type="number"
-                class="w-full"
-                placeholder="Latitude"
-                readonly
-              />
-              <input
-                v-model="userStore.updateInfo.mapLocation.lng"
-                type="number"
-                class="w-full"
-                placeholder="Longtitude"
-                readonly
-              />
+              <input v-model="userStore.updateInfo.mapLocation.lat" type="number" class="w-full" placeholder="Latitude"
+                readonly />
+              <input v-model="userStore.updateInfo.mapLocation.lng" type="number" class="w-full"
+                placeholder="Longtitude" readonly />
             </label>
             <div v-if="errorMessage" class="p-3 text-center error">
               {{ errorMessage }}
@@ -312,94 +202,57 @@
             <div v-if="!locationRes && !errorMessage" class="p-3 text-center error">
               No results to show
             </div>
-            <div v-if="isMapShow" id="map" class="h-[300px] w-[100%] mt-3"></div>
+            <div v-if="isMapShow" id="map" class="h-[250px] w-[100%] mt-3"></div>
+            <label class="flex items-center justify-between w-full input input-bordered">
+              <input v-model.trim="userStore.updateInfo.landMark" type="text" class="max-w-xs" placeholder="LandMark" />
+            </label>
           </div>
           <div class="flex justify-between gap-3 md:col-span-2 md:mt-6 md:ml-auto">
-            <router-link
-              :to="{ name: 'manage_users', query: { users: 'HTE' } }"
-              class="w-3/6 md:w-36 btn btn-accent btn-outline"
-            >
+            <router-link :to="{ name: 'manage_users', query: { users: 'HTE' } }"
+              class="w-3/6 md:w-36 btn btn-accent btn-outline">
               Cancel
             </router-link>
-            <button
-              type="button"
-              @click="updateHandlerHTE"
-              class="w-3/6 md:w-36 btn btn-md btn-primary"
-            >
+            <button type="button" @click="updateHandlerHTE" class="w-3/6 md:w-36 btn btn-md btn-primary">
               Update
             </button>
           </div>
         </section>
         <!-- Intern Information -->
-        <section
-          v-if="userStore.currentRole === 'Intern'"
-          class="grid w-full p-3 md:p-6 xl:p-2 xl:px-3 md:grid-cols-2 gap-x-6"
-        >
+        <section v-if="userStore.currentRole === 'Intern'"
+          class="grid w-full p-3 md:p-6 xl:p-2 xl:px-3 md:grid-cols-2 gap-x-6">
           <div class="flex flex-col gap-3">
             <div>
               <label for="">Email</label>
-              <input
-                v-model="userStore.updateInfo.internEmail"
-                type="text"
-                placeholder="Type here"
-                class="w-full input input-bordered"
-                required
-              />
+              <input v-model="userStore.updateInfo.internEmail" type="text" placeholder="Type here"
+                class="w-full input input-bordered" required />
             </div>
             <div>
               <label for="">First Name</label>
-              <input
-                v-model="userStore.updateInfo.internfirstName"
-                type="text"
-                placeholder="Type here"
-                class="w-full input input-bordered"
-                required
-              />
+              <input v-model="userStore.updateInfo.internfirstName" type="text" placeholder="Type here"
+                class="w-full input input-bordered" required />
             </div>
             <div>
               <label for="">Middle Initial</label>
-              <input
-                v-model="userStore.updateInfo.internMiddle"
-                type="text"
-                placeholder="Type here"
-                class="w-full input input-bordered"
-                required
-              />
+              <input v-model="userStore.updateInfo.internMiddle" type="text" placeholder="Type here"
+                class="w-full input input-bordered" required />
             </div>
             <div>
               <label for="">Last Name</label>
-              <input
-                v-model="userStore.updateInfo.internlastName"
-                type="text"
-                placeholder="Type here"
-                class="w-full input input-bordered"
-                required
-              />
+              <input v-model="userStore.updateInfo.internlastName" type="text" placeholder="Type here"
+                class="w-full input input-bordered" required />
             </div>
 
             <div>
               <label for="">Contact Number</label>
-              <input
-                v-model="userStore.contactNumbers"
-                minlength="11"
-                maxlength="11"
-                type="tel"
-                pattern="\d{11}"
-                placeholder="Type here"
-                class="w-full input input-bordered"
-                @input="validateContactNumber"
-              />
+              <input v-model="userStore.contactNumbers" minlength="11" maxlength="11" type="tel" pattern="\d{11}"
+                placeholder="Type here" class="w-full input input-bordered" @input="validateContactNumber" />
             </div>
           </div>
           <div class="flex flex-col gap-3">
             <div class="">
               <label class="block" for="">Province</label>
-              <select
-                class="w-full text-base select select-bordered"
-                v-model="selectedProvince"
-                @change="onSelectProvince"
-                required
-              >
+              <select class="w-full text-base select select-bordered" v-model="selectedProvince"
+                @change="onSelectProvince" required>
                 <option selected value="">
                   {{
                     userStore.updateInfo.internProvince
@@ -414,12 +267,8 @@
             </div>
             <div>
               <label class="block" for="">Municipality / City</label>
-              <select
-                class="w-full text-base select select-bordered"
-                v-model="selectedMunicipality"
-                @change="onSelectMunicipality"
-                required
-              >
+              <select class="w-full text-base select select-bordered" v-model="selectedMunicipality"
+                @change="onSelectMunicipality" required>
                 <option value="" selected>
                   {{
                     userStore.updateInfo.internMunicipality
@@ -434,12 +283,8 @@
             </div>
             <div>
               <label class="block" for="">Barangay</label>
-              <select
-                class="w-full text-base select select-bordered"
-                v-model="selectedBrgy"
-                @change="onSelectBrgy"
-                required
-              >
+              <select class="w-full text-base select select-bordered" v-model="selectedBrgy" @change="onSelectBrgy"
+                required>
                 <option value="" selected>
                   {{
                     userStore.updateInfo.internBrgy
@@ -454,47 +299,25 @@
             </div>
             <div>
               <label for="">Street</label>
-              <input
-                v-model="userStore.updateInfo.internStreet"
-                type="text"
-                placeholder="Type here"
-                class="w-full input input-bordered"
-                required
-              />
+              <input v-model="userStore.updateInfo.internStreet" type="text" placeholder="Type here"
+                class="w-full input input-bordered" required />
             </div>
             <div>
               <label for="">Select Department</label>
-              <select
-                @change="handleSelectDepartmentCoor"
-                v-model="userStore.updateInfo.internDepartment"
-                class="w-full py-3 select select-bordered"
-                required
-              >
+              <select @change="handleSelectDepartmentCoor" v-model="userStore.updateInfo.internDepartment"
+                class="w-full py-3 select select-bordered" required>
                 <option selected disabled value="">Select department</option>
-                <option
-                  v-for="item in userStore.departmentlist"
-                  :key="item._id"
-                  :value="item.name"
-                >
+                <option v-for="item in userStore.departmentlist" :key="item._id" :value="item.name">
                   {{ item.name }}
                 </option>
               </select>
             </div>
           </div>
-          <div
-            class="flex justify-between w-full gap-3 mt-6 ml-auto md:justify-end md:col-span-2"
-          >
-            <button
-               @click="router.back()"
-              class="w-36 btn btn-accent btn-outline"
-            >
+          <div class="flex justify-between w-full gap-3 mt-6 ml-auto md:justify-end md:col-span-2">
+            <button @click="router.back()" class="w-36 btn btn-accent btn-outline">
               Cancel
             </button>
-            <button
-              type="button"
-              @click="updateHandlerIntern"
-              class="w-36 btn btn-primary"
-            >
+            <button type="button" @click="updateHandlerIntern" class="w-36 btn btn-primary">
               Update
             </button>
           </div>
@@ -524,18 +347,18 @@ const businessName = ref('');
 const errMessage = ref('');
 
 const validateContactNumber = () => {
-      // Remove any non-digit characters
-      userStore.contactNumbers = userStore.contactNumbers.replace(/\D/g, '');
-      userStore.contactNumbers = userStore.contactNumbers.slice(0, 11);
-      // Check if the input exceeds 11 digits
-      // if (contactNumber.value.length > 11) {
-      //   errorMessage.value = 'Contact number cannot exceed 11 digits';
-      //   // Truncate the value to 11 digits
-      
-      // } else {
-      //   errorMessage.value = '';
-      // }
-    };
+  // Remove any non-digit characters
+  userStore.contactNumbers = userStore.contactNumbers.replace(/\D/g, '');
+  userStore.contactNumbers = userStore.contactNumbers.slice(0, 11);
+  // Check if the input exceeds 11 digits
+  // if (contactNumber.value.length > 11) {
+  //   errorMessage.value = 'Contact number cannot exceed 11 digits';
+  //   // Truncate the value to 11 digits
+
+  // } else {
+  //   errorMessage.value = '';
+  // }
+};
 
 
 const updateHandlerCoor = async () => {
@@ -551,7 +374,7 @@ const updateHandlerCoor = async () => {
   if (userStore.contactNumbers === "") {
     return alert("Contact number cannot be empty");
   }
-  if (userStore.contactNumbers.length < 11 ) {
+  if (userStore.contactNumbers.length < 11) {
     return alert("Contact number must 11 digits");
   }
   if (userStore.updateInfo.department === "") {
@@ -587,7 +410,7 @@ async function updateHandlerHTE() {
   if (userStore.contactNumbers === "") {
     return alert("Contact number cannot be empty");
   }
-  if (userStore.contactNumbers.length < 11 ) {
+  if (userStore.contactNumbers.length < 11) {
     return alert("Contact number must 11 digits");
   }
   if (userStore.updateInfo.companyStreet === "") {
@@ -607,6 +430,9 @@ async function updateHandlerHTE() {
   }
   if (userStore.updateInfo.mapLocation.lng === "") {
     return alert("Please provice lat value");
+  }
+  if (userStore.updateInfo.landMark === "") {
+    return alert("Please provide landmark");
   }
   const response = await userStore.updateInformationHTE();
   alert(response.data.message);
@@ -628,7 +454,7 @@ const updateHandlerIntern = async () => {
   if (userStore.contactNumbers === "") {
     return alert("Contact number cannot be empty");
   }
-  if (userStore.contactNumbers.length < 11 ) {
+  if (userStore.contactNumbers.length < 11) {
     return alert("Contact number must 11 digits");
   }
   if (userStore.updateInfo.internProvince === "") {

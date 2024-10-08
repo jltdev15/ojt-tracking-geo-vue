@@ -41,6 +41,7 @@ export const useAdminUserStore = defineStore("user", () => {
     province: "",
     municipality: "",
     brgy: "",
+    landMark:"",
 
     // HTE
     companyEmail: "",
@@ -171,9 +172,7 @@ export const useAdminUserStore = defineStore("user", () => {
     console.log(payload);
     try {
       const response = await apiClient.post("/hte", payload);
-      console.log("====================================");
       console.log(response);
-      console.log("====================================");
       alert("HTE Added");
       await fetchUsers();
       return response.data.message;
@@ -309,6 +308,7 @@ export const useAdminUserStore = defineStore("user", () => {
         updateInfo.mapLocation.lng = response.data.content.profile.location.lng;
         updateInfo.hasMoa = response.data.content.profile.hasMoa;
         updateInfo.companyEmail = response.data.content.email;
+        updateInfo.landMark = response.data.content.profile.landMark;
         currentRole.value = response.data.content.role;
       }
       if (response.data.content.role === "Intern") {
@@ -369,6 +369,7 @@ export const useAdminUserStore = defineStore("user", () => {
       municipality: updateInfo.companyMunicipality,
       province: updateInfo.companyProvince,
       location: updateInfo.mapLocation,
+      landMark: updateInfo.landMark
     };
     try {
       const response = await apiClient.patch(
