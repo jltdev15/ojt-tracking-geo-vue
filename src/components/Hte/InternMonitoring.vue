@@ -156,21 +156,12 @@ const generateFence = async (onlineInterns) => {
 
   locationArr.value.push(...results);
 };
-// const refreshMap = () => {
-//   if (map.value) {
-//     google.maps.event.trigger(map.value, "resize");
-//     map.value.setCenter({
-//       lat: authStore.hteLocationDefault.lat,
-//       lng: authStore.hteLocationDefault.lng,
-//     });
-//   }
-// };
 const pollOnlineInterns = async () => {
   intervalId = setInterval(async () => {
     const response = await apiClient.get(`/hte/internship/online`);
     onlineInternLists.value = response.data.content;
     // generateFence(onlineInternLists.value);
-  }, 1000);
+  }, 500);
 };
 watch(
   onlineInternLists,
@@ -194,7 +185,7 @@ watch(
         console.log("Adding Intern marker");
         addMarker(intern); // Add marker for newly clocked-in intern
       } else {
-        console.log("Watching Intern marker for location changes");
+        console.log("Watching Intern marker for location changes" + intern.internId);
         watch(
           () => intern.currentLocation, // Assuming `location` contains lat and lng
           (newLocation, oldLocation) => {

@@ -116,7 +116,7 @@ export const useInternStore = defineStore("intern", () => {
       }
       const response = await apiClient.post("/intern/timein", payload);
 
-      await fetchRequiredHours();
+      fetchRequiredHours();
 
       return response;
     } catch (err) {
@@ -172,10 +172,10 @@ export const useInternStore = defineStore("intern", () => {
     }
   };
   const sendLocationHandler = async () => {
+       getLocationHandler()
     // await fetchRequiredHours()
     try {
       if (isClockIn.value) {
-        getLocationHandler()
         const response = await apiClient.put(
           "intern/currentlocation",
           locationData

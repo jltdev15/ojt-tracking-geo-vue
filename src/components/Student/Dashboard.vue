@@ -169,11 +169,11 @@ onMounted(async () => {
   await internStore.fetchApplicationList();
   await internStore.fetchRequiredHours();
   await adminUserStore.fetchAnnouncement();
-  // if (internStore.isClockIn) {
-  //   return (intervalid = setInterval(internStore.sendLocationHandler, 3000));
-  // } else {
-  //   clearInterval(intervalid);
-  // }
+  if (internStore.isClockIn) {
+    return (intervalid = setInterval(internStore.sendLocationHandler, 1000));
+  } else {
+    clearInterval(intervalid);
+  }
 });
 
 onUnmounted(async () => {

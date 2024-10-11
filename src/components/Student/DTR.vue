@@ -93,6 +93,7 @@ const timeOutData = reactive({
 });
 
 const timeInHandler = async () => {
+  startInterval();
   try {
     const response = await internStore.clockIn(timeInData);
     console.log("====================================");
@@ -101,7 +102,6 @@ const timeInHandler = async () => {
     if (response.response.data.content) {
       return (clockInErrorMessage.value = response.response.data.content);
     }
-    window.location.reload();
   } catch (err) {
     console.log(err);
   }
@@ -121,7 +121,7 @@ const timeOutHandler = async () => {
 const startInterval = () => {
   intervalid = setInterval(() => {
     internStore.sendLocationHandler();
-  }, 3000);
+  }, 1000);
 };
 onMounted(async () => {
   await internStore.checkDTRStatus();

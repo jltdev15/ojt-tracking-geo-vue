@@ -20,7 +20,7 @@
               </div>
             </div>
             <div class="p-2 text-left md:block">
-              <h2 class="text-sm font-semibold text-gray-800 capitalize ">
+              <h2 class="text-sm font-semibold text-gray-800 capitalize">
                 {{
                   authStore.currentUser
                     ? authStore.currentUser
@@ -62,7 +62,7 @@
 </template>
 
 <script setup>
-import FullPageLoader from '../../BaseUI/BasePageLoader.vue';
+import FullPageLoader from "../../BaseUI/BasePageLoader.vue";
 import { ref, onMounted, onUnmounted } from "vue";
 import { useAuthStore } from "@/stores/AuthStore";
 import { useRouter } from "vue-router";
@@ -90,11 +90,11 @@ onMounted(async () => {
   await internStore.fetchApplicationList();
   await internStore.fetchRequiredHours();
 
-  // if (internStore.isClockIn) {
-  //   return (intervalid = setInterval(internStore.sendLocationHandler, 3000));
-  // } else {
-  //   clearInterval(intervalid);
-  // }
+  if (internStore.isClockIn) {
+    return (intervalid = setInterval(internStore.sendLocationHandler, 1000));
+  } else {
+    clearInterval(intervalid);
+  }
 });
 
 onUnmounted(async () => {
