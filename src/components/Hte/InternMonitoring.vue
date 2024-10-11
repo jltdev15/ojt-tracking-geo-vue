@@ -15,13 +15,8 @@
         <h1 class="text-3xl font-bold">Intern Monitoring</h1>
       </header>
       <div class="grid w-full gap-6 md:grid-cols-2">
-        <EasyDataTable
-          :headers="headers"
-          :items="locationArr"
-          border-cell
-          :rows-per-page="10"
-          table-class-name="customize-table"
-        >
+        <EasyDataTable :headers="headers" :items="locationArr" border-cell :rows-per-page="10"
+          table-class-name="customize-table">
           <template #item-status="item">
             <div class="text-center" v-if="item.isInside">
               <p class="font-bold bg-green-600 rounded-md text-gray-50">Inside</p>
@@ -196,10 +191,22 @@ watch(
     // Add markers for new interns who clocked in
     newInterns.forEach((intern) => {
       if (!markers.value[intern.internId]) {
-        // Check if marker for intern already exists
         console.log("Adding Intern marker");
-
-        addMarker(intern);
+        addMarker(intern); // Add marker for newly clocked-in intern
+      } else {
+        console.log("Watching Intern marker for location changes");
+        watch(
+          () => intern.currentLocation, // Assuming `location` contains lat and lng
+          (newLocation, oldLocation) => {
+            if (
+              newLocation.lat !== oldLocation.lat ||
+              newLocation.lng !== oldLocation.lng
+            ) {
+              updateMarker(intern); // Update marker if location changes
+            }
+          },
+          { deep: true } // Ensure deep watching for location changes
+        );
       }
     });
   },
@@ -208,6 +215,14 @@ watch(
     immediate: true, // Trigger immediately when the component is mounted
   }
 );
+
+function updateMarker(intern) {
+  if (markers.value[intern.internId]) {
+    // Assuming `intern` contains latitude and longitude
+    const position = new google.maps.LatLng(intern.latitude, intern.longitude);
+    markers.value[intern.internId].setPosition(position);
+  }
+}
 
 onMounted(async () => {
   initMap();
