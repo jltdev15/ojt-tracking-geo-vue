@@ -90,11 +90,11 @@ onMounted(async () => {
   await internStore.fetchApplicationList();
   await internStore.fetchRequiredHours();
 
-  if (internStore.isClockIn) {
-    return (intervalid = setInterval(internStore.sendLocationHandler, 3000));
-  } else {
-    clearInterval(intervalid);
-  }
+  // if (internStore.isClockIn) {
+  //   return (intervalid = setInterval(internStore.sendLocationHandler, 3000));
+  // } else {
+  //   clearInterval(intervalid);
+  // }
 });
 
 onUnmounted(async () => {

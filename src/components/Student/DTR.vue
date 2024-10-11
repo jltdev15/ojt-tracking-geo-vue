@@ -3,51 +3,36 @@
     <header class="p-3 text-center bg-gray-50 md:text-left">
       <h1 class="text-3xl font-bold">Daily Time Record</h1>
     </header>
-    <section
-      v-if="internStore.isInternReady"
-      class="max-w-sm py-6 m-6 bg-gray-100 shadow-lg rounded-xl"
-    >
+    <section v-if="internStore.isInternReady" class="max-w-sm py-6 m-6 bg-gray-100 shadow-lg rounded-xl">
       <p class="text-5xl font-bold text-center">{{ timeStringData }}</p>
       <div class="p-6">
         <p>Time starts at 8:00 am</p>
-        <button
-          :disabled="!internStore.isLocationEnabled || internStore.isClockIn"
-          @click="timeInHandler"
-          class="w-full rounded btn btn-primary"
-        >
+        <button :disabled="!internStore.isLocationEnabled || internStore.isClockIn" @click="timeInHandler"
+          class="w-full rounded btn btn-primary">
           Clock in
         </button>
-        <p
-          @click="removeErrorMessage"
+        <p @click="removeErrorMessage"
           class="flex items-center justify-center w-full gap-3 py-3 m-3 mx-auto font-bold text-center bg-red-600 text-gray-50"
-          v-if="clockInErrorMessage"
-        >
+          v-if="clockInErrorMessage">
           {{ clockInErrorMessage }}<i class="text-lg bx bx-info-circle"></i>
         </p>
       </div>
       <div class="p-6">
         <p>Time ends at 5:00 pm</p>
-        <button
-          @click="timeOutHandler"
-          :disabled="!internStore.isLocationEnabled || !internStore.isClockIn"
-          class="w-full rounded btn btn-primary"
-        >
+        <button @click="timeOutHandler" :disabled="!internStore.isLocationEnabled || !internStore.isClockIn"
+          class="w-full rounded btn btn-primary">
           Clock out
         </button>
       </div>
       <div class="flex justify-center py-3">
         <div v-if="!internStore.isLocationEnabled" class="p-3">
-          <p
-            class="inline-block p-3 text-xs font-medium text-center bg-red-600 md:text-base text-gray-50"
-          >
+          <p class="inline-block p-3 text-xs font-medium text-center bg-red-600 md:text-base text-gray-50">
             {{ internStore.errorMessage
             }}<span class="block">Please enable your location</span>
           </p>
         </div>
         <div v-else class="flex justify-center p-3">
-          <p
-            class="inline-block md:text-xs text-[0.6rem] bg-green-600 p-3 text-gray-50 font-medium"
-          >
+          <p class="inline-block md:text-xs text-[0.6rem] bg-green-600 p-3 text-gray-50 font-medium">
             Access location granted you can now clock in/clock out
           </p>
         </div>
@@ -59,11 +44,9 @@
         <p class="p-6 font-bold text-center text-gray-800">
           No exisiting internship found
         </p>
-        <router-link
-          to="/student/dashboard/internships"
-          class="flex items-center mt-3 font-medium text-center cursor-pointer btn-outline btn-accent btn hover:text-blue-600"
-          >Browse Interships</router-link
-        >
+        <router-link to="/student/dashboard/internships"
+          class="flex items-center mt-3 font-medium text-center cursor-pointer btn-outline btn-accent btn hover:text-blue-600">Browse
+          Interships</router-link>
       </div>
     </section>
   </div>
@@ -141,11 +124,11 @@ const startInterval = () => {
   }, 3000);
 };
 onMounted(async () => {
-  await internStore.checkDTRStatus()
-  await internStore.fetchRequiredHours();
-  if (internStore.isClockIn) {
-    startInterval();
-  }
+  // await internStore.checkDTRStatus()
+  // await internStore.fetchRequiredHours();
+  // if (internStore.isClockIn) {
+  //   startInterval();
+  // }
   await internStore.getLocationHandler();
 
   await updateClock();
