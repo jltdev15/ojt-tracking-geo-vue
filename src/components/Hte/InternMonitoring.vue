@@ -170,7 +170,7 @@ const pollOnlineInterns = async () => {
     const response = await apiClient.get(`/hte/internship/online`);
     onlineInternLists.value = response.data.content;
     // generateFence(onlineInternLists.value);
-  }, 500);
+  }, 1000);
 };
 watch(
   onlineInternLists,
