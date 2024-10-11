@@ -1,7 +1,7 @@
 <template>
   <div class="p-3">
     <header class="flex items-center justify-between p-3 bg-gray-50">
-      <h1 class="text-3xl font-bold">Dashboard-edited</h1>
+      <h1 class="text-3xl font-bold">Dashboard</h1>
     </header>
     <div class="flex md:flex-row flex-col min-h-screen bg-gray-100">
       <div class="container max-w-6xl p-5">
