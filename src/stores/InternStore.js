@@ -172,21 +172,7 @@ export const useInternStore = defineStore("intern", () => {
       errorMessage.value = "Geolocation is not supported by this browser.";
     }
   };
-  const sendLocationHandler = async () => {
-    // await fetchRequiredHours()
-    try {
-      if (isClockIn.value) {
-        const response = await apiClient.put(
-          "intern/currentlocation",
-          locationData
-        );
-        console.log(response);
-      }
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
-
+  let watchId;
   const startTrackingLocation = () => {
     if (navigator.geolocation) {
     watchId = navigator.geolocation.watchPosition(
@@ -207,6 +193,22 @@ export const useInternStore = defineStore("intern", () => {
     );
   }
   }
+
+  const sendLocationHandler = async () => {
+    // await fetchRequiredHours()
+    try {
+      if (isClockIn.value) {
+        const response = await apiClient.put(
+          "intern/currentlocation",
+          locationData
+        );
+        console.log(response);
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
   const getAttendanceHandler = async () => {
     try {
       const response = await apiClient.get("/intern/attendance");
