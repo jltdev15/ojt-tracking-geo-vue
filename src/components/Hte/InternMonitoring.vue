@@ -219,7 +219,10 @@ watch(
 function updateMarker(intern) {
   if (markers.value[intern.internId]) {
     // Assuming `intern` contains latitude and longitude
-    const position = new google.maps.LatLng(intern.latitude, intern.longitude);
+    const position = new google.maps.LatLng(
+      intern.currentLocation.lat,
+      intern.currentLocation.lng
+    );
     markers.value[intern.internId].setPosition(position);
   }
 }
