@@ -38,9 +38,9 @@
         </div>
       </div>
     </section>
-    <section v-else class="flex items-center justify-center h-[70dvh] p-6 ">
+    <section v-else class="flex items-center justify-center h-[70dvh] p-6">
       <div class="p-5 text-center rounded-md shadow-md bg-gray-50">
-        <i class='bg-red-700 rounded-full text-7xl bx bx-question-mark text-gray-50'></i>
+        <i class="bg-red-700 rounded-full text-7xl bx bx-question-mark text-gray-50"></i>
         <p class="p-6 font-bold text-center text-gray-800">
           No exisiting internship found
         </p>
@@ -124,11 +124,11 @@ const startInterval = () => {
   }, 3000);
 };
 onMounted(async () => {
-  // await internStore.checkDTRStatus()
-  // await internStore.fetchRequiredHours();
-  // if (internStore.isClockIn) {
-  //   startInterval();
-  // }
+  await internStore.checkDTRStatus();
+  await internStore.fetchRequiredHours();
+  if (internStore.isClockIn) {
+    startInterval();
+  }
   await internStore.getLocationHandler();
 
   await updateClock();
