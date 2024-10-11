@@ -34,7 +34,7 @@
               </div>
             </div>
             <div class="p-2 text-left md:block">
-              <h2 class="text-sm font-semibold text-gray-800">
+              <h2 class="text-sm font-semibold text-gray-800 capitalize">
                 {{ authStore.currentUser }}
               </h2>
               <p class="text-xs text-gray-500">HTE Account</p>
@@ -64,9 +64,11 @@
           >
         </li>
         <li>
-          <router-link :to="{name:'hte_settings'}"
+          <router-link
+            :to="{ name: 'hte_settings' }"
             class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-[#f84525] hover:bg-gray-50"
-            >Settings</router-link>
+            >Settings</router-link
+          >
         </li>
         <li>
           <a
@@ -85,7 +87,7 @@
 </template>
 
 <script setup>
-import FullPageLoader from '../../BaseUI/BasePageLoader.vue';
+import FullPageLoader from "../../BaseUI/BasePageLoader.vue";
 import { useAuthStore } from "@/stores/AuthStore";
 import { ref } from "vue";
 import { useRouter } from "vue-router";

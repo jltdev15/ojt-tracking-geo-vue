@@ -20,7 +20,7 @@
               </div>
             </div>
             <div class="p-2 text-left md:block">
-              <h2 class="text-sm font-semibold text-gray-800 capitalize">
+              <h2 class="text-sm font-semibold text-gray-800 capitalize ">
                 {{
                   authStore.currentUser
                     ? authStore.currentUser

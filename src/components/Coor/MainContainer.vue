@@ -34,7 +34,7 @@
               </div>
             </div>
             <div class="p-2 text-left md:block">
-              <h2 class="text-sm font-semibold text-gray-800">
+              <h2 class="text-sm font-semibold text-gray-800 capitalize">
                 {{ authStore.currentUser }}
               </h2>
               <p class="text-xs text-gray-500">Coordinator</p>
@@ -87,7 +87,7 @@
 </template>
 
 <script setup>
-import FullPageLoader from '../../BaseUI/BasePageLoader.vue';
+import FullPageLoader from "../../BaseUI/BasePageLoader.vue";
 import { ref, onMounted, onUnmounted } from "vue";
 import { useAuthStore } from "@/stores/AuthStore";
 import { useRouter } from "vue-router";
