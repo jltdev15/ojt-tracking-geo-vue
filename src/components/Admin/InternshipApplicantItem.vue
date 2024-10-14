@@ -40,7 +40,7 @@ const hteStore = useHteStore();
 const searchField = ref("Set filter");
 const searchValue = ref("");
 const headers = [
-  { text: "Intern Name", value: "firstName" },
+  { text: "Intern Name", value: "fullName" },
   { text: "Department", value: "department" },
   { text: "Internship applied", value: "jobTitle" },
 ];
