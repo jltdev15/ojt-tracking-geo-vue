@@ -10,12 +10,12 @@
           <h1 class="text-xl font-semibold text-gray-400 capitalize">Coordinator</h1>
         </header>
         <div class="grid grid-cols-2 gap-7 lg:grid-cols-3">
-          <div class="p-5 bg-white rounded shadow-sm hover:bg-gray-200">
-            <router-link :to="{ name: 'appSettings' }" class="flex items-center space-x-4 space-y-2"
+          <div class="flex p-2 bg-white rounded shadow-sm md:p-5 hover:bg-gray-200">
+            <router-link :to="{ name: 'appSettings' }" class="flex items-center md:space-x-4 md:space-y-2"
               v-if="adminUserStore.getNumberOfDepartment !== 0">
               <div>
                 <div
-                  class="flex items-center justify-center w-6 h-6 rounded-full md:w-12 md:h-12 bg-cyan-50 text-cyan-400">
+                  class="items-center justify-center hidden w-6 h-6 rounded-full md:flex md:w-12 md:h-12 bg-cyan-50 text-cyan-400">
                   <svg height="32px" id="Capa_1" style="enable-background: new 0 0 100 88" version="1.1"
                     viewBox="0 0 100 88" width="100px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -26,17 +26,17 @@
                   </svg>
                 </div>
               </div>
-              <div>
+              <div class="">
                 <div class="text-2xl font-bold text-gray-900">
                   {{ adminUserStore.getNumberOfDepartment }}
                 </div>
                 <div class="text-sm text-gray-400">Department</div>
               </div>
             </router-link>
-            <div class="flex items-center space-x-4 space-y-2" v-if="adminUserStore.getNumberOfDepartment === 0">
+            <div class="flex items-center md:space-x-4 md:space-y-2" v-if="adminUserStore.getNumberOfDepartment === 0">
               <div>
                 <div
-                  class="flex items-center justify-center w-6 h-6 rounded-full md:w-12 md:h-12 bg-cyan-50 text-cyan-400">
+                  class="items-center justify-center hidden w-6 h-6 rounded-full md:flex md:w-12 md:h-12 bg-cyan-50 text-cyan-400">
                   <svg height="32px" id="Capa_1" style="enable-background: new 0 0 100 88" version="1.1"
                     viewBox="0 0 100 88" width="100px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -55,11 +55,11 @@
               </div>
             </div>
           </div>
-          <div class="p-5 bg-white rounded shadow-sm cursor-pointer hover:bg-gray-200">
-            <div class="flex items-center space-x-4 space-y-2">
+          <div class="p-2 bg-white rounded shadow-sm cursor-pointer md:p-5 hover:bg-gray-200">
+            <div class="flex items-center md:space-x-4 md:space-y-2">
               <div>
                 <div
-                  class="flex items-center justify-center w-6 h-6 rounded-full md:w-12 md:h-12 bg-cyan-50 text-cyan-400">
+                  class="items-center justify-center hidden w-6 h-6 rounded-full md:flex md:w-12 md:h-12 bg-cyan-50 text-cyan-400">
                   <svg height="32px" id="Capa_1" style="enable-background: new 0 0 100 88" version="1.1"
                     viewBox="0 0 100 88" width="100px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -74,15 +74,15 @@
                 <div class="text-2xl font-bold text-gray-900">
                   {{ adminUserStore.getNumberVisitationSent }}
                 </div>
-                <div class="text-gray-400">Visitation Sent</div>
+                <div class="text-sm text-gray-400">Visitation Sent</div>
               </div>
             </div>
           </div>
-          <div class="p-5 bg-white rounded shadow-sm cursor-pointer hover:bg-gray-200">
-            <div class="flex items-center space-x-4 space-y-2">
+          <div class="p-2 bg-white rounded shadow-sm cursor-pointer md:p-5 hover:bg-gray-200">
+            <div class="flex items-center md:space-y-2 md:space-x-4">
               <div>
                 <div
-                  class="flex items-center justify-center w-6 h-6 rounded-full md:w-12 md:h-12 bg-cyan-50 text-cyan-400">
+                  class="items-center justify-center hidden w-6 h-6 rounded-full md:flex md:w-12 md:h-12 bg-cyan-50 text-cyan-400">
                   <svg height="32px" id="Layer_1" style="enable-background: new 0 0 50 50" version="1.1"
                     viewBox="0 0 50 50" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -97,7 +97,7 @@
                 <div class="text-2xl font-bold text-gray-900">
                   {{ adminUserStore.getNumberVisitationDone }}
                 </div>
-                <div class="text-gray-400">Visitation Done</div>
+                <div class="text-sm text-gray-400">Visitation Done</div>
               </div>
             </div>
           </div>
@@ -107,12 +107,12 @@
           <h1 class="text-xl font-semibold text-gray-400 capitalize">Interns</h1>
         </header>
         <div class="grid grid-cols-2 gap-7 lg:grid-cols-3">
-          <div class="p-5 bg-white rounded shadow-sm cursor-pointer hover:bg-gray-200">
+          <div class="p-2 bg-white rounded shadow-sm cursor-pointer md:p-5 hover:bg-gray-200">
             <router-link v-if="adminUserStore.getNumberOfInterns !== 0" :to="{ name: 'InternsList' }"
-              class="flex items-center space-x-4 space-y-2">
+              class="flex items-center md:space-x-4 md:space-y-2">
               <div>
                 <div
-                  class="flex items-center justify-center w-6 h-6 rounded-full md:w-12 md:h-12 bg-cyan-50 text-cyan-400">
+                  class="items-center justify-center hidden w-6 h-6 rounded-full md:flex md:w-12 md:h-12 bg-cyan-50 text-cyan-400">
                   <svg height="8.4666mm" style="
                       shape-rendering: geometricPrecision;
                       text-rendering: geometricPrecision;
@@ -133,14 +133,14 @@
                 <div class="text-2xl font-bold text-gray-900">
                   {{ adminUserStore.getNumberOfInterns }}
                 </div>
-                <div class="text-gray-400">Total Interns</div>
+                <div class="text-sm text-gray-400">Total Interns</div>
               </div>
             </router-link>
             <div v-if="adminUserStore.getNumberOfInterns === 0" :to="{ name: 'InternsList' }"
               class="flex items-center space-x-4 space-y-2">
               <div>
                 <div
-                  class="flex items-center justify-center w-6 h-6 rounded-full md:w-12 md:h-12 bg-cyan-50 text-cyan-400">
+                  class="items-center justify-center hidden w-6 h-6 rounded-full md:flex md:w-12 md:h-12 bg-cyan-50 text-cyan-400">
                   <svg height="8.4666mm" style="
                       shape-rendering: geometricPrecision;
                       text-rendering: geometricPrecision;
@@ -161,16 +161,16 @@
                 <div class="text-2xl font-bold text-gray-900">
                   {{ adminUserStore.getNumberOfInterns }}
                 </div>
-                <div class="text-gray-400">Total Interns</div>
+                <div class="text-sm text-gray-400">Total Interns</div>
               </div>
             </div>
           </div>
-          <div class="p-5 transition-all bg-white rounded shadow-sm cursor-pointer hover:bg-gray-200">
+          <div class="p-2 transition-all bg-white rounded shadow-sm cursor-pointer md:p-5 hover:bg-gray-200">
             <router-link v-if="adminUserStore.getNumberInternDeployed > 0" :to="{ name: 'InternsList' }"
-              class="flex items-center space-x-4 space-y-2">
+              class="flex items-center md:space-x-4 md:space-y-2">
               <div>
                 <div
-                  class="flex items-center justify-center w-6 h-6 rounded-full md:w-12 md:h-12 bg-cyan-50 text-cyan-400">
+                  class="items-center justify-center hidden w-6 h-6 rounded-full md:flex md:w-12 md:h-12 bg-cyan-50 text-cyan-400">
                   <svg height="32px" id="Capa_1" style="enable-background: new 0 0 100 88" version="1.1"
                     viewBox="0 0 100 88" width="100px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -185,7 +185,7 @@
                 <div class="text-2xl font-bold text-gray-900">
                   {{ adminUserStore.getNumberInternDeployed }}
                 </div>
-                <div class="text-gray-400">Deployed</div>
+                <div class="text-sm text-gray-400">Deployed</div>
               </div>
             </router-link>
             <div v-if="adminUserStore.getNumberInternDeployed === 0" :to="{ name: 'InternsList' }"
@@ -206,16 +206,16 @@
                 <div class="text-2xl font-bold text-gray-900">
                   {{ adminUserStore.getNumberInternDeployed }}
                 </div>
-                <div class="text-gray-400">Deployed</div>
+                <div class="text-sm text-gray-400">Deployed</div>
               </div>
             </div>
           </div>
 
-          <div class="p-5 bg-white rounded shadow-sm cursor-pointer hover:bg-gray-200">
-            <div class="flex items-center space-x-4 space-y-2">
+          <div class="p-2 bg-white rounded shadow-sm cursor-pointer md:p-5 hover:bg-gray-200">
+            <div class="flex items-center md:space-x-4 md:space-y-2">
               <div>
                 <div
-                  class="flex items-center justify-center w-6 h-6 rounded-full md:w-12 md:h-12 bg-cyan-50 text-cyan-400">
+                  class="items-center justify-center hidden w-6 h-6 rounded-full md:flex md:w-12 md:h-12 bg-cyan-50 text-cyan-400">
                   <svg height="32px" id="Layer_1" style="enable-background: new 0 0 50 50" version="1.1"
                     viewBox="0 0 50 50" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -230,7 +230,7 @@
                 <div class="text-2xl font-bold text-gray-900">
                   {{ adminUserStore.getNumberInternFinished }}
                 </div>
-                <div class="text-gray-400">Evaluated</div>
+                <div class="text-sm text-gray-400">Evaluated</div>
               </div>
             </div>
           </div>
@@ -242,12 +242,12 @@
           </h1>
         </header>
         <div class="grid grid-cols-2 gap-7 lg:grid-cols-3">
-          <div class="p-5 bg-white rounded shadow-sm cursor-pointer hover:bg-gray-200">
+          <div class="p-2 bg-white rounded shadow-sm cursor-pointer md:p-5 hover:bg-gray-200">
             <router-link v-if="adminUserStore.getNumberOfHTE !== 0" :to="{ name: 'hteLists' }"
-              class="flex items-center space-x-4 space-y-2">
+              class="flex items-center md:space-x-4 md:space-y-2">
               <div>
                 <div
-                  class="flex items-center justify-center w-6 h-6 rounded-full md:w-12 md:h-12 bg-cyan-50 text-cyan-400">
+                  class="items-center justify-center hidden w-6 h-6 rounded-full md:flex md:w-12 md:h-12 bg-cyan-50 text-cyan-400">
                   <svg height="8.4666mm" style="
                       shape-rendering: geometricPrecision;
                       text-rendering: geometricPrecision;
@@ -271,10 +271,10 @@
                 <div class="text-gray-400">Registerd HTE</div>
               </div>
             </router-link>
-            <div v-if="adminUserStore.getNumberOfHTE === 0" class="flex items-center space-x-4 space-y-2">
+            <div v-if="adminUserStore.getNumberOfHTE === 0" class="flex items-center md:space-x-4 md:space-y-2">
               <div>
                 <div
-                  class="flex items-center justify-center w-6 h-6 rounded-full md:w-12 md:h-12 bg-cyan-50 text-cyan-400">
+                  class="items-center justify-center hidden w-6 h-6 rounded-full md:flex md:w-12 md:h-12 bg-cyan-50 text-cyan-400">
                   <svg height="8.4666mm" style="
                       shape-rendering: geometricPrecision;
                       text-rendering: geometricPrecision;
@@ -295,16 +295,16 @@
                 <div class="text-2xl font-bold text-gray-900">
                   {{ adminUserStore.getNumberOfHTE }}
                 </div>
-                <div class="text-gray-400">Registerd HTE</div>
+                <div class="text-sm text-gray-400">Registerd HTE</div>
               </div>
             </div>
           </div>
-          <div class="p-5 bg-white rounded shadow-sm cursor-pointer hover:bg-gray-200">
+          <div class="p-2 bg-white rounded shadow-sm cursor-pointer md:p-5 hover:bg-gray-200">
             <router-link v-if="adminUserStore.getNumberOfDepartment > 0" :to="{ name: 'Hte_Listing' }"
-              class="flex items-center space-x-4 space-y-2">
+              class="flex items-center md:space-x-4 md:space-y-2">
               <div>
                 <div
-                  class="flex items-center justify-center w-6 h-6 rounded-full md:w-12 md:h-12 bg-cyan-50 text-cyan-400">
+                  class="items-center justify-center hidden w-6 h-6 rounded-full md:flex md:w-12 md:h-12 bg-cyan-50 text-cyan-400">
                   <svg height="32px" id="Capa_1" style="enable-background: new 0 0 100 88" version="1.1"
                     viewBox="0 0 100 88" width="100px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink">
