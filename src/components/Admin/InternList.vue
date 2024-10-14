@@ -36,6 +36,7 @@
         :items="userStore.internsList"
         :search-field="searchField"
         :search-value="searchValue"
+        :header-text-direction="center"
         table-class-name="customize-table"
         :rows-per-page="5"
         :hide-rows-per-page="true"
@@ -116,7 +117,8 @@ onMounted(async () => {
 
 @media only screen and (max-width: 390px) {
   .customize-table {
-    --easy-table-header-item-padding: 0 50px;
+    --easy-table-header-item-padding: 0 20px;
+    --easy-table-body-item-padding: 0 20px;
   }
 }
 </style>
