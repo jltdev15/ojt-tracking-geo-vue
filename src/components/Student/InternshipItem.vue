@@ -1,7 +1,7 @@
 <template>
   <section v-if="show" class="grid w-full gap-6 p-3 md:grid-cols-4">
     <div v-for="(item, index) in internStore.internshipLists" :key="index"
-      class="w-full shadow card card-compact bg-base-50 ">
+      class="w-full shadow card card-compact bg-base-50">
       <div class="flex items-center justify-between p-2 text-xs text-right">
         <p class="p-3 bg-gray-400 rounded-lg text-gray-50">Internship</p>
         <p v-if="item.hte.moaAttachement" class="inline-block px-6 py-3 bg-green-600 rounded-lg text-gray-50">
@@ -14,7 +14,7 @@
       <div class="flex justify-between px-6 pt-6 text-xs font-bold">
         <router-link :to="{ name: 'HteInformation', params: { id: item.hte._id } }">{{
           item.hte.fullName
-        }}</router-link>
+          }}</router-link>
         <!-- <router-link>{{ item.hte.name }}</router-link> -->
       </div>
 
@@ -31,14 +31,13 @@
           <p class="text-base font-bold">Slots {{ item.slots }}</p>
           <p class="text-sm font-medium text-gray-400">{{ item.location }}</p>
         </div>
-        <button :disabled="authStore.isInternReady" class="btn " :class="{ 'btn-primary': !authStore.isInternReady }"
+        <button :disabled="authStore.isInternReady" class="btn" :class="{ 'btn-primary': !authStore.isInternReady }"
           @click="handleApply(item._id)">
-          {{ authStore.isInternReady ? 'Applied' : 'Apply Now' }}
+          {{ authStore.isInternReady ? "Applied" : "Apply Now" }}
         </button>
       </div>
     </div>
   </section>
-
 </template>
 
 <script setup>
@@ -49,7 +48,7 @@ import { useRouter } from "vue-router";
 const internStore = useInternStore();
 const emit = defineEmits([""]);
 const router = useRouter();
-const props = defineProps(['show'])
+const props = defineProps(["show"]);
 
 const handleApply = async (jobId) => {
   console.log(jobId);
